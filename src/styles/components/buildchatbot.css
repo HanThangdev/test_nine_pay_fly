@@ -1,0 +1,74 @@
+.Chatbot-tabs {
+  @apply text-[70px];
+}
+
+.Chatbot-tabs .ant-tabs-tab {
+  @apply w-[150px] h-[43px] rounded-[10px] text-[15px] justify-center bg-white !border-solid !border-[1px] border-[#E7E8F2];
+}
+
+.Chatbot-tabs .ant-tabs-tab-btn {
+  @apply text-[#807d9b];
+}
+.Chatbot-tabs .ant-tabs-nav::before,
+.ant-tabs-ink-bar {
+  @apply !hidden;
+}
+
+.Chatbot-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  @apply !text-white bg-[#4AC1FF] w-[150px] rounded-[10px] font-bold h-[43px] justify-center flex items-center;
+}
+.Bog-config .ant-radio-group {
+  @apply !flex;
+}
+
+.Bog-config .ant-radio-button-wrapper {
+  @apply text-[15px] mr-[30px] h-[41px] w-[139px] rounded-[10px] flex items-center justify-center bg-[#E8E9F4] text-[#01058A];
+}
+
+.Bog-config .ant-radio-button-wrapper:not(:first-child)::before {
+  @apply hidden;
+}
+
+.Bog-config
+  .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
+  @apply bg-[#4AC1FF] font-bold border-none;
+}
+
+.Bog-config .ant-select-selector {
+  @apply !h-full items-center;
+}
+
+.Prompt .ant-slider-horizontal .ant-slider-rail {
+  @apply h-[14px] rounded-[20px] bg-[#DDE0F1];
+}
+
+.Prompt .ant-slider-horizontal .ant-slider-handle {
+  @apply top-[6px];
+}
+
+.Prompt .ant-slider-horizontal .ant-slider-track {
+  @apply h-[14px] bg-[#1AA8E9] rounded-[20px];
+}
+
+.Prompt .ant-switch.ant-switch-small {
+  @apply bg-[#DDE0F1] w-[46px] h-[24px];
+}
+
+.Prompt .ant-switch.ant-switch-small.ant-switch-checked .ant-switch-inner {
+  @apply bg-[#4AC1FF];
+}
+.Prompt
+  :where(
+    .css-dev-only-do-not-override-17a39f8
+  ).ant-switch.ant-switch-small.ant-switch-checked
+  .ant-switch-handle {
+  @apply start-[calc(100%-24px)];
+}
+
+.Prompt .ant-switch.ant-switch-small .ant-switch-handle {
+  @apply w-[24px] h-[24px] !top-0;
+}
+
+.Prompt .ant-switch .ant-switch-handle::before {
+  @apply !bg-[#4AC1FF] !rounded-[100px];
+}

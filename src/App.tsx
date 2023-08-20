@@ -1,21 +1,43 @@
 import { Suspense, lazy, useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 
-import Home from './pages/Dashboard/Home';
-import SignIn from './pages/Authentication/SignIn';
-import SignUp from './pages/Authentication/SignUp';
+import BuildChatbox from './pages/BuildChatbot';
+import SignIn from './pages/Authentication/login/SignIn';
+import SignUp from './pages/Authentication/register/SignUp';
 import Loader from './common/Loader';
 import routes from './routes';
+import Cookies from 'universal-cookie';
 
 const DefaultLayout = lazy(() => import('./layout/DefaultLayout'));
 
 function App() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const cookies = new Cookies();
+  const token = cookies.get('access_token');
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     setTimeout(() => setLoading(false), 1000);
   }, []);
+
+  if (Boolean(token) === false) {
+    if (
+      location.pathname !== '/auth/signin' &&
+      location.pathname !== '/auth/signup'
+    ) {
+      navigate('/auth/signin');
+    }
+  }
+
+  if (
+    Boolean(token) &&
+    (location.pathname === '/auth/signin' ||
+      location.pathname === '/auth/signup')
+  ) {
+    navigate('/');
+  }
 
   return loading ? (
     <Loader />
@@ -31,7 +53,7 @@ function App() {
         <Route path="/auth/signin" element={<SignIn />} />
         <Route path="/auth/signup" element={<SignUp />} />
         <Route element={<DefaultLayout />}>
-          <Route index element={<Home />} />
+          <Route index element={<BuildChatbox />} />
           {routes.map(({ path, component: Component }) => (
             <Route
               path={path}

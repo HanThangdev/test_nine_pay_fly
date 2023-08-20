@@ -1,0 +1,16 @@
+.auth-background {
+  background-image: url('../../../public/background.png');
+}
+
+.right-login-background {
+  background-image: url('../../../public/imageLogin.png');
+}
+
+.right-register-background {
+  background-image: url('../../../public/imageRegister.png');
+}
+
+.bg-button-login {
+  background: linear-gradient(135deg, #E25572 0%, #EB9858 100%) !important;
+}
+
