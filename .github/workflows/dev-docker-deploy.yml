@@ -21,7 +21,9 @@ jobs:
       - name: Create ENV
         env:
           DEV_SSH_KEY: ${{ secrets.DEV_SSH_KEY }}
+          DEV_ENV: ${{ vars.DEV_ENV }}
         run: |
+          echo -e "$DEV_ENV" >> .env
           echo -e "$DEV_SSH_KEY" > id_rsa.txt
 
       - name: Clone repository to remote server
