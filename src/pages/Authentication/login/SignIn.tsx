@@ -34,7 +34,6 @@ const SignIn = () => {
     dataForm.append('grant_type', 'password');
     dataForm.append('username', formData.email);
     dataForm.append('password', formData.password);
-
     try {
       await userApi.login(dataForm);
 
@@ -46,7 +45,7 @@ const SignIn = () => {
       }, 500);
     } catch (error: any) {
       notification.error({
-        message: error?.response?.data.message ?? error?.message,
+        message: error?.response?.data.errors ?? error?.message,
       });
 
       setLoading(false);

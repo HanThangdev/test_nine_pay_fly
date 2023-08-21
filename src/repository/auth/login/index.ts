@@ -1,6 +1,5 @@
 import http from '../..';
 
-import { LoginPayload } from './type';
 const FORM_DATA_HEADER = {
   'Content-Type': 'application/x-www-form-urlencoded',
 };
