@@ -48,8 +48,8 @@ const SignUp = () => {
   return (
     <>
       <div className="h-full auth-background bg-cover min-h-screen shadow-default">
-        <div className="flex flex-wrap items-center">
-          <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 m-auto">
+        <div className="h-full flex flex-wrap items-center px-[80px]">
+          <div className="w-full border-stroke dark:border-strokedark lg:w-1/2 m-auto">
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
               <div className="flex justify-center items-center">
                 <Image

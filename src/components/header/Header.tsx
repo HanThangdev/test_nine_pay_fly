@@ -3,6 +3,8 @@ import { Image } from 'antd';
 import DropdownNotification from '../dropdownNotification';
 import DropdownUser from '../dropdownUser';
 import { AiFillQuestionCircle } from 'react-icons/ai';
+import { PiListLight } from 'react-icons/pi';
+import classNames from 'classnames';
 
 import UserOne from '../../images/user/user-07.png';
 
@@ -14,8 +16,16 @@ const Header = (props: {
   return (
     <header className="sticky bg-[#fafafd] top-0 z-999 flex w-full  dark:bg-boxdark dark:drop-shadow-none">
       <div className="w-full pt-4 pb-2 border-b-[1px] mx-[38px] border-[#E7E8F2]">
-        <div className="flex flex-grow items-center justify-between lg:justify-end">
-          <div className="flex items-center gap-2 sm:gap-4 lg:hidden">
+        <div
+          className={classNames('flex flex-grow items-center justify-end', {
+            '!justify-between': props.sidebarOpen,
+          })}
+        >
+          <div
+            className={classNames('items-center gap-2 sm:gap-4 hidden', {
+              '!flex': props.sidebarOpen,
+            })}
+          >
             {/* <!-- Hamburger Toggle BTN --> */}
             <button
               aria-controls="sidebar"
@@ -23,43 +33,13 @@ const Header = (props: {
                 e.stopPropagation();
                 props.setSidebarOpen(!props.sidebarOpen);
               }}
-              className="z-99999 block rounded-sm border border-stroke bg-white p-1.5 shadow-sm dark:border-strokedark dark:bg-boxdark lg:hidden"
+              className="z-99999 block rounded-sm border border-stroke bg-white p-1.5 shadow-sm dark:border-strokedark dark:bg-boxdark "
             >
-              <span className="relative block h-5.5 w-5.5 cursor-pointer">
-                <span className="du-block absolute right-0 h-full w-full">
-                  <span
-                    className={`relative top-0 left-0 my-1 block h-0.5 w-0 rounded-sm bg-black delay-[0] duration-200 ease-in-out dark:bg-white ${
-                      !props.sidebarOpen && '!w-full delay-300'
-                    }`}
-                  ></span>
-                  <span
-                    className={`relative top-0 left-0 my-1 block h-0.5 w-0 rounded-sm bg-black delay-150 duration-200 ease-in-out dark:bg-white ${
-                      !props.sidebarOpen && 'delay-400 !w-full'
-                    }`}
-                  ></span>
-                  <span
-                    className={`relative top-0 left-0 my-1 block h-0.5 w-0 rounded-sm bg-black delay-200 duration-200 ease-in-out dark:bg-white ${
-                      !props.sidebarOpen && '!w-full delay-500'
-                    }`}
-                  ></span>
-                </span>
-                <span className="absolute right-0 h-full w-full rotate-45">
-                  <span
-                    className={`absolute left-2.5 top-0 block h-full w-0.5 rounded-sm bg-black delay-300 duration-200 ease-in-out dark:bg-white ${
-                      !props.sidebarOpen && '!h-0 !delay-[0]'
-                    }`}
-                  ></span>
-                  <span
-                    className={`delay-400 absolute left-0 top-2.5 block h-0.5 w-full rounded-sm bg-black duration-200 ease-in-out dark:bg-white ${
-                      !props.sidebarOpen && '!h-0 !delay-200'
-                    }`}
-                  ></span>
-                </span>
-              </span>
+              <PiListLight size={24} />
             </button>
             {/* <!-- Hamburger Toggle BTN --> */}
 
-            <Link className="flex items-center flex-shrink-0 lg:hidden" to="/">
+            <Link className="flex items-center flex-shrink-0" to="/">
               <Image
                 src={'/logo.png'}
                 alt="Chatfly"
@@ -69,7 +49,7 @@ const Header = (props: {
               />
             </Link>
           </div>
-          <div className='flex items-center'>
+          <div className="flex items-center">
             <div className="hidden sm:block">
               <form
                 action="https://formbold.com/s/unique_form_id"
@@ -109,7 +89,7 @@ const Header = (props: {
             </div>
 
             <div className="flex items-center gap-3 2xsm:gap-7">
-              <ul className="flex items-center gap-2 2xsm:gap-4">
+              <ul className="flex items-center mb-0">
                 {/* <!-- Notification Menu Area --> */}
                 <DropdownNotification />
                 {/* <!-- Notification Menu Area --> */}
@@ -121,10 +101,12 @@ const Header = (props: {
             </div>
           </div>
         </div>
-        <div className="flex justify-between mt-[25px]">
-          <p className="text-[22px] font-extrabold text-[#33343d]">UPGRADE</p>
+        <div className="flex justify-between mt-[10px]">
+          <p className="text-[22px] mb-0 font-extrabold text-[#33343d]">
+            UPGRADE
+          </p>
           <div className="flex gap-x-[40px]">
-            <p className="flex">
+            <p className="flex mb-0">
               <AiFillQuestionCircle size={20} color="black" />
               <span className="block text-sm ml-[15px] font-medium text-black dark:text-white">
                 Help

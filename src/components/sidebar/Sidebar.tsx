@@ -23,32 +23,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     storedSidebarExpanded === null ? false : storedSidebarExpanded === 'true',
   );
 
-  // close on click outside
-  useEffect(() => {
-    const clickHandler = ({ target }: MouseEvent) => {
-      if (!sidebar.current || !trigger.current) return;
-      if (
-        !sidebarOpen ||
-        sidebar.current.contains(target) ||
-        trigger.current.contains(target)
-      )
-        return;
-      setSidebarOpen(false);
-    };
-    document.addEventListener('click', clickHandler);
-    return () => document.removeEventListener('click', clickHandler);
-  });
-
-  // close if the esc key is pressed
-  useEffect(() => {
-    const keyHandler = ({ keyCode }: KeyboardEvent) => {
-      if (!sidebarOpen || keyCode !== 27) return;
-      setSidebarOpen(false);
-    };
-    document.addEventListener('keydown', keyHandler);
-    return () => document.removeEventListener('keydown', keyHandler);
-  });
-
   useEffect(() => {
     localStorage.setItem('sidebar-expanded', sidebarExpanded.toString());
     if (sidebarExpanded) {
@@ -61,9 +35,12 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   return (
     <aside
       ref={sidebar}
-      className={`absolute left-0 top-0 z-9999 flex h-screen w-[294px] flex-col overflow-y-hidden bg-[#00024C] duration-300 ease-linear lg:static lg:translate-x-0 ${
-        sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-      }`}
+      className={classNames(
+        ' flex h-screen w-[294px] flex-col left-0 top-0 z-9999 absolute xl:relative overflow-y-hidden bg-[#00024C] duration-300',
+        {
+          '!w-0': sidebarOpen,
+        },
+      )}
     >
       {/* <!-- SIDEBAR HEADER --> */}
       <div className="flex items-center justify-between gap-2 px-[20px] py-[20px] !border-b-[1px] border-[#ffffff82] border-solid">
@@ -78,7 +55,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             />
           </div>
           <NavLink to="/">
-            <p className={classNames('text-[24px] text-[#4AC1FF] font-bold')}>
+            <p
+              className={classNames(
+                'text-[24px] text-[#4AC1FF] font-bold mb-0',
+              )}
+            >
               Chatfly
             </p>
           </NavLink>
@@ -88,7 +69,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           onClick={() => setSidebarOpen(!sidebarOpen)}
           aria-controls="sidebar"
           aria-expanded={sidebarOpen}
-          className="block lg:hidden"
+          // className="block lg:hidden"
         >
           <AiOutlineLeft size={22} color="#A7A9C0" />
         </button>

@@ -20,13 +20,13 @@ const items: TabsProps['items'] = [
   },
   {
     key: 'testing',
-    label: `Testing`,
-    children: <TestingClient />,
+    label: `Advanced Setting`,
+    children: <IntegrationClient />,
   },
   {
     key: 'integration',
-    label: `Integration`,
-    children: <IntegrationClient />,
+    label: `Test Chatbot`,
+    children: <TestingClient />,
   },
 ];
 const BuildChatbot = () => {

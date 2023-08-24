@@ -1,9 +1,13 @@
-.Chatbot-tabs {
-  @apply text-[70px];
-}
-
 .Chatbot-tabs .ant-tabs-tab {
   @apply w-[150px] h-[43px] rounded-[10px] text-[15px] justify-center bg-white !border-solid !border-[1px] border-[#E7E8F2];
+}
+
+.import-data-tabs .ant-tabs-tab {
+  @apply !bg-[#E8E9F4];
+}
+
+.import-data-tabs .ant-tabs-tab-btn {
+  @apply !text-[#01058A];
 }
 
 .Chatbot-tabs .ant-tabs-tab-btn {
