@@ -13,6 +13,10 @@ export default defineConfig({
     host: true,
     port: 3001
   },
+  preview: {
+    host: true,
+    port: 3001
+  },
   optimizeDeps: {
     include: ['@ant-design/colors', '@ant-design/icons', '@ant-design/icons/es/icons'],
   },
@@ -24,5 +28,5 @@ export default defineConfig({
       find: "@components",
       replacement: resolve(__dirname, './src/components/')
     }]
-  }
+  },
 })

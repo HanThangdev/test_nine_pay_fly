@@ -1,13 +1,14 @@
-FROM node:16.13.1
-
-WORKDIR /usr/src/app
-
+FROM node:16.13.1 as builder
+WORKDIR /build/
 COPY package*.json ./
-
 RUN npm install
-
 COPY . .
+RUN npm run build
+
+FROM node:16.13.1 as app
+WORKDIR /usr/src/app/
+COPY --from=builder /build/ .
 
 EXPOSE 3001
 
-CMD [ "npm", "run", "dev"]
+CMD [ "npm", "run", "preview"]
