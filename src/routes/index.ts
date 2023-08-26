@@ -4,6 +4,7 @@ const Conversations = lazy(() => import('../pages/Conversations'));
 const Profile = lazy(() => import('../pages/profile'));
 const Settings = lazy(() => import('../pages/setting'));
 const ManageChatbots = lazy(() => import('../pages/ManageChatbots'));
+const PricingPlan = lazy(() => import('../pages/PricingPlan'));
 const Notfound = lazy(() => import('../pages/Notfound'));
 
 const coreRoutes = [
@@ -26,6 +27,11 @@ const coreRoutes = [
     path: '/settings',
     title: 'Settings',
     component: Settings,
+  },
+  {
+    path: '/price',
+    title: 'PricingPlan',
+    component: PricingPlan,
   },
   {
     path: '*',

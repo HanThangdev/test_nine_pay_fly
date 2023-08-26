@@ -1,6 +1,6 @@
 import classNames from 'classnames';
-import IconInterface from '../../../components/IconInterface/IconInterface';
-import IconReload from '../../../components/IconReload/IconReload';
+import IconInterface from '@/components/IconInterface/IconInterface';
+import IconReload from '@/components/IconReload/IconReload';
 import { AiFillRightCircle } from 'react-icons/ai';
 const Testing = () => {
   return (

@@ -1,7 +1,8 @@
-import ChatbotConfigClient from './ChatbotConfig';
-import ImportDataClient from './ImportData';
-import TestingClient from './Testing';
-import IntegrationClient from './Integration';
+import ChatbotConfigClient from '@/pages/BuildChatbot/ChatbotConfig';
+import ImportDataClient from '@/pages/BuildChatbot/ImportData';
+import TestingClient from '@/pages/BuildChatbot/Testing';
+import SettingClient from '@/pages/BuildChatbot/Setting';
+import IntegrationClient from '@/pages/BuildChatbot/Integration';
 import Cookies from 'universal-cookie';
 
 import { Tabs, TabsProps } from 'antd';
@@ -19,16 +20,22 @@ const items: TabsProps['items'] = [
     children: <ImportDataClient />,
   },
   {
-    key: 'testing',
+    key: 'setting',
     label: `Advanced Setting`,
-    children: <IntegrationClient />,
+    children: <SettingClient />,
   },
   {
-    key: 'integration',
+    key: 'testing',
     label: `Test Chatbot`,
     children: <TestingClient />,
   },
+  {
+    key: 'integration',
+    label: `Integration`,
+    children: <IntegrationClient />,
+  },
 ];
+
 const BuildChatbot = () => {
   const cookies = new Cookies();
   const token = cookies.get('access_token');
@@ -43,9 +50,6 @@ const BuildChatbot = () => {
         items={items}
         className={classNames('Chatbot-tabs flex-auto flex', 'box-border')}
       />
-      <button className="right-[38px] absolute w-[150px] h-[43px] bg-[#E8E9F4] text-[#01058A] rounded-[10px] text-[15px] font-bold justify-cente">
-        Intergration
-      </button>
     </div>
   );
 };

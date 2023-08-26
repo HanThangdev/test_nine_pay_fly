@@ -1,6 +1,6 @@
 import classNames from 'classnames';
-import IconInterface from '../../../../components/IconInterface/IconInterface';
-import IconReload from '../../../../components/IconReload/IconReload';
+import IconInterface from '@/components/IconInterface/IconInterface';
+import IconReload from '@/components/IconReload/IconReload';
 import { AiFillRightCircle } from 'react-icons/ai';
 
 const Interface = () => {
@@ -35,7 +35,7 @@ const Interface = () => {
             className="h-[47px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
           />
           <p className="mb-0 w-[40px]">
-            <AiFillRightCircle size={40} color='#4AC1FF'/>
+            <AiFillRightCircle size={40} color="#4AC1FF" />
           </p>
         </div>
       </div>

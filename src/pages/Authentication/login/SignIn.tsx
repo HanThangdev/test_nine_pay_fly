@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { notification, Image, Checkbox } from 'antd';
 import Cookies from 'universal-cookie';
 
-import userApi from '../../../repository/auth/login';
+import userApi from '@/repository/auth/login';
 
 const SignIn = () => {
   const [showPass, setShowPass] = useState(false);

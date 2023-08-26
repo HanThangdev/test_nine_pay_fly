@@ -6,7 +6,7 @@ import { PiEyeLight, PiEyeSlashLight } from 'react-icons/pi';
 import { useState } from 'react';
 import Cookies from 'universal-cookie';
 import { Image, notification } from 'antd';
-import userApi from '../../../repository/auth/register';
+import userApi from '@/repository/auth/register';
 
 const SignUp = () => {
   const [showPass, setShowPass] = useState(false);

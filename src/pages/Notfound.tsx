@@ -1,5 +1,5 @@
 import React from 'react';
-import error404 from '../images/error404.svg';
+import error404 from '@/images/error404.svg';
 import { NavLink } from 'react-router-dom';
 
 const Error404Page: React.FC = () => {

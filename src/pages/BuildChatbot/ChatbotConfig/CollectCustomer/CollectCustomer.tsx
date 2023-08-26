@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import IconCollectCustomer from '../../../../components/IconCollectCustomer/IconCollectCustomer';
+import IconCollectCustomer from '@/components/IconCollectCustomer/IconCollectCustomer';
 import { Checkbox } from 'antd';
 import { useState } from 'react';
 import { RiDeleteBinLine } from 'react-icons/ri';

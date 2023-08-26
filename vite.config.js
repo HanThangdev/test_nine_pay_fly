@@ -2,6 +2,9 @@ import {
   defineConfig
 } from 'vite'
 import react from '@vitejs/plugin-react'
+import {
+  resolve
+} from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -13,4 +16,13 @@ export default defineConfig({
   optimizeDeps: {
     include: ['@ant-design/colors', '@ant-design/icons', '@ant-design/icons/es/icons'],
   },
+  resolve: {
+    alias: [{
+      find: "@",
+      replacement: resolve(__dirname, "./src")
+    }, {
+      find: "@components",
+      replacement: resolve(__dirname, './src/components/')
+    }]
+  }
 })

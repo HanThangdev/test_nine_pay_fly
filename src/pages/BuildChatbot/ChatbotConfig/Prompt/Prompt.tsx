@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import IconPrompt from '../../../../components/IconPrompt/IconPrompt';
+import IconPrompt from '@/components/IconPrompt/IconPrompt';
 import { AiOutlineQuestionCircle } from 'react-icons/ai';
 import { Slider, Switch } from 'antd';
 import { useState } from 'react';

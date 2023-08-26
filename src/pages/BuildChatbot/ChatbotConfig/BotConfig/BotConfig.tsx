@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import IconRobot from '../../../../components/IconRobot/IconRobot';
+import IconRobot from '@/components/IconRobot/IconRobot';
 import { AiOutlineQuestionCircle } from 'react-icons/ai';
 import { Radio, Select } from 'antd';
 import { useState } from 'react';
@@ -39,7 +39,7 @@ const BotConfig = () => {
         </p>
         <Select
           showSearch
-          className='h-[41px] w-[calc(100%-240px)] rounded-[5px]'
+          className="h-[41px] w-[calc(100%-240px)] rounded-[5px]"
           placeholder="Search to Select"
           optionFilterProp="children"
           filterOption={(input, option) =>

@@ -1,8 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import classNames from 'classnames';
-import { BiDockTop } from 'react-icons/bi';
-import { AiOutlineLeft, AiOutlineAppstore } from 'react-icons/ai';
+import { BiMessageAltDetail } from 'react-icons/bi';
+import {
+  AiOutlineLeft,
+  AiOutlineAppstore,
+  AiFillDollarCircle,
+} from 'react-icons/ai';
 import { FiPieChart } from 'react-icons/fi';
 import { Image } from 'antd';
 
@@ -116,15 +120,29 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <NavLink
                   to="/conversations"
                   className={`h-[44px] group relative flex items-center gap-[18px] rounded-r-[5px] py-2 px-4 font-medium text-[#A7A9C0] duration-300 ease-in-out hover:bg-[#1AA8E9] hover:text-white ${
-                    pathname.includes('Conversations') &&
+                    pathname.includes('conversations') &&
                     'bg-[#1AA8E9] !text-white !font-bold'
                   }`}
                 >
-                  <BiDockTop size={26} />
+                  <BiMessageAltDetail size={26} />
                   Conversations
                 </NavLink>
               </li>
               {/* <!-- Menu Item Conversations --> */}
+              {/* <!-- Menu Item price --> */}
+              <li>
+                <NavLink
+                  to="/price"
+                  className={`h-[44px] group relative flex items-center gap-[18px] rounded-r-[5px] py-2 px-4 font-medium text-[#A7A9C0] duration-300 ease-in-out hover:bg-[#1AA8E9] hover:text-white ${
+                    pathname.includes('price') &&
+                    'bg-[#1AA8E9] !text-white !font-bold'
+                  }`}
+                >
+                  <AiFillDollarCircle size={26} />
+                  Pricing Plans
+                </NavLink>
+              </li>
+              {/* <!-- Menu Item price --> */}
             </ul>
           </div>
         </nav>

@@ -1,12 +1,9 @@
-import Breadcrumb from '../../components/Breadcrumb';
-import userThree from '../../images/user/user-07.png';
-import fireToast from '../../hooks/fireToast';
+import userThree from '@/images/user/user-07.png';
+import fireToast from '@/hooks/fireToast';
 const Settings = () => {
   return (
     <>
       <div className="mx-auto max-w-270">
-        <Breadcrumb pageName="Settings" />
-
         <div className="grid grid-cols-5 gap-8">
           <div className="col-span-5 xl:col-span-3">
             <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">

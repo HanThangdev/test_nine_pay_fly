@@ -1,3 +1,3 @@
-import ManageChatbots from './ManageChatbots';
+import ManageChatbotsClient from './ManageChatbotsClient';
 
-export default ManageChatbots;
+export default ManageChatbotsClient;

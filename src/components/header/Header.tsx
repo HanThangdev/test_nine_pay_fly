@@ -5,8 +5,9 @@ import DropdownUser from '../dropdownUser';
 import { AiFillQuestionCircle } from 'react-icons/ai';
 import { PiListLight } from 'react-icons/pi';
 import classNames from 'classnames';
+import { MdLanguage } from 'react-icons/md';
 
-import UserOne from '../../images/user/user-07.png';
+import UserOne from '@/images/user/user-07.png';
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
@@ -88,12 +89,13 @@ const Header = (props: {
               </form>
             </div>
 
-            <div className="flex items-center gap-3 2xsm:gap-7">
+            <div className="flex items-center gap-3 2xsm:gap-4">
               <ul className="flex items-center mb-0">
                 {/* <!-- Notification Menu Area --> */}
                 <DropdownNotification />
                 {/* <!-- Notification Menu Area --> */}
               </ul>
+              <MdLanguage size={24} />
 
               <span className="h-[43px] w-[43px] rounded-full">
                 <img src={UserOne} alt="User" />
@@ -102,7 +104,7 @@ const Header = (props: {
           </div>
         </div>
         <div className="flex justify-between mt-[10px]">
-          <p className="text-[22px] mb-0 font-extrabold text-[#33343d]">
+          <p className="text-[22px] mb-0 font-extrabold bg-[#E8E9F4] text-[#01058A] py-2 px-[22px] rounded-[10px]">
             UPGRADE
           </p>
           <div className="flex gap-x-[40px]">

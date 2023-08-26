@@ -1,3 +1,3 @@
-import Conversations from './Conversations';
+import ConversationsClient from './ConversationsClient';
 
-export default Conversations;
+export default ConversationsClient;

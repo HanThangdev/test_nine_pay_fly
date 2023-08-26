@@ -18,9 +18,22 @@
   @apply !hidden;
 }
 
+.Chatbot-tabs .ant-tabs-tab:nth-child(5) .ant-tabs-tab-btn {
+  @apply !text-[#01058A];
+}
+
+.Chatbot-tabs .ant-tabs-tab:nth-child(5) {
+  @apply absolute right-0 bg-[#E8E9F4] font-bold;
+}
+
 .Chatbot-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
   @apply !text-white bg-[#4AC1FF] w-[150px] rounded-[10px] font-bold h-[43px] justify-center flex items-center;
 }
+
+.Chatbot-tabs .ant-tabs-nav-list {
+  @apply w-full;
+}
+
 .Bog-config .ant-radio-group {
   @apply !flex;
 }

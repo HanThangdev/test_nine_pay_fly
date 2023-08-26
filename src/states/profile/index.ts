@@ -1,8 +1,8 @@
 import { useSnapshot } from 'valtio';
 
-import meRepository from '../../repository/me';
-import { MeProfile } from '../../repository/me/type';
-import { createStateProxy } from '../../valtio';
+import meRepository from '@/repository/me';
+import { MeProfile } from '@/repository/me/type';
+import { createStateProxy } from '@/valtio';
 
 export interface ProfileState {
   data: MeProfile | null;
