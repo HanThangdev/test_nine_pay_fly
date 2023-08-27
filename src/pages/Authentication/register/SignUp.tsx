@@ -135,9 +135,9 @@ const SignUp = () => {
                 </div>
 
                 <div className="mt-6 text-center">
-                  <p className="dark:text-white">
+                  <p className="text-white">
                     Already have an account?{' '}
-                    <Link to="/auth/signin" className="text-primary">
+                    <Link to="/auth/signin" className="text-[#4AC1FF]">
                       Login
                     </Link>
                   </p>

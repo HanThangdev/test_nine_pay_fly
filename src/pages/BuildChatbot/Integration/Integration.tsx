@@ -1,8 +1,10 @@
 import classNames from 'classnames';
+
 import IconSite from '@/components/IconSite/IconSite';
 import IconSlack from '@/components/IconSlack/IconSlack';
 import IconMess from '@/components/IconMess/IconMess';
 import IconTeams from '@/components/IconTeams/IconTeams';
+
 import { useState } from 'react';
 import ModalIntegration from './ModalIntegration';
 const Integration = () => {

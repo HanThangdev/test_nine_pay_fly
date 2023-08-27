@@ -1,11 +1,12 @@
 import { useSnapshot } from 'valtio';
 
 import meRepository from '@/repository/me';
-import { MeProfile } from '@/repository/me/type';
 import { createStateProxy } from '@/valtio';
+import Cookies from 'universal-cookie';
+import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 
 export interface ProfileState {
-  data: MeProfile | null;
+  data: any | null;
   loading: boolean;
 }
 
@@ -21,16 +22,20 @@ const profileState = createStateProxy<ProfileState>({
 });
 
 export const fetchProfile = async () => {
+  const navigate = useNavigate();
   try {
     const res = await meRepository.fetchProfile();
-    const data = res.data.data;
+    const data = res.data;
     setProfile(data);
   } catch (error) {
+    const cookies = new Cookies();
+    cookies.remove('access_token', { path: '/auth/signin' });
+    navigate('/auth/signin');
     return Promise.reject(error);
   }
 };
 
-export const setProfile = (payload: ProfileState['data']) => {
+export const setProfile = (payload: any) => {
   profileState.data = payload;
 };
 

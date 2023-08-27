@@ -6,6 +6,7 @@ import { PiEyeLight, PiEyeSlashLight } from 'react-icons/pi';
 import { useState } from 'react';
 import { notification, Image, Checkbox } from 'antd';
 import Cookies from 'universal-cookie';
+import { fetchProfile } from '@/states/profile';
 
 import userApi from '@/repository/auth/login';
 
@@ -36,7 +37,7 @@ const SignIn = () => {
     dataForm.append('password', formData.password);
     try {
       await userApi.login(dataForm);
-
+      fetchProfile();
       notification.success({
         message: 'You have successfully logged in.',
       });
@@ -80,7 +81,9 @@ const SignIn = () => {
               </h2>
               <p className="text-center mt-4 text-white">
                 Do you have an account yet?{' '}
-                <Link to="/auth/signup">Create account</Link>
+                <span className="text-[#4AC1FF]">
+                  <Link to="/auth/signup">Create account</Link>
+                </span>
               </p>
               <form onSubmit={onSubmit} className="w-[396px] m-auto">
                 <div className="mt-[31px]">

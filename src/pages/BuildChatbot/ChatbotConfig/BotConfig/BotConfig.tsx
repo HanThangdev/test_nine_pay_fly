@@ -8,7 +8,7 @@ import { BiLockOpenAlt, BiLockAlt } from 'react-icons/bi';
 const optionsModal = [
   { label: 'GPT - 3.5', value: 'GPT - 3.5' },
   { label: 'GPT - 3.5 - 16k', value: 'GPT - 3.5 - 16k' },
-  { label: 'GPT - 4.0', value: 'GPT - 4.0' },
+  { label: 'GPT - 4.0', value: 'GPT - 4.0', disabled: true },
 ];
 
 const BotConfig = () => {

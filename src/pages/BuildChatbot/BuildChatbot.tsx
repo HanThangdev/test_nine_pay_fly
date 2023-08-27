@@ -3,6 +3,7 @@ import ImportDataClient from '@/pages/BuildChatbot/ImportData';
 import TestingClient from '@/pages/BuildChatbot/Testing';
 import SettingClient from '@/pages/BuildChatbot/Setting';
 import IntegrationClient from '@/pages/BuildChatbot/Integration';
+
 import Cookies from 'universal-cookie';
 
 import { Tabs, TabsProps } from 'antd';
@@ -31,7 +32,7 @@ const items: TabsProps['items'] = [
   },
   {
     key: 'integration',
-    label: `Integration`,
+    label: `Integrations`,
     children: <IntegrationClient />,
   },
 ];

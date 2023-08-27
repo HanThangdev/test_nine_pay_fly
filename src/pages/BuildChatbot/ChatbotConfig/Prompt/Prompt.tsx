@@ -10,6 +10,9 @@ const Prompt = () => {
   const [creativity, setCreativity] = useState(0);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [rules, setRules] = useState<any>([]);
+  const [value, setValue] = useState(
+    'I want you to roleplay as "AI Assistant". You will provide me with answers from the given context. If the answer is not included, say exactly "Sorry, I am not familiar with that topic." and stop after that. Refuse to answer any question not answered by the context. Never break character.',
+  );
   const addItem = () => {
     setRules([
       ...rules,
@@ -58,13 +61,11 @@ const Prompt = () => {
             <p className="w-[240px] flex gap-x-[10px] font-bold items-center">
               Base Prompt <AiOutlineQuestionCircle size={18} color="#E77964" />
             </p>
-            <p className="text-[15px] px-[20px] py-[11px] border-[1px] border-[#DCDEED] mt-[11px] rounded-[5px]">
-              I want you to roleplay as "AI Assistant". You will provide me with
-              answers from the given context. If the answer is not included, say
-              exactly "Sorry, I am not familiar with that topic." and stop after
-              that. Refuse to answer any question not answered by the context.
-              Never break character.
-            </p>
+            <textarea
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+              className="w-full text-[15px] px-[20px] focus-visible:outline-none focus:border-[#DCDEED] py-[11px] border-[1px] border-[#DCDEED] mt-[11px] rounded-[5px]"
+            />
           </div>
 
           <div className="text-[15px] mt-[16px]">

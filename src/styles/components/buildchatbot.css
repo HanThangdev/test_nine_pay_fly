@@ -42,6 +42,10 @@
   @apply text-[15px] mr-[30px] h-[41px] w-[139px] rounded-[10px] flex items-center justify-center bg-[#E8E9F4] text-[#01058A];
 }
 
+.Bog-config .ant-radio-button-wrapper:nth-child(3) {
+  @apply opacity-50;
+}
+
 .Bog-config .ant-radio-button-wrapper:not(:first-child)::before {
   @apply hidden;
 }

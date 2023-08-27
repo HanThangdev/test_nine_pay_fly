@@ -1,3 +1,3 @@
-import BotConfigClient from './BotConfigClient';
+import BotConfig from './BotConfig';
 
-export default BotConfigClient;
+export default BotConfig;

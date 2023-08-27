@@ -1,5 +1,6 @@
 import userThree from '@/images/user/user-07.png';
 import fireToast from '@/hooks/fireToast';
+
 const Settings = () => {
   return (
     <>

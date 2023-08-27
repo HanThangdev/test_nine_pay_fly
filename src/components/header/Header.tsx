@@ -103,8 +103,8 @@ const Header = (props: {
             </div>
           </div>
         </div>
-        <div className="flex justify-between mt-[10px]">
-          <p className="text-[22px] mb-0 font-extrabold bg-[#E8E9F4] text-[#01058A] py-2 px-[22px] rounded-[10px]">
+        <div className="flex justify-between items-center">
+          <p className="text-[18px] mb-0 font-extrabold bg-[#E8E9F4] text-[#01058A] py-2 px-[22px] rounded-[10px]">
             UPGRADE
           </p>
           <div className="flex gap-x-[40px]">

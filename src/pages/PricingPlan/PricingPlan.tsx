@@ -1,5 +1,7 @@
 import classNames from 'classnames';
+
 import IconCheck from '@/components/IconCheck/IconCheck';
+
 import { AiOutlineDollarCircle } from 'react-icons/ai';
 
 const PricingPlan = () => {
