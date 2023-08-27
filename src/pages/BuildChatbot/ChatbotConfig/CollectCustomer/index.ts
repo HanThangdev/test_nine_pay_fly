@@ -1,3 +1,3 @@
-import CollectCustomerClient from './CollectCustomerClient';
+import CollectCustomer from './CollectCustomer';
 
-export default CollectCustomerClient;
+export default CollectCustomer;

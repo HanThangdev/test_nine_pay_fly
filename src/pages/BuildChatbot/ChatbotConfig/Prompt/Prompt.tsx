@@ -2,17 +2,25 @@ import classNames from 'classnames';
 import IconPrompt from '@/components/IconPrompt/IconPrompt';
 import { AiOutlineQuestionCircle } from 'react-icons/ai';
 import { Slider, Switch } from 'antd';
-import { useState } from 'react';
+import React from 'react';
 import { AiOutlineCaretDown, AiOutlineCaretUp } from 'react-icons/ai';
 import { RiDeleteBinLine } from 'react-icons/ri';
 
-const Prompt = () => {
-  const [creativity, setCreativity] = useState(0);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [rules, setRules] = useState<any>([]);
-  const [value, setValue] = useState(
-    'I want you to roleplay as "AI Assistant". You will provide me with answers from the given context. If the answer is not included, say exactly "Sorry, I am not familiar with that topic." and stop after that. Refuse to answer any question not answered by the context. Never break character.',
-  );
+interface PromptProps {
+  creativity: number;
+  setCreativity: (newValue: number) => void;
+
+  dropdownOpen: boolean;
+  setDropdownOpen: (newValue: boolean) => void;
+
+  rules: any;
+  setRules: (newValue: any) => void;
+
+  value: string;
+  setValue: (newValue: string) => void;
+}
+
+const Prompt: React.FC<PromptProps> = ({ creativity, setCreativity , dropdownOpen, setDropdownOpen, rules, setRules, value, setValue}) => {
   const addItem = () => {
     setRules([
       ...rules,
@@ -103,7 +111,7 @@ const Prompt = () => {
               />
               <div className="w-[30px]"></div>
             </div>
-            {rules.map((item: any, index: any) => (
+            {rules.map((_item: any, index: any) => (
               <div
                 key={index}
                 className="flex items-center justify-between gap-x-4 mt-[12px]"

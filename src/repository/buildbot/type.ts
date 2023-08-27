@@ -1,13 +1,11 @@
 export interface BotPayload {
-  user_id: number;
   bot_name: string;
   case_study: string;
-  rules: string[];
   gpt_model_name: string;
-  temperature: number;
   custom_prompt: string;
-  bot_tone_type: number;
-  custom_error_message: string;
+  temperature: number;
+  rules: string[];
+  collect_customer_info: any;
 }
 
 export interface BotDataResponse {

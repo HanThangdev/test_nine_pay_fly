@@ -1,3 +1,3 @@
-import PromptClient from './PromptClient';
+import Prompt from './Prompt';
 
-export default PromptClient;
+export default Prompt;

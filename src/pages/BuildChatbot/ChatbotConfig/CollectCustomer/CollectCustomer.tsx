@@ -1,16 +1,25 @@
 import classNames from 'classnames';
 import IconCollectCustomer from '@/components/IconCollectCustomer/IconCollectCustomer';
 import { Checkbox } from 'antd';
-import { useState } from 'react';
 import { RiDeleteBinLine } from 'react-icons/ri';
+import React from "react";
 
-const CollectCustomer = () => {
-  const [email, setEmail] = useState(false);
-  const [name, setName] = useState(false);
-  const [phone, setPhone] = useState(false);
-  const [custom, setCustom] = useState(false);
-  const [value, setValue] = useState('Let us know how to contact you');
-  const [field, setField] = useState('Custom field');
+interface CollectCustomerProps {
+  email: boolean;
+  setEmail: (value: boolean) => void;
+  name: boolean;
+  setName: (value: boolean) => void;
+  phone: boolean;
+  setPhone: (value: boolean) => void;
+  custom: boolean;
+  setCustom: (value: boolean) => void;
+  value: string;
+  setValue: (value: string) => void;
+  field: string;
+  setField: (value: string) => void;
+}
+
+const CollectCustomer: React.FC<CollectCustomerProps> = ({ email, setEmail, name, setName, phone, setPhone, custom, setCustom, value, setValue, field, setField }) => {
   return (
     <div
       className={classNames(
@@ -86,11 +95,6 @@ const CollectCustomer = () => {
             />
           </div>
         )}
-        <div className="flex justify-end">
-          <button className="w-[150px] mt-[20px] h-[43px] bg-[#4AC1FF] text-white rounded-[10px] text-[13px] font-bold justify-cente">
-            Create
-          </button>
-        </div>
       </div>
     </div>
   );

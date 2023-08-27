@@ -2,7 +2,61 @@ import classNames from 'classnames';
 import IconInterface from '@/components/IconInterface/IconInterface';
 import IconReload from '@/components/IconReload/IconReload';
 import { AiFillRightCircle } from 'react-icons/ai';
+import React, {useState} from "react";
+import testingBotRepository from "@/repository/testingbot";
+import {notification} from "antd";
 const Testing = () => {
+  const [history, setHistory] = useState<Array<string>>([]);
+  const [loading, setLoading] = useState<boolean>();
+  const [message, setMessage] = useState<string>('');
+
+  const onSendMessage = async () => {
+    if (loading) {
+      return
+    }
+
+    setLoading(true);
+    setHistory(history => [...history, message]);
+    setMessage('');
+
+    try {
+      const response = await testingBotRepository.getNormalResponse(message);
+      setTimeout(() => {}, 500);
+      setHistory(history => [...history, response.data.data]);
+    } catch (error: any) {
+      notification.error({
+        message: error?.response?.data.errors ?? error?.message,
+      });
+    }
+    setLoading(false);
+  };
+
+  const getDivForResponse = (index: number, message: string) => {
+    if (index % 2 === 0) {
+        return (
+          <div className="w-full justify-end flex">
+            <p className="bg-[#D1EFFF] p-2 rounded-t-lg rounded-bl-lg w-fit">
+              {message}
+            </p>
+          </div>
+        )
+    }
+    else {
+      return (
+        <div className="bg-[#F1F7FF] p-2 rounded-t-lg rounded-br-lg w-fit">
+          {message}
+        </div>
+      )
+    }
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      onSendMessage();
+    }
+  };
+
   return (
     <div
       className={classNames(
@@ -17,15 +71,8 @@ const Testing = () => {
         </p>
         <IconReload />
       </div>
-      <div className="py-[37px] px-[27px] gap-y-[10px] grid">
-        <div className="bg-[#F1F7FF] p-2 rounded-t-lg rounded-br-lg w-fit">
-          Hello! How can I assist you today?
-        </div>
-        <div className="w-full justify-end flex">
-          <p className="bg-[#D1EFFF] p-2 rounded-t-lg rounded-bl-lg w-fit">
-            Hi
-          </p>
-        </div>
+      <div className="py-[37px] px-[27px] gap-y-[10px] grid overflow-y-auto" style={{ maxHeight: 'calc(100% - 230px)' }}>
+        {history.map((message, index) => getDivForResponse(index, message))}
       </div>
       <div className="absolute bottom-0 w-full">
         <div className="flex gap-x-3 ml-[26px]">
@@ -36,12 +83,14 @@ const Testing = () => {
         <div className="h-[62px] items-center border-t-[1px] border-[#E7E8F2] p-2 flex gap-x-[12px]">
           <input
             type="text"
-            placeholder=""
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            onKeyDown={handleKeyDown}
             className="h-[47px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
           />
-          <p className="mb-0 w-[40px]">
+          <button className="mb-0 w-[40px]" onClick={onSendMessage}>
             <AiFillRightCircle size={40} color="#4AC1FF" />
-          </p>
+          </button>
         </div>
       </div>
     </div>

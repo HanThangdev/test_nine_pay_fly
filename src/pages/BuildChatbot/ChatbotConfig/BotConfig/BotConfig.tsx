@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import IconRobot from '@/components/IconRobot/IconRobot';
 import { AiOutlineQuestionCircle } from 'react-icons/ai';
-import { Radio, Select } from 'antd';
-import { useState } from 'react';
+import { Radio } from 'antd';
+import React from 'react';
 import { BiLockOpenAlt, BiLockAlt } from 'react-icons/bi';
 
 const optionsModal = [
@@ -11,9 +11,24 @@ const optionsModal = [
   { label: 'GPT - 4.0', value: 'GPT - 4.0', disabled: true },
 ];
 
-const BotConfig = () => {
-  const [modal, setModal] = useState('GPT - 3.5');
-  const [visibility, setVisibility] = useState('Public');
+interface Option {
+  value: string;
+  label: string;
+}
+
+interface BotConfigProps {
+  botName: string;
+  setBotName: (value: string) => void;
+  caseStudy: string;
+  setCaseStudy: (value: string) => void;
+  model: string;
+  setModel: (value: string) => void;
+  visibility: string;
+  setVisibility: (value: string) => void;
+  options: Option[];
+}
+
+const BotConfig: React.FC<BotConfigProps> = ({ botName, setBotName, caseStudy, setCaseStudy, model, setModel , visibility, setVisibility, options}) => {
   return (
     <div
       className={classNames(
@@ -28,6 +43,7 @@ const BotConfig = () => {
       <div className="flex text-[15px] mt-[16px] items-center">
         <p className="w-[240px] font-bold">Name Chatbot</p>
         <input
+          onChange={(e) => setBotName(e.target.value)}
           type="text"
           placeholder=""
           className="h-[41px] w-[calc(100%-240px)] rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
@@ -35,35 +51,15 @@ const BotConfig = () => {
       </div>
       <div className="flex text-[15px] mt-[16px] items-center">
         <p className="w-[240px] flex gap-x-[10px] font-bold items-center">
-          Select Casestudy <AiOutlineQuestionCircle size={18} color="#E77964" />
+          Select Casestudy <AiOutlineQuestionCircle size={18} color="#E77964"/>
         </p>
-        <Select
-          showSearch
-          className="h-[41px] w-[calc(100%-240px)] rounded-[5px]"
-          placeholder="Search to Select"
-          optionFilterProp="children"
-          filterOption={(input, option) =>
-            (option?.label ?? '').includes(input)
-          }
-          options={[
-            {
-              value: '1',
-              label: 'Custom For Business',
-            },
-            {
-              value: '2',
-              label: 'Customer Support',
-            },
-            {
-              value: '3',
-              label: 'Knowledge Management',
-            },
-            {
-              value: '4',
-              label: 'Teaching Education',
-            },
-          ]}
-        />
+        <select value={caseStudy} onChange={(e) => setCaseStudy(e.target.value)}>
+          {options.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
       </div>
       <div className="text-[15px] mt-[16px]">
         <p className="w-[240px] flex gap-x-[10px] font-bold items-center">
@@ -72,8 +68,8 @@ const BotConfig = () => {
         <div className="mt-[13px]">
           <Radio.Group
             options={optionsModal}
-            onChange={(e) => setModal(e.target.value)}
-            value={modal}
+            onChange={(e) => setModel(e.target.value)}
+            value={model}
             optionType="button"
             buttonStyle="solid"
           />
