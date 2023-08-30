@@ -67,6 +67,14 @@ const ChatbotConfig = () => {
       return
     }
 
+    const resultObject: Record<string, boolean> = custom.reduce(
+      (acc: any, item) => {
+        acc[item.key] = true;
+        return acc;
+      },
+      {}
+    );
+
     const createBotPayload: BotPayload = {
       bot_name: botName,
       case_study: caseStudy,
@@ -74,15 +82,13 @@ const ChatbotConfig = () => {
         email: email,
         name: name,
         phone: phone,
-        custom: custom,
+        ...resultObject
       },
       rules: rules,
       gpt_model_name: model,
       temperature: creativity,
       custom_prompt: promptExample,
     }
-
-    console.log(createBotPayload)
 
     setLoading(true);
 

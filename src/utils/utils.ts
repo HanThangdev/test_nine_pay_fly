@@ -16,3 +16,10 @@ export function isAxiosInternalServerError<InternalServerError>(
     error.response?.status === HttpStatusCode.InternalServerError
   );
 }
+
+export function isEmptyObjectOrArray(data: any) {
+  if(!data){
+    return true
+  }
+  return !((Array.isArray(data) && data.length > 0) || (typeof data === 'object' && Object.keys(data).length > 0));
+}
