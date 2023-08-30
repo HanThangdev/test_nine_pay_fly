@@ -40,7 +40,7 @@ class Http {
       (response) => {
         if (response.status === HttpStatusCode.Unauthorized) {
           const cookies = new Cookies();
-          cookies.remove('access_token', { path: '/auth/signin' });
+          cookies.remove('access_token', { path: '/' });
         } else {
           const { url } = response.config;
           if (url === `/token`) {
@@ -55,11 +55,12 @@ class Http {
       (error: AxiosError) => {
         if (error.response?.status === HttpStatusCode.Unauthorized) {
           const cookies = new Cookies();
-          cookies.remove('access_token', { path: '/auth/signin' });
+          cookies.remove('access_token', { path: '/' })
           notification.warning({
             message: 'Your Token Expired, Please Login',
             duration: 2
-        }); 
+          }); 
+          setTimeout(() => window.location.replace('/auth/signin'), 2000)
         }
 
         return Promise.reject(error);
