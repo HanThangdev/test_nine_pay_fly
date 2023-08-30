@@ -10,7 +10,8 @@ import { Tabs, TabsProps } from 'antd';
 import classNames from 'classnames';
 import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import * as _ from "lodash";
+import _ from 'lodash';
+
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AppDispatch } from '@/states/store';
 import { resetStateBuild } from '@/states/buildChatBot/buildChatBot.slice';
