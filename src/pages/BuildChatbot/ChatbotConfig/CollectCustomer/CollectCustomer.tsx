@@ -4,8 +4,6 @@ import { Checkbox } from 'antd';
 import { RiDeleteBinLine } from 'react-icons/ri';
 import React from 'react';
 import { CustomField } from '@/repository/buildChatBot/type';
-import _ from 'lodash';
-
 interface CollectCustomerProps {
   email: boolean;
   setEmail: (value: boolean) => void;
@@ -106,12 +104,12 @@ const CollectCustomer: React.FC<CollectCustomerProps> = ({
         {custom?.length ? (
           custom.map((item, idx) => {
             return (
-              <div className="flex items-center mt-[12px]">
+              <div className="flex items-center mt-[12px]" key={idx}>
                 <input
                   type="text"
                   value={item?.key}
                   onChange={(e) => {
-                    const newCustomValue = _.cloneDeep(custom);
+                    const newCustomValue = Array.from(custom);
                     newCustomValue[idx].key = e.target.value;
                     setCustom(newCustomValue);
                   }}
@@ -121,7 +119,7 @@ const CollectCustomer: React.FC<CollectCustomerProps> = ({
                   size={18}
                   color="#F44336"
                   onClick={() => {
-                    const newCustomValue = _.cloneDeep(custom);
+                    const newCustomValue = Array.from(custom);
                     newCustomValue.splice(idx, 1);
                     setCustom(newCustomValue);
                   }}

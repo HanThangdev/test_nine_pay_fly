@@ -10,11 +10,11 @@ import { Tabs, TabsProps } from 'antd';
 import classNames from 'classnames';
 import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import _ from 'lodash';
 
-import { useLocation, useNavigate } from 'react-router-dom';
-import { AppDispatch } from '@/states/store';
+import { useLocation } from 'react-router-dom';
+import { AppDispatch, RootState } from '@/states/store';
 import { resetStateBuild } from '@/states/buildChatBot/buildChatBot.slice';
+import { isEmptyObjectOrArray } from '@/utils/utils';
 
 const items: TabsProps['items'] = [
   {
@@ -45,7 +45,7 @@ const items: TabsProps['items'] = [
 ];
 
 const BuildChatbot = () => {
-  const { activeTab, data } = useSelector((state: any) => state.buildChatBot);
+  const { activeTab, data } = useSelector((state: RootState) => state.buildChatBot);
   const location = useLocation();
   const dispatch = useDispatch<AppDispatch>();
   const [activeKey, setActiveKey] = useState<string>(items[0].key);
@@ -64,7 +64,7 @@ const BuildChatbot = () => {
   }, [location]);
 
   const listTab = useMemo(() => {
-    return !!_.isEmpty(data) ? items.map((item, index) => ( index != 0  ? { ...item, disabled: true } : item)) : items
+    return !!isEmptyObjectOrArray(data) ? items.map((item, index) => ( index != 0  ? { ...item, disabled: true } : item)) : items
   },[data])
 
   const onChange = (key: string) => {
