@@ -8,6 +8,10 @@ export interface BotPayload {
   collect_customer_info: any;
 }
 
+export interface CustomField {
+  key: string,
+}
+
 export interface BotDataResponse {
   user_id: number;
   bot_name: string;

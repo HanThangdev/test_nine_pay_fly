@@ -53,7 +53,7 @@ const BotConfig: React.FC<BotConfigProps> = ({ botName, setBotName, caseStudy, s
         <p className="w-[240px] flex gap-x-[10px] font-bold items-center">
           Select Casestudy <AiOutlineQuestionCircle size={18} color="#E77964"/>
         </p>
-        <select value={caseStudy} onChange={(e) => setCaseStudy(e.target.value)}>
+        <select value={caseStudy} onChange={(e) => setCaseStudy(e.target.value)} className="h-[41px] w-[calc(100%-240px)] rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none">
           {options.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}
@@ -83,7 +83,7 @@ const BotConfig: React.FC<BotConfigProps> = ({ botName, setBotName, caseStudy, s
           <button
             onClick={() => setVisibility('Public')}
             className={classNames(
-              'text-[15px] gap-x-[11px] h-[41px] w-[139px] rounded-[10px] flex items-center justify-center bg-[#E8E9F4] text-[#01058A]',
+              'text-[15px] gap-x-[11px] h-[41px] w-[145px] rounded-[10px] flex items-center justify-center bg-[#E8E9F4] text-[#01058A]',
               {
                 '!bg-[#4AC1FF] font-bold border-none text-white':
                   visibility === 'Public',
@@ -96,7 +96,7 @@ const BotConfig: React.FC<BotConfigProps> = ({ botName, setBotName, caseStudy, s
           <button
             onClick={() => setVisibility('Private')}
             className={classNames(
-              'text-[15px] gap-x-[11px] h-[41px] w-[139px] rounded-[10px] flex items-center justify-center bg-[#E8E9F4] text-[#01058A]',
+              'text-[15px] gap-x-[11px] h-[41px] w-[145px] rounded-[10px] flex items-center justify-center bg-[#E8E9F4] text-[#01058A]',
               {
                 '!bg-[#4AC1FF] font-bold border-none text-white':
                   visibility === 'Private',

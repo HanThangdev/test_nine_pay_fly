@@ -1,3 +1,4 @@
+import { notification } from 'antd';
 import axios, {
   AxiosError,
   type AxiosInstance,
@@ -55,6 +56,10 @@ class Http {
         if (error.response?.status === HttpStatusCode.Unauthorized) {
           const cookies = new Cookies();
           cookies.remove('access_token', { path: '/auth/signin' });
+          notification.warning({
+            message: 'Your Token Expired, Please Login',
+            duration: 2
+        }); 
         }
 
         return Promise.reject(error);
