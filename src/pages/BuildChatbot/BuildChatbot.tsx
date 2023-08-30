@@ -8,6 +8,12 @@ import Cookies from 'universal-cookie';
 
 import { Tabs, TabsProps } from 'antd';
 import classNames from 'classnames';
+import { useEffect, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import * as _ from "lodash";
+import { useLocation, useNavigate } from 'react-router-dom';
+import { AppDispatch } from '@/states/store';
+import { resetStateBuild } from '@/states/buildChatBot/buildChatBot.slice';
 
 const items: TabsProps['items'] = [
   {
@@ -38,17 +44,40 @@ const items: TabsProps['items'] = [
 ];
 
 const BuildChatbot = () => {
+  const { activeTab, data } = useSelector((state: any) => state.buildChatBot);
+  const location = useLocation();
+  const dispatch = useDispatch<AppDispatch>();
+  const [activeKey, setActiveKey] = useState<string>(items[0].key);
   const cookies = new Cookies();
   const token = cookies.get('access_token');
   if (Boolean(token) === false) {
     window.location.replace('/auth/signin');
   }
+
+  useEffect(() => {
+    setActiveKey(activeTab || items[0].key)
+  },[activeTab])
+
+  useEffect(() => {
+    dispatch(resetStateBuild())
+  }, [location]);
+
+  const listTab = useMemo(() => {
+    return !!_.isEmpty(data) ? items.map((item, index) => ( index != 0  ? { ...item, disabled: true } : item)) : items
+  },[data])
+
+  const onChange = (key: string) => {
+    setActiveKey(key);
+  };
+
   return (
     <div className="flex">
       <Tabs
         id="Chatbot-Tabs"
         defaultActiveKey="overview"
-        items={items}
+        items={listTab}
+        activeKey={activeKey}
+        onChange={onChange}
         className={classNames('Chatbot-tabs flex-auto flex', 'box-border')}
       />
     </div>

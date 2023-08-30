@@ -39,7 +39,7 @@
 }
 
 .Bog-config .ant-radio-button-wrapper {
-  @apply text-[15px] mr-[30px] h-[41px] w-[139px] rounded-[10px] flex items-center justify-center bg-[#E8E9F4] text-[#01058A];
+  @apply text-[15px] mr-[30px] h-[41px] w-[145px] rounded-[10px] flex items-center justify-center bg-[#E8E9F4] text-[#01058A];
 }
 
 .Bog-config .ant-radio-button-wrapper:nth-child(3) {

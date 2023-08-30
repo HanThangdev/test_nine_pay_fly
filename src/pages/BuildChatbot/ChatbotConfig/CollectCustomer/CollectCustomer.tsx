@@ -2,7 +2,9 @@ import classNames from 'classnames';
 import IconCollectCustomer from '@/components/IconCollectCustomer/IconCollectCustomer';
 import { Checkbox } from 'antd';
 import { RiDeleteBinLine } from 'react-icons/ri';
-import React from "react";
+import React from 'react';
+import { CustomField } from '@/repository/buildChatBot/type';
+import _ from 'lodash';
 
 interface CollectCustomerProps {
   email: boolean;
@@ -11,15 +13,24 @@ interface CollectCustomerProps {
   setName: (value: boolean) => void;
   phone: boolean;
   setPhone: (value: boolean) => void;
-  custom: boolean;
-  setCustom: (value: boolean) => void;
+  custom: CustomField[];
+  setCustom: (value: CustomField[]) => void;
   value: string;
   setValue: (value: string) => void;
-  field: string;
-  setField: (value: string) => void;
 }
 
-const CollectCustomer: React.FC<CollectCustomerProps> = ({ email, setEmail, name, setName, phone, setPhone, custom, setCustom, value, setValue, field, setField }) => {
+const CollectCustomer: React.FC<CollectCustomerProps> = ({
+  email,
+  setEmail,
+  name,
+  setName,
+  phone,
+  setPhone,
+  custom,
+  setCustom,
+  value,
+  setValue,
+}) => {
   return (
     <div
       className={classNames(
@@ -36,12 +47,21 @@ const CollectCustomer: React.FC<CollectCustomerProps> = ({ email, setEmail, name
       </p>
       <div className="text-[15px] mt-[20px] flex gap-x-[70px] items-center">
         <div className="flex gap-x-[30px]">
-          <Checkbox onClick={() => setEmail(!email)}>Email</Checkbox>
-          <Checkbox onClick={() => setName(!name)}>Name</Checkbox>
-          <Checkbox onClick={() => setPhone(!phone)}>Phone</Checkbox>
+          <Checkbox onClick={() => setEmail(!email)} checked={!!email}>
+            Email
+          </Checkbox>
+          <Checkbox onClick={() => setName(!name)} checked={!!name}>
+            Name
+          </Checkbox>
+          <Checkbox onClick={() => setPhone(!phone)} checked={!!phone}>
+            Phone
+          </Checkbox>
         </div>
         <button
-          onClick={() => setCustom(true)}
+          onClick={() =>
+            custom.length < 2 &&
+            setCustom([...custom, { key: 'Custom field' }])
+          }
           className="w-[150px] h-[43px] bg-[#E8E9F4] text-[#01058A] rounded-[10px] text-[13px] font-bold justify-cente"
         >
           Custom field
@@ -52,6 +72,7 @@ const CollectCustomer: React.FC<CollectCustomerProps> = ({ email, setEmail, name
           Form title
         </p>
         <input
+          disabled
           type="text"
           placeholder="Let us know how to contact you"
           value={value}
@@ -60,6 +81,7 @@ const CollectCustomer: React.FC<CollectCustomerProps> = ({ email, setEmail, name
         />
         {email && (
           <input
+            disabled
             type="text"
             placeholder="Email"
             className="h-[41px] mt-[12px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
@@ -67,6 +89,7 @@ const CollectCustomer: React.FC<CollectCustomerProps> = ({ email, setEmail, name
         )}
         {name && (
           <input
+            disabled
             type="text"
             placeholder="Name"
             className="h-[41px] mt-[12px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
@@ -74,27 +97,44 @@ const CollectCustomer: React.FC<CollectCustomerProps> = ({ email, setEmail, name
         )}
         {phone && (
           <input
+            disabled
             type="text"
             placeholder="Phone"
             className="h-[41px] mt-[12px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
           />
         )}
-        {custom && (
-          <div className="flex items-center mt-[12px]">
-            <input
-              type="text"
-              value={field}
-              onChange={(e) => setField(e.target.value)}
-              className="h-[41px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
-            />
-            <RiDeleteBinLine
-              size={18}
-              color="#F44336"
-              onClick={() => setCustom(false)}
-              style={{ position: 'absolute', right: '5px', cursor: 'pointer' }}
-            />
-          </div>
-        )}
+        {custom?.length ? (
+          custom.map((item, idx) => {
+            return (
+              <div className="flex items-center mt-[12px]">
+                <input
+                  type="text"
+                  value={item?.key}
+                  onChange={(e) => {
+                    const newCustomValue = _.cloneDeep(custom);
+                    newCustomValue[idx].key = e.target.value;
+                    setCustom(newCustomValue);
+                  }}
+                  className="h-[41px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
+                />
+                <RiDeleteBinLine
+                  size={18}
+                  color="#F44336"
+                  onClick={() => {
+                    const newCustomValue = _.cloneDeep(custom);
+                    newCustomValue.splice(idx, 1);
+                    setCustom(newCustomValue);
+                  }}
+                  style={{
+                    position: 'absolute',
+                    right: '5px',
+                    cursor: 'pointer',
+                  }}
+                />
+              </div>
+            );
+          })
+        ) : <></>}
       </div>
     </div>
   );

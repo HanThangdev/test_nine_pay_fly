@@ -1,14 +1,21 @@
 import profileState, { useProfileState } from '@/states/profile';
-import { BotPayload } from '@/repository/buildbot/type';
+import { BotPayload, CustomField } from '@/repository/buildChatBot/type';
 import React, { useState } from 'react';
 import BotConfig from "./BotConfig";
 import Prompt from "./Prompt";
 import CollectCustomer from "./CollectCustomer";
 import {notification} from "antd";
-import botRepository from "@/repository/buildbot";
+import { createBotTransaction } from '@/repository/buildChatBot';
+import { useDispatch } from "react-redux";
+import { AppDispatch } from '@/states/store';
+import { API_STATUS, KEY_TAB_BUILD_CHAT_BOT } from '@/\bconstants';
+import { setActiveTab } from '@/states/buildChatBot/buildChatBot.slice';
 
 
 const ChatbotConfig = () => {
+
+  const dispatch = useDispatch<AppDispatch>();
+
   const { data: profile } = useProfileState(profileState);
   console.log(profile);
 
@@ -48,12 +55,12 @@ const ChatbotConfig = () => {
   );
 
   // CollectCustomer variables
-  const [email, setEmail] = useState(false);
-  const [name, setName] = useState(false);
+  const [email, setEmail] = useState(true);
+  const [name, setName] = useState(true);
   const [phone, setPhone] = useState(false);
-  const [custom, setCustom] = useState(false);
+  const [custom, setCustom] = useState<CustomField[]>([]);
   const [value, setValue] = useState('Let us know how to contact you');
-  const [field, setField] = useState('Custom field');
+  // const [field, setField] = useState('Custom field');
 
   const onSubmit = async () => {
     if (loading) {
@@ -80,7 +87,16 @@ const ChatbotConfig = () => {
     setLoading(true);
 
     try {
-      await botRepository.createBot(createBotPayload);
+      if(!botName){
+        throw {message: "Name chat bot is required"}
+      }
+      // await botRepository.createBot(createBotPayload);
+      const { meta } = await dispatch(createBotTransaction(createBotPayload)) 
+
+      if(meta.requestStatus === API_STATUS.REJECTED){
+        return;
+      }
+      dispatch(setActiveTab(KEY_TAB_BUILD_CHAT_BOT.IMPORT_DATA));
       notification.success({
         message: 'Create bot successfully.',
       });
@@ -98,7 +114,7 @@ const ChatbotConfig = () => {
     <>
       <BotConfig botName={botName} setBotName={setBotName} caseStudy={caseStudy} setCaseStudy={setCaseStudy} model={model} setModel={setModel} visibility={visibility} setVisibility={setVisibility} options={options}/>
       <Prompt creativity={creativity} setCreativity={setCreativity} dropdownOpen={dropdownOpen} setDropdownOpen={setDropdownOpen} rules={rules} setRules={setRules} value={promptExample} setValue={setPromptExample}/>
-      <CollectCustomer email={email} setEmail={setEmail} name={name} setName={setName} phone={phone} setPhone={setPhone} custom={custom} setCustom={setCustom} value={value} setValue={setValue} field={field} setField={setField}/>
+      <CollectCustomer email={email} setEmail={setEmail} name={name} setName={setName} phone={phone} setPhone={setPhone} custom={custom} setCustom={setCustom} value={value} setValue={setValue}/>
       <div className="flex justify-end">
           <button onClick={onSubmit} className="w-[150px] mt-[20px] h-[43px] bg-[#4AC1FF] text-white rounded-[10px] text-[13px] font-bold justify-cente">
             Create
