@@ -1,4 +1,3 @@
-'use client';
 import { notification } from 'antd';
 import authRepository from '../../repository/auth';
 import Header from './Header';
