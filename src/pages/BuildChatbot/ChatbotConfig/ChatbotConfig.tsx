@@ -17,7 +17,6 @@ const ChatbotConfig = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const { data: profile } = useProfileState(profileState);
-  console.log(profile);
 
   const options = [
     {

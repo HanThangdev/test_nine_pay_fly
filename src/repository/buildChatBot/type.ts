@@ -8,6 +8,13 @@ export interface BotPayload {
   collect_customer_info: any;
 }
 
+export interface ScrapingURLPayload {
+  bot_id: string;
+  user_id: string;
+  scrape_url: string;
+  scrape_type: number;
+}
+
 export interface CustomField {
   key: string,
 }

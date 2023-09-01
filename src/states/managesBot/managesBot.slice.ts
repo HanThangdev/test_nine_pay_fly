@@ -14,7 +14,6 @@ export const buildChatBotSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(createBotTransaction.pending, (state) => state);
     builder.addCase(createBotTransaction.fulfilled, (state, action) => {
-      console.log(state, action);
       state.data = action.payload.data
       return state;
     }

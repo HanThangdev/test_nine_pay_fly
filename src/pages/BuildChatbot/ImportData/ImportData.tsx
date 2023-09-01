@@ -6,14 +6,14 @@ import QuestionAnswerClient from './Q&A';
 
 const items: TabsProps['items'] = [
   {
-    key: 'files',
-    label: `Files`,
-    children: <FilesClient />,
-  },
-  {
     key: 'website',
     label: `Website`,
     children: <WebsiteClient />,
+  },
+  {
+    key: 'files',
+    label: `Files`,
+    children: <FilesClient />,
   },
   {
     key: 'Q&A',

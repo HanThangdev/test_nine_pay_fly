@@ -9,7 +9,7 @@ import Cookies from 'universal-cookie';
 
 const configs: CreateAxiosDefaults = {
   baseURL: new URL(import.meta.env.VITE_API_URL).toString(),
-  timeout: 50000,
+  // timeout: 50000,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -43,6 +43,18 @@ class Http {
           cookies.remove('access_token', { path: '/' });
         } else {
           const { url } = response.config;
+          if(url == '/api/chat/get-streaming-response' || url == '/api/scraping/url'){
+            console.log("vaoday", response)
+            response.data.on('data', (chunk: any) => {
+              // Handle the data chunk as it arrives
+              console.log('Received chunk:', chunk.toString());
+            });
+          
+            response.data.on('end', () => {
+              // All data has been received
+              console.log('Streaming completed.');
+            });
+          }
           if (url === `/token`) {
             const data = response.data.data;
             const cookies = new Cookies();

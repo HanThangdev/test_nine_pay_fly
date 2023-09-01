@@ -23,3 +23,15 @@ export function isEmptyObjectOrArray(data: any) {
   }
   return !((Array.isArray(data) && data.length > 0) || (typeof data === 'object' && Object.keys(data).length > 0));
 }
+
+export function convertArrayMessage(message: any) {
+  const resultArray = [];
+
+  for (let i = 1; i <= message.length; i++) {
+    const subString = message.slice(0, i);
+    resultArray.push(subString);
+    resultArray.push(10);
+  }
+  
+  return resultArray
+}

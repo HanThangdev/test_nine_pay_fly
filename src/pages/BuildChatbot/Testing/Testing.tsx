@@ -2,27 +2,55 @@ import classNames from 'classnames';
 import IconInterface from '@/components/IconInterface/IconInterface';
 import IconReload from '@/components/IconReload/IconReload';
 import { AiFillRightCircle } from 'react-icons/ai';
-import React, {useState} from "react";
-import testingBotRepository from "@/repository/testingbot";
-import {notification} from "antd";
+import React, { useState } from 'react';
+import testingBotRepository, {
+  getStreamingResponse,
+} from '@/repository/testingbot';
+import { notification } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import { buildChatBotState } from '@/states/buildChatBot/type';
+import { GetStreamingResponseRequest } from '@/repository/testingbot/type';
+import { AppDispatch } from '@/states/store';
+import { RootState } from '@/states/store';
+import { API_STATUS } from '@/\bconstants';
+import { TypeAnimation } from 'react-type-animation';
+import { convertArrayMessage } from '@/utils/utils';
 const Testing = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { data } = useSelector((state: RootState) => state.buildChatBot);
   const [history, setHistory] = useState<Array<string>>([]);
   const [loading, setLoading] = useState<boolean>();
   const [message, setMessage] = useState<string>('');
-
+  const LOADING_TEXT = "Generating..."
   const onSendMessage = async () => {
     if (loading) {
-      return
+      return;
     }
 
     setLoading(true);
-    setHistory(history => [...history, message]);
+    setHistory((history) => [...history, message, LOADING_TEXT]);
     setMessage('');
 
+    const { id, user_id  } = data
+    const streamingPayload : GetStreamingResponseRequest = {
+      bot_id: id,
+      message,
+      user_id,
+      session_id: 'e1babe89-3910-48e1-9790-0debfb0f6928',
+    }
     try {
-      const response = await testingBotRepository.getNormalResponse(message);
+      const { meta, payload  } = await dispatch<any>(
+        getStreamingResponse(streamingPayload),
+      );
+
+      if(meta.requestStatus == API_STATUS.REJECTED){
+        return
+      }
       setTimeout(() => {}, 500);
-      setHistory(history => [...history, response.data.data]);
+      setHistory((history) => {
+        const newHistory = Array.from(history).splice(0, history.length - 1)
+        return [...newHistory, payload]
+      });
     } catch (error: any) {
       notification.error({
         message: error?.response?.data.errors ?? error?.message,
@@ -33,22 +61,21 @@ const Testing = () => {
 
   const getDivForResponse = (index: number, message: string) => {
     if (index % 2 === 0) {
-        return (
-          <div className="w-full justify-end flex">
-            <p className="bg-[#D1EFFF] p-2 rounded-t-lg rounded-bl-lg w-fit">
-              {message}
-            </p>
-          </div>
-        )
-    }
-    else {
+      return (
+        <div className="w-full justify-end flex">
+          <p className="bg-[#D1EFFF] p-2 rounded-t-lg rounded-bl-lg w-fit">
+            {message}
+          </p>
+        </div>
+      );
+    } else {
       return (
         <div className="bg-[#F1F7FF] p-2 rounded-t-lg rounded-br-lg w-fit">
           {message}
         </div>
-      )
+      );
     }
-  }
+  };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
@@ -71,7 +98,10 @@ const Testing = () => {
         </p>
         <IconReload />
       </div>
-      <div className="py-[37px] px-[27px] gap-y-[10px] grid overflow-y-auto" style={{ maxHeight: 'calc(100% - 230px)' }}>
+      <div
+        className="py-[37px] px-[27px] gap-y-[10px] grid overflow-y-auto"
+        style={{ maxHeight: 'calc(100% - 230px)' }}
+      >
         {history.map((message, index) => getDivForResponse(index, message))}
       </div>
       <div className="absolute bottom-0 w-full">
@@ -88,7 +118,7 @@ const Testing = () => {
             onKeyDown={handleKeyDown}
             className="h-[47px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
           />
-          <button className="mb-0 w-[40px]" onClick={onSendMessage}>
+          <button className="mb-0 w-[40px]" onClick={onSendMessage} type="submit">
             <AiFillRightCircle size={40} color="#4AC1FF" />
           </button>
         </div>
