@@ -3,18 +3,17 @@ import IconInterface from '@/components/IconInterface/IconInterface';
 import IconReload from '@/components/IconReload/IconReload';
 import { AiFillRightCircle } from 'react-icons/ai';
 import React, { useState } from 'react';
-import testingBotRepository, {
+import  {
   getStreamingResponse,
 } from '@/repository/testingbot';
 import { notification } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { buildChatBotState } from '@/states/buildChatBot/type';
 import { GetStreamingResponseRequest } from '@/repository/testingbot/type';
 import { AppDispatch } from '@/states/store';
 import { RootState } from '@/states/store';
-import { API_STATUS } from '@/\bconstants';
+import { API_STATUS } from '@/constants';
 import { TypeAnimation } from 'react-type-animation';
-import { convertArrayMessage } from '@/utils/utils';
+
 const Testing = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { data } = useSelector((state: RootState) => state.buildChatBot);

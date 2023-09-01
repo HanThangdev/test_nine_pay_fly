@@ -1,6 +1,13 @@
-export interface buildChatBotState {
+export interface BuildChatBotState {
   data: any | null;
   loading: boolean;
   activeTab: string;
-  listIncludesLink: string[]
+  listIncludesLink: DataFetchLink[]
+  fetchLink: DataFetchLink
+}
+
+export interface DataFetchLink {
+  num_token: number,
+  progress: number,
+  url: string
 }

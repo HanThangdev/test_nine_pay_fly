@@ -4,6 +4,8 @@ import http from '..';
 import { SuccessResponse } from '../type';
 import { BotPayload, BotDataResponse, ScrapingURLPayload } from './type';
 import Cookies from 'universal-cookie';
+import store from '@/states/store';
+import { loadFetchLink } from '@/states/buildChatBot/buildChatBot.slice';
 
 
 export const createBotTransaction = createAsyncThunk(
@@ -21,10 +23,11 @@ export const createBotTransaction = createAsyncThunk(
 
 export const scrapingURLTransaction = createAsyncThunk(
   "transaction/scrapingURLTransaction",
-  async (payload: ScrapingURLPayload, { rejectWithValue }) => {
+  async (params: ScrapingURLPayload, { rejectWithValue }) => {
     const endPoint = "api/scraping/url"
     const cookies = new Cookies();
     const token = cookies.get('access_token');
+    const { setValueProcess, ...payload } = params
   try {
     const response: any = await fetch(new URL(import.meta.env.VITE_API_URL).toString() + endPoint, {
       method: "POST",
@@ -35,9 +38,9 @@ export const scrapingURLTransaction = createAsyncThunk(
       
       body: JSON.stringify(payload),
     });
-    const reader = response.body.getReader();
+    const reader = response.body?.getReader();
     const decoder = new TextDecoder("utf-8");
-    let parsedLines
+    let data;
 
     while (true) {
       const { done, value } = await reader.read();
@@ -47,11 +50,17 @@ export const scrapingURLTransaction = createAsyncThunk(
       }
       // Massage and parse the chunk of data
       const chunk = decoder.decode(value);
-      console.log("chunk", chunk)
+      const lines = chunk.split("\n");
 
-      return parsedLines = chunk  
+      const parsedLines = lines
+      .map((line) => line.replace(/^data: /, "").trim()) // Remove the "data: " prefix
+      .filter((line) => line !== "" && line !== "[DONE]") // Remove empty lines and "[DONE]"
+      .map((line) => {
+        return JSON.parse(line)}); // Parse the JSON string
+        data = parsedLines  
+        setValueProcess(data[0]) ;
     }
-    return parsedLines;
+    return data;
   } catch (error: any) {
     console.log(error)
     return rejectWithValue(error.response.data.error);

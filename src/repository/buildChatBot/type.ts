@@ -13,6 +13,7 @@ export interface ScrapingURLPayload {
   user_id: string;
   scrape_url: string;
   scrape_type: number;
+  setValueProcess: (data:any) => void
 }
 
 export interface CustomField {

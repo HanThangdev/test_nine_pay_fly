@@ -1,15 +1,16 @@
-import { API_STATUS } from '@/\bconstants';
+import { API_STATUS } from '@/constants';
 import { scrapingURLTransaction } from '@/repository/buildChatBot';
 import { ScrapingURLPayload } from '@/repository/buildChatBot/type';
 import store, { AppDispatch, RootState } from '@/states/store';
 import { isEmptyObjectOrArray } from '@/utils/utils';
-import { notification } from 'antd';
+import { Progress, notification } from 'antd';
 import { useMemo, useState } from 'react';
 import { AiOutlineQuestionCircle } from 'react-icons/ai';
 import { RiDeleteBinLine } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
 import { TextLoadingWebsite } from './type';
 import { TypeAnimation } from 'react-type-animation';
+import { DataFetchLink } from '@/states/buildChatBot/type';
 
 const Website = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -17,6 +18,11 @@ const Website = () => {
   const [fullPageUrl, setFullPageUrl] = useState<string>('');
   const [directPageUrl, setDirectPageUrl] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
+  const [valueProcess, setValueProcess] = useState<DataFetchLink>({
+    num_token: 0,
+    progress: 0,
+    url: ''
+  });
   const [textLoading, setTextLoading] = useState<TextLoadingWebsite>({
     direct_page: '',
     full_page: ''
@@ -25,13 +31,11 @@ const Website = () => {
     FULL_PAGE: 1,
     DIRECT_PAGE: 2
   }
-
   const onFetchLink = async(scrapeType: number) => {
 
     if (loading) {
       return;
     }
-
 
     setLoading(true);
     const valueLoading = Object.assign(textLoading)
@@ -43,7 +47,8 @@ const Website = () => {
       bot_id: id,
       user_id,
       scrape_url: scrapeType === SCRAPE_TYPE.FULL_PAGE ? fullPageUrl : directPageUrl,
-      scrape_type: scrapeType
+      scrape_type: scrapeType,
+      setValueProcess
     }
 
     try {
@@ -54,7 +59,6 @@ const Website = () => {
       if(meta.requestStatus == API_STATUS.REJECTED){
         return
       }
-
     } catch (error: any) {
       notification.error({
         message: error?.response?.data.errors ?? error?.message,
@@ -63,10 +67,24 @@ const Website = () => {
     valueLoading[scrapeType === SCRAPE_TYPE.FULL_PAGE ? "full_page" : "direct_page"] = "";
     setTextLoading(valueLoading)
     setLoading(false);
+    setValueProcess({
+      num_token: 0,
+      progress: 0,
+      url: ''
+    })
+    resetUrl();
   }
 
   const listLink = useMemo(() => listIncludesLink, [listIncludesLink])
-  console.log("listLink", listLink)
+
+  // const onDeletedLink = (index: number) => {
+  //   dispatch(deletedListIncludes(index));
+  // }
+
+  const resetUrl = () => {
+    setFullPageUrl("")
+    setDirectPageUrl("")
+  }
   return (
     <>
       <div>
@@ -75,6 +93,7 @@ const Website = () => {
         </p>
         <div className="flex justify-between gap-x-[21px]">
           <input
+            value={fullPageUrl}
             onChange={(e) => setFullPageUrl(e.target.value)}
             type="text"
             placeholder="Do not respond to content outside the documents provided"
@@ -96,6 +115,7 @@ const Website = () => {
             )}
           </button>
         </div>
+        {!!valueProcess.progress && <Progress className="mt-[10px]" percent={+(valueProcess.progress * 100).toFixed(2)} />}
       </div>
       <div className="flex justify-between gap-x-3 my-6 items-center">
         <div className="bg-[#E7E8F2] h-[1px] w-full"></div>
@@ -109,6 +129,7 @@ const Website = () => {
         </p>
         <div className="flex justify-between gap-x-[21px]">
           <input
+            value={directPageUrl}
             onChange={(e) => setDirectPageUrl(e.target.value)}
             type="text"
             placeholder="https://www.example.com"
@@ -143,11 +164,11 @@ const Website = () => {
                 <input
                   disabled
                   type="text"
-                  value={item}
+                  value={item.url}
                   className="h-[41px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
                 />
                 <div className="flex justify-between w-[150px] items-center">
-                  <p className="mb-0">2000</p>
+                  <p className="mb-0">{item.num_token}</p>
                   <RiDeleteBinLine size={18} color="#F44336" />
                 </div>
               </div>

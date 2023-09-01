@@ -8,7 +8,7 @@ import {notification} from "antd";
 import { createBotTransaction } from '@/repository/buildChatBot';
 import { useDispatch } from "react-redux";
 import { AppDispatch } from '@/states/store';
-import { API_STATUS, KEY_TAB_BUILD_CHAT_BOT } from '@/\bconstants';
+import { API_STATUS, KEY_TAB_BUILD_CHAT_BOT } from '@/constants';
 import { setActiveTab } from '@/states/buildChatBot/buildChatBot.slice';
 
 
