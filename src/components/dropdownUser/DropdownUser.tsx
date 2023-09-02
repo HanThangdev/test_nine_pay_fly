@@ -48,9 +48,9 @@ const DropdownUser = (props: { onLogout: () => void }) => {
           </span>
         </span>
         {dropdownOpen ? (
-          <AiOutlineCaretUp size={18} color='black' />
+          <AiOutlineCaretUp size={18} color="black" />
         ) : (
-          <AiOutlineCaretDown size={18} color='black' />
+          <AiOutlineCaretDown size={18} color="black" />
         )}
       </Link>
 
@@ -63,7 +63,7 @@ const DropdownUser = (props: { onLogout: () => void }) => {
           dropdownOpen === true ? 'block' : 'hidden'
         }`}
       >
-        <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-7.5 dark:border-strokedark">
+        {/* <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-7.5 dark:border-strokedark">
           <li>
             <Link
               to="/profile"
@@ -114,7 +114,7 @@ const DropdownUser = (props: { onLogout: () => void }) => {
               Account Settings
             </Link>
           </li>
-        </ul>
+        </ul> */}
         <div
           onClick={props.onLogout}
           className="flex cursor-pointer items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"

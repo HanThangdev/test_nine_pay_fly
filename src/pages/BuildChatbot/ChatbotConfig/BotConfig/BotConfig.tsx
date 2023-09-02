@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import IconRobot from '@/components/IconRobot/IconRobot';
 import { AiOutlineQuestionCircle } from 'react-icons/ai';
-import { Radio } from 'antd';
+import { Radio, Tooltip } from 'antd';
 import React from 'react';
 import { BiLockOpenAlt, BiLockAlt } from 'react-icons/bi';
 
@@ -28,7 +28,17 @@ interface BotConfigProps {
   options: Option[];
 }
 
-const BotConfig: React.FC<BotConfigProps> = ({ botName, setBotName, caseStudy, setCaseStudy, model, setModel , visibility, setVisibility, options}) => {
+const BotConfig: React.FC<BotConfigProps> = ({
+  botName,
+  setBotName,
+  caseStudy,
+  setCaseStudy,
+  model,
+  setModel,
+  visibility,
+  setVisibility,
+  options,
+}) => {
   return (
     <div
       className={classNames(
@@ -41,19 +51,23 @@ const BotConfig: React.FC<BotConfigProps> = ({ botName, setBotName, caseStudy, s
         Bot Configurations
       </h2>
       <div className="flex text-[15px] mt-[16px] items-center">
-        <p className="w-[240px] font-bold">Name Chatbot</p>
+        <p className="w-[150px] font-bold">Name Chatbot</p>
         <input
           onChange={(e) => setBotName(e.target.value)}
           type="text"
           placeholder=""
-          className="h-[41px] w-[calc(100%-240px)] rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
+          className="h-[41px] w-[calc(100%-150px)] rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
         />
       </div>
       <div className="flex text-[15px] mt-[16px] items-center">
-        <p className="w-[240px] flex gap-x-[10px] font-bold items-center">
-          Select Casestudy <AiOutlineQuestionCircle size={18} color="#E77964"/>
+        <p className="w-[150px] flex gap-x-[10px] font-bold items-center">
+          Select Casestudy
         </p>
-        <select value={caseStudy} onChange={(e) => setCaseStudy(e.target.value)} className="h-[41px] w-[calc(100%-240px)] rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none">
+        <select
+          value={caseStudy}
+          onChange={(e) => setCaseStudy(e.target.value)}
+          className="h-[41px] w-[calc(100%-150px)] rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
+        >
           {options.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}
@@ -62,8 +76,18 @@ const BotConfig: React.FC<BotConfigProps> = ({ botName, setBotName, caseStudy, s
         </select>
       </div>
       <div className="text-[15px] mt-[16px]">
-        <p className="w-[240px] flex gap-x-[10px] font-bold items-center">
-          Model <AiOutlineQuestionCircle size={18} color="#E77964" />
+        <p className="flex gap-x-[10px] font-bold items-center">
+          Model
+          <Tooltip
+            color="#212121"
+            placement="rightTop"
+            overlayStyle={{ whiteSpace: 'pre-line', width: '400px' }}
+            title={
+              'GPT-3.5 is best for general use. It is a good balance of speed and output quality. \n GPT-3.5 turbo-16k is an upgraded version of GPT-3.5 that takes in 4x more context from your documents when generating output. \n GPT-3.5-16k: 8 message credits per message. \n GPT-3.5: 1 message credit per message.'
+            }
+          >
+            <AiOutlineQuestionCircle size={18} color="#E77964" />
+          </Tooltip>
         </p>
         <div className="mt-[13px]">
           <Radio.Group
@@ -77,7 +101,17 @@ const BotConfig: React.FC<BotConfigProps> = ({ botName, setBotName, caseStudy, s
       </div>
       <div className="text-[15px] mt-[16px]">
         <p className="w-[240px] flex gap-x-[10px] font-bold items-center">
-          Visibility <AiOutlineQuestionCircle size={18} color="#E77964" />
+          Visibility
+          <Tooltip
+            color="#212121"
+            placement="rightTop"
+            overlayStyle={{ whiteSpace: 'pre-line', width: '400px' }}
+            title={
+              'Private: No one can access your chatbot except you (your account). \n Public: Anyone with the link can access it on ChatFly.com, and can be embedded on your website.'
+            }
+          >
+            <AiOutlineQuestionCircle size={18} color="#E77964" />
+          </Tooltip>
         </p>
         <div className="mt-[13px] flex gap-x-[30px]">
           <button
@@ -110,7 +144,17 @@ const BotConfig: React.FC<BotConfigProps> = ({ botName, setBotName, caseStudy, s
       </div>
       <div className="text-[15px] mt-[16px]">
         <p className="w-[240px] flex gap-x-[10px] mb-0 font-bold items-center">
-          Rate Limit <AiOutlineQuestionCircle size={18} color="#E77964" />
+          Rate Limit{' '}
+          <Tooltip
+            color="#212121"
+            placement="rightTop"
+            overlayStyle={{ whiteSpace: 'pre-line', width: '400px' }}
+            title={
+              'Limit the number of messages sent from one device on the iframe and chat bubble (this limit will not be applied to you on ChatFly, only on websites for your users to prevent abuse).'
+            }
+          >
+            <AiOutlineQuestionCircle size={18} color="#E77964" />
+          </Tooltip>
         </p>
         <p className="mt-[12px] text-[15px] text-[#A7A7B0]">
           Limit to 100 messages every 1 day.

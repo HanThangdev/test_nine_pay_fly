@@ -81,7 +81,7 @@ const SignIn = () => {
               </h2>
               <p className="text-center mt-4 text-white">
                 Do you have an account yet?{' '}
-                <span className="text-[#4AC1FF]">
+                <span className="text-[19px] text-[#4AC1FF]">
                   <Link to="/auth/signup">Create account</Link>
                 </span>
               </p>
@@ -104,9 +104,13 @@ const SignIn = () => {
                 </div>
 
                 <div>
-                  <label className="mb-2.5 h-[21px] block font-medium text-white">
+                  <label className="mb-1 h-[21px] block font-medium text-white">
                     Password
                   </label>
+                  <p className="text-white text-[14px] mb-2">
+                    Must include at least eight letter, number and special
+                    character
+                  </p>
                   <div className="relative">
                     <input
                       type={showPass ? 'text' : 'password'}
@@ -135,11 +139,7 @@ const SignIn = () => {
                     </span>
                   </div>
                 </div>
-                <p className="text-white text-[15px]">
-                  Must include at least eight letter, number and special
-                  character
-                </p>
-                <div className="my-[32px] flex justify-between">
+                <div className="mb-[32px] flex justify-between">
                   <p className="mb-0 text-white">
                     <Checkbox className="w-[24px] h-[24px] bg-[#D9D9D9"></Checkbox>
                     Remember me

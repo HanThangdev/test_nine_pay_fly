@@ -5,19 +5,49 @@ import IconInterface from '@/components/IconInterface/IconInterface';
 import IconDown from '@/components/IconDown/IconDown';
 
 import { BiSolidFileExport } from 'react-icons/bi';
-import { DatePicker } from 'antd';
+import { DatePicker, Select } from 'antd';
+
 const Conversations = () => {
   return (
     <div
       className={classNames(
         'bg-[#FFF] rounded-[10px] p-6 mt-[6px] py-[22px] px-[29px]',
-        'shadow-[0_0px_4px_0px_rgba(32,32,62,0.16)] Bog-config',
+        'shadow-[0_0px_4px_0px_rgba(32,32,62,0.16)] Conversations',
       )}
     >
       <div className="flex justify-between items-center">
-        <button className="w-[150px] h-[43px] bg-[#E8E9F4] text-[#01058A] rounded-[10px] text-[15px] font-bold justify-cente">
-          Select chatbot
-        </button>
+        <Select
+          showSearch
+          style={{ width: 150 }}
+          placeholder="Select chatbot"
+          optionFilterProp="children"
+          filterOption={(input, option) =>
+            (option?.label ?? '').includes(input)
+          }
+          filterSort={(optionA, optionB) =>
+            (optionA?.label ?? '')
+              .toLowerCase()
+              .localeCompare((optionB?.label ?? '').toLowerCase())
+          }
+          options={[
+            {
+              value: '1',
+              label: 'Chatbot1',
+            },
+            {
+              value: '2',
+              label: 'Chatbot2',
+            },
+            {
+              value: '3',
+              label: 'Chatbot3',
+            },
+            {
+              value: '4',
+              label: 'Chatbot4',
+            },
+          ]}
+        />
         <div className="flex items-center gap-x-3">
           <DatePicker placeholder="From" />
           <p className="mb-0">~</p>

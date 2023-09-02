@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import IconCollectCustomer from '@/components/IconCollectCustomer/IconCollectCustomer';
-import { Checkbox } from 'antd';
+import { Checkbox, Tooltip } from 'antd';
+import { AiOutlineQuestionCircle } from 'react-icons/ai';
 import { RiDeleteBinLine } from 'react-icons/ri';
 import React from 'react';
 import { CustomField } from '@/repository/buildChatBot/type';
@@ -36,9 +37,19 @@ const CollectCustomer: React.FC<CollectCustomerProps> = ({
         'shadow-[0_0px_4px_0px_rgba(32,32,62,0.16)] CollectCustomer mt-[27px]',
       )}
     >
-      <h2 className="text-[20px] text-[#01058A] font-black flex gap-x-3">
+      <h2 className="text-[20px] items-center text-[#01058A] font-black flex gap-x-3">
         <IconCollectCustomer />
         Collect customer info
+        <Tooltip
+          color="#212121"
+          placement="rightTop"
+          overlayStyle={{ whiteSpace: 'pre-line', width: '400px' }}
+          title={
+            'As your users/customers interact with your chatbot, you can collect valuable user information for various purposes with ChatFly built-in data collection form, which will appear within the chat interface.'
+          }
+        >
+          <AiOutlineQuestionCircle size={18} color="#E77964" />
+        </Tooltip>
       </h2>
       <p className="mt-[12px] text-[15px] text-[#A7A7B0]">
         Collect essential information about users
@@ -57,10 +68,9 @@ const CollectCustomer: React.FC<CollectCustomerProps> = ({
         </div>
         <button
           onClick={() =>
-            custom.length < 2 &&
-            setCustom([...custom, { key: 'Custom field' }])
+            custom.length < 2 && setCustom([...custom, { key: 'Custom field' }])
           }
-          className="w-[150px] h-[43px] bg-[#E8E9F4] text-[#01058A] rounded-[10px] text-[13px] font-bold justify-cente"
+          className="w-[150px] h-[43px] bg-[#E8E9F4] text-[#01058A] rounded-[10px] text-[14px] font-bold justify-cente"
         >
           Custom field
         </button>
@@ -132,7 +142,9 @@ const CollectCustomer: React.FC<CollectCustomerProps> = ({
               </div>
             );
           })
-        ) : <></>}
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );

@@ -1,9 +1,9 @@
 import classNames from 'classnames';
 import IconPrompt from '@/components/IconPrompt/IconPrompt';
 import { AiOutlineQuestionCircle } from 'react-icons/ai';
-import { Slider, Switch } from 'antd';
+import { Slider, Switch, Tooltip } from 'antd';
 import React from 'react';
-import { AiOutlineCaretDown, AiOutlineCaretUp } from 'react-icons/ai';
+import { AiOutlineCaretRight, AiOutlineCaretDown } from 'react-icons/ai';
 import { RiDeleteBinLine } from 'react-icons/ri';
 
 interface PromptProps {
@@ -20,7 +20,16 @@ interface PromptProps {
   setValue: (newValue: string) => void;
 }
 
-const Prompt: React.FC<PromptProps> = ({ creativity, setCreativity , dropdownOpen, setDropdownOpen, rules, setRules, value, setValue}) => {
+const Prompt: React.FC<PromptProps> = ({
+  creativity,
+  setCreativity,
+  dropdownOpen,
+  setDropdownOpen,
+  rules,
+  setRules,
+  value,
+  setValue,
+}) => {
   const addItem = () => {
     setRules([
       ...rules,
@@ -47,11 +56,11 @@ const Prompt: React.FC<PromptProps> = ({ creativity, setCreativity , dropdownOpe
       >
         <IconPrompt />
         Prompt
-        <span className="mt-[5px]">
+        <span className="mt-[2px]">
           {dropdownOpen ? (
-            <AiOutlineCaretUp size={18} color="black" />
-          ) : (
             <AiOutlineCaretDown size={18} color="black" />
+          ) : (
+            <AiOutlineCaretRight size={18} color="black" />
           )}
         </span>
       </h2>
@@ -61,24 +70,44 @@ const Prompt: React.FC<PromptProps> = ({ creativity, setCreativity , dropdownOpe
             <p className="mt-[12px] text-[15px] text-[#A7A7B0]">
               Guiding instructions for AI's intelligent responses
             </p>
-            <button className="w-[150px] h-[43px] bg-[#E8E9F4] text-[#01058A] rounded-[10px] text-[13px] font-bold justify-cente">
+            <button className="w-[150px] h-[43px] bg-[#E8E9F4] text-[#01058A] rounded-[10px] text-[14px] font-bold justify-cente">
               Prompt examples
             </button>
           </div>
           <div className="text-[15px] mt-[16px]">
             <p className="w-[240px] flex gap-x-[10px] font-bold items-center">
-              Base Prompt <AiOutlineQuestionCircle size={18} color="#E77964" />
+              Base Prompt{' '}
+              <Tooltip
+                color="#212121"
+                placement="rightTop"
+                overlayStyle={{ whiteSpace: 'pre-line', width: '400px' }}
+                title={
+                  'The prompt helps the AI understand what you want and how to respond. It guides the conversation and ensures relevant and coherent answers.'
+                }
+              >
+                <AiOutlineQuestionCircle size={18} color="#E77964" />
+              </Tooltip>
             </p>
             <textarea
               value={value}
               onChange={(e) => setValue(e.target.value)}
-              className="w-full text-[15px] px-[20px] focus-visible:outline-none focus:border-[#DCDEED] py-[11px] border-[1px] border-[#DCDEED] mt-[11px] rounded-[5px]"
+              className="w-full h-[120px] !h-min-[150px] text-[15px] px-[20px] focus-visible:outline-none focus:border-[#DCDEED] py-[11px] border-[1px] border-[#DCDEED] mt-[11px] rounded-[5px]"
             />
           </div>
 
           <div className="text-[15px] mt-[16px]">
             <p className="w-[240px] flex gap-x-[10px] font-bold items-center">
-              Creativity <AiOutlineQuestionCircle size={18} color="#E77964" />
+              Creativity{' '}
+              <Tooltip
+                color="#212121"
+                placement="rightTop"
+                overlayStyle={{ whiteSpace: 'pre-line', width: '400px' }}
+                title={
+                  'A higher temperature value and nearly to More Creative, allows for more randomness and creativity in the responses. This can lead to more diverse and unexpected answers. On the other hand, a lower temperature value, nearly to More Focused, produces deterministic responses, making them more conservative and predictable.'
+                }
+              >
+                <AiOutlineQuestionCircle size={18} color="#E77964" />
+              </Tooltip>
             </p>
             <Slider
               defaultValue={0}
@@ -95,13 +124,32 @@ const Prompt: React.FC<PromptProps> = ({ creativity, setCreativity , dropdownOpe
           <div className="text-[15px] mt-[16px]">
             <p className="w-[240px] flex gap-x-[10px] mb-0 font-bold items-center">
               Enable In-text Citations{' '}
-              <AiOutlineQuestionCircle size={18} color="#E77964" />
+              <Tooltip
+                color="#212121"
+                placement="rightTop"
+                overlayStyle={{ whiteSpace: 'pre-line', width: '400px' }}
+                title={
+                  'Our AI bot credits sources and includes links to specific information it used from your trained data, promoting a reliable and informed conversation.'
+                }
+              >
+                <AiOutlineQuestionCircle size={18} color="#E77964" />
+              </Tooltip>
             </p>
             <Switch size="small" className="mt-[9px]" />
           </div>
           <div className="text-[15px] mt-[16px]">
             <p className="w-[240px] flex gap-x-[10px] mb-0 font-bold items-center">
-              Rules <AiOutlineQuestionCircle size={18} color="#E77964" />
+              Rules{' '}
+              <Tooltip
+                color="#212121"
+                placement="rightTop"
+                overlayStyle={{ whiteSpace: 'pre-line', width: '400px' }}
+                title={
+                  'The rules help the AI understand an accepted principle or instruction that tells Chatbot what It is allowed or is not allowed to respon.'
+                }
+              >
+                <AiOutlineQuestionCircle size={18} color="#E77964" />
+              </Tooltip>
             </p>
             <div className="flex items-center justify-between gap-x-4">
               <input

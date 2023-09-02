@@ -51,7 +51,7 @@ const Header = (props: {
             </Link>
           </div>
           <div className="flex items-center">
-            <div className="hidden sm:block">
+            {/* <div className="hidden sm:block">
               <form
                 action="https://formbold.com/s/unique_form_id"
                 method="POST"
@@ -87,19 +87,18 @@ const Header = (props: {
                   </button>
                 </div>
               </form>
-            </div>
+            </div> */}
 
             <div className="flex items-center gap-3 2xsm:gap-4">
-              <ul className="flex items-center mb-0">
-                {/* <!-- Notification Menu Area --> */}
-                <DropdownNotification />
-                {/* <!-- Notification Menu Area --> */}
-              </ul>
-              <MdLanguage size={24} />
+              {/* <ul className="flex items-center mb-0"> */}
+              {/* <!-- Notification Menu Area --> */}
+              {/* <DropdownNotification /> */}
+              {/* <!-- Notification Menu Area --> */}
+              {/* </ul> */}
 
-              <span className="h-[43px] w-[43px] rounded-full">
+              {/* <span className="h-[43px] w-[43px] rounded-full">
                 <img src={UserOne} alt="User" />
-              </span>
+              </span> */}
             </div>
           </div>
         </div>
@@ -107,7 +106,14 @@ const Header = (props: {
           <p className="text-[18px] mb-0 font-extrabold bg-[#E8E9F4] text-[#01058A] py-2 px-[22px] rounded-[10px]">
             UPGRADE
           </p>
-          <div className="flex gap-x-[40px]">
+          <div className="flex gap-x-[40px] items-center">
+            <p className="flex mb-0 items-center">
+              <MdLanguage size={24} />
+              <span className="block text-sm ml-[15px] font-medium text-black dark:text-white">
+                Language
+              </span>
+            </p>
+
             <p className="flex mb-0">
               <AiFillQuestionCircle size={20} color="black" />
               <span className="block text-sm ml-[15px] font-medium text-black dark:text-white">

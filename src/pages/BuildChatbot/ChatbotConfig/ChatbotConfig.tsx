@@ -1,28 +1,22 @@
 import profileState, { useProfileState } from '@/states/profile';
 import { BotPayload, CustomField } from '@/repository/buildChatBot/type';
 import React, { useState } from 'react';
-import BotConfig from "./BotConfig";
-import Prompt from "./Prompt";
-import CollectCustomer from "./CollectCustomer";
-import {notification} from "antd";
+import BotConfig from './BotConfig';
+import Prompt from './Prompt';
+import CollectCustomer from './CollectCustomer';
+import { notification } from 'antd';
 import { createBotTransaction } from '@/repository/buildChatBot';
-import { useDispatch } from "react-redux";
+import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/states/store';
 import { API_STATUS, KEY_TAB_BUILD_CHAT_BOT } from '@/constants';
 import { setActiveTab } from '@/states/buildChatBot/buildChatBot.slice';
 
-
 const ChatbotConfig = () => {
-
   const dispatch = useDispatch<AppDispatch>();
 
   const { data: profile } = useProfileState(profileState);
 
   const options = [
-    {
-      value: '1',
-      label: 'Custom For Business',
-    },
     {
       value: '2',
       label: 'Customer Support',
@@ -34,6 +28,10 @@ const ChatbotConfig = () => {
     {
       value: '4',
       label: 'Teaching Education',
+    },
+    {
+      value: '1',
+      label: 'Other',
     },
   ];
 
@@ -63,7 +61,7 @@ const ChatbotConfig = () => {
 
   const onSubmit = async () => {
     if (loading) {
-      return
+      return;
     }
 
     const resultObject: Record<string, boolean> = custom.reduce(
@@ -71,7 +69,7 @@ const ChatbotConfig = () => {
         acc[item.key] = true;
         return acc;
       },
-      {}
+      {},
     );
 
     const createBotPayload: BotPayload = {
@@ -81,24 +79,24 @@ const ChatbotConfig = () => {
         email: email,
         name: name,
         phone: phone,
-        ...resultObject
+        ...resultObject,
       },
       rules: rules,
       gpt_model_name: model,
       temperature: creativity,
       custom_prompt: promptExample,
-    }
+    };
 
     setLoading(true);
 
     try {
-      if(!botName){
-        throw {message: "Name chat bot is required"}
+      if (!botName) {
+        throw { message: 'Name chat bot is required' };
       }
       // await botRepository.createBot(createBotPayload);
-      const { meta } = await dispatch(createBotTransaction(createBotPayload)) 
+      const { meta } = await dispatch(createBotTransaction(createBotPayload));
 
-      if(meta.requestStatus === API_STATUS.REJECTED){
+      if (meta.requestStatus === API_STATUS.REJECTED) {
         return;
       }
       dispatch(setActiveTab(KEY_TAB_BUILD_CHAT_BOT.IMPORT_DATA));
@@ -117,13 +115,46 @@ const ChatbotConfig = () => {
 
   return (
     <>
-      <BotConfig botName={botName} setBotName={setBotName} caseStudy={caseStudy} setCaseStudy={setCaseStudy} model={model} setModel={setModel} visibility={visibility} setVisibility={setVisibility} options={options}/>
-      <Prompt creativity={creativity} setCreativity={setCreativity} dropdownOpen={dropdownOpen} setDropdownOpen={setDropdownOpen} rules={rules} setRules={setRules} value={promptExample} setValue={setPromptExample}/>
-      <CollectCustomer email={email} setEmail={setEmail} name={name} setName={setName} phone={phone} setPhone={setPhone} custom={custom} setCustom={setCustom} value={value} setValue={setValue}/>
+      <BotConfig
+        botName={botName}
+        setBotName={setBotName}
+        caseStudy={caseStudy}
+        setCaseStudy={setCaseStudy}
+        model={model}
+        setModel={setModel}
+        visibility={visibility}
+        setVisibility={setVisibility}
+        options={options}
+      />
+      <Prompt
+        creativity={creativity}
+        setCreativity={setCreativity}
+        dropdownOpen={dropdownOpen}
+        setDropdownOpen={setDropdownOpen}
+        rules={rules}
+        setRules={setRules}
+        value={promptExample}
+        setValue={setPromptExample}
+      />
+      <CollectCustomer
+        email={email}
+        setEmail={setEmail}
+        name={name}
+        setName={setName}
+        phone={phone}
+        setPhone={setPhone}
+        custom={custom}
+        setCustom={setCustom}
+        value={value}
+        setValue={setValue}
+      />
       <div className="flex justify-end">
-          <button onClick={onSubmit} className="w-[150px] mt-[20px] h-[43px] bg-[#4AC1FF] text-white rounded-[10px] text-[13px] font-bold justify-cente">
-            Create
-          </button>
+        <button
+          onClick={onSubmit}
+          className="w-[150px] mt-[20px] h-[43px] bg-[#4AC1FF] text-white rounded-[10px] text-[15px] font-bold justify-cente"
+        >
+          Create
+        </button>
       </div>
     </>
   );

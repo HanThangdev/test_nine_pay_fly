@@ -93,3 +93,16 @@
 .Prompt .ant-switch .ant-switch-handle::before {
   @apply !bg-[#4AC1FF] !rounded-[100px];
 }
+
+.Conversations .ant-select-selector {
+  @apply !w-[150px] !h-[43px] !bg-[#E8E9F4] !items-center rounded-[10px] text-[15px] font-bold justify-center;
+}
+
+.Conversations .ant-select-selector .ant-select-selection-search-input {
+  @apply !h-full !text-[#01058A];
+}
+
+.Conversations .ant-select-selection-item,
+.ant-select-selection-placeholder {
+  @apply !text-[#01058A] font-bold;
+}
