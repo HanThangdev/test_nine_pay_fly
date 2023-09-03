@@ -13,14 +13,15 @@ export interface ScrapingURLPayload {
   user_id: string;
   scrape_url: string;
   scrape_type: number;
-  setValueProcess: (data:any) => void
+  setValueProcess: (data: any) => void;
 }
 
 export interface CustomField {
-  key: string,
+  key: string;
 }
 
 export interface BotDataResponse {
+  id: string;
   user_id: number;
   bot_name: string;
   case_study: string;
@@ -32,4 +33,18 @@ export interface BotDataResponse {
   custom_error_message: string;
   created_at: string;
   updated_at: string;
+}
+
+export interface AdvancePayload {
+  bot_id: string;
+  initial_message: string;
+  suggest_messages: [];
+  theme: string;
+  display_name: string;
+  bot_avatar_url: string;
+  chat_icon_url: string;
+  chat_bubble_button_color: string;
+  chat_message_color: string;
+  align_chat_bubble_button: string;
+  auto_show_initial_message_after: number;
 }

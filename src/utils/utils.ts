@@ -18,10 +18,13 @@ export function isAxiosInternalServerError<InternalServerError>(
 }
 
 export function isEmptyObjectOrArray(data: any) {
-  if(!data){
-    return true
+  if (!data) {
+    return true;
   }
-  return !((Array.isArray(data) && data.length > 0) || (typeof data === 'object' && Object.keys(data).length > 0));
+  return !(
+    (Array.isArray(data) && data.length > 0) ||
+    (typeof data === 'object' && Object.keys(data).length > 0)
+  );
 }
 
 export function convertArrayMessage(message: any) {
@@ -32,6 +35,15 @@ export function convertArrayMessage(message: any) {
     resultArray.push(subString);
     resultArray.push(10);
   }
-  
-  return resultArray
+
+  return resultArray;
+}
+
+export default function convertFile2Base64(file: File) {
+  return new Promise<string | undefined>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result?.toString());
+    reader.onerror = reject;
+  });
 }

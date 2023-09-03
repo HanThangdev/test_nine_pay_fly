@@ -106,3 +106,11 @@
 .ant-select-selection-placeholder {
   @apply !text-[#01058A] font-bold;
 }
+
+.Setting .ant-checkbox-inner {
+  @apply w-[25px] h-[25px];
+}
+
+.Setting .ant-checkbox-inner:after {
+  @apply w-[8px] h-[12px];
+}

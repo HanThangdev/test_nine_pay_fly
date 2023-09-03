@@ -22,34 +22,6 @@ const Header = (props: {
             '!justify-between': props.sidebarOpen,
           })}
         >
-          <div
-            className={classNames('items-center gap-2 sm:gap-4 hidden', {
-              '!flex': props.sidebarOpen,
-            })}
-          >
-            {/* <!-- Hamburger Toggle BTN --> */}
-            <button
-              aria-controls="sidebar"
-              onClick={(e) => {
-                e.stopPropagation();
-                props.setSidebarOpen(!props.sidebarOpen);
-              }}
-              className="z-99999 block rounded-sm border border-stroke bg-white p-1.5 shadow-sm dark:border-strokedark dark:bg-boxdark "
-            >
-              <PiListLight size={24} />
-            </button>
-            {/* <!-- Hamburger Toggle BTN --> */}
-
-            <Link className="flex items-center flex-shrink-0" to="/">
-              <Image
-                src={'/logo.png'}
-                alt="Chatfly"
-                width={30}
-                height={30}
-                preview={false}
-              />
-            </Link>
-          </div>
           <div className="flex items-center">
             {/* <div className="hidden sm:block">
               <form
@@ -103,9 +75,40 @@ const Header = (props: {
           </div>
         </div>
         <div className="flex justify-between items-center">
-          <p className="text-[18px] mb-0 font-extrabold bg-[#E8E9F4] text-[#01058A] py-2 px-[22px] rounded-[10px]">
-            UPGRADE
-          </p>
+          <div className="flex gap-x-4">
+            <div
+              className={classNames('items-center gap-2 sm:gap-4 hidden', {
+                '!flex': props.sidebarOpen,
+              })}
+            >
+              {/* <!-- Hamburger Toggle BTN --> */}
+              <button
+                aria-controls="sidebar"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  props.setSidebarOpen(!props.sidebarOpen);
+                }}
+                className="z-99999 block rounded-sm border border-stroke bg-white p-1.5 shadow-sm dark:border-strokedark dark:bg-boxdark "
+              >
+                <PiListLight size={24} />
+              </button>
+              {/* <!-- Hamburger Toggle BTN --> */}
+
+              <Link className="flex items-center flex-shrink-0" to="/">
+                <Image
+                  src={'/logo.png'}
+                  alt="Chatfly"
+                  width={30}
+                  height={30}
+                  preview={false}
+                />
+              </Link>
+            </div>
+            <p className="text-[18px] mb-0 font-extrabold bg-[#E8E9F4] text-[#01058A] py-2 px-[22px] rounded-[10px]">
+              UPGRADE
+            </p>
+          </div>
+
           <div className="flex gap-x-[40px] items-center">
             <p className="flex mb-0 items-center">
               <MdLanguage size={24} />

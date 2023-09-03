@@ -1,17 +1,20 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { BuildChatBotState } from './type';
-import { createBotTransaction, scrapingURLTransaction } from '@/repository/buildChatBot';
+import {
+  createBotTransaction,
+  scrapingURLTransaction,
+} from '@/repository/buildChatBot';
 import { getStreamingResponse } from '@/repository/testingbot';
 
 const initialState: BuildChatBotState = {
   data: null,
   loading: false,
-  activeTab: "",
+  activeTab: '',
   listIncludesLink: [],
   fetchLink: {
     num_token: 0,
     progress: 0,
-    url: ""
+    url: '',
   },
 };
 
@@ -25,22 +28,21 @@ export const buildChatbotSlice = createSlice({
     resetStateBuild: (state) => initialState,
 
     loadFetchLink: (state, action) => {
-      state.fetchLink= action.payload;
+      state.fetchLink = action.payload;
     },
 
     deletedListIncludes: (state, action) => {
-      const newList = Array.from(state.listIncludesLink)
+      const newList = Array.from(state.listIncludesLink);
       newList.splice(action.payload, 1);
       state.listIncludesLink = action.payload;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(createBotTransaction.pending, (state) => state);
     builder.addCase(createBotTransaction.fulfilled, (state, action) => {
-      state.data = action.payload.data
+      state.data = action.payload.data;
       return state;
-    }
-    );
+    });
     builder.addCase(createBotTransaction.rejected, (state) => state);
 
     builder.addCase(getStreamingResponse.pending, (state) => state);
@@ -49,13 +51,18 @@ export const buildChatbotSlice = createSlice({
 
     builder.addCase(scrapingURLTransaction.pending, (state) => state);
     builder.addCase(scrapingURLTransaction.fulfilled, (state, action: any) => {
-      state.listIncludesLink.push(action.payload[0])
-      return state
-    } );
+      state.listIncludesLink.push(action.payload[0]);
+      return state;
+    });
     builder.addCase(scrapingURLTransaction.rejected, (state) => state);
   },
 });
 
-export const { setActiveTab, resetStateBuild, loadFetchLink, deletedListIncludes } = buildChatbotSlice.actions;
+export const {
+  setActiveTab,
+  resetStateBuild,
+  loadFetchLink,
+  deletedListIncludes,
+} = buildChatbotSlice.actions;
 
 export default buildChatbotSlice.reducer;

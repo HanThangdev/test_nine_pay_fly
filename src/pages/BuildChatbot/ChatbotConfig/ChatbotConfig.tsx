@@ -1,6 +1,6 @@
 import profileState, { useProfileState } from '@/states/profile';
 import { BotPayload, CustomField } from '@/repository/buildChatBot/type';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import BotConfig from './BotConfig';
 import Prompt from './Prompt';
 import CollectCustomer from './CollectCustomer';
@@ -9,7 +9,10 @@ import { createBotTransaction } from '@/repository/buildChatBot';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/states/store';
 import { API_STATUS, KEY_TAB_BUILD_CHAT_BOT } from '@/constants';
-import { setActiveTab } from '@/states/buildChatBot/buildChatBot.slice';
+import {
+  setActiveTab,
+  setIdBot,
+} from '@/states/buildChatBot/buildChatBot.slice';
 
 const ChatbotConfig = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -99,6 +102,7 @@ const ChatbotConfig = () => {
       if (meta.requestStatus === API_STATUS.REJECTED) {
         return;
       }
+
       dispatch(setActiveTab(KEY_TAB_BUILD_CHAT_BOT.IMPORT_DATA));
       notification.success({
         message: 'Create bot successfully.',

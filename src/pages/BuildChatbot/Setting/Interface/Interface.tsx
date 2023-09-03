@@ -1,42 +1,119 @@
 import classNames from 'classnames';
-import IconInterface from '@/components/IconInterface/IconInterface';
-import IconReload from '@/components/IconReload/IconReload';
 import { AiFillRightCircle } from 'react-icons/ai';
+import { TfiReload } from 'react-icons/tfi';
 
-const Interface = () => {
+interface Data {
+  initial_message: string;
+  suggest_messages: [];
+  theme: string;
+  display_name: string;
+  bot_avatar_url: string;
+  chat_icon_url: string;
+  chat_bubble_button_color: string;
+  chat_message_color: string;
+  align_chat_bubble_button: string;
+  auto_show_initial_message_after: number;
+}
+
+interface Props {
+  dataInterface: Data;
+}
+
+const Interface = ({ dataInterface }: Props) => {
   return (
     <>
-      <div
-        className={classNames(
-          'rounded-[8px] border-[10px] border-[rgb(220,222,237)] h-[654px] relative',
-        )}
-      >
-        <div className="flex justify-between h-[45px] bg-[#FAFAFD] items-center px-[18px]">
-          <p className="mb-0 flex items-center gap-x-[10px] text-[16px] text-[#01058A]">
-            <IconInterface />
-            Chat fly
-          </p>
-          <IconReload />
-        </div>
-        <div className="py-[37px] px-[27px] gap-y-[10px] grid">
-          <div className="bg-[#F1F7FF] p-2 rounded-t-lg rounded-br-lg w-fit">
-            Hello! How can I assist you today?
+      <div>
+        <div
+          className={classNames(
+            'rounded-[8px] border-[10px] border-[rgb(220,222,237)] h-[654px] relative',
+            {
+              'bg-[#111827]': dataInterface.theme === 'dark',
+            },
+          )}
+        >
+          <div
+            className={classNames(
+              'flex justify-between h-[45px] items-center px-[18px] border-b-2 border-[rgb(220,222,237)]',
+            )}
+          >
+            <p
+              className={classNames(
+                'mb-0 flex items-center gap-x-[10px] text-[16px] text-[#01058A]',
+                {
+                  'text-white': dataInterface.theme === 'dark',
+                },
+              )}
+            >
+              {dataInterface.bot_avatar_url && (
+                <img
+                  className="w-[25px] h-[25px]"
+                  src={dataInterface.bot_avatar_url}
+                />
+              )}
+              {dataInterface.display_name}
+            </p>
+            <p className="mb-0 cursor-pointer">
+              <TfiReload
+                size={25}
+                color={dataInterface.theme === 'dark' ? 'white' : 'black'}
+              />
+            </p>
           </div>
-          <div className="w-full justify-end flex">
-            <p className="bg-[#D1EFFF] p-2 rounded-t-lg rounded-bl-lg w-fit">
-              Hi
+          <div className="py-[37px] px-[27px] gap-y-[10px] grid">
+            <div className="bg-[#eeeef1] px-3 py-2 rounded-t-lg rounded-br-lg w-fit">
+              {dataInterface.initial_message}
+            </div>
+            <div className="w-full justify-end flex">
+              <p
+                className="px-3 py-2 text-white rounded-t-lg rounded-bl-lg w-fit"
+                style={{ background: dataInterface.chat_message_color }}
+              >
+                Hi
+              </p>
+            </div>
+          </div>
+          <div className="absolute bottom-[62px] flex gap-x-3 p-2">
+            {dataInterface.suggest_messages?.map((item, index) => (
+              <p key={index} className="bg-[#F1F7FF] mb-0 p-2 rounded-lg w-fit">
+                {' '}
+                {item}
+              </p>
+            ))}
+          </div>
+          <div className="absolute h-[62px] flex gap-x-[12px] bottom-0 w-full items-center border-t-[1px] border-[#E7E8F2] p-2">
+            <input
+              type="text"
+              placeholder=""
+              className={classNames(
+                'h-[47px] w-full rounded-[5px] border border-[#DCDEED] px-4 outline-none focus:border-primary focus-visible:shadow-none',
+                {
+                  'bg-[#111827] text-white': dataInterface.theme === 'dark',
+                },
+              )}
+            />
+            <p className="mb-0 w-[40px] cursor-pointer">
+              <AiFillRightCircle
+                size={40}
+                color={dataInterface.chat_message_color}
+              />
             </p>
           </div>
         </div>
-        <div className="absolute h-[62px] bottom-0 w-full items-center border-t-[1px] border-[#E7E8F2] p-2 flex gap-x-[12px]">
-          <input
-            type="text"
-            placeholder=""
-            className="h-[47px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
-          />
-          <p className="mb-0 w-[40px]">
-            <AiFillRightCircle size={40} color="#4AC1FF" />
-          </p>
+        <div
+          className={classNames('mt-4 flex', {
+            'justify-end': dataInterface.align_chat_bubble_button === 'right',
+            'justify-start': dataInterface.align_chat_bubble_button === 'left',
+          })}
+        >
+          <div
+            className="rounded-full bg-black flex items-center justify-center w-[50px] h-[50px]"
+            style={{ background: dataInterface.chat_bubble_button_color }}
+          >
+            <img
+              className="w-[30px] h-[30px] invert"
+              src={dataInterface.chat_icon_url}
+            />
+          </div>
         </div>
       </div>
     </>

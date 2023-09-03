@@ -45,7 +45,9 @@ const items: TabsProps['items'] = [
 ];
 
 const BuildChatbot = () => {
-  const { activeTab, data } = useSelector((state: RootState) => state.buildChatBot);
+  const { activeTab, data } = useSelector(
+    (state: RootState) => state.buildChatBot,
+  );
   const location = useLocation();
   const dispatch = useDispatch<AppDispatch>();
   const [activeKey, setActiveKey] = useState<string>(items[0].key);
@@ -56,16 +58,20 @@ const BuildChatbot = () => {
   }
 
   useEffect(() => {
-    setActiveKey(activeTab || items[0].key)
-  },[activeTab])
+    setActiveKey(activeTab || items[0].key);
+  }, [activeTab]);
 
   useEffect(() => {
-    dispatch(resetStateBuild())
+    dispatch(resetStateBuild());
   }, [location]);
 
   const listTab = useMemo(() => {
-    return !!isEmptyObjectOrArray(data) ? items.map((item, index) => ( index != 0  ? { ...item, disabled: true } : item)) : items
-  },[data])
+    return !!isEmptyObjectOrArray(data)
+      ? items.map((item, index) =>
+          index != 0 ? { ...item, disabled: true } : item,
+        )
+      : items;
+  }, [data]);
 
   const onChange = (key: string) => {
     setActiveKey(key);
