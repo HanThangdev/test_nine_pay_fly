@@ -7,8 +7,6 @@ import {
   AdvancePayload,
 } from './type';
 import Cookies from 'universal-cookie';
-import store from '@/states/store';
-import { loadFetchLink } from '@/states/buildChatBot/buildChatBot.slice';
 
 export const createBotTransaction = createAsyncThunk(
   'transaction/createBotTransaction',

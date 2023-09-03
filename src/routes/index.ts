@@ -3,7 +3,7 @@ import { lazy } from 'react';
 const Conversations = lazy(() => import('../pages/Conversations'));
 const Profile = lazy(() => import('../pages/profile'));
 const Settings = lazy(() => import('../pages/setting'));
-const ManageChatbots = lazy(() => import('../pages/ManageChatbots'));
+const ManageChatbot = lazy(() => import('../pages/ManageChatbot'));
 const PricingPlan = lazy(() => import('../pages/PricingPlan'));
 const Notfound = lazy(() => import('../pages/Notfound'));
 
@@ -11,7 +11,7 @@ const coreRoutes = [
   {
     path: '/manage-chatbots',
     title: 'Manage-chatbots',
-    component: ManageChatbots,
+    component: ManageChatbot,
   },
   {
     path: '/conversations',

@@ -21,6 +21,7 @@ const Testing = () => {
   const [loading, setLoading] = useState<boolean>();
   const [message, setMessage] = useState<string>('');
   const LOADING_TEXT = "Generating..."
+
   const onSendMessage = async () => {
     if (loading) {
       return;

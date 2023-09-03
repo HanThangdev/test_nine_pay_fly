@@ -1,3 +1,5 @@
+import { DataFetchLink } from "@/states/buildChatBot/type";
+
 export interface BotPayload {
   bot_name: string;
   case_study: string;
@@ -13,7 +15,7 @@ export interface ScrapingURLPayload {
   user_id: string;
   scrape_url: string;
   scrape_type: number;
-  setValueProcess: (data: any) => void;
+  setValueProcess: (data:DataFetchLink) => void
 }
 
 export interface CustomField {

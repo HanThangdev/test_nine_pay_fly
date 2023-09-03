@@ -1,6 +1,6 @@
 import profileState, { useProfileState } from '@/states/profile';
 import { BotPayload, CustomField } from '@/repository/buildChatBot/type';
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import BotConfig from './BotConfig';
 import Prompt from './Prompt';
 import CollectCustomer from './CollectCustomer';
@@ -11,7 +11,6 @@ import { AppDispatch } from '@/states/store';
 import { API_STATUS, KEY_TAB_BUILD_CHAT_BOT } from '@/constants';
 import {
   setActiveTab,
-  setIdBot,
 } from '@/states/buildChatBot/buildChatBot.slice';
 
 const ChatbotConfig = () => {
