@@ -1,16 +1,13 @@
 import { ScrapingURLPayload } from '@/repository/buildChatBot/type';
-import { AppDispatch, RootState } from '@/states/store';
+import { RootState } from '@/states/store';
 import { isEmptyObjectOrArray } from '@/utils/utils';
 import { Progress, notification } from 'antd';
 import { useMemo, useState } from 'react';
 import { AiOutlineQuestionCircle } from 'react-icons/ai';
-import { RiDeleteBinLine } from 'react-icons/ri';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { TextLoadingWebsite } from './type';
 import { TypeAnimation } from 'react-type-animation';
 import { useBuildChatbot } from '@/states/buildChatBot/buildChatBot.selector';
-import { deleteURLTransaction } from '@/repository/buildChatBot';
-import { API_STATUS } from '@/constants';
 import FetchLinkItem from '../../Component/FetchLinkItem';
 
 const Website = () => {

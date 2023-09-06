@@ -6,7 +6,6 @@ import { PiEyeLight, PiEyeSlashLight } from 'react-icons/pi';
 import { useState } from 'react';
 import { notification, Image, Checkbox } from 'antd';
 import Cookies from 'universal-cookie';
-import { fetchProfile } from '@/states/profile';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/states/store';
 import { loginTransaction } from '@/repository/auth/login';

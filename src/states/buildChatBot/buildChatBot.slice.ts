@@ -36,6 +36,10 @@ export const buildChatbotSlice = createSlice({
 
     resetStateBuild: (state) => initialState,
 
+    setDataWhenUpdate: (state, action) => {
+      state.data = action.payload
+    },
+
     loadFetchLink: (state, action) => {
       state.fetchLink = action.payload;
     },
@@ -158,6 +162,7 @@ export const {
   deletedListIncludes,
   setGenerateChatIntoListHistory,
   setNewChatIntoListHistory,
+  setDataWhenUpdate,
 } = buildChatbotSlice.actions;
 
 export default buildChatbotSlice.reducer;

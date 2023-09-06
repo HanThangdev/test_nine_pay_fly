@@ -15,6 +15,8 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/states/store';
 import { deleteChatBotTransaction, getBotTransaction } from '@/repository/manageChatbot';
 import { API_STATUS } from '@/constants';
+import { useNavigate } from 'react-router-dom';
+import { objectToQueryString } from '@/utils/utils';
 
 interface ChatbotElementProps {
   info: ResponseManageChatbot;
@@ -22,6 +24,7 @@ interface ChatbotElementProps {
 
 const ChatbotElement = ({ info }: ChatbotElementProps) => {
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate()
   const [visibleDeleteModal, setVisibleDeleteModal] = useState<boolean>(false);
   const [openPopover, setOpenPopover] = useState<boolean>(false);
   // const [visibleShareodal, setVisibleShareModal] = useState<boolean>(false);
@@ -48,6 +51,12 @@ const ChatbotElement = ({ info }: ChatbotElementProps) => {
     }
   };
 
+  const redirectToUpdateBot = () => {
+    const {id, user_id} = info
+    const queryString = objectToQueryString({id, user_id})
+    navigate(`/build-chatbots?${queryString}`)
+  }
+
   return (
     <div
       className={classNames(
@@ -56,19 +65,19 @@ const ChatbotElement = ({ info }: ChatbotElementProps) => {
       )}
     >
       <div className="flex justify-between">
-        <p className="text-[24px] font-black text-black">{info.bot_name}</p>
+        <button className="text-[24px] font-black text-black" onClick={redirectToUpdateBot}>{info.bot_name}</button>
         <Popover
           placement="bottomRight"
           open={openPopover}
           content={
             <div className="grid gap-y-2">
-              <p className="m-auto">
+              <p className="m-auto  cursor-pointer">
                 <IconEdit />
               </p>
-              <p className="m-auto">
+              <p className="m-auto  cursor-pointer">
                 <IconShare />
               </p>
-              <p className="m-auto" onClick={() => {
+              <p className="m-auto cursor-pointer " onClick={() => {
                 setOpenPopover(!openPopover)
                 setVisibleDeleteModal(true)
               }}>
@@ -83,7 +92,7 @@ const ChatbotElement = ({ info }: ChatbotElementProps) => {
           </p>
         </Popover>
       </div>
-      <div className="flex justify-center">
+      <div className="flex justify-center cursor-pointer" onClick={redirectToUpdateBot}>
         <IconBot />
       </div>
       <p className="text-[20px] text-[#01058A] absolute bottom-0 flex items-center gap-x-2">

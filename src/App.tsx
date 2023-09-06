@@ -3,7 +3,7 @@ import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { Provider } from 'react-redux'
 
-import BuildChatbox from './pages/BuildChatbot';
+import ManageChatbot from './pages/ManageChatbot';
 import SignIn from './pages/Authentication/login/SignIn';
 import SignUp from './pages/Authentication/register/SignUp';
 import Loader from './common/Loader';
@@ -56,7 +56,7 @@ function App() {
         <Route path="/auth/signin" element={<SignIn />} />
         <Route path="/auth/signup" element={<SignUp />} />
         <Route element={<DefaultLayout />}>
-          <Route index element={<BuildChatbox />} />
+          <Route index element={<ManageChatbot />} />
           {routes.map(({ path, component: Component }) => (
             <Route
               path={path}

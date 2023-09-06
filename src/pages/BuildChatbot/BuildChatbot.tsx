@@ -11,9 +11,8 @@ import classNames from 'classnames';
 import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useLocation } from 'react-router-dom';
 import { AppDispatch, RootState } from '@/states/store';
-import { resetStateBuild } from '@/states/buildChatBot/buildChatBot.slice';
+import { setDataWhenUpdate } from '@/states/buildChatBot/buildChatBot.slice';
 import { isEmptyObjectOrArray } from '@/utils/utils';
 
 const items: TabsProps['items'] = [
@@ -48,7 +47,7 @@ const BuildChatbot = () => {
   const { activeTab, data } = useSelector(
     (state: RootState) => state.buildChatBot,
   );
-  const location = useLocation();
+
   const dispatch = useDispatch<AppDispatch>();
   const [activeKey, setActiveKey] = useState<string>(items[0].key);
   const cookies = new Cookies();
@@ -62,8 +61,15 @@ const BuildChatbot = () => {
   }, [activeTab]);
 
   useEffect(() => {
-    dispatch(resetStateBuild());
-  }, [location]);
+    const urlParams = new URLSearchParams(window.location.search);
+    const obj: any = {};
+
+    for (const [key , value] of urlParams) {
+      obj[key] = value;
+    }
+
+    dispatch(setDataWhenUpdate(obj));
+  }, []);
 
   const listTab = useMemo(() => {
     return !!isEmptyObjectOrArray(data)

@@ -1,5 +1,5 @@
 import { BotPayload, CustomField } from '@/repository/buildChatBot/type';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import BotConfig from './BotConfig';
 import Prompt from './Prompt';
 import CollectCustomer from './CollectCustomer';
@@ -11,10 +11,13 @@ import { API_STATUS, KEY_TAB_BUILD_CHAT_BOT } from '@/constants';
 import {
   setActiveTab,
 } from '@/states/buildChatBot/buildChatBot.slice';
+import { isEmptyObjectOrArray, objectToQueryString } from '@/utils/utils';
+import { useNavigate } from 'react-router-dom';
 
 const ChatbotConfig = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { data } = useSelector((state: RootState) => state.buildChatBot);
+  const navigate = useNavigate()
   const options = [
     {
       value: '2',
@@ -111,6 +114,14 @@ const ChatbotConfig = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if(!isEmptyObjectOrArray(data)){
+      const { id, user_id} = data
+      const queryString = objectToQueryString({id, user_id})
+      navigate(`/build-chatbots?${queryString}`)
+    }
+  }, [data])
 
   return (
     <>

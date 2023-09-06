@@ -107,7 +107,19 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <NavLink
                   to="/"
                   className={`h-[44px] group relative flex items-center gap-[18px] rounded-r-[5px] py-2 px-4 font-medium text-[#A7A9C0] duration-300 ease-in-out hover:bg-[#1AA8E9] hover:text-white ${
-                    pathname === '/' && 'bg-[#1AA8E9] !text-white !font-bold'
+                    pathname === '/' &&
+                    'bg-[#1AA8E9] !text-white !font-bold'
+                  }`}
+                >
+                  <FiPieChart size={24} />
+                  Manage Chatbots
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/build-chatbots"
+                  className={`h-[44px] group relative flex items-center gap-[18px] rounded-r-[5px] py-2 px-4 font-medium text-[#A7A9C0] duration-300 ease-in-out hover:bg-[#1AA8E9] hover:text-white ${
+                    pathname.includes('build-chatbots') && 'bg-[#1AA8E9] !text-white !font-bold'
                   }`}
                 >
                   <AiOutlineAppstore size={26} />
@@ -117,18 +129,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               {/* <!-- Menu Item Build Chatbot --> */}
 
               {/* <!-- Menu Item Manage Chatbots --> */}
-              <li>
-                <NavLink
-                  to="/manage-chatbots"
-                  className={`h-[44px] group relative flex items-center gap-[18px] rounded-r-[5px] py-2 px-4 font-medium text-[#A7A9C0] duration-300 ease-in-out hover:bg-[#1AA8E9] hover:text-white ${
-                    pathname.includes('manage-chatbots') &&
-                    'bg-[#1AA8E9] !text-white !font-bold'
-                  }`}
-                >
-                  <FiPieChart size={24} />
-                  Manage Chatbots
-                </NavLink>
-              </li>
+             
               {/* <!-- Menu Item Manage Chatbots --> */}
 
               {/* <!-- Menu Item Conversations --> */}
