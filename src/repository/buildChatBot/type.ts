@@ -15,7 +15,11 @@ export interface ScrapingURLPayload {
   user_id: string;
   scrape_url: string;
   scrape_type: number;
-  setValueProcess: (data:DataFetchLink) => void
+}
+
+export interface GetStreamingPayload<T, D>{
+  payload: T
+  callBack: (data: D) => void
 }
 
 export interface CustomField {
@@ -24,7 +28,7 @@ export interface CustomField {
 
 export interface BotDataResponse {
   id: string;
-  user_id: number;
+  user_id: string;
   bot_name: string;
   case_study: string;
   rules: string[];
@@ -33,8 +37,8 @@ export interface BotDataResponse {
   custom_prompt: string;
   bot_tone_type: number;
   custom_error_message: string;
-  created_at: string;
-  updated_at: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface AdvancePayload {
@@ -50,3 +54,32 @@ export interface AdvancePayload {
   align_chat_bubble_button: string;
   auto_show_initial_message_after: number;
 }
+
+export interface GetChatStreamingRequest {
+  bot_id: string;
+  message: string;
+  session_id: string;
+  user_id: string;
+}
+
+export interface CreateSessionResponse {
+  session_id: string;
+}
+
+export interface GetNormalResponseRequest {
+  message: string;
+}
+
+export interface DeleteURLPayload {
+  bot_id: string
+  url: string
+}
+
+export interface GetAllURLPayload {
+  bot_id: string
+}
+
+export interface GetAllURLResponse {
+  url: Array<string>
+}
+

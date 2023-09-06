@@ -10,13 +10,13 @@ import { MdOutlineDarkMode } from 'react-icons/md';
 import { Checkbox, Upload, Popover, notification } from 'antd';
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
 import type { RcFile } from 'antd/es/upload';
-import convertFile2Base64 from '@/utils/utils';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/states/store';
-import { AdvanceSettinTransaction } from '@/repository/buildChatBot';
+import { AdvanceSettingTransaction } from '@/repository/buildChatBot';
 import { API_STATUS } from '@/constants';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/states/store';
+import { convertFile2Base64 } from '@/utils/utils';
 
 const optionsAlign = [
   {
@@ -122,7 +122,7 @@ const SetInterface = ({ dataSetinterface }: Props) => {
 
   const onSubmit = handleSubmit(async () => {
     try {
-      const { meta } = await dispatch(AdvanceSettinTransaction(dataSet));
+      const { meta } = await dispatch(AdvanceSettingTransaction(dataSet));
 
       if (meta.requestStatus === API_STATUS.REJECTED) {
         return;

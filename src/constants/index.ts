@@ -11,3 +11,5 @@ export const KEY_TAB_BUILD_CHAT_BOT = {
   TESTING: 'testing',
   INTEGRATION: 'integration',
 }
+
+export const LOADING_TEXT = "Generating..."

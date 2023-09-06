@@ -4,6 +4,10 @@ import manageChatBotReducer  from '@/states/manageBot/manageBot.slice'
 
 
 const store = configureStore({
+  middleware: getDefaultMiddleware =>
+  getDefaultMiddleware({
+    serializableCheck: false,
+  }),
   reducer: {
     buildChatBot: buildChatBotReducer,
     manageBot: manageChatBotReducer

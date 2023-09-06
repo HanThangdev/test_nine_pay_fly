@@ -7,13 +7,17 @@ import { useState } from 'react';
 import { notification, Image, Checkbox } from 'antd';
 import Cookies from 'universal-cookie';
 import { fetchProfile } from '@/states/profile';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '@/states/store';
+import { loginTransaction } from '@/repository/auth/login';
+import { API_STATUS } from '@/constants';
 
-import userApi from '@/repository/auth/login';
 
 const SignIn = () => {
   const [showPass, setShowPass] = useState(false);
   const [loading, setLoading] = useState<boolean>();
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
   const cookies = new Cookies();
   const token = cookies.get('access_token');
   const {
@@ -36,8 +40,12 @@ const SignIn = () => {
     dataForm.append('username', formData.email);
     dataForm.append('password', formData.password);
     try {
-      await userApi.login(dataForm);
-      fetchProfile();
+      const { meta} = await dispatch(loginTransaction(dataForm));
+
+      if(meta.requestStatus == API_STATUS.REJECTED){
+        return
+      }
+      
       notification.success({
         message: 'You have successfully logged in.',
       });

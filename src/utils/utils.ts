@@ -39,11 +39,23 @@ export function convertArrayMessage(message: any) {
   return resultArray;
 }
 
-export default function convertFile2Base64(file: File) {
+export function convertFile2Base64(file: File) {
   return new Promise<string | undefined>((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => resolve(reader.result?.toString());
     reader.onerror = reject;
   });
+}
+
+export function objectToQueryString(obj: { [key: string]: any }): string {
+  const keyValuePairs = [];
+
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      keyValuePairs.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]));
+    }
+  }
+
+  return keyValuePairs.join('&');
 }

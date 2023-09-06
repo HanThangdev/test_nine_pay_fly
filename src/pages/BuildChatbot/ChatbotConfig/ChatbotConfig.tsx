@@ -1,13 +1,12 @@
-import profileState, { useProfileState } from '@/states/profile';
 import { BotPayload, CustomField } from '@/repository/buildChatBot/type';
 import { useState } from 'react';
 import BotConfig from './BotConfig';
 import Prompt from './Prompt';
 import CollectCustomer from './CollectCustomer';
-import { notification } from 'antd';
+import { Button, notification } from 'antd';
 import { createBotTransaction } from '@/repository/buildChatBot';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '@/states/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '@/states/store';
 import { API_STATUS, KEY_TAB_BUILD_CHAT_BOT } from '@/constants';
 import {
   setActiveTab,
@@ -15,9 +14,7 @@ import {
 
 const ChatbotConfig = () => {
   const dispatch = useDispatch<AppDispatch>();
-
-  const { data: profile } = useProfileState(profileState);
-
+  const { data } = useSelector((state: RootState) => state.buildChatBot);
   const options = [
     {
       value: '2',
@@ -97,21 +94,20 @@ const ChatbotConfig = () => {
       }
       // await botRepository.createBot(createBotPayload);
       const { meta } = await dispatch(createBotTransaction(createBotPayload));
-
+      
       if (meta.requestStatus === API_STATUS.REJECTED) {
         return;
       }
-
       dispatch(setActiveTab(KEY_TAB_BUILD_CHAT_BOT.IMPORT_DATA));
       notification.success({
         message: 'Create bot successfully.',
       });
-      setTimeout(() => {}, 500);
     } catch (error: any) {
       notification.error({
         message: error?.response?.data.errors ?? error?.message,
       });
 
+    } finally{
       setLoading(false);
     }
   };
@@ -152,12 +148,14 @@ const ChatbotConfig = () => {
         setValue={setValue}
       />
       <div className="flex justify-end">
-        <button
+        <Button
+          loading={loading}
+          disabled={loading}
           onClick={onSubmit}
           className="w-[150px] mt-[20px] h-[43px] bg-[#4AC1FF] text-white rounded-[10px] text-[15px] font-bold justify-cente"
         >
           Create
-        </button>
+        </Button>
       </div>
     </>
   );
