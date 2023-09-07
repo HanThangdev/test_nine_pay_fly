@@ -29,8 +29,9 @@ const ManageChatbot = () => {
         });
       }
     };
-
-    fetchDataBot();
+    if(isEmptyObjectOrArray(ownerChatbot)){
+      fetchDataBot();
+    }
   }, []);
 
   return (
