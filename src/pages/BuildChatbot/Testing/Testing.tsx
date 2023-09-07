@@ -31,7 +31,6 @@ const Testing = () => {
     };
     try {
       onStreamingDataTesting(streamingPayload);
-      messagesEndRef?.current?.scrollIntoView({ behavior: 'smooth' });
     } catch (error: any) {
       notification.error({
         message: error?.response?.data.errors ?? error?.message,

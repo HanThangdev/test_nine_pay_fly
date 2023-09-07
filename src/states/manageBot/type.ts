@@ -1,4 +1,4 @@
-export interface manageChatBotState {
+export interface ManageChatBotState {
   data: any | null;
   loading: boolean;
   ownerChatbot: ResponseManageChatbot[];

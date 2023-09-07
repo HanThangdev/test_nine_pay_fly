@@ -14,8 +14,6 @@ interface CollectCustomerProps {
   setPhone: (value: boolean) => void;
   custom: CustomField[];
   setCustom: (value: CustomField[]) => void;
-  value: string;
-  setValue: (value: string) => void;
 }
 
 const CollectCustomer: React.FC<CollectCustomerProps> = ({
@@ -27,8 +25,6 @@ const CollectCustomer: React.FC<CollectCustomerProps> = ({
   setPhone,
   custom,
   setCustom,
-  value,
-  setValue,
 }) => {
   return (
     <div
@@ -83,8 +79,6 @@ const CollectCustomer: React.FC<CollectCustomerProps> = ({
           disabled
           type="text"
           placeholder="Let us know how to contact you"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
           className="h-[41px] mt-[12px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
         />
         {email && (

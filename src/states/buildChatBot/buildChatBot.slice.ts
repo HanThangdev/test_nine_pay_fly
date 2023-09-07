@@ -5,8 +5,10 @@ import {
   createSessionTransaction,
   deleteURLTransaction,
   getAllURLTransaction,
+  getBotInfoTransaction,
   getChatStreamingTransaction,
   scrapingURLTransaction,
+  updateBotTransaction,
 } from '@/repository/buildChatBot';
 import { LOADING_TEXT } from '@/constants';
 
@@ -34,7 +36,7 @@ export const buildChatbotSlice = createSlice({
       state.activeTab = action.payload;
     },
 
-    resetStateBuild: (state) => initialState,
+    resetStateBuild: () => initialState,
 
     setDataWhenUpdate: (state, action) => {
       state.data = action.payload
@@ -77,6 +79,19 @@ export const buildChatbotSlice = createSlice({
     });
 
     // end createBotTransaction
+    // start updateBotTransaction
+    builder.addCase(updateBotTransaction.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(updateBotTransaction.fulfilled, (state, action) => {
+      state.loading = false;
+      state.data = action.payload.data;
+    });
+    builder.addCase(updateBotTransaction.rejected, (state) => {
+      state.loading = false;
+    });
+
+    // end updateBotTransaction
     // start createSession
 
     builder.addCase(createSessionTransaction.pending, (state) => {
@@ -149,6 +164,22 @@ export const buildChatbotSlice = createSlice({
     });
     builder.addCase(getAllURLTransaction.rejected, (state) => {
       state.loadingFetchLink = false;
+    });
+
+    // end getAllURLTransaction
+
+    // start getAllURLTransaction
+
+    builder.addCase(getBotInfoTransaction.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getBotInfoTransaction.fulfilled, (state, action) => { 
+      state.data = action.payload.data
+      state.loading = false;
+    });
+    builder.addCase(getBotInfoTransaction.rejected, (state) => {
+      state.loadingFetchLink = false;
+      state.data = null
     });
 
     // end getAllURLTransaction

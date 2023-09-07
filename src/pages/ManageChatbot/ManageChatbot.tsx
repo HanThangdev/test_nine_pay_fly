@@ -4,24 +4,25 @@ import { notification } from 'antd';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/states/store';
-import { getBotTransaction } from '@/repository/manageChatbot';
 import { isEmptyObjectOrArray } from '@/utils/utils';
 import Loader from '@/common/Loader';
 import ChatbotElement from './ChatbotElement';
 import { useNavigate } from 'react-router-dom';
+import { resetStateBuild } from '@/states/buildChatBot/buildChatBot.slice';
+import { useManageChatbot } from '@/states/manageBot/manageBot.selector';
 
 const ManageChatbot = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+  const { onGetBot } = useManageChatbot();
   const { ownerChatbot, loading } = useSelector(
     (state: RootState) => state.manageBot,
   );
 
   useEffect(() => {
-    console.log('i fire once');
     const fetchDataBot = async () => {
       try {
-        await dispatch(getBotTransaction());
+        onGetBot()
       } catch (error: any) {
         notification.error({
           message: error?.response?.data.errors ?? error?.message,
@@ -45,7 +46,13 @@ const ManageChatbot = () => {
           All Chatbots{' '}
           <span className="font-thin">({`${ownerChatbot.length || 0}`})</span>
         </h2>
-        <button className="w-[150px] h-[43px] bg-[#E8E9F4] text-[#01058A] rounded-[10px] text-[15px] font-bold justify-center" onClick={()=>navigate('/')}>
+        <button
+          className="w-[150px] h-[43px] bg-[#E8E9F4] text-[#01058A] rounded-[10px] text-[15px] font-bold justify-center"
+          onClick={() => {
+            dispatch(resetStateBuild());
+            navigate('/build-chatbots');
+          }}
+        >
           New Chatbot
         </button>
       </div>
@@ -55,7 +62,7 @@ const ManageChatbot = () => {
         ) : (
           !isEmptyObjectOrArray(ownerChatbot) &&
           ownerChatbot.map((_, index) => (
-            <ChatbotElement info={_} key={index}/>
+            <ChatbotElement info={_} key={index} />
           ))
         )}
       </div>

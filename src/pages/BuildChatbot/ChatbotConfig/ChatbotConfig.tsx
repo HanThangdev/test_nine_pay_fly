@@ -1,23 +1,21 @@
 import { BotPayload, CustomField } from '@/repository/buildChatBot/type';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import BotConfig from './BotConfig';
 import Prompt from './Prompt';
 import CollectCustomer from './CollectCustomer';
 import { Button, notification } from 'antd';
-import { createBotTransaction } from '@/repository/buildChatBot';
+import { createBotTransaction, updateBotTransaction } from '@/repository/buildChatBot';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/states/store';
 import { API_STATUS, KEY_TAB_BUILD_CHAT_BOT } from '@/constants';
-import {
-  setActiveTab,
-} from '@/states/buildChatBot/buildChatBot.slice';
-import { isEmptyObjectOrArray, objectToQueryString } from '@/utils/utils';
+import { setActiveTab } from '@/states/buildChatBot/buildChatBot.slice';
+import { convertCustomValue, isEmptyObjectOrArray, objectToQueryString } from '@/utils/utils';
 import { useNavigate } from 'react-router-dom';
 
 const ChatbotConfig = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { data } = useSelector((state: RootState) => state.buildChatBot);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const options = [
     {
       value: '2',
@@ -48,7 +46,7 @@ const ChatbotConfig = () => {
   // Prompt variables
   const [creativity, setCreativity] = useState(0);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [rules, setRules] = useState<any>([]);
+  const [rules, setRules] = useState<Array<string>>([""]);
   const [promptExample, setPromptExample] = useState(
     'I want you to roleplay as "AI Assistant". You will provide me with answers from the given context. If the answer is not included, say exactly "Sorry, I am not familiar with that topic." and stop after that. Refuse to answer any question not answered by the context. Never break character.',
   );
@@ -58,7 +56,6 @@ const ChatbotConfig = () => {
   const [name, setName] = useState(true);
   const [phone, setPhone] = useState(false);
   const [custom, setCustom] = useState<CustomField[]>([]);
-  const [value, setValue] = useState('Let us know how to contact you');
   // const [field, setField] = useState('Custom field');
 
   const onSubmit = async () => {
@@ -95,33 +92,61 @@ const ChatbotConfig = () => {
       if (!botName) {
         throw { message: 'Name chat bot is required' };
       }
-      // await botRepository.createBot(createBotPayload);
-      const { meta } = await dispatch(createBotTransaction(createBotPayload));
-      
+
+      let response
+      if(!isUpdate){
+        response = await dispatch(createBotTransaction(createBotPayload));
+      }else {
+        const updateBotPayload = {
+          ...createBotPayload,
+          user_id: data.user_id,
+          id: data.id
+        }
+        response = await dispatch(updateBotTransaction(updateBotPayload));
+      }
+
+      const { meta } = response
+
       if (meta.requestStatus === API_STATUS.REJECTED) {
         return;
       }
+
       dispatch(setActiveTab(KEY_TAB_BUILD_CHAT_BOT.IMPORT_DATA));
       notification.success({
-        message: 'Create bot successfully.',
+        message: !isUpdate ? 'Create bot successfully.' : 'Update bot successfully.',
       });
     } catch (error: any) {
       notification.error({
         message: error?.response?.data.errors ?? error?.message,
       });
-
-    } finally{
+    } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    if(!isEmptyObjectOrArray(data)){
-      const { id, user_id} = data
-      const queryString = objectToQueryString({id, user_id})
-      navigate(`/build-chatbots?${queryString}`)
+    if (!isEmptyObjectOrArray(data)) {
+      const { id, user_id, bot_name, case_study, gpt_model_name, rules, temperature, custom_prompt, collect_customer_info} = data;
+      const queryString = objectToQueryString({ id, user_id });
+      navigate(`/build-chatbots?${queryString}`);
+
+      setBotName(bot_name);
+      setCaseStudy(case_study);
+      setModel(gpt_model_name);
+
+      setCreativity(temperature);
+      setPromptExample(custom_prompt);
+      setRules(rules);
+      setEmail(collect_customer_info?.email);
+      setName(collect_customer_info?.name);
+      setPhone(collect_customer_info?.phone);
+      setCustom(convertCustomValue(collect_customer_info))
     }
-  }, [data])
+  }, [data]);
+
+  const isUpdate = useMemo(() => 
+    !isEmptyObjectOrArray(data)
+  ,[data])
 
   return (
     <>
@@ -135,6 +160,7 @@ const ChatbotConfig = () => {
         visibility={visibility}
         setVisibility={setVisibility}
         options={options}
+        isUpdate={isUpdate}
       />
       <Prompt
         creativity={creativity}
@@ -155,18 +181,16 @@ const ChatbotConfig = () => {
         setPhone={setPhone}
         custom={custom}
         setCustom={setCustom}
-        value={value}
-        setValue={setValue}
       />
       <div className="flex justify-end">
-        <Button
-          loading={loading}
-          disabled={loading}
-          onClick={onSubmit}
-          className="w-[150px] mt-[20px] h-[43px] bg-[#4AC1FF] text-white rounded-[10px] text-[15px] font-bold justify-cente"
-        >
-          Create
-        </Button>
+          <Button
+            loading={loading}
+            disabled={loading}
+            onClick={onSubmit}
+            className="w-[150px] mt-[20px] h-[43px] bg-[#4AC1FF] text-white rounded-[10px] text-[15px] font-bold justify-cente"
+          >
+            {isUpdate ? 'Update' : 'Create'}
+          </Button>
       </div>
     </>
   );

@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import IconRobot from '@/components/IconRobot/IconRobot';
 import { AiOutlineQuestionCircle } from 'react-icons/ai';
-import { Radio, Tooltip } from 'antd';
+import { Input, Radio, Tooltip } from 'antd';
 import React from 'react';
 import { BiLockOpenAlt, BiLockAlt } from 'react-icons/bi';
 
@@ -26,6 +26,7 @@ interface BotConfigProps {
   visibility: string;
   setVisibility: (value: string) => void;
   options: Option[];
+  isUpdate: boolean
 }
 
 const BotConfig: React.FC<BotConfigProps> = ({
@@ -38,6 +39,7 @@ const BotConfig: React.FC<BotConfigProps> = ({
   visibility,
   setVisibility,
   options,
+  isUpdate
 }) => {
   return (
     <div
@@ -52,7 +54,9 @@ const BotConfig: React.FC<BotConfigProps> = ({
       </h2>
       <div className="flex text-[15px] mt-[16px] items-center">
         <p className="w-[150px] font-bold">Name Chatbot</p>
-        <input
+        <Input
+          disabled={isUpdate}
+          value={botName}
           onChange={(e) => setBotName(e.target.value)}
           type="text"
           placeholder=""

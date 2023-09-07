@@ -59,3 +59,13 @@ export function objectToQueryString(obj: { [key: string]: any }): string {
 
   return keyValuePairs.join('&');
 }
+
+export function convertCustomValue(obj: any): Array<{key: string}> {
+  if(isEmptyObjectOrArray(obj)){
+    return []
+  }
+  const newArray = Object.keys(obj)
+  .filter(key => key !== 'name' && key !== 'phone' &&  key !== 'email')
+  .map(key => ({ key: key }));
+  return newArray;
+}

@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { manageChatBotState } from './type';
+import { ManageChatBotState } from './type';
 import { deleteChatBotTransaction, getBotTransaction } from '@/repository/manageChatbot';
 
-const initialState: manageChatBotState = {
+const initialState: ManageChatBotState = {
   data: null,
   loading: false,
   ownerChatbot: []

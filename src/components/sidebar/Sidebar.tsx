@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import classNames from 'classnames';
 import { BiMessageAltDetail } from 'react-icons/bi';
@@ -9,6 +9,9 @@ import {
 } from 'react-icons/ai';
 import { FiPieChart } from 'react-icons/fi';
 import { Image } from 'antd';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '@/states/store';
+import { resetStateBuild } from '@/states/buildChatBot/buildChatBot.slice';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -18,6 +21,7 @@ interface SidebarProps {
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const location = useLocation();
   const { pathname } = location;
+  const dispatch = useDispatch<AppDispatch>();
 
   const trigger = useRef<any>(null);
   const sidebar = useRef<any>(null);
@@ -30,8 +34,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const handleResize = () => {
     if (window.innerWidth < 1024) {
       setSidebarOpen(true);
+      localStorage.setItem('sidebar-expanded', "true")
     } else {
       setSidebarOpen(sidebarOpen);
+      localStorage.setItem('sidebar-expanded', sidebarOpen.toString())
     }
   };
 
@@ -105,6 +111,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               {/* <!-- Menu Item Build Chatbot --> */}
               <li>
                 <NavLink
+                  onClick={() => {dispatch(resetStateBuild())}}
                   to="/"
                   className={`h-[44px] group relative flex items-center gap-[18px] rounded-r-[5px] py-2 px-4 font-medium text-[#A7A9C0] duration-300 ease-in-out hover:bg-[#1AA8E9] hover:text-white ${
                     pathname === '/' &&

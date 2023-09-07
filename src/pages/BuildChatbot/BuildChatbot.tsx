@@ -12,8 +12,9 @@ import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { AppDispatch, RootState } from '@/states/store';
-import { setDataWhenUpdate } from '@/states/buildChatBot/buildChatBot.slice';
+import { setActiveTab, setDataWhenUpdate } from '@/states/buildChatBot/buildChatBot.slice';
 import { isEmptyObjectOrArray } from '@/utils/utils';
+import { getBotInfoTransaction } from '@/repository/buildChatBot';
 
 const items: TabsProps['items'] = [
   {
@@ -69,6 +70,9 @@ const BuildChatbot = () => {
     }
 
     dispatch(setDataWhenUpdate(obj));
+    if(urlParams.get("id")){
+      dispatch(getBotInfoTransaction({bot_id: urlParams.get("id") || ""}));
+    }
   }, []);
 
   const listTab = useMemo(() => {
@@ -81,6 +85,7 @@ const BuildChatbot = () => {
 
   const onChange = (key: string) => {
     setActiveKey(key);
+    dispatch(setActiveTab(key));
   };
 
   return (

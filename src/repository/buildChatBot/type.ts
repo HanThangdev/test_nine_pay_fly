@@ -9,7 +9,19 @@ export interface BotPayload {
   rules: string[];
   collect_customer_info: any;
 }
-
+export interface UpdateBotPayload {
+  user_id: string;
+  bot_name: string;
+  case_study: string;
+  gpt_model_name: string;
+  custom_prompt: string;
+  temperature: number;
+  rules: string[];
+  collect_customer_info: any;
+  bot_tone_type?: number;
+  custom_error_message?: string;
+  id: string;
+}
 export interface ScrapingURLPayload {
   bot_id: string;
   user_id: string;
@@ -27,6 +39,21 @@ export interface CustomField {
 }
 
 export interface BotDataResponse {
+  id: string;
+  user_id: string;
+  bot_name: string;
+  case_study: string;
+  rules: string[];
+  gpt_model_name: string;
+  temperature: number;
+  custom_prompt: string;
+  bot_tone_type: number;
+  custom_error_message: string;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface UpdateBotDataResponse {
   id: string;
   user_id: string;
   bot_name: string;
@@ -81,5 +108,9 @@ export interface GetAllURLPayload {
 
 export interface GetAllURLResponse {
   url: Array<string>
+}
+
+export interface GetBotInfoPayload {
+  bot_id: string
 }
 

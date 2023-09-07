@@ -17,6 +17,7 @@ import { deleteChatBotTransaction, getBotTransaction } from '@/repository/manage
 import { API_STATUS } from '@/constants';
 import { useNavigate } from 'react-router-dom';
 import { objectToQueryString } from '@/utils/utils';
+import { resetStateBuild } from '@/states/buildChatBot/buildChatBot.slice';
 
 interface ChatbotElementProps {
   info: ResponseManageChatbot;
@@ -37,7 +38,8 @@ const ChatbotElement = ({ info }: ChatbotElementProps) => {
       );
 
       if (meta.requestStatus == API_STATUS.REJECTED) {
-         return;
+        setVisibleDeleteModal(false)
+        return;
       }
 
       notification.success({
@@ -54,6 +56,7 @@ const ChatbotElement = ({ info }: ChatbotElementProps) => {
   const redirectToUpdateBot = () => {
     const {id, user_id} = info
     const queryString = objectToQueryString({id, user_id})
+    dispatch(resetStateBuild())
     navigate(`/build-chatbots?${queryString}`)
   }
 

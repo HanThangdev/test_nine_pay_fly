@@ -31,12 +31,7 @@ const Prompt: React.FC<PromptProps> = ({
   setValue,
 }) => {
   const addItem = () => {
-    setRules([
-      ...rules,
-      {
-        rule: '',
-      },
-    ]);
+    setRules([...rules, '']);
   };
   const removeItem = (index: any) => {
     const rows = [...rules];
@@ -112,6 +107,7 @@ const Prompt: React.FC<PromptProps> = ({
             <Slider
               defaultValue={0}
               max={100}
+              value={creativity}
               onChange={(e) => setCreativity(e)}
               tooltip={{ formatter: null }}
             />
@@ -151,31 +147,41 @@ const Prompt: React.FC<PromptProps> = ({
                 <AiOutlineQuestionCircle size={18} color="#E77964" />
               </Tooltip>
             </p>
-            <div className="flex items-center justify-between gap-x-4">
-              <input
-                type="text"
-                placeholder="Do not respond to content outside the documents provided"
-                className="h-[41px] mt-[12px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
-              />
-              <div className="w-[30px]"></div>
-            </div>
-            {rules.map((_item: any, index: any) => (
+            {rules.map((_item: string, index: number) => (
               <div
                 key={index}
                 className="flex items-center justify-between gap-x-4 mt-[12px]"
               >
                 <input
                   type="text"
-                  placeholder="New rule you can set"
-                  onChange={(e: any) => (rules[index].rule = e?.value)}
-                  className="h-[41px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
+                  value={_item}
+                  placeholder={
+                    index !== 0
+                      ? 'New rule you can set'
+                      : 'Do not respond to content outside the documents provided'
+                  }
+                  onChange={(e) => {
+                    const newRules = Array.from(rules).map((_, idx) => {
+                      if (index === idx) {
+                        return e.target.value; // Thay đổi giá trị "b" thành "d"
+                      }
+                      return _;
+                    });
+                    setRules(newRules)
+                    }}
+                  className={`${
+                    index !== 0 || 'mt-[12px'
+                  } h-[41px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none`}
                 />
+
                 <div className="w-[30px]">
-                  <RiDeleteBinLine
-                    size={18}
-                    color="#F44336"
-                    onClick={() => removeItem(index)}
-                  />
+                  {index !== 0 && (
+                    <RiDeleteBinLine
+                      size={18}
+                      color="#F44336"
+                      onClick={() => removeItem(index)}
+                    />
+                  )}
                 </div>
               </div>
             ))}

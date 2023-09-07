@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FormData, schema } from './validation';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
@@ -10,12 +10,13 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/states/store';
 import { loginTransaction } from '@/repository/auth/login';
 import { API_STATUS } from '@/constants';
+import { useManageChatbot } from '@/states/manageBot/manageBot.selector';
 
 
 const SignIn = () => {
   const [showPass, setShowPass] = useState(false);
   const [loading, setLoading] = useState<boolean>();
-  const navigate = useNavigate();
+  const { onGetBot } = useManageChatbot();
   const dispatch = useDispatch<AppDispatch>();
   const cookies = new Cookies();
   const token = cookies.get('access_token');
@@ -48,9 +49,10 @@ const SignIn = () => {
       notification.success({
         message: 'You have successfully logged in.',
       });
-      setTimeout(() => {
-        navigate('/');
-      }, 500);
+
+      const isLogin = true
+      await onGetBot(isLogin)
+
     } catch (error: any) {
       notification.error({
         message: error?.response?.data.errors ?? error?.message,

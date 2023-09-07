@@ -8,7 +8,7 @@ export const getBotTransaction = createAsyncThunk(
   "transaction/getBotTransaction",
   async (payload, { rejectWithValue }) => {
     try {
-      const response = await http.get<SuccessResponse<ManageDataResponse>>('/api/bot')
+      const response = await http.get<SuccessResponse<ManageDataResponse[]>>('/api/bot')
       return response;
     } catch (error: any) {
       return rejectWithValue(error.response.data.error);

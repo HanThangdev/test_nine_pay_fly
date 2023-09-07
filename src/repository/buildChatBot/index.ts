@@ -11,6 +11,9 @@ import {
   DeleteURLPayload,
   GetAllURLPayload,
   GetAllURLResponse,
+  GetBotInfoPayload,
+  UpdateBotPayload,
+  UpdateBotDataResponse,
 } from './type';
 import Cookies from 'universal-cookie';
 import { SuccessResponse } from '../type';
@@ -21,6 +24,18 @@ export const createBotTransaction = createAsyncThunk(
   async (payload: BotPayload, { rejectWithValue }) => {
     try {
       const response = await http.post<SuccessResponse<BotDataResponse>>('/api/bot', payload);
+      return response;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data.error);
+    }
+  },
+);
+
+export const updateBotTransaction = createAsyncThunk(
+  'transaction/updateBotTransaction',
+  async (payload: UpdateBotPayload, { rejectWithValue }) => {
+    try {
+      const response = await http.put<SuccessResponse<UpdateBotDataResponse>>('/api/bot', payload);
       return response;
     } catch (error: any) {
       return rejectWithValue(error.response.data.error);
@@ -142,7 +157,7 @@ export const AdvanceSettingTransaction = createAsyncThunk(
 
 
 export const deleteURLTransaction = createAsyncThunk(
-  'transaction/AdvanceSettingTransaction',
+  'transaction/deleteURLTransaction',
   async (payload: DeleteURLPayload, { rejectWithValue }) => {
     try {
       const queryString = objectToQueryString(payload)
@@ -163,6 +178,21 @@ export const getAllURLTransaction = createAsyncThunk(
       const queryString = objectToQueryString(payload)
       const response = await http.get<SuccessResponse<GetAllURLResponse>>(
         `/api/scraping/url?${queryString}`,
+      );
+      return response;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data.error);
+    }
+  },
+);
+
+export const getBotInfoTransaction = createAsyncThunk(
+  'transaction/getBotInfoTransaction',
+  async (payload: GetBotInfoPayload, { rejectWithValue }) => {
+    try {
+      const queryString = objectToQueryString(payload)
+      const response = await http.get<SuccessResponse<BotDataResponse>>(
+        `/api/bot/information?${queryString}`,
       );
       return response;
     } catch (error: any) {
