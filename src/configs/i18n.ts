@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { getLocalStorage, STORAGE } from '@/utils/storage';
-import { en, jp, vi } from '@/I18n';
+import { en, jp, vi } from '@/i18n';
 
 const resources = {
 	vi,
