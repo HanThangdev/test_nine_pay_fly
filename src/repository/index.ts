@@ -43,24 +43,6 @@ class Http {
           cookies.remove('access_token', { path: '/' });
         } else {
           const { url } = response.config;
-<<<<<<< HEAD
-=======
-          if (
-            url == '/api/chat/get-streaming-response' ||
-            url == '/api/scraping/url'
-          ) {
-            console.log('vaoday', response);
-            response.data.on('data', (chunk: any) => {
-              // Handle the data chunk as it arrives
-              console.log('Received chunk:', chunk.toString());
-            });
-
-            response.data.on('end', () => {
-              // All data has been received
-              console.log('Streaming completed.');
-            });
-          }
->>>>>>> 0a2575a (CF-51 forgot-password)
           if (url === `/token`) {
             const data = response.data.data;
             const cookies = new Cookies();
