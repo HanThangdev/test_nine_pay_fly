@@ -43,6 +43,24 @@ class Http {
           cookies.remove('access_token', { path: '/' });
         } else {
           const { url } = response.config;
+<<<<<<< HEAD
+=======
+          if (
+            url == '/api/chat/get-streaming-response' ||
+            url == '/api/scraping/url'
+          ) {
+            console.log('vaoday', response);
+            response.data.on('data', (chunk: any) => {
+              // Handle the data chunk as it arrives
+              console.log('Received chunk:', chunk.toString());
+            });
+
+            response.data.on('end', () => {
+              // All data has been received
+              console.log('Streaming completed.');
+            });
+          }
+>>>>>>> 0a2575a (CF-51 forgot-password)
           if (url === `/token`) {
             const data = response.data.data;
             const cookies = new Cookies();
@@ -55,12 +73,12 @@ class Http {
       (error: AxiosError) => {
         if (error.response?.status === HttpStatusCode.Unauthorized) {
           const cookies = new Cookies();
-          cookies.remove('access_token', { path: '/' })
+          cookies.remove('access_token', { path: '/' });
           notification.warning({
             message: 'Your Token Expired, Please Login',
-            duration: 2
-          }); 
-          setTimeout(() => window.location.replace('/auth/signin'), 2000)
+            duration: 2,
+          });
+          // setTimeout(() => window.location.replace('/auth/signin'), 2000)
         }
 
         return Promise.reject(error);

@@ -1,9 +1,13 @@
+<<<<<<< HEAD
 import { Link } from 'react-router-dom';
+=======
+import { Link, useNavigate, useParams } from 'react-router-dom';
+>>>>>>> 0a2575a (CF-51 forgot-password)
 import { FormData, schema } from './validation';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { PiEyeLight, PiEyeSlashLight } from 'react-icons/pi';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { notification, Image, Checkbox } from 'antd';
 import Cookies from 'universal-cookie';
 import { useDispatch } from 'react-redux';
@@ -14,6 +18,7 @@ import { useManageChatbot } from '@/states/manageBot/manageBot.selector';
 
 
 const SignIn = () => {
+  const { code } = useParams();
   const [showPass, setShowPass] = useState(false);
   const [loading, setLoading] = useState<boolean>();
   const { onGetBot } = useManageChatbot();
@@ -31,6 +36,17 @@ const SignIn = () => {
     },
     resolver: yupResolver(schema),
   });
+
+  const verifyEmail = async () => {
+    await userApi.verifyEmail(code);
+  };
+
+  useEffect(() => {
+    if (code) {
+      verifyEmail();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [code]);
 
   const onSubmit = handleSubmit(async (formData) => {
     setLoading(true);
@@ -55,7 +71,7 @@ const SignIn = () => {
 
     } catch (error: any) {
       notification.error({
-        message: error?.response?.data.errors ?? error?.message,
+        message: error?.response?.data.message,
       });
 
       setLoading(false);
@@ -106,7 +122,7 @@ const SignIn = () => {
                       className="h-[48px] w-full rounded-lg border border-stroke bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
                       {...register('email')}
                     />
-                    <div className="text-[#CC0000] mt-1 min-h-[17px] text-[14px]">
+                    <div className="text-[#ff0505] mt-1 min-h-[17px] text-[14px]">
                       {errors.email?.message}
                     </div>
                   </div>
@@ -127,7 +143,7 @@ const SignIn = () => {
                       className="h-[48px] w-full rounded-lg border border-stroke bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
                       {...register('password')}
                     />
-                    <div className="text-[#CC0000] mt-1 min-h-[17px] text-[14px]">
+                    <div className="text-[#ff0505] mt-1 min-h-[17px] text-[14px]">
                       {errors.password?.message}
                     </div>
 
@@ -154,7 +170,7 @@ const SignIn = () => {
                     Remember me
                   </p>
                   <p className="text-[#4AC1FF] mb-0">
-                    <Link to="/auth/signin">Forgot password?</Link>
+                    <Link to="/auth/forgot-password">Forgot password?</Link>
                   </p>
                 </div>
                 <div className="mb-5">

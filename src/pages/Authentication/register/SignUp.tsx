@@ -1,7 +1,7 @@
 import { FormData, schema } from './validation';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { PiEyeLight, PiEyeSlashLight } from 'react-icons/pi';
 import { useState } from 'react';
 import Cookies from 'universal-cookie';
@@ -13,12 +13,11 @@ const SignUp = () => {
   const [showPassConfirm, setShowPassConfirm] = useState(false);
   const cookies = new Cookies();
   const token = cookies.get('access_token');
-  const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>();
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const {
     handleSubmit,
     register,
-    reset,
     formState: { errors, isSubmitting },
   } = useForm<FormData>({
     resolver: yupResolver(schema),
@@ -38,10 +37,7 @@ const SignUp = () => {
         message: 'You have successfully registered.',
         duration: 2,
       });
-      reset();
-      setTimeout(() => {
-        navigate('/auth/signin');
-      }, 500);
+      setIsSuccess(true);
     } catch (error: any) {
       notification.error({
         message: error?.response?.data.message ?? error?.message,
@@ -93,7 +89,7 @@ const SignUp = () => {
                       className="h-[48px] w-full rounded-lg border border-stroke bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
                       {...register('first_name')}
                     />
-                    <div className="text-[#CC0000] mt-1 min-h-[17px] text-[14px]">
+                    <div className="text-[#ff0505] mt-1 min-h-[17px] text-[14px]">
                       {errors.first_name?.message}
                     </div>
                   </div>
@@ -109,7 +105,7 @@ const SignUp = () => {
                       className="h-[48px] w-full rounded-lg border border-stroke bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
                       {...register('last_name')}
                     />
-                    <div className="text-[#CC0000] mt-1 min-h-[17px] text-[14px]">
+                    <div className="text-[#ff0505] mt-1 min-h-[17px] text-[14px]">
                       {errors.last_name?.message}
                     </div>
                   </div>
@@ -125,7 +121,7 @@ const SignUp = () => {
                       className="h-[48px] w-full rounded-lg border border-stroke bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
                       {...register('email')}
                     />
-                    <div className="text-[#CC0000] mt-1 min-h-[17px] text-[14px]">
+                    <div className="text-[#ff0505] mt-1 min-h-[17px] text-[14px]">
                       {errors.email?.message}
                     </div>
                   </div>
@@ -146,7 +142,7 @@ const SignUp = () => {
                       className="h-[48px] w-full rounded-lg border border-stroke bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
                       {...register('password')}
                     />
-                    <div className="text-[#CC0000] mt-1 min-h-[17px] text-[14px]">
+                    <div className="text-[#ff0505] mt-1 min-h-[17px] text-[14px]">
                       {errors.password?.message}
                     </div>
 
@@ -178,7 +174,7 @@ const SignUp = () => {
                       className="h-[48px] w-full rounded-lg border border-stroke bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
                       {...register('password_confirmation')}
                     />
-                    <div className="text-[#CC0000] mt-1 min-h-[17px] text-[14px] mb-3">
+                    <div className="text-[#ff0505] mt-1 min-h-[17px] text-[14px] mb-3">
                       {errors.password_confirmation?.message}
                     </div>
 
@@ -219,6 +215,11 @@ const SignUp = () => {
                     </Link>
                   </p>
                 </div>
+                {isSuccess && (
+                  <p className="w-full m-auto flex items-center bg-[#15257c] justify-center h-[48px] rounded-[8px] text-white transition">
+                    Check your email for the confirmation link.
+                  </p>
+                )}
               </form>
             </div>
           </div>
