@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import { Link } from 'react-router-dom';
-=======
 import { Link, useNavigate, useParams } from 'react-router-dom';
->>>>>>> 0a2575a (CF-51 forgot-password)
 import { FormData, schema } from './validation';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
@@ -15,6 +11,7 @@ import { AppDispatch } from '@/states/store';
 import { loginTransaction } from '@/repository/auth/login';
 import { API_STATUS } from '@/constants';
 import { useManageChatbot } from '@/states/manageBot/manageBot.selector';
+import { userApi } from '@/repository/auth/login';
 
 
 const SignIn = () => {
