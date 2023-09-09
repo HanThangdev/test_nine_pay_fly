@@ -42,7 +42,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   };
 
   useEffect(() => {
-    localStorage.setItem('sidebar-expanded', sidebarExpanded.toString());
     if (sidebarExpanded) {
       document.querySelector('body')?.classList.add('sidebar-expanded');
     } else {
@@ -92,7 +91,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         </div>
         <button
           ref={trigger}
-          onClick={() => setSidebarOpen(!sidebarOpen)}
+          onClick={() => {
+            setSidebarOpen(!sidebarOpen)
+            localStorage.setItem('sidebar-expanded', (!sidebarOpen).toString())
+          }
+          }
           aria-controls="sidebar"
           aria-expanded={sidebarOpen}
           // className="block lg:hidden"

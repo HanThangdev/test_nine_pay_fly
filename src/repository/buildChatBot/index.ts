@@ -14,6 +14,7 @@ import {
   GetBotInfoPayload,
   UpdateBotPayload,
   UpdateBotDataResponse,
+  UploadFilePayload,
 } from './type';
 import Cookies from 'universal-cookie';
 import { SuccessResponse } from '../type';
@@ -121,14 +122,9 @@ export const scrapingURLTransaction = createAsyncThunk(
         const chunk = decoder.decode(value);
         const lines = chunk.split('\n');
 
-        const parsedLines = lines
-        .map((line) => line.replace(/^data: /, '').trim()) // Remove the "data: " prefix
-        .filter((line) => line !== '' && line !== '[DONE]') // Remove empty lines and "[DONE]"
-        .map((line) => {
-          return JSON?.parse(line);
-        });
-        data = parsedLines;
-        callBack(parsedLines)
+        data = JSON.parse(lines[0]);
+        console.log(lines)
+        callBack(lines[0])
       }
       return data;
     } catch (error: any) {
@@ -194,6 +190,55 @@ export const getBotInfoTransaction = createAsyncThunk(
       );
       return response;
     } catch (error: any) {
+      return rejectWithValue(error.response.data.error);
+    }
+  },
+);
+
+export const uploadFileTransaction = createAsyncThunk(
+  'transaction/uploadFileTransaction',
+  async ({payload, callBack}: GetStreamingPayload<UploadFilePayload, any>, { rejectWithValue }) => {
+    const endPoint = 'api/scraping/file';
+    const cookies = new Cookies();
+    const token = cookies.get('access_token');
+   
+    try {
+      const formData = new FormData();
+      formData.append("bot_id", payload.bot_id);
+      formData.append("file", payload.file);
+      console.log(formData);
+      const response: any = await fetch(
+        new URL(import.meta.env.VITE_API_URL).toString() + endPoint,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+
+          body: formData,
+        },
+      );
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder('utf-8');
+      let data;
+
+      while (true) {
+        const { done, value } = await reader.read();
+
+        if (done) {
+          break;
+        }
+        // Massage and parse the chunk of data
+        const chunk = decoder.decode(value);
+        const lines = chunk.split('\n');
+
+        data = JSON.parse(lines[0]);
+        console.log(lines)
+        callBack(lines[0])
+      }
+      return data;
+    } catch (error: any) {
+      console.log(error);
       return rejectWithValue(error.response.data.error);
     }
   },

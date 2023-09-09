@@ -153,11 +153,11 @@ const Website = () => {
           Total detected tokens: {totalTokens}/400,000 limit
         </p>
       </div>
-      <div className="flex justify-end mt-[30px]">
+      {/* <div className="flex justify-end mt-[30px]">
         <button className="w-[150px] h-[43px] bg-[#4AC1FF;] text-white rounded-[10px] text-[15px] font-bold justify-cente">
           Import
         </button>
-      </div>
+      </div> */}
     </>
   );
 };

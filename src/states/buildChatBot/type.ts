@@ -9,6 +9,9 @@ export interface BuildChatBotState {
   fetchLink: DataFetchLink;
   loadingFetchLink: boolean;
   loadingChat: boolean;
+  loadingFetchFile: boolean;
+  listIncludesFile: any,
+  fetchFile: DataFetchFile;
 }
 
 export interface DataFetchLink {
@@ -16,3 +19,10 @@ export interface DataFetchLink {
   progress: number;
   url: string;
 }
+
+export interface DataFetchFile {
+  num_token: number;
+  progress: number;
+  url: string;
+}
+

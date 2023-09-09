@@ -42,7 +42,7 @@ const Header = (props: {
       key: '1',
       icon: <img src={jpFlag} alt="ja" width={20} height={20}/>,
       onClick: () => 
-        onChangeLanguage('ja')
+        onChangeLanguage('jp')
 
     },
     {

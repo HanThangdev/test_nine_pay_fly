@@ -69,3 +69,7 @@ export function convertCustomValue(obj: any): Array<{key: string}> {
   .map(key => ({ key: key }));
   return newArray;
 }
+
+export function hasDuplicateFiles(file: File, listFiles: File[]): boolean {
+  return listFiles.some(existingFile => existingFile.name === file.name);; // No duplicates found
+}

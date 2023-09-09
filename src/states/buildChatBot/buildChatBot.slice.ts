@@ -9,6 +9,7 @@ import {
   getChatStreamingTransaction,
   scrapingURLTransaction,
   updateBotTransaction,
+  uploadFileTransaction,
 } from '@/repository/buildChatBot';
 import { LOADING_TEXT } from '@/constants';
 
@@ -18,10 +19,17 @@ const initialState: BuildChatBotState = {
   activeTab: '',
   session: '',
   listIncludesLink: [],
+  listIncludesFile: [],
   history: [],
   loadingFetchLink: false,
+  loadingFetchFile: false,
   loadingChat: false,
   fetchLink: {
+    num_token: 0,
+    progress: 0,
+    url: '',
+  },
+  fetchFile: {
     num_token: 0,
     progress: 0,
     url: '',
@@ -44,6 +52,10 @@ export const buildChatbotSlice = createSlice({
 
     loadFetchLink: (state, action) => {
       state.fetchLink = action.payload;
+    },
+
+    loadFetchFile: (state, action) => {
+      state.fetchFile = action.payload;
     },
 
     deletedListIncludes: (state, action) => {
@@ -167,7 +179,7 @@ export const buildChatbotSlice = createSlice({
 
     // end getAllURLTransaction
 
-    // start getAllURLTransaction
+    // start getBotInfoTransaction
 
     builder.addCase(getBotInfoTransaction.pending, (state) => {
       state.loading = true;
@@ -177,7 +189,23 @@ export const buildChatbotSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(getBotInfoTransaction.rejected, (state) => {
-      state.loadingFetchLink = false;
+      state.loading = false;
+      state.data = null
+    });
+
+    // end getBotInfoTransaction
+
+    // start uploadFile
+
+    builder.addCase(uploadFileTransaction.pending, (state) => {
+      state.loadingFetchFile = true;
+    });
+    builder.addCase(uploadFileTransaction.fulfilled, (state, action) => { 
+      state.listIncludesFile.push(action.payload[0]);
+      state.loadingFetchFile = false;
+    });
+    builder.addCase(uploadFileTransaction.rejected, (state) => {
+      state.loadingFetchFile = false;
       state.data = null
     });
 

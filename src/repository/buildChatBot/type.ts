@@ -114,3 +114,7 @@ export interface GetBotInfoPayload {
   bot_id: string
 }
 
+export interface UploadFilePayload {
+  bot_id: string;
+  file: File;
+}
