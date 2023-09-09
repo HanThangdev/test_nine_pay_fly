@@ -158,7 +158,6 @@ export const buildChatbotSlice = createSlice({
       state.loadingFetchLink = true;
     });
     builder.addCase(getAllURLTransaction.fulfilled, (state, action) => { 
-      console.log(action)
       // state.listIncludesLink = 
       state.loadingFetchLink = false;
     });

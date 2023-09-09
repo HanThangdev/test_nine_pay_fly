@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/states/store';
 import { isEmptyObjectOrArray } from '@/utils/utils';
-import Loader from '@/common/Loader';
+import Loader from '@/components/Loader';
 import ChatbotElement from './ChatbotElement';
 import { useNavigate } from 'react-router-dom';
 import { resetStateBuild } from '@/states/buildChatBot/buildChatBot.slice';

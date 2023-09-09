@@ -120,7 +120,6 @@ export const scrapingURLTransaction = createAsyncThunk(
         // Massage and parse the chunk of data
         const chunk = decoder.decode(value);
         const lines = chunk.split('\n');
-        console.log("lines", lines)
 
         const parsedLines = lines
         .map((line) => line.replace(/^data: /, '').trim()) // Remove the "data: " prefix
@@ -129,7 +128,6 @@ export const scrapingURLTransaction = createAsyncThunk(
           return JSON?.parse(line);
         });
         data = parsedLines;
-        console.log("parsedLines", parsedLines)
         callBack(parsedLines)
       }
       return data;

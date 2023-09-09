@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Image } from 'antd';
+import { Dropdown, Image, MenuProps } from 'antd';
 import DropdownNotification from '../dropdownNotification';
 import DropdownUser from '../dropdownUser';
 import { AiFillQuestionCircle } from 'react-icons/ai';
@@ -7,13 +7,76 @@ import { PiListLight } from 'react-icons/pi';
 import classNames from 'classnames';
 import { MdLanguage } from 'react-icons/md';
 
-import UserOne from '@/images/user/user-07.png';
+import { useTranslation } from 'react-i18next';
+import { useEffect, useState } from 'react';
+import enFlag from '@/images/lang/en.png';
+import jpFlag from '@/images/lang/ja.png';
+import vnFlag from '@/images/lang/vn.png';
+
+const urlParams = new URLSearchParams(window.location.search);
+const getLanguageFromURL = urlParams.get("language");
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
   setSidebarOpen: (arg0: boolean) => void;
   onLogout: () => void;
 }) => {
+  const { t, i18n } = useTranslation();
+  const lang = getLanguageFromURL || localStorage.getItem("LANGUAGE") || "en";
+
+  const [active, setActive] = useState(lang);
+
+  const onChangeLanguage = (lang: string) => {
+    if (lang === active) return;
+    i18n.changeLanguage(lang);
+    localStorage.setItem("LANGUAGE", lang);
+    setActive(lang);
+  };
+  const items: MenuProps['items'] = [
+    {
+      label: (
+        <div>
+          Japanese
+        </div>
+      ),
+      key: '1',
+      icon: <img src={jpFlag} alt="ja" width={20} height={20}/>,
+      onClick: () => 
+        onChangeLanguage('ja')
+
+    },
+    {
+      label: (
+        <div>
+          English
+        </div>
+      ),
+      key: '2',
+      icon: <img src={enFlag} alt="en" width={20} height={20}/>,
+      onClick: () => 
+        onChangeLanguage('en')
+    },
+    {
+      label: (
+        <div>
+          VietNamese
+        </div>
+      ),
+      key: '3',
+      icon: <img src={vnFlag} alt="vi" width={20} height={20}/>,
+      onClick: () => 
+        onChangeLanguage('vi')
+    },
+  ];
+
+  useEffect(() => {
+    if (getLanguageFromURL) {
+      localStorage.setItem("LANGUAGE", getLanguageFromURL);
+      setActive(getLanguageFromURL);
+      i18n.changeLanguage(getLanguageFromURL);
+    }
+  }, []);
+
   return (
     <header className="sticky bg-[#fafafd] top-0 z-999 flex w-full  dark:bg-boxdark dark:drop-shadow-none">
       <div className="w-full pt-4 pb-2 border-b-[1px] mx-[38px] border-[#E7E8F2]">
@@ -110,13 +173,14 @@ const Header = (props: {
           </div>
 
           <div className="flex gap-x-[40px] items-center">
-            <p className="flex mb-0 items-center">
-              <MdLanguage size={24} />
-              <span className="block text-sm ml-[15px] font-medium text-black dark:text-white">
-                Language
-              </span>
-            </p>
-
+            <Dropdown menu={{ items }} trigger={['click']}>
+              <p className="flex mb-0 items-center">
+                <MdLanguage size={24} />
+                <span className="block text-sm ml-[15px] font-medium text-black dark:text-white">
+                  {t('language')}
+                </span>
+              </p>
+            </Dropdown>
             <p className="flex mb-0">
               <AiFillQuestionCircle size={20} color="black" />
               <span className="block text-sm ml-[15px] font-medium text-black dark:text-white">

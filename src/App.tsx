@@ -6,7 +6,7 @@ import { Provider } from 'react-redux'
 import ManageChatbot from './pages/ManageChatbot';
 import SignIn from './pages/Authentication/login/SignIn';
 import SignUp from './pages/Authentication/register/SignUp';
-import Loader from './common/Loader';
+import Loader from './components/Loader';
 import routes from './routes';
 import Cookies from 'universal-cookie';
 import store from './states/store';
