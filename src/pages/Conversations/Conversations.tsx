@@ -48,14 +48,14 @@ const Conversations = () => {
       date_from: fromDate.format().toString(),
       date_to: toDate.format().toString(),
     };
-    dispatch(getAllConversations(paramsGetAllConversations));
+    // dispatch(getAllConversations(paramsGetAllConversations));
   };
 
-  useEffect(() => {
-    if (isEmptyObjectOrArray(ownerChatbot)) {
-      dispatch(getBotTransaction());
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (isEmptyObjectOrArray(ownerChatbot)) {
+  //     dispatch(getBotTransaction());
+  //   }
+  // }, []);
 
   return (
     <div
