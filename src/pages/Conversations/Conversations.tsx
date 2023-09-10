@@ -12,7 +12,7 @@ import { IOptionSelect } from './type';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/states/store';
 import { getBotTransaction } from '@/repository/manageChatbot';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import { getAllConversations } from '@/repository/conversations';
 import classNames from 'classnames';
 import { GetAllConversationsPayload } from '@/repository/conversations/type';
