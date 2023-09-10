@@ -81,14 +81,14 @@ const Website = () => {
             disabled={loadingFetchLink}
           >
              {textLoading.full_page ? (<div>
-                Fetching<TypeAnimation
+                <TypeAnimation
                   sequence={['.', 800, '..', 800, '...', 800]}
                   repeat={Infinity}
                   cursor={false}
                 />
               </div>
             ) : (
-              'Fetch Link'
+              'Import'
             )}
           </button>
         </div>
@@ -118,14 +118,14 @@ const Website = () => {
             disabled={loadingFetchLink}
           >
              {textLoading.direct_page ? (<div>
-                Fetching<TypeAnimation
+                <TypeAnimation
                   sequence={['.', 800, '..', 800, '...', 800]}
                   repeat={Infinity}
                   cursor={false}
                 />
               </div>
             ) : (
-              'Fetch Link'
+              'Import'
             )}
           </button>
         </div>
