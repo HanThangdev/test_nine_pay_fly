@@ -3,7 +3,7 @@ import http from '..';
 import {
   BotPayload,
   BotDataResponse,
-  ScrapingURLPayload,
+  ImportURLPayload,
   AdvancePayload,
   GetStreamingPayload,
   CreateSessionResponse,
@@ -104,10 +104,10 @@ export const getChatStreamingTransaction = createAsyncThunk(
   },
 );
 
-export const scrapingURLTransaction = createAsyncThunk(
-  'transaction/scrapingURLTransaction',
+export const importURLTransaction = createAsyncThunk(
+  'transaction/importURLTransaction',
   async (
-    { payload, callBack }: GetStreamingPayload<ScrapingURLPayload, any>,
+    { payload, callBack }: GetStreamingPayload<ImportURLPayload, any>,
     { rejectWithValue },
   ) => {
     const endPoint = 'api/scraping/url';
@@ -128,14 +128,18 @@ export const scrapingURLTransaction = createAsyncThunk(
       );
       const reader = response.body?.getReader();
       const decoder = new TextDecoder('utf-8');
-
+      let data
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
-        const data = decoder.decode(value, { stream: true });
+        data = decoder.decode(value, { stream: true });
         console.log(data);
-        callBack(data);
+        callBack(JSON.parse(data));
       }
+      if(!!data){
+        callBack(JSON.parse(data));
+      }
+      return data
     } catch (error: any) {
       console.log(error);
       return rejectWithValue(error.response.data.error);
@@ -164,7 +168,7 @@ export const deleteURLTransaction = createAsyncThunk(
     try {
       const queryString = objectToQueryString(payload);
       const response = await http.delete<SuccessResponse<string>>(
-        `/api/scraping/url?${queryString}`,
+        `/api/import/url?${queryString}`,
       );
       return response;
     } catch (error: any) {
@@ -179,7 +183,7 @@ export const getAllURLTransaction = createAsyncThunk(
     try {
       const queryString = objectToQueryString(payload);
       const response = await http.get<SuccessResponse<GetAllURLResponse>>(
-        `/api/scraping/url?${queryString}`,
+        `/api/import/url?${queryString}`,
       );
       return response;
     } catch (error: any) {

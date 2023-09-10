@@ -84,16 +84,16 @@ const ChatbotElement = ({ info }: ChatbotElementProps) => {
           content={
             <div className="grid gap-y-2">
               <p
-                className="m-auto cursor-pointer"
+                className="m-auto cursor-pointer pb-2"
                 onClick={redirectToUpdateBot}
               >
                 <IconEdit />
               </p>
-              <p className="m-auto cursor-pointer">
+              <p className="m-auto cursor-pointer pb-2">
                 <IconShare />
               </p>
               <p
-                className="m-auto cursor-pointer "
+                className="m-auto cursor-pointer pb-2"
                 onClick={() => {
                   setOpenPopover(!openPopover);
                   setVisibleDeleteModal(true);

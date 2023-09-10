@@ -1,3 +1,5 @@
+import { DataFetchLink } from "@/states/auth/type";
+
 export interface BotPayload {
   bot_name: string;
   case_study: string;
@@ -20,7 +22,7 @@ export interface UpdateBotPayload {
   custom_error_message?: string;
   id: string;
 }
-export interface ScrapingURLPayload {
+export interface ImportURLPayload {
   bot_id: string;
   user_id: string;
   scrape_url: string;
@@ -105,7 +107,7 @@ export interface GetAllURLPayload {
 }
 
 export interface GetAllURLResponse {
-  url: Array<string>
+  url: DataFetchLink[]
 }
 
 export interface GetBotInfoPayload {

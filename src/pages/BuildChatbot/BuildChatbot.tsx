@@ -39,14 +39,14 @@ const BuildChatbot = () => {
       children: <ImportDataClient />,
     },
     {
-      key: 'setting',
-      label: `${t('AdvancedSetting')}`,
-      children: <SettingClient />,
-    },
-    {
       key: 'testing',
       label: `${t('TestChatbot')}`,
       children: <TestingClient />,
+    },
+    {
+      key: 'setting',
+      label: `${t('AdvancedSetting')}`,
+      children: <SettingClient />,
     },
     {
       key: 'integration',

@@ -8,7 +8,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { isEmptyObjectOrArray } from '@/utils/utils';
 import { useManageChatbot } from '@/states/manageBot/manageBot.selector';
 import { ResponseManageChatbot } from '@/states/manageBot/type';
-import { IOptionSelect } from './type';
+import { IOptionBotSelect } from './type';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/states/store';
 import { getBotTransaction } from '@/repository/manageChatbot';
@@ -24,9 +24,10 @@ const Conversations = () => {
 
   const [fromDate, setFromDate] = useState(dayjs());
   const [toDate, setToDate] = useState(dayjs().add(1, 'day'));
+  const [botSelect, setBotSelect] = useState<IOptionBotSelect | any>();
 
   const valueBot = useMemo(() => {
-    let convertedArray: IOptionSelect[] = [];
+    let convertedArray: IOptionBotSelect[] = [];
     if (!isEmptyObjectOrArray(ownerChatbot)) {
       convertedArray = ownerChatbot.map((item: ResponseManageChatbot) => {
         return {
@@ -40,22 +41,28 @@ const Conversations = () => {
     return !isEmptyObjectOrArray(convertedArray) ? convertedArray : [];
   }, [ownerChatbot]);
 
-  const handleChange = (value: string, option: IOptionSelect | any) => {
-    const { bot_id, user_id } = option;
-    const paramsGetAllConversations: GetAllConversationsPayload = {
-      bot_id,
-      user_id,
-      date_from: fromDate.format().toString(),
-      date_to: toDate.format().toString(),
-    };
-    // dispatch(getAllConversations(paramsGetAllConversations));
+  const handleSelectBotChange = (value: string, option: IOptionBotSelect | any) => {
+    setBotSelect(option)
   };
 
-  // useEffect(() => {
-  //   if (isEmptyObjectOrArray(ownerChatbot)) {
-  //     dispatch(getBotTransaction());
-  //   }
-  // }, []);
+  useEffect(() => {
+    if(!isEmptyObjectOrArray(botSelect)){
+      const { bot_id, user_id } = botSelect;
+      const paramsGetAllConversations: GetAllConversationsPayload = {
+        bot_id,
+        user_id,
+        date_from: fromDate.format().toString(),
+        date_to: toDate.format().toString(),
+      };
+      dispatch(getAllConversations(paramsGetAllConversations));
+    }
+  }, [fromDate, toDate, botSelect, ownerChatbot]);
+
+  useEffect(() => {
+    if (isEmptyObjectOrArray(ownerChatbot)) {
+      dispatch(getBotTransaction());
+    }
+  }, []);
 
   return (
     <div
@@ -70,7 +77,7 @@ const Conversations = () => {
           style={{ width: 150 }}
           placeholder={`${t('SelectBot', { ns: 'conversation' })}`}
           optionFilterProp="children"
-          onChange={handleChange}
+          onChange={handleSelectBotChange}
           // filterOption={(input, option) =>
           //   (option?.label ?? '').includes(input)
           // }
@@ -86,12 +93,14 @@ const Conversations = () => {
             placeholder={`${t('From', { ns: 'conversation' })}`}
             value={fromDate}
             allowClear={false}
+            onChange={(value) => setFromDate(value || dayjs())}
           />
           <p className="mb-0">~</p>
           <DatePicker
             placeholder={`${t('To', { ns: 'conversation' })}`}
             value={toDate}
             allowClear={false}
+            onChange={(value) => setToDate(value || dayjs().add(1, 'day'))}
           />
         </div>
       </div>

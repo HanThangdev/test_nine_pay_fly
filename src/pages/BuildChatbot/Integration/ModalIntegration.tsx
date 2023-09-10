@@ -15,16 +15,25 @@ export default function ModalIntegration({ open, onClose }: Props) {
   const { data, session_id } = useBuildChatbot();
   const cookies = new Cookies();
   const token = cookies.get('access_token');
-  const codeString = `
+  const codeStringEmbedBubble = `
     <script src="${window.location.origin}/Chat.js"></script>
     <script>
       window.chatbotConfig = {
-        bot_id: "${data?.id}",
-        session_id: "${session_id}",
-        user_id: "${data?.user_id}",
-        token: "${token}",
+        bot_id:"${data?.id}",
+        session_id:"${session_id}",
+        user_id:"${data?.user_id}",
+        token:"${token}",
       };
     </script>
+  `;
+
+  const codeStringEmbedIframe = `
+    <iframe
+      src="/default.asp"
+      width="100%"
+      height="300"
+      style="border:1px solid black;"
+    ></iframe>
   `;
   return (
     <Modal
@@ -50,14 +59,7 @@ export default function ModalIntegration({ open, onClose }: Props) {
         <div
           className={classNames('w-full bg-[#f1f5f9] rounded-[5px] px-4 py-2')}
         >
-          <p>
-            &lt;iframe <br />
-            src="/default.asp" <br />
-            width="100%" <br />
-            height="300" <br />
-            style="border:1px solid black;" <br />
-            &gt;&lt;/iframe&gt;
-          </p>
+          <Code language="html">{codeStringEmbedIframe}</Code>
         </div>
       </div>
       <p className="text-[15px] text-[#878787] mt-6">
@@ -71,7 +73,7 @@ export default function ModalIntegration({ open, onClose }: Props) {
         <div
           className={classNames('w-full bg-[#f1f5f9] rounded-[5px] px-4 py-2')}
         >
-          <Code language="html">{codeString}</Code>
+          <Code language="html">{codeStringEmbedBubble}</Code>
         </div>
       </div>
     </Modal>

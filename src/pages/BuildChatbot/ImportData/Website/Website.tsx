@@ -1,28 +1,30 @@
-import { ScrapingURLPayload } from '@/repository/buildChatBot/type';
-import { RootState } from '@/states/store';
+import { ImportURLPayload } from '@/repository/buildChatBot/type';
+import { AppDispatch, RootState } from '@/states/store';
 import { isEmptyObjectOrArray } from '@/utils/utils';
 import { Progress, notification } from 'antd';
 import { useMemo, useState } from 'react';
 import { AiOutlineQuestionCircle } from 'react-icons/ai';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { TextLoadingWebsite } from './type';
 import { TypeAnimation } from 'react-type-animation';
 import { useBuildChatbot } from '@/states/buildChatBot/buildChatBot.selector';
 import FetchLinkItem from '../../Component/FetchLinkItem';
 import { useTranslation } from 'react-i18next';
+import { loadFetchLink } from '@/states/buildChatBot/buildChatBot.slice';
+import { validURL } from '@/utils/validate';
 
 const Website = () => {
   const { t } = useTranslation();
+  const dispatch = useDispatch<AppDispatch>();
   const { onStreamingUploadUrl, fetchLink } = useBuildChatbot();
   const { data, listIncludesLink, loadingFetchLink } = useSelector(
     (state: RootState) => state.buildChatBot,
   );
   const [fullPageUrl, setFullPageUrl] = useState<string>('');
   const [directPageUrl, setDirectPageUrl] = useState<string>('');
-  const [textLoading, setTextLoading] = useState<TextLoadingWebsite>({
-    direct_page: '',
-    full_page: '',
-  });
+  const [loadingFullPage, setLoadingFullPage] = useState<boolean>(false);
+  const [loadingDirectPage, setLoadingDirectPage] = useState<boolean>(false);
+  
   const SCRAPE_TYPE = {
     FULL_PAGE: 1,
     DIRECT_PAGE: 2,
@@ -32,14 +34,27 @@ const Website = () => {
       return;
     }
 
-    const valueLoading = Object.assign(textLoading);
-    valueLoading[
-      scrapeType === SCRAPE_TYPE.FULL_PAGE ? 'full_page' : 'direct_page'
-    ] = 'Fetching...';
-    setTextLoading(valueLoading);
+    if(!validURL(scrapeType === SCRAPE_TYPE.FULL_PAGE ? fullPageUrl : directPageUrl)){
+      notification.error({
+        message: "Invalid Url"
+      });
+    }
+
+    dispatch(loadFetchLink({
+      num_token: 0,
+      progress: 0,
+      url:""
+    }))
+
+    if(scrapeType == SCRAPE_TYPE.FULL_PAGE){
+      setLoadingFullPage(true)
+    }else{
+      setLoadingDirectPage(true)
+    }
+    
     const { id, user_id } = data;
 
-    const scrapingUrlPayload: ScrapingURLPayload = {
+    const importUrlPayload: ImportURLPayload = {
       bot_id: id,
       user_id,
       scrape_url:
@@ -48,16 +63,15 @@ const Website = () => {
     };
 
     try {
-      onStreamingUploadUrl(scrapingUrlPayload);
+      await onStreamingUploadUrl(importUrlPayload);
     } catch (error: any) {
       notification.error({
         message: error?.response?.data.errors ?? error?.message,
       });
+    } finally {
+      setLoadingFullPage(false)
+      setLoadingDirectPage(false)
     }
-    valueLoading[
-      scrapeType === SCRAPE_TYPE.FULL_PAGE ? 'full_page' : 'direct_page'
-    ] = '';
-    setTextLoading(valueLoading);
     resetUrl();
   };
 
@@ -66,7 +80,7 @@ const Website = () => {
   const totalTokens = useMemo(
     () =>
       listIncludesLink.reduce(
-        (accumulator, item) => accumulator + item.num_token,
+        (accumulator, item) => accumulator + (item.num_token || 0),
         0,
       ),
     [listIncludesLink],
@@ -76,6 +90,7 @@ const Website = () => {
     setFullPageUrl('');
     setDirectPageUrl('');
   };
+  
   return (
     <>
       <div>
@@ -96,7 +111,7 @@ const Website = () => {
             onClick={() => onFetchLink(SCRAPE_TYPE.FULL_PAGE)}
             disabled={loadingFetchLink}
           >
-            {textLoading.full_page ? (
+            {loadingFullPage ? (
               <div>
                 <TypeAnimation
                   sequence={['.', 800, '..', 800, '...', 800]}
@@ -109,7 +124,7 @@ const Website = () => {
             )}
           </button>
         </div>
-        {!!fetchLink?.progress && textLoading.full_page && (
+        {!isEmptyObjectOrArray(fetchLink) && loadingFullPage && (
           <Progress
             className="mt-[10px]"
             percent={+(fetchLink.progress * 100).toFixed(2)}
@@ -140,7 +155,7 @@ const Website = () => {
             onClick={() => onFetchLink(SCRAPE_TYPE.DIRECT_PAGE)}
             disabled={loadingFetchLink}
           >
-            {textLoading.direct_page ? (
+            {loadingDirectPage ? (
               <div>
                 <TypeAnimation
                   sequence={['.', 800, '..', 800, '...', 800]}
@@ -153,7 +168,7 @@ const Website = () => {
             )}
           </button>
         </div>
-        {!!fetchLink?.progress && textLoading.direct_page && (
+        {!isEmptyObjectOrArray(fetchLink) && loadingDirectPage&& (
           <Progress
             className="mt-[10px]"
             percent={+(fetchLink.progress * 100).toFixed(2)}

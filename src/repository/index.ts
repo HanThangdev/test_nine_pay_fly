@@ -64,7 +64,7 @@ class Http {
           return Promise.reject(error);
         }
         notification.error({
-          message: error.response?.data?.message,
+          message: error.response?.data?.message || (error.response?.status == HttpStatusCode.InternalServerError && "Server Error"),
           duration: 2,
         });
         return Promise.reject(error);

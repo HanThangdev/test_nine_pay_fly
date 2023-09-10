@@ -1,4 +1,4 @@
-export interface IOptionSelect {
+export interface IOptionBotSelect {
   key: string
   value: string,
   bot_id: string

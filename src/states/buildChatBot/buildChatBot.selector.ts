@@ -2,8 +2,8 @@ import { useCallback } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../store';
 import { DataFetchFile, DataFetchLink } from './type';
-import { createSessionTransaction, deleteURLTransaction, getChatStreamingTransaction, scrapingURLTransaction, uploadFileTransaction } from '@/repository/buildChatBot';
-import { DeleteURLPayload, GetChatStreamingRequest, ScrapingURLPayload, UploadFilePayload } from '@/repository/buildChatBot/type';
+import { createSessionTransaction, deleteURLTransaction, getChatStreamingTransaction, importURLTransaction, uploadFileTransaction } from '@/repository/buildChatBot';
+import { DeleteURLPayload, GetChatStreamingRequest, ImportURLPayload, UploadFilePayload } from '@/repository/buildChatBot/type';
 import { loadFetchLink, setGenerateChatIntoListHistory, setNewChatIntoListHistory } from './buildChatBot.slice';
 
 export const useBuildChatbot = () => {
@@ -22,11 +22,12 @@ export const useBuildChatbot = () => {
   );
 
   const onStreamingUploadUrl = useCallback(
-    async (payload: ScrapingURLPayload) => {
+    async (payload: ImportURLPayload) => {
       const callBack = (data: DataFetchLink) => {
         dispatch(loadFetchLink(data))
       }
-       await dispatch(scrapingURLTransaction({payload, callBack}));
+       const response = await dispatch(importURLTransaction({payload, callBack}));
+       return response
     },
     [dispatch],
   );

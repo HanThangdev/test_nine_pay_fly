@@ -7,7 +7,7 @@ import {
   getAllURLTransaction,
   getBotInfoTransaction,
   getChatStreamingTransaction,
-  scrapingURLTransaction,
+  importURLTransaction,
   updateBotTransaction,
   uploadFileTransaction,
 } from '@/repository/buildChatBot';
@@ -138,9 +138,9 @@ export const buildChatbotSlice = createSlice({
     });
 
     // end getChatStreamingResponse
-    // start scrapingURLTransaction
+    // start importURLTransaction
 
-    builder.addCase(scrapingURLTransaction.pending, (state) => {
+    builder.addCase(importURLTransaction.pending, (state) => {
       state.loadingFetchLink = true;
       state.fetchFile={
         num_token: 0,
@@ -148,12 +148,19 @@ export const buildChatbotSlice = createSlice({
         url:""
       };
     });
-    builder.addCase(scrapingURLTransaction.fulfilled, (state, action: any) => {
-      console.log(action)
-      state.listIncludesLink.push(action.payload);
+    builder.addCase(importURLTransaction.fulfilled, (state, action: any) => {
+      const newListIncludesLink = Array.from(state.listIncludesLink)
+      newListIncludesLink.push(JSON.parse(action.payload));
+      
+      state.listIncludesLink = newListIncludesLink;
       state.loadingFetchLink = false;
+      state.fetchFile={
+        num_token: null,
+        progress: 100,
+        url:""
+    }
     });
-    builder.addCase(scrapingURLTransaction.rejected, (state) => {
+    builder.addCase(importURLTransaction.rejected, (state) => {
       state.loadingFetchLink = false;
       state.fetchFile={
           num_token: null,
@@ -162,7 +169,7 @@ export const buildChatbotSlice = createSlice({
       }
     });
 
-    // end scrapingURLTransaction
+    // end importURLTransaction
     // start deleteURLTransaction
 
     builder.addCase(deleteURLTransaction.pending, (state) => {
@@ -182,7 +189,7 @@ export const buildChatbotSlice = createSlice({
       state.loadingFetchLink = true;
     });
     builder.addCase(getAllURLTransaction.fulfilled, (state, action) => { 
-      // state.listIncludesLink = 
+      state.listIncludesLink = action.payload.data.data.url
       state.loadingFetchLink = false;
     });
     builder.addCase(getAllURLTransaction.rejected, (state) => {
