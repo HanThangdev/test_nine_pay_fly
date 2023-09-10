@@ -18,6 +18,7 @@ import { API_STATUS } from '@/constants';
 import { useNavigate } from 'react-router-dom';
 import { objectToQueryString } from '@/utils/utils';
 import { resetStateBuild } from '@/states/buildChatBot/buildChatBot.slice';
+import { formatTimeAgo } from '@/utils/format';
 
 interface ChatbotElementProps {
   info: ResponseManageChatbot;
@@ -100,7 +101,7 @@ const ChatbotElement = ({ info }: ChatbotElementProps) => {
       </div>
       <p className="text-[20px] text-[#01058A] absolute bottom-0 flex items-center gap-x-2">
         <AiFillClockCircle />
-        Today at 09:32 AM
+        {formatTimeAgo(new Date(info.updated_at))}
       </p>
       <ModalComponent
         title={<div>Delete your chatbot</div>}
