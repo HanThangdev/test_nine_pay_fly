@@ -38,6 +38,7 @@ const Website = () => {
       notification.error({
         message: "Invalid Url"
       });
+      return;
     }
 
     dispatch(loadFetchLink({

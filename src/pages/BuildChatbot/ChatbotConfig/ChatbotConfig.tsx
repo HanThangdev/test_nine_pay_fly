@@ -50,28 +50,6 @@ const ChatbotConfig = () => {
     },
   ];
 
-  const optionsTone = [
-    {
-      value: '2',
-      label: 'Customer Support',
-      prompt: "customer_support_prompt"
-    },
-    {
-      value: '3',
-      label: 'Knowledge Management',
-      prompt: "knowledge_management_prompt"
-    },
-    {
-      value: '4',
-      label: 'Teaching Education',
-      prompt: "teaching_assistant_prompt"
-    },
-    {
-      value: '1',
-      label: 'Other',
-      prompt: "default_prompt"
-    },
-  ];
 
   const [loading, setLoading] = useState<boolean>();
 
