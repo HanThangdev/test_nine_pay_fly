@@ -4,16 +4,25 @@ import BotConfig from './BotConfig';
 import Prompt from './Prompt';
 import CollectCustomer from './CollectCustomer';
 import { Button, notification } from 'antd';
-import { createBotTransaction, updateBotTransaction } from '@/repository/buildChatBot';
+import {
+  createBotTransaction,
+  updateBotTransaction,
+} from '@/repository/buildChatBot';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/states/store';
 import { API_STATUS, KEY_TAB_BUILD_CHAT_BOT } from '@/constants';
 import { setActiveTab } from '@/states/buildChatBot/buildChatBot.slice';
-import { convertCustomValue, isEmptyObjectOrArray, objectToQueryString } from '@/utils/utils';
+import {
+  convertCustomValue,
+  isEmptyObjectOrArray,
+  objectToQueryString,
+} from '@/utils/utils';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { getBotTransaction } from '@/repository/manageChatbot';
 
 const ChatbotConfig = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const { data } = useSelector((state: RootState) => state.buildChatBot);
   const navigate = useNavigate();
@@ -47,7 +56,7 @@ const ChatbotConfig = () => {
   // Prompt variables
   const [creativity, setCreativity] = useState(0);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [rules, setRules] = useState<Array<string>>([""]);
+  const [rules, setRules] = useState<Array<string>>(['']);
   const [promptExample, setPromptExample] = useState(
     'I want you to roleplay as "AI Assistant". You will provide me with answers from the given context. If the answer is not included, say exactly "Sorry, I am not familiar with that topic." and stop after that. Refuse to answer any question not answered by the context. Never break character.',
   );
@@ -91,23 +100,23 @@ const ChatbotConfig = () => {
 
     try {
       if (!botName) {
-        throw { message: 'Name chat bot is required' };
+        throw { message: `${t('requiredName', { ns: 'config_bot' })}` };
       }
 
-      let response
+      let response;
       //Check have bot if not have status is update else status is create
-      if(!isUpdate){
+      if (!isUpdate) {
         response = await dispatch(createBotTransaction(createBotPayload));
-      }else {
+      } else {
         const updateBotPayload = {
           ...createBotPayload,
           user_id: data.user_id,
-          id: data.id
-        }
+          id: data.id,
+        };
         response = await dispatch(updateBotTransaction(updateBotPayload));
       }
 
-      const { meta } = response
+      const { meta } = response;
 
       if (meta.requestStatus === API_STATUS.REJECTED) {
         return;
@@ -116,7 +125,9 @@ const ChatbotConfig = () => {
       dispatch(setActiveTab(KEY_TAB_BUILD_CHAT_BOT.IMPORT_DATA));
       dispatch(getBotTransaction());
       notification.success({
-        message: !isUpdate ? 'Create bot successfully.' : 'Update bot successfully.',
+        message: !isUpdate
+          ? `${t('createSuccess', { ns: 'config_bot' })}`
+          : `${t('upadetSuccess', { ns: 'config_bot' })}`,
       });
     } catch (error: any) {
       notification.error({
@@ -129,7 +140,17 @@ const ChatbotConfig = () => {
 
   useEffect(() => {
     if (!isEmptyObjectOrArray(data)) {
-      const { id, user_id, bot_name, case_study, gpt_model_name, rules, temperature, custom_prompt, collect_customer_info} = data;
+      const {
+        id,
+        user_id,
+        bot_name,
+        case_study,
+        gpt_model_name,
+        rules,
+        temperature,
+        custom_prompt,
+        collect_customer_info,
+      } = data;
       const queryString = objectToQueryString({ id, user_id });
       navigate(`/build-chatbots?${queryString}`);
 
@@ -143,15 +164,12 @@ const ChatbotConfig = () => {
       setEmail(collect_customer_info?.email);
       setName(collect_customer_info?.name);
       setPhone(collect_customer_info?.phone);
-      setCustom(convertCustomValue(collect_customer_info))
+      setCustom(convertCustomValue(collect_customer_info));
     }
   }, [data]);
 
-
   //Check have bot if not have status is update else status is create
-  const isUpdate = useMemo(() => 
-    !isEmptyObjectOrArray(data)
-  ,[data])
+  const isUpdate = useMemo(() => !isEmptyObjectOrArray(data), [data]);
 
   return (
     <>
@@ -188,14 +206,16 @@ const ChatbotConfig = () => {
         setCustom={setCustom}
       />
       <div className="flex justify-end">
-          <Button
-            loading={loading}
-            disabled={loading}
-            onClick={onSubmit}
-            className="w-[150px] mt-[20px] h-[43px] bg-[#4AC1FF] text-white rounded-[10px] text-[15px] font-bold justify-cente"
-          >
-            {isUpdate ? 'Update' : 'Create'}
-          </Button>
+        <Button
+          loading={loading}
+          disabled={loading}
+          onClick={onSubmit}
+          className="w-[150px] mt-[20px] h-[43px] bg-[#4AC1FF] text-white rounded-[10px] text-[15px] font-bold justify-cente"
+        >
+          {isUpdate
+            ? `${t('Update', { ns: 'config_bot' })}`
+            : `${t('Create', { ns: 'config_bot' })}`}
+        </Button>
       </div>
     </>
   );

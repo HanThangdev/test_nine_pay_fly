@@ -17,6 +17,7 @@ import { API_STATUS } from '@/constants';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/states/store';
 import { convertFile2Base64 } from '@/utils/utils';
+import { useTranslation } from 'react-i18next';
 
 const optionsAlign = [
   {
@@ -34,6 +35,7 @@ interface Props {
 }
 
 const SetInterface = ({ dataSetinterface }: Props) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const resultRef = useRef<any>(null);
   const resultRefButton = useRef<any>(null);
@@ -129,7 +131,7 @@ const SetInterface = ({ dataSetinterface }: Props) => {
       }
 
       notification.success({
-        message: 'Advanced setting successfully.',
+        message: `${t('AdvancedSuccess', { ns: 'config_bot' })}`,
       });
       setTimeout(() => {}, 500);
     } catch (error: any) {
@@ -165,7 +167,9 @@ const SetInterface = ({ dataSetinterface }: Props) => {
     <div className="">
       <form onSubmit={onSubmit}>
         <div className="text-[15px]">
-          <p className="font-bold mb-[8px]">Initial Messages</p>
+          <p className="font-bold mb-[8px]">
+            {t('Initial', { ns: 'config_bot' })}
+          </p>
           <input
             type="text"
             placeholder=""
@@ -179,11 +183,13 @@ const SetInterface = ({ dataSetinterface }: Props) => {
             }
           />
           <p className="mt-[12px] text-[#A7A7B0]">
-            Enter each message in a new line
+            {t('EnterEach', { ns: 'config_bot' })}
           </p>
         </div>
         <div className="text-[15px]">
-          <p className="font-bold mb-[8px]">Auto show initial messages after</p>
+          <p className="font-bold mb-[8px]">
+            {t('AutoShow', { ns: 'config_bot' })}
+          </p>
           <input
             type="number"
             placeholder=""
@@ -199,18 +205,22 @@ const SetInterface = ({ dataSetinterface }: Props) => {
           />
         </div>
         <div className="text-[15px]">
-          <p className="font-bold mb-[8px]">Suggestted Messages</p>
+          <p className="font-bold mb-[8px]">
+            {t('SuggesttedMess', { ns: 'config_bot' })}
+          </p>
           <textarea
             placeholder=""
             className="h-[100px] w-full py-2 rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
             onChange={(e) => setSuggestMessages(e.target.value)}
           />
           <p className="mt-[12px] text-[#A7A7B0]">
-            Enter each message in a new line
+            {t('EnterEach', { ns: 'config_bot' })}
           </p>
         </div>
         <div className="text-[15px]">
-          <p className="font-bold mb-[8px]">Theme</p>
+          <p className="font-bold mb-[8px]">
+            {t('Theme', { ns: 'config_bot' })}
+          </p>
           <div className="flex gap-x-4">
             <button
               type="button"
@@ -223,7 +233,7 @@ const SetInterface = ({ dataSetinterface }: Props) => {
               )}
             >
               <PiSunDimLight size={20} />
-              Light
+              {t('Light', { ns: 'config_bot' })}
             </button>
             <button
               type="button"
@@ -236,7 +246,7 @@ const SetInterface = ({ dataSetinterface }: Props) => {
               )}
             >
               <MdOutlineDarkMode size={20} />
-              Dark
+              {t('Dark', { ns: 'config_bot' })}
             </button>
           </div>
         </div>
@@ -244,7 +254,7 @@ const SetInterface = ({ dataSetinterface }: Props) => {
           {!removeImage && (
             <>
               <p className="font-bold mb-[8px]">
-                Update Chatbot profile picture
+                {t('UpdateChatAvatar', { ns: 'config_bot' })}
               </p>
 
               <div className="h-[41px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] items-center justify-center flex">
@@ -263,11 +273,15 @@ const SetInterface = ({ dataSetinterface }: Props) => {
             </>
           )}
 
-          <p className="mt-[12px] mb-1">Remove Chatbot profile picture</p>
+          <p className="mt-[12px] mb-1">
+            {t('RemoveChatAvatar', { ns: 'config_bot' })}
+          </p>
           <Checkbox onChange={onChange}></Checkbox>
         </div>
         <div className="text-[15px] mt-4">
-          <p className="font-bold mb-[8px]">Display name</p>
+          <p className="font-bold mb-[8px]">
+            {t('DisplayName', { ns: 'config_bot' })}
+          </p>
           <input
             type="text"
             placeholder=""
@@ -282,7 +296,9 @@ const SetInterface = ({ dataSetinterface }: Props) => {
           />
         </div>
         <div className="text-[15px]">
-          <p className="font-bold mt-4 mb-[8px]">User Message Color</p>
+          <p className="font-bold mt-4 mb-[8px]">
+            {t('colorUserMess', { ns: 'config_bot' })}
+          </p>
           <div className="flex justify-between">
             <div>
               <div
@@ -309,12 +325,14 @@ const SetInterface = ({ dataSetinterface }: Props) => {
               onClick={() => setColor('#4AC1FF')}
               className="right-[38px] w-[150px] h-[43px] bg-[#E8E9F4] text-[#01058A] rounded-[10px] text-[15px] font-bold justify-cente"
             >
-              Reset
+              {t('Reset', { ns: 'config_bot' })}
             </button>
           </div>
         </div>
         <div className="text-[15px] flex gap-x-4 items-center mt-[15px]">
-          <p className="font-bold mb-0">Update Chat icon</p>
+          <p className="font-bold mb-0">
+            {t('UpdateIconChat', { ns: 'config_bot' })}
+          </p>
           <Popover
             content={
               <div className="w-[220px] grid grid-cols-4 gap-x-2">
@@ -345,7 +363,9 @@ const SetInterface = ({ dataSetinterface }: Props) => {
           </Popover>
         </div>
         <div className="text-[15px] mt-4 flex gap-x-4">
-          <p className="font-bold mt-4 mb-[8px]">Chat Bubble button color</p>
+          <p className="font-bold mt-4 mb-[8px]">
+            {t('ChatBubble', { ns: 'config_bot' })}
+          </p>
           <div className="flex justify-between">
             <div
               onClick={() => setOpencolorButton(!openColorButton)}
@@ -368,7 +388,9 @@ const SetInterface = ({ dataSetinterface }: Props) => {
           </div>
         </div>
         <div className="text-[15px] mt-4">
-          <p className="font-bold mb-[8px]">Align Chat Bubble Button</p>
+          <p className="font-bold mb-[8px]">
+            {t('AlignChat', { ns: 'config_bot' })}
+          </p>
           <select
             {...register('align_chat_bubble_button')}
             onChange={(e) =>
@@ -391,7 +413,7 @@ const SetInterface = ({ dataSetinterface }: Props) => {
             type="submit"
             className="w-[150px] h-[43px] bg-[#4AC1FF;] text-white rounded-[10px] text-[15px] font-bold justify-cente"
           >
-            Save
+            {t('save', { ns: 'config_bot' })}
           </button>
         </div>
       </form>

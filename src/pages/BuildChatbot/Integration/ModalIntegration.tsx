@@ -2,6 +2,7 @@ import Code from '@/components/code';
 import { useBuildChatbot } from '@/states/buildChatBot/buildChatBot.selector';
 import { Modal } from 'antd';
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 import Cookies from 'universal-cookie';
 interface Props {
   open?: boolean;
@@ -9,8 +10,9 @@ interface Props {
 }
 
 export default function ModalIntegration({ open, onClose }: Props) {
+  const { t } = useTranslation();
 
-  const { data, session_id } = useBuildChatbot()
+  const { data, session_id } = useBuildChatbot();
   const cookies = new Cookies();
   const token = cookies.get('access_token');
   const codeString = `
@@ -35,11 +37,10 @@ export default function ModalIntegration({ open, onClose }: Props) {
       className="integration-modal"
     >
       <p className="flex text-[20px] text-[#01058A] font-black">
-        Embed on site
+        {t('Embed', { ns: 'config_bot' })}
       </p>
       <p className="text-[15px] text-[#878787]">
-        To add the chatbot any where on your website, add this iframe to your
-        html code
+        {t('addChatbot', { ns: 'config_bot' })}
       </p>
       <div
         className={classNames(
@@ -60,8 +61,7 @@ export default function ModalIntegration({ open, onClose }: Props) {
         </div>
       </div>
       <p className="text-[15px] text-[#878787] mt-6">
-        To add a chat bubble to the bottom right of your website add this script
-        tag to your html
+        {t('addChatbubble', { ns: 'config_bot' })}
       </p>
       <div
         className={classNames(
@@ -71,10 +71,7 @@ export default function ModalIntegration({ open, onClose }: Props) {
         <div
           className={classNames('w-full bg-[#f1f5f9] rounded-[5px] px-4 py-2')}
         >
-          <Code language='html'
-          >
-            {codeString}
-          </Code>
+          <Code language="html">{codeString}</Code>
         </div>
       </div>
     </Modal>

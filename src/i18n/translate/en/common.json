@@ -1,3 +1,16 @@
 {
-	"language": "Language"
+  "language": "Language",
+  "Upgrade": "UPGRADE",
+  "Help": "Help",
+  "Account": "Account",
+  "Logout": "Log Out",
+  "Manage": "Manage Chatbots",
+  "Build": "Build Chatbot",
+  "Conversations": "Conversations",
+  "Pricing": "Pricing Plans",
+  "ChatbotConfig": "Chatbot config",
+  "ImportData": "Import Data",
+  "AdvancedSetting": "Advanced Setting",
+  "TestChatbot": "Test Chatbot",
+  "Integrations": "Integrations"
 }

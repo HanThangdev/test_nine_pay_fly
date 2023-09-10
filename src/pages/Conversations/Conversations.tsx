@@ -1,7 +1,7 @@
 import IconReload from '@/components/IconReload/IconReload';
 import IconInterface from '@/components/IconInterface/IconInterface';
 import IconDown from '@/components/IconDown/IconDown';
-
+import { useTranslation } from 'react-i18next';
 import { BiSolidFileExport } from 'react-icons/bi';
 import { DatePicker, Select } from 'antd';
 import { useEffect, useMemo, useState } from 'react';
@@ -12,49 +12,50 @@ import { IOptionSelect } from './type';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/states/store';
 import { getBotTransaction } from '@/repository/manageChatbot';
-import * as dayjs from 'dayjs'
+import * as dayjs from 'dayjs';
 import { getAllConversations } from '@/repository/conversations';
 import classNames from 'classnames';
 import { GetAllConversationsPayload } from '@/repository/conversations/type';
 
 const Conversations = () => {
-  const { ownerChatbot } = useManageChatbot()
+  const { t } = useTranslation();
+  const { ownerChatbot } = useManageChatbot();
   const dispatch = useDispatch<AppDispatch>();
 
-  const [fromDate, setFromDate]=useState(dayjs())
-  const [toDate, setToDate]=useState(dayjs().add(1, 'day'))
+  const [fromDate, setFromDate] = useState(dayjs());
+  const [toDate, setToDate] = useState(dayjs().add(1, 'day'));
 
   const valueBot = useMemo(() => {
-    let convertedArray: IOptionSelect[] = []
-    if(!isEmptyObjectOrArray(ownerChatbot)){
+    let convertedArray: IOptionSelect[] = [];
+    if (!isEmptyObjectOrArray(ownerChatbot)) {
       convertedArray = ownerChatbot.map((item: ResponseManageChatbot) => {
         return {
           value: item.bot_name,
           key: item.bot_name,
           bot_id: item.id,
-          user_id: item.user_id
+          user_id: item.user_id,
         };
-      })
+      });
     }
-    return !isEmptyObjectOrArray(convertedArray) ? convertedArray : []
-  }, [ownerChatbot])
+    return !isEmptyObjectOrArray(convertedArray) ? convertedArray : [];
+  }, [ownerChatbot]);
 
-  const handleChange = (value:string, option:IOptionSelect | any) => {
-    const {bot_id, user_id} = option 
+  const handleChange = (value: string, option: IOptionSelect | any) => {
+    const { bot_id, user_id } = option;
     const paramsGetAllConversations: GetAllConversationsPayload = {
       bot_id,
       user_id,
       date_from: fromDate.format().toString(),
       date_to: toDate.format().toString(),
-    }
+    };
     dispatch(getAllConversations(paramsGetAllConversations));
-  }
+  };
 
   useEffect(() => {
-    if(isEmptyObjectOrArray(ownerChatbot)){
+    if (isEmptyObjectOrArray(ownerChatbot)) {
       dispatch(getBotTransaction());
     }
-  },[])
+  }, []);
 
   return (
     <div
@@ -67,7 +68,7 @@ const Conversations = () => {
         <Select
           showSearch
           style={{ width: 150 }}
-          placeholder="Select chatbot"
+          placeholder={`${t('SelectBot', { ns: 'conversation' })}`}
           optionFilterProp="children"
           onChange={handleChange}
           // filterOption={(input, option) =>
@@ -81,9 +82,15 @@ const Conversations = () => {
           options={valueBot}
         />
         <div className="flex items-center gap-x-3">
-          <DatePicker placeholder="From" value={fromDate}/>
+          <DatePicker
+            placeholder={`${t('From', { ns: 'conversation' })}`}
+            value={fromDate}
+          />
           <p className="mb-0">~</p>
-          <DatePicker placeholder="To" value={toDate}/>
+          <DatePicker
+            placeholder={`${t('To', { ns: 'conversation' })}`}
+            value={toDate}
+          />
         </div>
       </div>
       <div className={classNames('mt-6 grid grid-cols-2 gap-x-8')}>
@@ -98,7 +105,7 @@ const Conversations = () => {
                 )}
               >
                 <div className="flex justify-between text-[15px] text-[#33343D]">
-                  <p>Customer:</p>
+                  <p>{t('Customer', { ns: 'conversation' })}:</p>
                   <p>2 Day</p>
                 </div>
                 <div className="flex justify-between gap-x-4 text-[20px] text-[#33343D]">
@@ -140,7 +147,7 @@ const Conversations = () => {
       <div className="flex justify-end mt-[30px]">
         <button className="w-[150px] flex items-center gap-x-2 justify-center h-[43px] bg-[#4AC1FF] text-white rounded-[10px] text-[15px] font-bold justify-cente">
           <BiSolidFileExport size={24} />
-          Export PDF
+          {t('ExportPDF', { ns: 'conversation' })}
         </button>
       </div>
     </div>

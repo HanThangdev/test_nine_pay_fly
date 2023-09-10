@@ -5,6 +5,7 @@ import { Slider, Switch, Tooltip } from 'antd';
 import React from 'react';
 import { AiOutlineCaretRight, AiOutlineCaretDown } from 'react-icons/ai';
 import { RiDeleteBinLine } from 'react-icons/ri';
+import { useTranslation } from 'react-i18next';
 
 interface PromptProps {
   creativity: number;
@@ -30,6 +31,7 @@ const Prompt: React.FC<PromptProps> = ({
   value,
   setValue,
 }) => {
+  const { t } = useTranslation();
   const addItem = () => {
     setRules([...rules, '']);
   };
@@ -50,7 +52,7 @@ const Prompt: React.FC<PromptProps> = ({
         className="text-[20px] text-[#01058A] font-black flex items-center gap-x-3"
       >
         <IconPrompt />
-        Prompt
+        {t('Prompt', { ns: 'config_bot' })}
         <span className="mt-[2px]">
           {dropdownOpen ? (
             <AiOutlineCaretDown size={18} color="black" />
@@ -63,22 +65,20 @@ const Prompt: React.FC<PromptProps> = ({
         <>
           <div className="flex items-center justify-between">
             <p className="mt-[12px] text-[15px] text-[#A7A7B0]">
-              Guiding instructions for AI's intelligent responses
+              {t('Guiding', { ns: 'config_bot' })}
             </p>
             <button className="w-[150px] h-[43px] bg-[#E8E9F4] text-[#01058A] rounded-[10px] text-[14px] font-bold justify-cente">
-              Prompt examples
+              {t('PromptEx', { ns: 'config_bot' })}
             </button>
           </div>
           <div className="text-[15px] mt-[16px]">
             <p className="w-[240px] flex gap-x-[10px] font-bold items-center">
-              Base Prompt{' '}
+              {t('Base', { ns: 'config_bot' })}
               <Tooltip
                 color="#212121"
                 placement="rightTop"
                 overlayStyle={{ whiteSpace: 'pre-line', width: '400px' }}
-                title={
-                  'The prompt helps the AI understand what you want and how to respond. It guides the conversation and ensures relevant and coherent answers.'
-                }
+                title={t('tooltipPrompt', { ns: 'config_bot' })}
               >
                 <AiOutlineQuestionCircle size={18} color="#E77964" />
               </Tooltip>
@@ -92,14 +92,12 @@ const Prompt: React.FC<PromptProps> = ({
 
           <div className="text-[15px] mt-[16px]">
             <p className="w-[240px] flex gap-x-[10px] font-bold items-center">
-              Creativity{' '}
+              {t('Creativity', { ns: 'config_bot' })}
               <Tooltip
                 color="#212121"
                 placement="rightTop"
                 overlayStyle={{ whiteSpace: 'pre-line', width: '400px' }}
-                title={
-                  'A higher temperature value and nearly to More Creative, allows for more randomness and creativity in the responses. This can lead to more diverse and unexpected answers. On the other hand, a lower temperature value, nearly to More Focused, produces deterministic responses, making them more conservative and predictable.'
-                }
+                title={t('tooltipTem', { ns: 'config_bot' })}
               >
                 <AiOutlineQuestionCircle size={18} color="#E77964" />
               </Tooltip>
@@ -112,21 +110,19 @@ const Prompt: React.FC<PromptProps> = ({
               tooltip={{ formatter: null }}
             />
             <div className="flex justify-between text-[#323232] font-bold">
-              <p>More Focused</p>
+              <p>{t('MoreFocus', { ns: 'config_bot' })}</p>
               <p>{creativity}</p>
-              <p>More Creative</p>
+              <p>{t('MoreCreate', { ns: 'config_bot' })}</p>
             </div>
           </div>
           <div className="text-[15px] mt-[16px]">
             <p className="w-[240px] flex gap-x-[10px] mb-0 font-bold items-center">
-              Enable In-text Citations{' '}
+              {t('Enable', { ns: 'config_bot' })}
               <Tooltip
                 color="#212121"
                 placement="rightTop"
                 overlayStyle={{ whiteSpace: 'pre-line', width: '400px' }}
-                title={
-                  'Our AI bot credits sources and includes links to specific information it used from your trained data, promoting a reliable and informed conversation.'
-                }
+                title={t('tooltipAI', { ns: 'config_bot' })}
               >
                 <AiOutlineQuestionCircle size={18} color="#E77964" />
               </Tooltip>
@@ -135,14 +131,12 @@ const Prompt: React.FC<PromptProps> = ({
           </div>
           <div className="text-[15px] mt-[16px]">
             <p className="w-[240px] flex gap-x-[10px] mb-0 font-bold items-center">
-              Rules{' '}
+              {t('Rules', { ns: 'config_bot' })}
               <Tooltip
                 color="#212121"
                 placement="rightTop"
                 overlayStyle={{ whiteSpace: 'pre-line', width: '400px' }}
-                title={
-                  'The rules help the AI understand an accepted principle or instruction that tells Chatbot what It is allowed or is not allowed to respon.'
-                }
+                title={t('tooltipRule', { ns: 'config_bot' })}
               >
                 <AiOutlineQuestionCircle size={18} color="#E77964" />
               </Tooltip>
@@ -157,8 +151,8 @@ const Prompt: React.FC<PromptProps> = ({
                   value={_item}
                   placeholder={
                     index !== 0
-                      ? 'New rule you can set'
-                      : 'Do not respond to content outside the documents provided'
+                      ? `${t('Newrule', { ns: 'config_bot' })}`
+                      : `${t('notRespond', { ns: 'config_bot' })}`
                   }
                   onChange={(e) => {
                     const newRules = Array.from(rules).map((_, idx) => {
@@ -167,8 +161,8 @@ const Prompt: React.FC<PromptProps> = ({
                       }
                       return _;
                     });
-                    setRules(newRules)
-                    }}
+                    setRules(newRules);
+                  }}
                   className={`${
                     index !== 0 || 'mt-[12px'
                   } h-[41px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none`}
@@ -189,7 +183,7 @@ const Prompt: React.FC<PromptProps> = ({
               onClick={addItem}
               className="w-[150px] mt-[20px] h-[43px] bg-[#4AC1FF] text-white rounded-[10px] text-[13px] font-bold justify-cente"
             >
-              Add
+              {t('Add', { ns: 'config_bot' })}
             </button>
           </div>
         </>

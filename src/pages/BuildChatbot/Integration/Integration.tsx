@@ -4,10 +4,12 @@ import IconSite from '@/components/IconSite/IconSite';
 import IconSlack from '@/components/IconSlack/IconSlack';
 import IconMess from '@/components/IconMess/IconMess';
 import IconTeams from '@/components/IconTeams/IconTeams';
+import { useTranslation } from 'react-i18next';
 
 import { useState } from 'react';
 import ModalIntegration from './ModalIntegration';
 const Integration = () => {
+  const { t } = useTranslation();
   const [openModal, setOpenModal] = useState(false);
   return (
     <>
@@ -19,7 +21,7 @@ const Integration = () => {
       >
         <div className="my-[58px] ">
           <h2 className="text-[20px] flex justify-center text-[#33343d] font-black gap-x-3 items-center">
-            INTEGRATIONS
+            {t('INTEGRATIONS', { ns: 'config_bot' })}
           </h2>
           <div className="grid gap-y-[25px] mt-[38px] w-[530px]">
             <p
@@ -30,7 +32,7 @@ const Integration = () => {
               )}
             >
               <IconSite />
-              Embed on site
+              {t('Embed', { ns: 'config_bot' })}
             </p>
             <p
               onClick={() => setOpenModal(true)}
@@ -40,7 +42,7 @@ const Integration = () => {
               )}
             >
               <IconSlack />
-              Add to Slack workspace
+              {t('addSlack', { ns: 'config_bot' })}
             </p>
             <p
               onClick={() => setOpenModal(true)}
@@ -50,7 +52,7 @@ const Integration = () => {
               )}
             >
               <IconTeams />
-              Add to Microsoft Team
+              {t('addTeam', { ns: 'config_bot' })}
             </p>
             <p
               onClick={() => setOpenModal(true)}
@@ -60,7 +62,7 @@ const Integration = () => {
               )}
             >
               <IconMess />
-              Add to Messenger
+              {t('addMess', { ns: 'config_bot' })}
             </p>
           </div>
         </div>

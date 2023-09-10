@@ -4,6 +4,7 @@ import { AiOutlineQuestionCircle } from 'react-icons/ai';
 import { Input, Radio, Tooltip } from 'antd';
 import React from 'react';
 import { BiLockOpenAlt, BiLockAlt } from 'react-icons/bi';
+import { useTranslation } from 'react-i18next';
 
 const optionsModal = [
   { label: 'GPT - 3.5', value: 'GPT - 3.5' },
@@ -26,7 +27,7 @@ interface BotConfigProps {
   visibility: string;
   setVisibility: (value: string) => void;
   options: Option[];
-  isUpdate: boolean
+  isUpdate: boolean;
 }
 
 const BotConfig: React.FC<BotConfigProps> = ({
@@ -39,8 +40,9 @@ const BotConfig: React.FC<BotConfigProps> = ({
   visibility,
   setVisibility,
   options,
-  isUpdate
+  isUpdate,
 }) => {
+  const { t } = useTranslation();
   return (
     <div
       className={classNames(
@@ -50,10 +52,12 @@ const BotConfig: React.FC<BotConfigProps> = ({
     >
       <h2 className="text-[20px] text-[#01058A] font-black flex gap-x-3">
         <IconRobot />
-        Bot Configurations
+        {t('BotConfig', { ns: 'config_bot' })}
       </h2>
       <div className="flex text-[15px] mt-[16px] items-center">
-        <p className="w-[150px] font-bold">Name Chatbot</p>
+        <p className="w-[150px] font-bold">
+          {t('NameBot', { ns: 'config_bot' })}
+        </p>
         <Input
           disabled={isUpdate}
           value={botName}
@@ -65,7 +69,7 @@ const BotConfig: React.FC<BotConfigProps> = ({
       </div>
       <div className="flex text-[15px] mt-[16px] items-center">
         <p className="w-[150px] flex gap-x-[10px] font-bold items-center">
-          Select Casestudy
+          {t('SelectCase', { ns: 'config_bot' })}
         </p>
         <select
           value={caseStudy}
@@ -81,14 +85,12 @@ const BotConfig: React.FC<BotConfigProps> = ({
       </div>
       <div className="text-[15px] mt-[16px]">
         <p className="flex gap-x-[10px] font-bold items-center">
-          Model
+          {t('Model', { ns: 'config_bot' })}
           <Tooltip
             color="#212121"
             placement="rightTop"
             overlayStyle={{ whiteSpace: 'pre-line', width: '400px' }}
-            title={
-              'GPT-3.5 is best for general use. It is a good balance of speed and output quality. \n GPT-3.5 turbo-16k is an upgraded version of GPT-3.5 that takes in 4x more context from your documents when generating output. \n GPT-3.5-16k: 8 message credits per message. \n GPT-3.5: 1 message credit per message.'
-            }
+            title={t('tooltipModel', { ns: 'config_bot' })}
           >
             <AiOutlineQuestionCircle size={18} color="#E77964" />
           </Tooltip>
@@ -105,14 +107,12 @@ const BotConfig: React.FC<BotConfigProps> = ({
       </div>
       <div className="text-[15px] mt-[16px]">
         <p className="w-[240px] flex gap-x-[10px] font-bold items-center">
-          Visibility
+          {t('Visibility', { ns: 'config_bot' })}
           <Tooltip
             color="#212121"
             placement="rightTop"
             overlayStyle={{ whiteSpace: 'pre-line', width: '400px' }}
-            title={
-              'Private: No one can access your chatbot except you (your account). \n Public: Anyone with the link can access it on ChatFly.com, and can be embedded on your website.'
-            }
+            title={t('tooltipPrivate', { ns: 'config_bot' })}
           >
             <AiOutlineQuestionCircle size={18} color="#E77964" />
           </Tooltip>
@@ -129,7 +129,7 @@ const BotConfig: React.FC<BotConfigProps> = ({
             )}
           >
             <BiLockOpenAlt size={20} />
-            Public
+            {t('Public', { ns: 'config_bot' })}
           </button>
           <button
             onClick={() => setVisibility('Private')}
@@ -142,13 +142,13 @@ const BotConfig: React.FC<BotConfigProps> = ({
             )}
           >
             <BiLockAlt size={20} />
-            Private
+            {t('Private', { ns: 'config_bot' })}
           </button>
         </div>
       </div>
       <div className="text-[15px] mt-[16px]">
         <p className="w-[240px] flex gap-x-[10px] mb-0 font-bold items-center">
-          Rate Limit{' '}
+          {t('Rate', { ns: 'config_bot' })}
           <Tooltip
             color="#212121"
             placement="rightTop"
@@ -161,14 +161,14 @@ const BotConfig: React.FC<BotConfigProps> = ({
           </Tooltip>
         </p>
         <p className="mt-[12px] text-[15px] text-[#A7A7B0]">
-          Limit to 100 messages every 1 day.
+          {t('Limit', { ns: 'config_bot' })}
         </p>
         <p className="text-[15px] text-[#A7A7B0]">
-          Message to show when limit is reached
+          {t('Message', { ns: 'config_bot' })}
         </p>
         <input
           type="text"
-          placeholder="Too many messages in a row."
+          placeholder={`${t('ManyMessage', { ns: 'config_bot' })}`}
           className="h-[41px] mt-[12px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
         />
       </div>

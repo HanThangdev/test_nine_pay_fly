@@ -13,11 +13,15 @@ import { useState } from 'react';
 import { ResponseManageChatbot } from '@/states/manageBot/type';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/states/store';
-import { deleteChatBotTransaction, getBotTransaction } from '@/repository/manageChatbot';
+import {
+  deleteChatBotTransaction,
+  getBotTransaction,
+} from '@/repository/manageChatbot';
 import { API_STATUS } from '@/constants';
 import { useNavigate } from 'react-router-dom';
 import { objectToQueryString } from '@/utils/utils';
 import { resetStateBuild } from '@/states/buildChatBot/buildChatBot.slice';
+import { useTranslation } from 'react-i18next';
 import { formatTimeAgo } from '@/utils/format';
 
 interface ChatbotElementProps {
@@ -25,8 +29,9 @@ interface ChatbotElementProps {
 }
 
 const ChatbotElement = ({ info }: ChatbotElementProps) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [visibleDeleteModal, setVisibleDeleteModal] = useState<boolean>(false);
   const [openPopover, setOpenPopover] = useState<boolean>(false);
   // const [visibleShareodal, setVisibleShareModal] = useState<boolean>(false);
@@ -34,17 +39,15 @@ const ChatbotElement = ({ info }: ChatbotElementProps) => {
   const deletedChatbot = async () => {
     try {
       const { id } = info;
-      const { meta } = await dispatch(
-        deleteChatBotTransaction({ bot_id: id }),
-      );
+      const { meta } = await dispatch(deleteChatBotTransaction({ bot_id: id }));
 
       if (meta.requestStatus == API_STATUS.REJECTED) {
-        setVisibleDeleteModal(false)
+        setVisibleDeleteModal(false);
         return;
       }
 
       notification.success({
-        message: "Delete bot success",
+        message: `${t('DeleteSuccess', { ns: 'manage_bot' })}`,
       });
       await dispatch(getBotTransaction());
     } catch (error: any) {
@@ -55,11 +58,11 @@ const ChatbotElement = ({ info }: ChatbotElementProps) => {
   };
 
   const redirectToUpdateBot = () => {
-    const {id, user_id} = info
-    const queryString = objectToQueryString({id, user_id})
-    dispatch(resetStateBuild())
-    navigate(`/build-chatbots?${queryString}`)
-  }
+    const { id, user_id } = info;
+    const queryString = objectToQueryString({ id, user_id });
+    dispatch(resetStateBuild());
+    navigate(`/build-chatbots?${queryString}`);
+  };
 
   return (
     <div
@@ -69,34 +72,53 @@ const ChatbotElement = ({ info }: ChatbotElementProps) => {
       )}
     >
       <div className="flex justify-between">
-        <button className="text-[24px] font-black text-black" onClick={redirectToUpdateBot}>{info.bot_name}</button>
+        <button
+          className="text-[24px] font-black text-black"
+          onClick={redirectToUpdateBot}
+        >
+          {info.bot_name}
+        </button>
         <Popover
           placement="bottomRight"
           open={openPopover}
           content={
             <div className="grid gap-y-2">
-              <p className="m-auto cursor-pointer" onClick={redirectToUpdateBot}>
+              <p
+                className="m-auto cursor-pointer"
+                onClick={redirectToUpdateBot}
+              >
                 <IconEdit />
               </p>
               <p className="m-auto cursor-pointer">
                 <IconShare />
               </p>
-              <p className="m-auto cursor-pointer " onClick={() => {
-                setOpenPopover(!openPopover)
-                setVisibleDeleteModal(true)
-              }}>
+              <p
+                className="m-auto cursor-pointer "
+                onClick={() => {
+                  setOpenPopover(!openPopover);
+                  setVisibleDeleteModal(true);
+                }}
+              >
                 <IconDelete />
               </p>
             </div>
           }
           trigger="click"
         >
-          <p className="cursor-pointer" onClick={()=>{setOpenPopover(!openPopover)}}>
+          <p
+            className="cursor-pointer"
+            onClick={() => {
+              setOpenPopover(!openPopover);
+            }}
+          >
             <IconGroup />
           </p>
         </Popover>
       </div>
-      <div className="flex justify-center cursor-pointer" onClick={redirectToUpdateBot}>
+      <div
+        className="flex justify-center cursor-pointer"
+        onClick={redirectToUpdateBot}
+      >
         <IconBot />
       </div>
       <p className="text-[20px] text-[#01058A] absolute bottom-0 flex items-center gap-x-2">
@@ -104,8 +126,10 @@ const ChatbotElement = ({ info }: ChatbotElementProps) => {
         {formatTimeAgo(new Date(info.updated_at))}
       </p>
       <ModalComponent
-        title={<div>Delete your chatbot</div>}
-        onCancel={() => {setVisibleDeleteModal(false)}}
+        title={<div>{t('textDelete', { ns: 'manage_bot' })}</div>}
+        onCancel={() => {
+          setVisibleDeleteModal(false);
+        }}
         open={visibleDeleteModal}
         centered={true}
         footer={
@@ -114,20 +138,18 @@ const ChatbotElement = ({ info }: ChatbotElementProps) => {
               className="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
               onClick={() => setVisibleDeleteModal(false)}
             >
-              Cancel
+              {t('Cancel', { ns: 'manage_bot' })}
             </button>
             <button
               className="flex justify-center rounded bg-[#ef7772] py-2 px-6 font-medium text-white hover:shadow-1"
               onClick={deletedChatbot}
             >
-              Delete
+              {t('Delete', { ns: 'manage_bot' })}
             </button>
           </div>
         }
       >
-        <div>
-          Are you sure you want to delete your chatbot? This action cannot be undone.
-        </div>
+        <div>{t('confirm', { ns: 'manage_bot' })}</div>
       </ModalComponent>
     </div>
   );

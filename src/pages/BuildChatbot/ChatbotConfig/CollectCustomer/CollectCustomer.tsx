@@ -5,6 +5,7 @@ import { AiOutlineQuestionCircle } from 'react-icons/ai';
 import { RiDeleteBinLine } from 'react-icons/ri';
 import React from 'react';
 import { CustomField } from '@/repository/buildChatBot/type';
+import { useTranslation } from 'react-i18next';
 interface CollectCustomerProps {
   email: boolean;
   setEmail: (value: boolean) => void;
@@ -26,6 +27,7 @@ const CollectCustomer: React.FC<CollectCustomerProps> = ({
   custom,
   setCustom,
 }) => {
+  const { t } = useTranslation();
   return (
     <div
       className={classNames(
@@ -35,31 +37,29 @@ const CollectCustomer: React.FC<CollectCustomerProps> = ({
     >
       <h2 className="text-[20px] items-center text-[#01058A] font-black flex gap-x-3">
         <IconCollectCustomer />
-        Collect customer info
+        {t('CollectCustomer', { ns: 'config_bot' })}
         <Tooltip
           color="#212121"
           placement="rightTop"
           overlayStyle={{ whiteSpace: 'pre-line', width: '400px' }}
-          title={
-            'As your users/customers interact with your chatbot, you can collect valuable user information for various purposes with ChatFly built-in data collection form, which will appear within the chat interface.'
-          }
+          title={t('tooltipCus', { ns: 'config_bot' })}
         >
           <AiOutlineQuestionCircle size={18} color="#E77964" />
         </Tooltip>
       </h2>
       <p className="mt-[12px] text-[15px] text-[#A7A7B0]">
-        Collect essential information about users
+        {t('CollectInfor', { ns: 'config_bot' })}
       </p>
       <div className="text-[15px] mt-[20px] flex gap-x-[70px] items-center">
         <div className="flex gap-x-[30px]">
           <Checkbox onClick={() => setEmail(!email)} checked={!!email}>
-            Email
+            {t('Email', { ns: 'config_bot' })}
           </Checkbox>
           <Checkbox onClick={() => setName(!name)} checked={!!name}>
-            Name
+            {t('Name', { ns: 'config_bot' })}
           </Checkbox>
           <Checkbox onClick={() => setPhone(!phone)} checked={!!phone}>
-            Phone
+            {t('Phone', { ns: 'config_bot' })}
           </Checkbox>
         </div>
         <button
@@ -68,24 +68,24 @@ const CollectCustomer: React.FC<CollectCustomerProps> = ({
           }
           className="w-[150px] h-[43px] bg-[#E8E9F4] text-[#01058A] rounded-[10px] text-[14px] font-bold justify-cente"
         >
-          Custom field
+          {t('CustomField', { ns: 'config_bot' })}
         </button>
       </div>
       <div className="text-[15px] mt-[16px]">
         <p className="w-[240px] flex gap-x-[10px] font-bold items-center">
-          Form title
+          {t('Form', { ns: 'config_bot' })}
         </p>
         <input
           disabled
           type="text"
-          placeholder="Let us know how to contact you"
+          placeholder={`${t('Letus', { ns: 'config_bot' })}`}
           className="h-[41px] mt-[12px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
         />
         {email && (
           <input
             disabled
             type="text"
-            placeholder="Email"
+            placeholder={`${t('Email', { ns: 'config_bot' })}`}
             className="h-[41px] mt-[12px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
           />
         )}
@@ -93,7 +93,7 @@ const CollectCustomer: React.FC<CollectCustomerProps> = ({
           <input
             disabled
             type="text"
-            placeholder="Name"
+            placeholder={`${t('Name', { ns: 'config_bot' })}`}
             className="h-[41px] mt-[12px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
           />
         )}
@@ -101,7 +101,7 @@ const CollectCustomer: React.FC<CollectCustomerProps> = ({
           <input
             disabled
             type="text"
-            placeholder="Phone"
+            placeholder={`${t('Phone', { ns: 'config_bot' })}`}
             className="h-[41px] mt-[12px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
           />
         )}

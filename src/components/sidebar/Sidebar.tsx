@@ -12,6 +12,7 @@ import { Image } from 'antd';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/states/store';
 import { resetStateBuild } from '@/states/buildChatBot/buildChatBot.slice';
+import { useTranslation } from 'react-i18next';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -19,6 +20,7 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
+  const { t } = useTranslation();
   const location = useLocation();
   const { pathname } = location;
   const dispatch = useDispatch<AppDispatch>();
@@ -34,10 +36,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const handleResize = () => {
     if (window.innerWidth < 1024) {
       setSidebarOpen(true);
-      localStorage.setItem('sidebar-expanded', "true")
+      localStorage.setItem('sidebar-expanded', 'true');
     } else {
       setSidebarOpen(sidebarOpen);
-      localStorage.setItem('sidebar-expanded', sidebarOpen.toString())
+      localStorage.setItem('sidebar-expanded', sidebarOpen.toString());
     }
   };
 
@@ -92,10 +94,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         <button
           ref={trigger}
           onClick={() => {
-            setSidebarOpen(!sidebarOpen)
-            localStorage.setItem('sidebar-expanded', (!sidebarOpen).toString())
-          }
-          }
+            setSidebarOpen(!sidebarOpen);
+            localStorage.setItem('sidebar-expanded', (!sidebarOpen).toString());
+          }}
           aria-controls="sidebar"
           aria-expanded={sidebarOpen}
           // className="block lg:hidden"
@@ -105,7 +106,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       </div>
       {/* <!-- SIDEBAR HEADER --> */}
 
-      <div className="no-scrollbar w-[260px] flex flex-col overflow-y-auto duration-300 ease-linear">
+      <div className="no-scrollbar w-[220px] flex flex-col overflow-y-auto duration-300 ease-linear">
         {/* <!-- Sidebar Menu --> */}
         <nav className="py-8 ">
           {/* <!-- Menu Group --> */}
@@ -114,32 +115,34 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               {/* <!-- Menu Item Build Chatbot --> */}
               <li>
                 <NavLink
-                  onClick={() => {dispatch(resetStateBuild())}}
+                  onClick={() => {
+                    dispatch(resetStateBuild());
+                  }}
                   to="/"
                   className={`h-[44px] group relative flex items-center gap-[18px] rounded-r-[5px] py-2 px-4 font-medium text-[#A7A9C0] duration-300 ease-in-out hover:bg-[#1AA8E9] hover:text-white ${
-                    pathname === '/' &&
-                    'bg-[#1AA8E9] !text-white !font-bold'
+                    pathname === '/' && 'bg-[#1AA8E9] !text-white !font-bold'
                   }`}
                 >
                   <FiPieChart size={24} />
-                  Manage Chatbots
+                  {t('Manage')}
                 </NavLink>
               </li>
               <li>
                 <NavLink
                   to="/build-chatbots"
                   className={`h-[44px] group relative flex items-center gap-[18px] rounded-r-[5px] py-2 px-4 font-medium text-[#A7A9C0] duration-300 ease-in-out hover:bg-[#1AA8E9] hover:text-white ${
-                    pathname.includes('build-chatbots') && 'bg-[#1AA8E9] !text-white !font-bold'
+                    pathname.includes('build-chatbots') &&
+                    'bg-[#1AA8E9] !text-white !font-bold'
                   }`}
                 >
                   <AiOutlineAppstore size={26} />
-                  Build Chatbot
+                  {t('Build')}
                 </NavLink>
               </li>
               {/* <!-- Menu Item Build Chatbot --> */}
 
               {/* <!-- Menu Item Manage Chatbots --> */}
-             
+
               {/* <!-- Menu Item Manage Chatbots --> */}
 
               {/* <!-- Menu Item Conversations --> */}
@@ -152,7 +155,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   }`}
                 >
                   <BiMessageAltDetail size={26} />
-                  Conversations
+                  {t('Conversations')}
                 </NavLink>
               </li>
               {/* <!-- Menu Item Conversations --> */}
@@ -166,7 +169,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   }`}
                 >
                   <AiFillDollarCircle size={26} />
-                  Pricing Plans
+                  {t('Pricing')}
                 </NavLink>
               </li>
               {/* <!-- Menu Item price --> */}

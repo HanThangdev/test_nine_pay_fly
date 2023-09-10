@@ -10,8 +10,10 @@ import ChatbotElement from './ChatbotElement';
 import { useNavigate } from 'react-router-dom';
 import { resetStateBuild } from '@/states/buildChatBot/buildChatBot.slice';
 import { useManageChatbot } from '@/states/manageBot/manageBot.selector';
+import { useTranslation } from 'react-i18next';
 
 const ManageChatbot = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { onGetBot } = useManageChatbot();
@@ -22,14 +24,14 @@ const ManageChatbot = () => {
   useEffect(() => {
     const fetchDataBot = async () => {
       try {
-        onGetBot()
+        onGetBot();
       } catch (error: any) {
         notification.error({
           message: error?.response?.data.errors ?? error?.message,
         });
       }
     };
-    if(isEmptyObjectOrArray(ownerChatbot)){
+    if (isEmptyObjectOrArray(ownerChatbot)) {
       fetchDataBot();
     }
   }, []);
@@ -44,7 +46,7 @@ const ManageChatbot = () => {
       <div className="flex justify-between items-center">
         <h2 className="text-[20px] text-[#01058A] font-black flex gap-x-3">
           <IconManage />
-          All Chatbots{' '}
+          {t('All', { ns: 'manage_bot' })}
           <span className="font-thin">({`${ownerChatbot.length || 0}`})</span>
         </h2>
         <button
@@ -54,7 +56,7 @@ const ManageChatbot = () => {
             navigate('/build-chatbots');
           }}
         >
-          New Chatbot
+          {t('New', { ns: 'manage_bot' })}
         </button>
       </div>
       <div className="grid grid-cols-3 gap-4 mt-8">

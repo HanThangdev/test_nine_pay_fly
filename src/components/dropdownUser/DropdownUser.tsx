@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { AiOutlineCaretDown } from 'react-icons/ai';
 
 const DropdownUser = (props: { onLogout: () => void }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
+  const { t } = useTranslation();
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
 
@@ -35,18 +36,21 @@ const DropdownUser = (props: { onLogout: () => void }) => {
   });
 
   return (
-    <div className="relative cursor-pointer" onClick={() => setDropdownOpen(!dropdownOpen)}>
-      <Link
-        ref={trigger}
-        className="flex items-center gap-4 "
-        to="#"
-      >
+    <div
+      className="relative cursor-pointer"
+      onClick={() => setDropdownOpen(!dropdownOpen)}
+    >
+      <Link ref={trigger} className="flex items-center gap-4 " to="#">
         <span className="text-right">
           <span className="block text-sm font-medium text-black dark:text-white">
-            Account
+            {t('Account')}
           </span>
         </span>
-          <AiOutlineCaretDown size={18} color="black" className={`${dropdownOpen  && "rotate-180 "} transition-all`}/>
+        <AiOutlineCaretDown
+          size={18}
+          color="black"
+          className={`${dropdownOpen && 'rotate-180 '} transition-all`}
+        />
       </Link>
 
       {/* <!-- Dropdown Start --> */}
@@ -131,7 +135,7 @@ const DropdownUser = (props: { onLogout: () => void }) => {
               fill=""
             />
           </svg>
-          Log Out
+          {t('Logout')}
         </div>
       </div>
       {/* <!-- Dropdown End --> */}

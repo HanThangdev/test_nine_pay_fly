@@ -5,10 +5,11 @@ import { Upload, UploadFile, notification } from 'antd';
 import { useCallback, useState } from 'react';
 import { hasDuplicateFiles, isEmptyObjectOrArray } from '@/utils/utils';
 import { useBuildChatbot } from '@/states/buildChatBot/buildChatBot.selector';
-
+import { useTranslation } from 'react-i18next';
 const Files = () => {
+  const { t } = useTranslation();
   const [listFile, setListFile] = useState<File[]>([]);
-  const {onUploadFile, data} = useBuildChatbot()
+  const { onUploadFile, data } = useBuildChatbot();
   const UploadToWaitList = useCallback(
     (file: File) => {
       if (hasDuplicateFiles(file, listFile)) {
@@ -23,8 +24,8 @@ const Files = () => {
   );
 
   const onUpload = (file: File) => {
-    onUploadFile({file, bot_id: data?.id})
-  }
+    onUploadFile({ file, bot_id: data?.id });
+  };
 
   return (
     <>
@@ -54,12 +55,14 @@ const Files = () => {
           <div className="flex justify-center mt-[30px]">
             <AiOutlineCloudUpload size={100} color="#E8E9F4" />
           </div>
-          <p className="text-[24px] font-bold">Upload Files</p>
+          <p className="text-[24px] font-bold">
+            {t('Upload', { ns: 'config_bot' })}
+          </p>
           <p className="text-[#A7A7B0] text-[15px] mb-0">
-            Drag & drop files here, or click to select files
+            {t('Drag', { ns: 'config_bot' })}
           </p>
           <p className="text-[#A7A7B0] text-[15px]">
-            Supported File Types: .pdf, .doc, .docx, .txt, .csv, .xlsx
+            {t('support', { ns: 'config_bot' })}
           </p>
         </Upload.Dragger>
       </div>
@@ -72,25 +75,36 @@ const Files = () => {
                 <div
                   onClick={() => {
                     const newListFile = Array.from(listFile);
-                    setListFile(newListFile.filter(it => it.name !== item.name));
+                    setListFile(
+                      newListFile.filter((it) => it.name !== item.name),
+                    );
                   }}
                 >
                   <RiDeleteBinLine size={18} color="#F44336" />
                 </div>
               </div>
-              <button className="w-[150px] h-[43px] bg-[#E8E9F4] text-[#01058A] rounded-[10px] text-[15px] font-bold justify-center" onClick={() => onUpload(item)}>
-                Import
+              <button
+                className="w-[150px] h-[43px] bg-[#E8E9F4] text-[#01058A] rounded-[10px] text-[15px] font-bold justify-center"
+                onClick={() => onUpload(item)}
+              >
+                {t('Import', { ns: 'config_bot' })}
               </button>
             </div>
           );
         })}
 
       <div className="mt-[25px]">
-        <p className="text-[16px] font-bold">Attached Files (40 chars)</p>
+        <p className="text-[16px] font-bold">
+          {' '}
+          {t('Attached', { ns: 'config_bot' })} (40{' '}
+          {t('chars', { ns: 'config_bot' })})
+        </p>
         <div className="flex justify-between">
           <p className="text-[15px]">
             File_Test_ChatFly_Not_Finished.docx
-            <span className="text-[#A7A7B0]">(20 chars)</span>
+            <span className="text-[#A7A7B0]">
+              (20 {t('chars', { ns: 'config_bot' })})
+            </span>
           </p>
           {/* <button className="w-[150px] h-[43px] bg-[#E8E9F4] text-[#01058A] rounded-[10px] text-[15px] font-bold justify-cente">
             Training
@@ -99,7 +113,9 @@ const Files = () => {
         <div className="flex justify-between mt-[15px]">
           <p className="text-[15px] flex items-center">
             File_Test_ChatFly_Not_Finished.docx
-            <span className="text-[#A7A7B0 mr-[48px]">(20 chars)</span>
+            <span className="text-[#A7A7B0 mr-[48px]">
+              (20 {t('chars', { ns: 'config_bot' })})
+            </span>
             <RiDeleteBinLine size={18} color="#F44336" />
           </p>
           {/* <button className="w-[150px] h-[43px] bg-[#4AC1FF;] text-white rounded-[10px] text-[15px] font-bold justify-cente">
@@ -108,13 +124,18 @@ const Files = () => {
         </div>
       </div>
       <div className="mt-[25px]">
-        <p className="text-[16px] font-bold">Included sources:</p>
-        <p className="text-[15px]">
-          2 Files
-          <span className="text-[#A7A7B0]">(40 chars)</span>
+        <p className="text-[16px] font-bold">
+          {t('IncludedSource', { ns: 'config_bot' })}:
         </p>
         <p className="text-[15px]">
-          Total detected characters: 40/400,000 limit
+          2 {t('Files', { ns: 'config_bot' })}
+          <span className="text-[#A7A7B0]">
+            (40 {t('chars', { ns: 'config_bot' })})
+          </span>
+        </p>
+        <p className="text-[15px]">
+          {t('TotalChar', { ns: 'config_bot' })}: 40/400,000{' '}
+          {t('limit', { ns: 'config_bot' })}
         </p>
       </div>
     </>

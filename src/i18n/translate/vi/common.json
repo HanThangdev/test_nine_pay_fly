@@ -1,3 +1,16 @@
 {
-	"language": "Ngôn ngữ"
+  "language": "Ngôn ngữ",
+  "Upgrade": "NÂNG CẤP",
+  "Help": "Trợ giúp",
+  "Account": "Tài khoản",
+  "Logout": "Đăng xuất",
+  "Manage": "Quản lý chatbot",
+  "Build": "Xây dựng chatbot",
+  "Conversations": "Cuộc trò chuyện",
+  "Pricing": "Các gói giá",
+  "ChatbotConfig": "Cấu hình Chatbot",
+  "ImportData": "Nhập dữ liệu",
+  "AdvancedSetting": "Cài đặt nâng cao",
+  "TestChatbot": "Kiểm tra Chatbot",
+  "Integrations": "Tích hợp"
 }

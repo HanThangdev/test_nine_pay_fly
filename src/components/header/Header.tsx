@@ -14,7 +14,7 @@ import jpFlag from '@/images/lang/ja.png';
 import vnFlag from '@/images/lang/vn.png';
 
 const urlParams = new URLSearchParams(window.location.search);
-const getLanguageFromURL = urlParams.get("language");
+const getLanguageFromURL = urlParams.get('language');
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
@@ -22,56 +22,40 @@ const Header = (props: {
   onLogout: () => void;
 }) => {
   const { t, i18n } = useTranslation();
-  const lang = getLanguageFromURL || localStorage.getItem("LANGUAGE") || "en";
+  const lang = getLanguageFromURL || localStorage.getItem('LANGUAGE') || 'en';
 
   const [active, setActive] = useState(lang);
 
   const onChangeLanguage = (lang: string) => {
     if (lang === active) return;
     i18n.changeLanguage(lang);
-    localStorage.setItem("LANGUAGE", lang);
+    localStorage.setItem('LANGUAGE', lang);
     setActive(lang);
   };
   const items: MenuProps['items'] = [
     {
-      label: (
-        <div>
-          Japanese
-        </div>
-      ),
+      label: <div>Japanese</div>,
       key: '1',
-      icon: <img src={jpFlag} alt="ja" width={20} height={20}/>,
-      onClick: () => 
-        onChangeLanguage('jp')
-
+      icon: <img src={jpFlag} alt="ja" width={20} height={20} />,
+      onClick: () => onChangeLanguage('jp'),
     },
     {
-      label: (
-        <div>
-          English
-        </div>
-      ),
+      label: <div>English</div>,
       key: '2',
-      icon: <img src={enFlag} alt="en" width={20} height={20}/>,
-      onClick: () => 
-        onChangeLanguage('en')
+      icon: <img src={enFlag} alt="en" width={20} height={20} />,
+      onClick: () => onChangeLanguage('en'),
     },
     {
-      label: (
-        <div>
-          VietNamese
-        </div>
-      ),
+      label: <div>VietNamese</div>,
       key: '3',
-      icon: <img src={vnFlag} alt="vi" width={20} height={20}/>,
-      onClick: () => 
-        onChangeLanguage('vi')
+      icon: <img src={vnFlag} alt="vi" width={20} height={20} />,
+      onClick: () => onChangeLanguage('vi'),
     },
   ];
 
   useEffect(() => {
     if (getLanguageFromURL) {
-      localStorage.setItem("LANGUAGE", getLanguageFromURL);
+      localStorage.setItem('LANGUAGE', getLanguageFromURL);
       setActive(getLanguageFromURL);
       i18n.changeLanguage(getLanguageFromURL);
     }
@@ -167,14 +151,16 @@ const Header = (props: {
                 />
               </Link>
             </div>
-            <p className="text-[18px] mb-0 font-extrabold bg-[#E8E9F4] text-[#01058A] py-2 px-[22px] rounded-[10px]">
-              UPGRADE
-            </p>
+            <Link to="/price">
+              <p className="text-[18px] cursor-pointer mb-0 font-extrabold bg-[#E8E9F4] text-[#01058A] py-2 px-[22px] rounded-[10px]">
+                {t('Upgrade')}
+              </p>
+            </Link>
           </div>
 
           <div className="flex gap-x-[40px] items-center">
             <Dropdown menu={{ items }} trigger={['click']}>
-              <p className="flex mb-0 items-center">
+              <p className="flex mb-0 items-center cursor-pointer">
                 <MdLanguage size={24} />
                 <span className="block text-sm ml-[15px] font-medium text-black dark:text-white">
                   {t('language')}
@@ -184,7 +170,7 @@ const Header = (props: {
             <p className="flex mb-0">
               <AiFillQuestionCircle size={20} color="black" />
               <span className="block text-sm ml-[15px] font-medium text-black dark:text-white">
-                Help
+                {t('Help')}
               </span>
             </p>
             {/* <!-- User Area --> */}
