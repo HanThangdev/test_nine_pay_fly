@@ -12,4 +12,4 @@ export const KEY_TAB_BUILD_CHAT_BOT = {
   INTEGRATION: 'integration',
 }
 
-export const LOADING_TEXT = "Generating..."
+export const LOADING_TEXT = "LOADING_TEXT"

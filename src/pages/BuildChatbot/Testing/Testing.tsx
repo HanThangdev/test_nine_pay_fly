@@ -8,16 +8,20 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/states/store';
 import { useBuildChatbot } from '@/states/buildChatBot/buildChatBot.selector';
 import { GetChatStreamingRequest } from '@/repository/buildChatBot/type';
+import { LOADING_TEXT } from '@/constants';
+import { TypeAnimation } from 'react-type-animation';
 
 const Testing = () => {
-  const { data, history, session_id } = useSelector((state: RootState) => state.buildChatBot);
+  const { data, history, session_id } = useSelector(
+    (state: RootState) => state.buildChatBot,
+  );
   const [loading, setLoading] = useState<boolean>();
   const [message, setMessage] = useState<string>('');
   const messagesEndRef = useRef<HTMLInputElement | null>(null);
   const { onStreamingDataTesting } = useBuildChatbot();
 
   const onSendMessage = async (msg: string | undefined = '') => {
-    if (loading || !message && !msg || !data) {
+    if (loading || (!message && !msg) || !data) {
       return;
     }
     setLoading(true);
@@ -44,14 +48,33 @@ const Testing = () => {
       return (
         <div className="w-full justify-end flex" key={index}>
           <p className="bg-[#D1EFFF] p-2 rounded-t-lg rounded-bl-lg w-fit">
-            {message}
+            {message === LOADING_TEXT ? (
+              <TypeAnimation
+                sequence={['.', 200, '..', 200, '...', 200]}
+                repeat={Infinity}
+                cursor={false}
+              />
+            ) : (
+              message
+            )}
           </p>
         </div>
       );
     } else {
       return (
-        <div className="bg-[#F1F7FF] p-2 rounded-t-lg rounded-br-lg w-fit" key={index}> 
-          {message}
+        <div
+          className="bg-[#F1F7FF] p-2 rounded-t-lg rounded-br-lg w-fit"
+          key={index}
+        >
+          {message === LOADING_TEXT ? (
+            <TypeAnimation
+              sequence={['.', 200, '..', 200, '...', 200]}
+              repeat={Infinity}
+              cursor={false}
+            />
+          ) : (
+            message
+          )}
         </div>
       );
     }
@@ -66,12 +89,15 @@ const Testing = () => {
 
   useEffect(() => {
     if (messagesEndRef.current) {
-      messagesEndRef.current.addEventListener('DOMNodeInserted',( event:any) => {
-        const { currentTarget: target } = event;
-        target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
-      });
+      messagesEndRef.current.addEventListener(
+        'DOMNodeInserted',
+        (event: any) => {
+          const { currentTarget: target } = event;
+          target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
+        },
+      );
     }
-  }, [])
+  }, []);
 
   return (
     <div
@@ -92,12 +118,25 @@ const Testing = () => {
         style={{ maxHeight: 'calc(100% - 230px)' }}
         ref={messagesEndRef}
       >
-        {!!history.length && history.map((message, index) => getDivForResponse(index, message))}
+        {!!history.length &&
+          history.map((message, index) => getDivForResponse(index, message))}
       </div>
       <div className="absolute bottom-0 w-full">
         <div className="flex gap-x-3 ml-[26px]">
-          <button className="bg-[#F1F7FF] p-2 rounded-lg w-fit" onClick={() => onSendMessage("What's ChatFly?")}> What's ChatFly?</button>
-          <button className="bg-[#F1F7FF] p-2 rounded-lg w-fit" onClick={() => onSendMessage("Policy")}> Policy</button>
+          <button
+            className="bg-[#F1F7FF] p-2 rounded-lg w-fit"
+            onClick={() => onSendMessage("What's ChatFly?")}
+          >
+            {' '}
+            What's ChatFly?
+          </button>
+          <button
+            className="bg-[#F1F7FF] p-2 rounded-lg w-fit"
+            onClick={() => onSendMessage('Policy')}
+          >
+            {' '}
+            Policy
+          </button>
         </div>
         <p className="text-[#878787] ml-[26px]">48 massage credits left</p>
         <div className="h-[62px] items-center border-t-[1px] border-[#E7E8F2] p-2 flex gap-x-[12px]">
@@ -108,10 +147,7 @@ const Testing = () => {
             onKeyUp={(e) => handleKeyUp(e)}
             className="h-[47px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
           />
-          <button
-            className="mb-0 w-[40px]"
-            onClick={() => onSendMessage()}
-          >
+          <button className="mb-0 w-[40px]" onClick={() => onSendMessage()}>
             <AiFillRightCircle size={40} color="#4AC1FF" />
           </button>
         </div>

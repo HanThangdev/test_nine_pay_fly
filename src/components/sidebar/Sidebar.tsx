@@ -61,7 +61,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     <aside
       ref={sidebar}
       className={classNames(
-        ' flex h-screen w-[294px] flex-col left-0 top-0 z-9999 absolute xl:relative overflow-y-hidden bg-[#00024C] duration-300',
+        ' flex h-screen w-[230px] flex-col left-0 top-0 z-9999 absolute xl:relative overflow-y-hidden bg-[#00024C] duration-300',
         {
           '!w-0': sidebarOpen,
         },
