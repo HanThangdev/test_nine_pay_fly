@@ -59,6 +59,13 @@
   @apply !h-full items-center;
 }
 
+.Bog-config
+  .ant-radio-button-wrapper-checked:not(
+    .ant-radio-button-wrapper-disabled
+  ):hover {
+  @apply hover:bg-[#4ac1ff];
+}
+
 .Prompt .ant-slider-horizontal .ant-slider-rail {
   @apply h-[14px] rounded-[20px] bg-[#DDE0F1];
 }

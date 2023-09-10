@@ -13,13 +13,10 @@ import { API_STATUS } from '@/constants';
 import { useManageChatbot } from '@/states/manageBot/manageBot.selector';
 import { userApi } from '@/repository/auth/login';
 
-
 const SignIn = () => {
   const { code } = useParams();
   const [showPass, setShowPass] = useState(false);
-  const { loading } = useSelector(
-    (state: RootState) => state.auth,
-  );
+  const { loading } = useSelector((state: RootState) => state.auth);
 
   const { onGetBot } = useManageChatbot();
   const dispatch = useDispatch<AppDispatch>();
@@ -38,7 +35,11 @@ const SignIn = () => {
   });
 
   const verifyEmail = async () => {
-    await userApi.verifyEmail(code);
+    const res = await userApi.verifyEmail(code);
+    const cookies = new Cookies();
+    cookies.set('access_token', res.data.data.access_token, { path: '/' });
+    const isLogin = true;
+    await onGetBot(isLogin);
   };
 
   useEffect(() => {
@@ -49,25 +50,23 @@ const SignIn = () => {
   }, [code]);
 
   const onSubmit = handleSubmit(async (formData) => {
-
     const dataForm = new URLSearchParams();
     dataForm.append('grant_type', 'password');
     dataForm.append('username', formData.email);
     dataForm.append('password', formData.password);
     try {
-      const { meta} = await dispatch(loginTransaction(dataForm));
+      const { meta } = await dispatch(loginTransaction(dataForm));
 
-      if(meta.requestStatus == API_STATUS.REJECTED){
-        return
+      if (meta.requestStatus == API_STATUS.REJECTED) {
+        return;
       }
-      
+
       notification.success({
         message: 'You have successfully logged in.',
       });
 
-      const isLogin = true
-      await onGetBot(isLogin)
-
+      const isLogin = true;
+      await onGetBot(isLogin);
     } catch (error: any) {
       notification.error({
         message: error?.response?.data.message,

@@ -60,7 +60,7 @@
   },
   "Business": {
     "title": "Kinh doanh",
-    "item1": "50,000 tin nhắn/tháng included (Messages over the limit will use your OpenAI API Key)",
+    "item1": "Đã bao gồm 50.000 tín dụng tin nhắn/tháng (Tin nhắn vượt quá giới hạn sẽ sử dụng Khóa API OpenAI của bạn)",
     "item2": "10 bot trò chuyệns",
     "item3": "11,000,000 ký tự/chatbot",
     "item4": "Nhúng vào không giới hạn trang web",

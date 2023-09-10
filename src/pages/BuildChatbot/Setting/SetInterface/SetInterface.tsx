@@ -12,7 +12,11 @@ import type { CheckboxChangeEvent } from 'antd/es/checkbox';
 import type { RcFile } from 'antd/es/upload';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/states/store';
-import { AdvanceSettingTransaction } from '@/repository/buildChatBot';
+import {
+  getAdvanceSettingTransaction,
+  updateAdvanceSettingTransaction,
+  uploadBotProfilePictureTransaction,
+} from '@/repository/buildChatBot';
 import { API_STATUS } from '@/constants';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/states/store';
@@ -49,6 +53,7 @@ const SetInterface = ({ dataSetinterface }: Props) => {
   const [botAvatarFile, setBotAvatarFile] = useState<File | undefined>();
   const [botAvatarUrl, setBotAvatarUrl] = useState<string>();
   const [botAvatar, setBotAvatar] = useState<string>();
+  const [bot_avatar_url, setBot_avatar_url] = useState<string>('');
   const [removeImage, setRemoveImage] = useState(false);
   const [openButtonIcon, setOpenButtonIcon] = useState(false);
   const { data } = useSelector((state: RootState) => state.buildChatBot);
@@ -58,6 +63,8 @@ const SetInterface = ({ dataSetinterface }: Props) => {
     display_name: '',
     align_chat_bubble_button: 'right',
     auto_show_initial_message_after: 0,
+    chat_message_color: '#4AC1FF',
+    chat_bubble_button_color: '#4AC1FF',
     chat_icon_url:
       'https://app.gpt-trainer.com/img/widget-images/widget-button-open-state/default-chat.svg',
   });
@@ -96,7 +103,7 @@ const SetInterface = ({ dataSetinterface }: Props) => {
       ...dataSet,
       suggest_messages: suggestArray,
       theme: theme,
-      bot_avatar_url: botAvatar,
+      bot_avatar_url: botAvatar ? botAvatar : bot_avatar_url,
       chat_message_color: color,
       chat_bubble_button_color: colorButton,
     });
@@ -107,24 +114,43 @@ const SetInterface = ({ dataSetinterface }: Props) => {
   }, [dataSet]);
 
   const { handleSubmit, register } = useForm<FormData>({
-    defaultValues: {
-      initial_message: 'Hello! How can I assist you today?',
-      display_name: '',
-      chat_bubble_button_color: '',
-      align_chat_bubble_button: 'right',
-      auto_show_initial_message_after: 0,
-    },
     resolver: yupResolver(schema),
   });
 
   useEffect(() => {
-    const newArray = suggestMessages.split('\n').filter((item) => item !== '');
+    const newArray = suggestMessages?.split('\n').filter((item) => item !== '');
     setSuggestArray(newArray);
   }, [suggestMessages]);
 
   const onSubmit = handleSubmit(async () => {
     try {
-      const { meta } = await dispatch(AdvanceSettingTransaction(dataSet));
+      const res = botAvatarFile
+        ? await dispatch(
+            uploadBotProfilePictureTransaction({
+              bot_id: data.id,
+              file: botAvatarFile,
+            }),
+          )
+        : '';
+
+      const payload = {
+        bot_id: data.id,
+        initial_message: dataSet.initial_message,
+        suggest_messages: dataSet.suggest_messages,
+        theme: dataSet.theme,
+        display_name: dataSet.display_name,
+        bot_avatar_url: res
+          ? res.payload.data.data.s3_location_file
+          : bot_avatar_url,
+        chat_icon_url: dataSet.chat_icon_url,
+        chat_bubble_button_color: dataSet.chat_bubble_button_color,
+        chat_message_color: dataSet.chat_message_color,
+        align_chat_bubble_button: dataSet.align_chat_bubble_button,
+        auto_show_initial_message_after:
+          dataSet.auto_show_initial_message_after,
+      };
+
+      const { meta } = await dispatch(updateAdvanceSettingTransaction(payload));
 
       if (meta.requestStatus === API_STATUS.REJECTED) {
         return;
@@ -133,13 +159,53 @@ const SetInterface = ({ dataSetinterface }: Props) => {
       notification.success({
         message: `${t('AdvancedSuccess', { ns: 'config_bot' })}`,
       });
-      setTimeout(() => {}, 500);
     } catch (error: any) {
       notification.error({
         message: error?.response?.data.errors ?? error?.message,
       });
     }
   });
+
+  const getAdvance = async () => {
+    const res = await dispatch(
+      getAdvanceSettingTransaction({ bot_id: data.id }),
+    );
+
+    if (res.payload.data.theme) {
+      setTheme(res.payload.data.theme);
+    }
+    if (res.payload.data.chat_message_color) {
+      setColor(res.payload.data.chat_message_color);
+    }
+    if (res.payload.data.chat_message_color) {
+      setColorButton(res.payload.data.chat_bubble_button_color);
+    }
+    if (res.payload.data.suggest_messages) {
+      setSuggestMessages(res.payload.data.suggest_messages?.join('\n'));
+    }
+    if (res.payload.data.bot_avatar_url) {
+      setBot_avatar_url(res.payload.data.bot_avatar_url);
+    }
+
+    setDataSet({
+      ...dataSet,
+      display_name: res.payload.data.display_name,
+      initial_message: res.payload.data.initial_message,
+      theme: res.payload.data.theme,
+      suggest_messages: res.payload.data.suggest_messages,
+      bot_avatar_url: res.payload.data.bot_avatar_url,
+      chat_message_color: res.payload.data.chat_message_color,
+      chat_icon_url: res.payload.data.chat_icon_url,
+      chat_bubble_button_color: res.payload.data.chat_bubble_button_color,
+      align_chat_bubble_button: res.payload.data.align_chat_bubble_button,
+      auto_show_initial_message_after:
+        res.payload.data.auto_show_initial_message_after,
+    });
+  };
+
+  useEffect(() => {
+    getAdvance();
+  }, []);
 
   useEffect(() => {
     const handleClickOutSide = (e: any) => {
@@ -173,6 +239,7 @@ const SetInterface = ({ dataSetinterface }: Props) => {
           <input
             type="text"
             placeholder=""
+            value={dataSet.initial_message}
             className="h-[41px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
             {...register('initial_message')}
             onChange={(e) =>
@@ -193,6 +260,7 @@ const SetInterface = ({ dataSetinterface }: Props) => {
           <input
             type="number"
             placeholder=""
+            value={dataSet.auto_show_initial_message_after}
             min={0}
             className="h-[41px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
             {...register('auto_show_initial_message_after')}
@@ -210,6 +278,8 @@ const SetInterface = ({ dataSetinterface }: Props) => {
           </p>
           <textarea
             placeholder=""
+            value={suggestMessages}
+            // value={suggestArray}
             className="h-[100px] w-full py-2 rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
             onChange={(e) => setSuggestMessages(e.target.value)}
           />
@@ -285,6 +355,7 @@ const SetInterface = ({ dataSetinterface }: Props) => {
           <input
             type="text"
             placeholder=""
+            value={dataSet.display_name}
             {...register('display_name')}
             onChange={(e) =>
               setDataSet({
@@ -358,7 +429,14 @@ const SetInterface = ({ dataSetinterface }: Props) => {
             onOpenChange={handleOpenChange}
           >
             <div className="h-[50px] w-[50px] cursor-pointer rounded-full border border-[#DCDEED] bg-[#ffffffeb] items-center justify-center flex">
-              <img className="w-[30px] h-[30px]" src={dataSet.chat_icon_url} />
+              <img
+                className="w-[30px] h-[30px]"
+                src={
+                  dataSet.chat_icon_url
+                    ? dataSet.chat_icon_url
+                    : 'https://app.gpt-trainer.com/img/widget-images/widget-button-open-state/default-chat.svg'
+                }
+              />
             </div>
           </Popover>
         </div>
@@ -393,6 +471,7 @@ const SetInterface = ({ dataSetinterface }: Props) => {
           </p>
           <select
             {...register('align_chat_bubble_button')}
+            value={dataSet.align_chat_bubble_button}
             onChange={(e) =>
               setDataSet({
                 ...dataSet,

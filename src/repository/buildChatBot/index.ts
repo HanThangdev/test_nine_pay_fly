@@ -19,7 +19,7 @@ import {
 import Cookies from 'universal-cookie';
 import { SuccessResponse } from '../type';
 import { objectToQueryString } from '@/utils/utils';
-
+const FORM_DATA_HEADER = { 'Content-Type': 'multipart/form-data' };
 export const createBotTransaction = createAsyncThunk(
   'transaction/createBotTransaction',
   async (payload: BotPayload, { rejectWithValue }) => {
@@ -147,13 +147,45 @@ export const importURLTransaction = createAsyncThunk(
   },
 );
 
-export const AdvanceSettingTransaction = createAsyncThunk(
+export const getAdvanceSettingTransaction = createAsyncThunk(
+  'transaction/AdvanceSettingTransaction',
+  async (payload: { bot_id: string }, { rejectWithValue }) => {
+    try {
+      const response = await http.get<SuccessResponse<AdvancePayload>>(
+        `/api/bot/bot-widget-setting?bot_id=${payload.bot_id}`,
+      );
+      return response;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data.error);
+    }
+  },
+);
+
+export const updateAdvanceSettingTransaction = createAsyncThunk(
   'transaction/AdvanceSettingTransaction',
   async (payload: AdvancePayload, { rejectWithValue }) => {
     try {
       const response = await http.put<SuccessResponse<AdvancePayload>>(
         '/api/bot/bot-widget-setting',
         payload,
+      );
+      return response;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data.error);
+    }
+  },
+);
+
+export const uploadBotProfilePictureTransaction = createAsyncThunk(
+  'transaction/AdvanceSettingTransaction',
+  async (payload: { bot_id: string; file?: File }, { rejectWithValue }) => {
+    try {
+      const response = await http.post<SuccessResponse<AdvancePayload>>(
+        '/api/bot/upload-bot-profile-picture',
+        payload,
+        {
+          headers: FORM_DATA_HEADER,
+        },
       );
       return response;
     } catch (error: any) {

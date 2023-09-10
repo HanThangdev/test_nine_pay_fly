@@ -61,12 +61,18 @@ const Interface = ({ dataInterface }: Props) => {
           </div>
           <div className="py-[37px] px-[27px] gap-y-[10px] grid">
             <div className="bg-[#eeeef1] px-3 py-2 rounded-t-lg rounded-br-lg w-fit">
-              {dataInterface.initial_message}
+              {dataInterface.initial_message
+                ? dataInterface.initial_message
+                : 'Hello! How can I assist you today?'}
             </div>
             <div className="w-full justify-end flex">
               <p
                 className="px-3 py-2 text-white rounded-t-lg rounded-bl-lg w-fit"
-                style={{ background: dataInterface.chat_message_color }}
+                style={{
+                  background: dataInterface.chat_message_color
+                    ? dataInterface.chat_message_color
+                    : '#4AC1FF',
+                }}
               >
                 Hi
               </p>
@@ -94,24 +100,36 @@ const Interface = ({ dataInterface }: Props) => {
             <p className="mb-0 w-[40px] cursor-pointer">
               <AiFillRightCircle
                 size={40}
-                color={dataInterface.chat_message_color}
+                color={
+                  dataInterface.chat_message_color
+                    ? dataInterface.chat_message_color
+                    : '#4AC1FF'
+                }
               />
             </p>
           </div>
         </div>
         <div
-          className={classNames('mt-4 flex', {
-            'justify-end': dataInterface.align_chat_bubble_button === 'right',
-            'justify-start': dataInterface.align_chat_bubble_button === 'left',
+          className={classNames('mt-4 flex justify-end', {
+            '!justify-end': dataInterface.align_chat_bubble_button === 'right',
+            '!justify-start': dataInterface.align_chat_bubble_button === 'left',
           })}
         >
           <div
             className="rounded-full bg-black flex items-center justify-center w-[50px] h-[50px]"
-            style={{ background: dataInterface.chat_bubble_button_color }}
+            style={{
+              background: dataInterface.chat_bubble_button_color
+                ? dataInterface.chat_bubble_button_color
+                : '#4AC1FF',
+            }}
           >
             <img
               className="w-[30px] h-[30px] invert"
-              src={dataInterface.chat_icon_url}
+              src={
+                dataInterface.chat_icon_url
+                  ? dataInterface.chat_icon_url
+                  : 'https://app.gpt-trainer.com/img/widget-images/widget-button-open-state/default-chat.svg'
+              }
             />
           </div>
         </div>
