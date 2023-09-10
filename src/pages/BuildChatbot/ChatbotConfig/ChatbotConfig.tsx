@@ -11,6 +11,7 @@ import { API_STATUS, KEY_TAB_BUILD_CHAT_BOT } from '@/constants';
 import { setActiveTab } from '@/states/buildChatBot/buildChatBot.slice';
 import { convertCustomValue, isEmptyObjectOrArray, objectToQueryString } from '@/utils/utils';
 import { useNavigate } from 'react-router-dom';
+import { getBotTransaction } from '@/repository/manageChatbot';
 
 const ChatbotConfig = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -94,6 +95,7 @@ const ChatbotConfig = () => {
       }
 
       let response
+      //Check have bot if not have status is update else status is create
       if(!isUpdate){
         response = await dispatch(createBotTransaction(createBotPayload));
       }else {
@@ -112,6 +114,7 @@ const ChatbotConfig = () => {
       }
 
       dispatch(setActiveTab(KEY_TAB_BUILD_CHAT_BOT.IMPORT_DATA));
+      dispatch(getBotTransaction());
       notification.success({
         message: !isUpdate ? 'Create bot successfully.' : 'Update bot successfully.',
       });
@@ -144,6 +147,8 @@ const ChatbotConfig = () => {
     }
   }, [data]);
 
+
+  //Check have bot if not have status is update else status is create
   const isUpdate = useMemo(() => 
     !isEmptyObjectOrArray(data)
   ,[data])

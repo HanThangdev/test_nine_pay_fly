@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../store';
+import { AppDispatch, RootState } from '../store';
 import { ManageChatBotState } from './type';
 import { getBotTransaction } from '@/repository/manageChatbot';
 import { useNavigate } from 'react-router-dom';
@@ -10,7 +10,7 @@ export const useManageChatbot = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { ownerChatbot, loading } = useSelector(
-    (state: ManageChatBotState) => state,
+    (state: RootState) => state.manageBot,
     shallowEqual,
   );
 

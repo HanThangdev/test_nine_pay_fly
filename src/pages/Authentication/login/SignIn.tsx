@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { FormData, schema } from './validation';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
@@ -6,8 +6,8 @@ import { PiEyeLight, PiEyeSlashLight } from 'react-icons/pi';
 import { useState, useEffect } from 'react';
 import { notification, Image, Checkbox } from 'antd';
 import Cookies from 'universal-cookie';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '@/states/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '@/states/store';
 import { loginTransaction } from '@/repository/auth/login';
 import { API_STATUS } from '@/constants';
 import { useManageChatbot } from '@/states/manageBot/manageBot.selector';
@@ -17,7 +17,10 @@ import { userApi } from '@/repository/auth/login';
 const SignIn = () => {
   const { code } = useParams();
   const [showPass, setShowPass] = useState(false);
-  const [loading, setLoading] = useState<boolean>();
+  const { loading } = useSelector(
+    (state: RootState) => state.auth,
+  );
+
   const { onGetBot } = useManageChatbot();
   const dispatch = useDispatch<AppDispatch>();
   const cookies = new Cookies();
@@ -25,7 +28,7 @@ const SignIn = () => {
   const {
     handleSubmit,
     register,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
       email: '',
@@ -46,7 +49,6 @@ const SignIn = () => {
   }, [code]);
 
   const onSubmit = handleSubmit(async (formData) => {
-    setLoading(true);
 
     const dataForm = new URLSearchParams();
     dataForm.append('grant_type', 'password');
@@ -70,8 +72,6 @@ const SignIn = () => {
       notification.error({
         message: error?.response?.data.message,
       });
-
-      setLoading(false);
     }
   });
 
@@ -173,7 +173,7 @@ const SignIn = () => {
                 <div className="mb-5">
                   <input
                     type="submit"
-                    disabled={isSubmitting || loading}
+                    disabled={loading}
                     value="Sign in"
                     className="w-full h-[48px] cursor-pointer rounded-[8px] bg-button-login text-white transition hover:bg-opacity-90"
                   />

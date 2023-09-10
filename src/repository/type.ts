@@ -18,3 +18,8 @@ export interface PaginationResponse<T> {
   previous_page: number | null
   result: T[]
 }
+
+export interface ErrorMessageResponse {
+  message: string
+  message_code: number
+}

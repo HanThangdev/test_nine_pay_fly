@@ -75,10 +75,10 @@ const ChatbotElement = ({ info }: ChatbotElementProps) => {
           open={openPopover}
           content={
             <div className="grid gap-y-2">
-              <p className="m-auto  cursor-pointer">
+              <p className="m-auto cursor-pointer" onClick={redirectToUpdateBot}>
                 <IconEdit />
               </p>
-              <p className="m-auto  cursor-pointer">
+              <p className="m-auto cursor-pointer">
                 <IconShare />
               </p>
               <p className="m-auto cursor-pointer " onClick={() => {

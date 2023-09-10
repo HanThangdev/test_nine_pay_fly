@@ -1,13 +1,61 @@
-import classNames from 'classnames';
-
 import IconReload from '@/components/IconReload/IconReload';
 import IconInterface from '@/components/IconInterface/IconInterface';
 import IconDown from '@/components/IconDown/IconDown';
 
 import { BiSolidFileExport } from 'react-icons/bi';
 import { DatePicker, Select } from 'antd';
+import { useEffect, useMemo, useState } from 'react';
+import { isEmptyObjectOrArray } from '@/utils/utils';
+import { useManageChatbot } from '@/states/manageBot/manageBot.selector';
+import { ResponseManageChatbot } from '@/states/manageBot/type';
+import { IOptionSelect } from './type';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '@/states/store';
+import { getBotTransaction } from '@/repository/manageChatbot';
+import * as dayjs from 'dayjs'
+import { getAllConversations } from '@/repository/conversations';
+import classNames from 'classnames';
+import { GetAllConversationsPayload } from '@/repository/conversations/type';
 
 const Conversations = () => {
+  const { ownerChatbot } = useManageChatbot()
+  const dispatch = useDispatch<AppDispatch>();
+
+  const [fromDate, setFromDate]=useState(dayjs())
+  const [toDate, setToDate]=useState(dayjs().add(1, 'day'))
+
+  const valueBot = useMemo(() => {
+    let convertedArray: IOptionSelect[] = []
+    if(!isEmptyObjectOrArray(ownerChatbot)){
+      convertedArray = ownerChatbot.map((item: ResponseManageChatbot) => {
+        return {
+          value: item.bot_name,
+          key: item.bot_name,
+          bot_id: item.id,
+          user_id: item.user_id
+        };
+      })
+    }
+    return !isEmptyObjectOrArray(convertedArray) ? convertedArray : []
+  }, [ownerChatbot])
+
+  const handleChange = (value:string, option:IOptionSelect | any) => {
+    const {bot_id, user_id} = option 
+    const paramsGetAllConversations: GetAllConversationsPayload = {
+      bot_id,
+      user_id,
+      date_from: fromDate.format().toString(),
+      date_to: toDate.format().toString(),
+    }
+    dispatch(getAllConversations(paramsGetAllConversations));
+  }
+
+  useEffect(() => {
+    if(isEmptyObjectOrArray(ownerChatbot)){
+      dispatch(getBotTransaction());
+    }
+  },[])
+
   return (
     <div
       className={classNames(
@@ -21,37 +69,21 @@ const Conversations = () => {
           style={{ width: 150 }}
           placeholder="Select chatbot"
           optionFilterProp="children"
-          filterOption={(input, option) =>
-            (option?.label ?? '').includes(input)
-          }
-          filterSort={(optionA, optionB) =>
-            (optionA?.label ?? '')
-              .toLowerCase()
-              .localeCompare((optionB?.label ?? '').toLowerCase())
-          }
-          options={[
-            {
-              value: '1',
-              label: 'Chatbot1',
-            },
-            {
-              value: '2',
-              label: 'Chatbot2',
-            },
-            {
-              value: '3',
-              label: 'Chatbot3',
-            },
-            {
-              value: '4',
-              label: 'Chatbot4',
-            },
-          ]}
+          onChange={handleChange}
+          // filterOption={(input, option) =>
+          //   (option?.label ?? '').includes(input)
+          // }
+          // filterSort={(optionA, optionB) =>
+          //   (optionA?.label ?? '')
+          //     .toLowerCase()
+          //     .localeCompare((optionB?.label ?? '').toLowerCase())
+          // }
+          options={valueBot}
         />
         <div className="flex items-center gap-x-3">
-          <DatePicker placeholder="From" />
+          <DatePicker placeholder="From" value={fromDate}/>
           <p className="mb-0">~</p>
-          <DatePicker placeholder="To" />
+          <DatePicker placeholder="To" value={toDate}/>
         </div>
       </div>
       <div className={classNames('mt-6 grid grid-cols-2 gap-x-8')}>

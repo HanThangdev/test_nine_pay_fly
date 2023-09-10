@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AiOutlineCaretDown, AiOutlineCaretUp } from 'react-icons/ai';
+import { AiOutlineCaretDown } from 'react-icons/ai';
 
 const DropdownUser = (props: { onLogout: () => void }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -35,11 +35,10 @@ const DropdownUser = (props: { onLogout: () => void }) => {
   });
 
   return (
-    <div className="relative">
+    <div className="relative cursor-pointer" onClick={() => setDropdownOpen(!dropdownOpen)}>
       <Link
         ref={trigger}
-        onClick={() => setDropdownOpen(!dropdownOpen)}
-        className="flex items-center gap-4"
+        className="flex items-center gap-4 "
         to="#"
       >
         <span className="text-right">
@@ -47,11 +46,7 @@ const DropdownUser = (props: { onLogout: () => void }) => {
             Account
           </span>
         </span>
-        {dropdownOpen ? (
-          <AiOutlineCaretUp size={18} color="black" />
-        ) : (
-          <AiOutlineCaretDown size={18} color="black" />
-        )}
+          <AiOutlineCaretDown size={18} color="black" className={`${dropdownOpen  && "rotate-180 "} transition-all`}/>
       </Link>
 
       {/* <!-- Dropdown Start --> */}

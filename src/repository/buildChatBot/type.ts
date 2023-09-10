@@ -1,5 +1,3 @@
-import { DataFetchLink } from "@/states/buildChatBot/type";
-
 export interface BotPayload {
   bot_name: string;
   case_study: string;

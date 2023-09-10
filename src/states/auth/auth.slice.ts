@@ -16,12 +16,17 @@ export const buildChatbotSlice = createSlice({
   reducers: {
   },
   extraReducers: (builder) => {
-    builder.addCase(loginTransaction.pending, (state) => state);
+    builder.addCase(loginTransaction.pending, (state) => {
+      state.loading=true;
+    });
     builder.addCase(loginTransaction.fulfilled, (state, action) => {
       state.data = action.payload.data.data;
+      state.loading=false;
       return state;
     });
-    builder.addCase(loginTransaction.rejected, (state) => state);
+    builder.addCase(loginTransaction.rejected, (state) => {
+      state.loading=false;
+    });
   },
 });
 

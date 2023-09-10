@@ -25,7 +25,7 @@ const initialState: BuildChatBotState = {
   loadingFetchFile: false,
   loadingChat: false,
   fetchLink: {
-    num_token: 0,
+    num_token: null,
     progress: 0,
     url: '',
   },
@@ -142,13 +142,24 @@ export const buildChatbotSlice = createSlice({
 
     builder.addCase(scrapingURLTransaction.pending, (state) => {
       state.loadingFetchLink = true;
+      state.fetchFile={
+        num_token: 0,
+        progress: 0,
+        url:""
+      };
     });
     builder.addCase(scrapingURLTransaction.fulfilled, (state, action: any) => {
-      state.listIncludesLink.push(action.payload[0]);
+      console.log(action)
+      state.listIncludesLink.push(action.payload);
       state.loadingFetchLink = false;
     });
     builder.addCase(scrapingURLTransaction.rejected, (state) => {
       state.loadingFetchLink = false;
+      state.fetchFile={
+          num_token: null,
+          progress: 0,
+          url:""
+      }
     });
 
     // end scrapingURLTransaction

@@ -15,13 +15,13 @@ export interface BuildChatBotState {
 }
 
 export interface DataFetchLink {
-  num_token: number;
+  num_token: number | null;
   progress: number;
   url: string;
 }
 
 export interface DataFetchFile {
-  num_token: number;
+  num_token: number | null;
   progress: number;
   url: string;
 }

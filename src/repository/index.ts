@@ -6,6 +6,7 @@ import axios, {
   HttpStatusCode,
 } from 'axios';
 import Cookies from 'universal-cookie';
+import { ErrorMessageResponse } from './type';
 
 const configs: CreateAxiosDefaults = {
   baseURL: new URL(import.meta.env.VITE_API_URL).toString(),
@@ -52,7 +53,7 @@ class Http {
 
         return response;
       },
-      (error: AxiosError) => {
+      (error: AxiosError<ErrorMessageResponse>) => {
         if (error.response?.status === HttpStatusCode.Unauthorized) {
           const cookies = new Cookies();
           cookies.remove('access_token', { path: '/' });
@@ -60,9 +61,12 @@ class Http {
             message: 'Your Token Expired, Please Login',
             duration: 2,
           });
-          // setTimeout(() => window.location.replace('/auth/signin'), 2000)
+          return Promise.reject(error);
         }
-
+        notification.error({
+          message: error.response?.data?.message,
+          duration: 2,
+        });
         return Promise.reject(error);
       },
     );

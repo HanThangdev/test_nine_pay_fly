@@ -24,7 +24,10 @@ export const createBotTransaction = createAsyncThunk(
   'transaction/createBotTransaction',
   async (payload: BotPayload, { rejectWithValue }) => {
     try {
-      const response = await http.post<SuccessResponse<BotDataResponse>>('/api/bot', payload);
+      const response = await http.post<SuccessResponse<BotDataResponse>>(
+        '/api/bot',
+        payload,
+      );
       return response;
     } catch (error: any) {
       return rejectWithValue(error.response.data.error);
@@ -36,7 +39,10 @@ export const updateBotTransaction = createAsyncThunk(
   'transaction/updateBotTransaction',
   async (payload: UpdateBotPayload, { rejectWithValue }) => {
     try {
-      const response = await http.put<SuccessResponse<UpdateBotDataResponse>>('/api/bot', payload);
+      const response = await http.put<SuccessResponse<UpdateBotDataResponse>>(
+        '/api/bot',
+        payload,
+      );
       return response;
     } catch (error: any) {
       return rejectWithValue(error.response.data.error);
@@ -48,7 +54,10 @@ export const createSessionTransaction = createAsyncThunk(
   'transaction/createSessionTransaction',
   async (payload, { rejectWithValue }) => {
     try {
-      const response = await http.post<CreateSessionResponse>('/api/chat/session', payload);
+      const response = await http.post<CreateSessionResponse>(
+        '/api/chat/session',
+        payload,
+      );
       return response;
     } catch (error: any) {
       return rejectWithValue(error.response.data.error);
@@ -57,41 +66,50 @@ export const createSessionTransaction = createAsyncThunk(
 );
 
 export const getChatStreamingTransaction = createAsyncThunk(
-  "transaction/getStreamingResponse",
-  async ({payload, callBack}: GetStreamingPayload<GetChatStreamingRequest, string>, { rejectWithValue }) => {
-      const endPoint = "api/chat/get-streaming-response"
-      const cookies = new Cookies();
-      const token = cookies.get('access_token');
-      let textContainer = '';
+  'transaction/getStreamingResponse',
+  async (
+    { payload, callBack }: GetStreamingPayload<GetChatStreamingRequest, string>,
+    { rejectWithValue },
+  ) => {
+    const endPoint = 'api/chat/get-streaming-response';
+    const cookies = new Cookies();
+    const token = cookies.get('access_token');
+    let textContainer = '';
     try {
-      const response: any = await fetch(new URL(import.meta.env.VITE_API_URL).toString() + endPoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+      const response: any = await fetch(
+        new URL(import.meta.env.VITE_API_URL).toString() + endPoint,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+
+          body: JSON.stringify(payload),
         },
-        
-        body: JSON.stringify(payload),
-      });
+      );
       // console.log("response", response)
       const reader = response.body.getReader();
-      const decoder = new TextDecoder("utf-8");
+      const decoder = new TextDecoder('utf-8');
       while (true) {
-          const {done, value} = await reader.read();
-          if (done) break;
-          textContainer += decoder.decode(value, {stream: true})
-          callBack(textContainer)
+        const { done, value } = await reader.read();
+        if (done) break;
+        textContainer += decoder.decode(value, { stream: true });
+        callBack(textContainer);
       }
       return response;
     } catch (error: any) {
       return rejectWithValue(error.response.data.error);
     }
-  }
+  },
 );
 
 export const scrapingURLTransaction = createAsyncThunk(
   'transaction/scrapingURLTransaction',
-  async ({payload, callBack}: GetStreamingPayload<ScrapingURLPayload, any>, { rejectWithValue }) => {
+  async (
+    { payload, callBack }: GetStreamingPayload<ScrapingURLPayload, any>,
+    { rejectWithValue },
+  ) => {
     const endPoint = 'api/scraping/url';
     const cookies = new Cookies();
     const token = cookies.get('access_token');
@@ -110,23 +128,14 @@ export const scrapingURLTransaction = createAsyncThunk(
       );
       const reader = response.body?.getReader();
       const decoder = new TextDecoder('utf-8');
-      let data;
 
       while (true) {
         const { done, value } = await reader.read();
-
-        if (done) {
-          break;
-        }
-        // Massage and parse the chunk of data
-        const chunk = decoder.decode(value);
-        const lines = chunk.split('\n');
-
-        data = JSON.parse(lines[0]);
-        console.log(lines)
-        callBack(lines[0])
+        if (done) break;
+        const data = decoder.decode(value, { stream: true });
+        console.log(data);
+        callBack(data);
       }
-      return data;
     } catch (error: any) {
       console.log(error);
       return rejectWithValue(error.response.data.error);
@@ -149,12 +158,11 @@ export const AdvanceSettingTransaction = createAsyncThunk(
   },
 );
 
-
 export const deleteURLTransaction = createAsyncThunk(
   'transaction/deleteURLTransaction',
   async (payload: DeleteURLPayload, { rejectWithValue }) => {
     try {
-      const queryString = objectToQueryString(payload)
+      const queryString = objectToQueryString(payload);
       const response = await http.delete<SuccessResponse<string>>(
         `/api/scraping/url?${queryString}`,
       );
@@ -169,7 +177,7 @@ export const getAllURLTransaction = createAsyncThunk(
   'transaction/getAllURLTransaction',
   async (payload: GetAllURLPayload, { rejectWithValue }) => {
     try {
-      const queryString = objectToQueryString(payload)
+      const queryString = objectToQueryString(payload);
       const response = await http.get<SuccessResponse<GetAllURLResponse>>(
         `/api/scraping/url?${queryString}`,
       );
@@ -184,7 +192,7 @@ export const getBotInfoTransaction = createAsyncThunk(
   'transaction/getBotInfoTransaction',
   async (payload: GetBotInfoPayload, { rejectWithValue }) => {
     try {
-      const queryString = objectToQueryString(payload)
+      const queryString = objectToQueryString(payload);
       const response = await http.get<SuccessResponse<BotDataResponse>>(
         `/api/bot/information?${queryString}`,
       );
@@ -197,15 +205,18 @@ export const getBotInfoTransaction = createAsyncThunk(
 
 export const uploadFileTransaction = createAsyncThunk(
   'transaction/uploadFileTransaction',
-  async ({payload, callBack}: GetStreamingPayload<UploadFilePayload, any>, { rejectWithValue }) => {
+  async (
+    { payload, callBack }: GetStreamingPayload<UploadFilePayload, any>,
+    { rejectWithValue },
+  ) => {
     const endPoint = 'api/scraping/file';
     const cookies = new Cookies();
     const token = cookies.get('access_token');
-   
+
     try {
       const formData = new FormData();
-      formData.append("bot_id", payload.bot_id);
-      formData.append("file", payload.file);
+      formData.append('bot_id', payload.bot_id);
+      formData.append('file', payload.file);
       const response: any = await fetch(
         new URL(import.meta.env.VITE_API_URL).toString() + endPoint,
         {
@@ -232,8 +243,8 @@ export const uploadFileTransaction = createAsyncThunk(
         const lines = chunk.split('\n');
 
         data = JSON.parse(lines[0]);
-        console.log(lines)
-        callBack(lines[0])
+        console.log(lines);
+        callBack(lines[0]);
       }
       return data;
     } catch (error: any) {
