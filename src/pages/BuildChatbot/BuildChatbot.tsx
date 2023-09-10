@@ -9,12 +9,13 @@ import Cookies from 'universal-cookie';
 import { Tabs, TabsProps } from 'antd';
 import classNames from 'classnames';
 import { useEffect, useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import { AppDispatch, RootState } from '@/states/store';
+import { AppDispatch } from '@/states/store';
 import { setActiveTab, setDataWhenUpdate } from '@/states/buildChatBot/buildChatBot.slice';
 import { isEmptyObjectOrArray } from '@/utils/utils';
 import { getBotInfoTransaction } from '@/repository/buildChatBot';
+import { useBuildChatbot } from '@/states/buildChatBot/buildChatBot.selector';
 
 const items: TabsProps['items'] = [
   {
@@ -45,10 +46,7 @@ const items: TabsProps['items'] = [
 ];
 
 const BuildChatbot = () => {
-  const { activeTab, data } = useSelector(
-    (state: RootState) => state.buildChatBot,
-  );
-
+  const { data, activeTab, onCreateSession } = useBuildChatbot()
   const dispatch = useDispatch<AppDispatch>();
   const [activeKey, setActiveKey] = useState<string>(items[0].key);
   const cookies = new Cookies();
@@ -73,6 +71,7 @@ const BuildChatbot = () => {
     if(urlParams.get("id")){
       dispatch(getBotInfoTransaction({bot_id: urlParams.get("id") || ""}));
     }
+    onCreateSession();
   }, []);
 
   const listTab = useMemo(() => {

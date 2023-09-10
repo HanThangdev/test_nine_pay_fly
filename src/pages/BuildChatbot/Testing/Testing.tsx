@@ -10,7 +10,7 @@ import { useBuildChatbot } from '@/states/buildChatBot/buildChatBot.selector';
 import { GetChatStreamingRequest } from '@/repository/buildChatBot/type';
 
 const Testing = () => {
-  const { data, history } = useSelector((state: RootState) => state.buildChatBot);
+  const { data, history, session_id } = useSelector((state: RootState) => state.buildChatBot);
   const [loading, setLoading] = useState<boolean>();
   const [message, setMessage] = useState<string>('');
   const messagesEndRef = useRef<HTMLInputElement | null>(null);
@@ -27,10 +27,10 @@ const Testing = () => {
       bot_id: id,
       message: msg || message,
       user_id,
-      session_id: 'e1babe89-3910-48e1-9790-0debfb0f6928',
+      session_id: session_id,
     };
     try {
-      onStreamingDataTesting(streamingPayload);
+      await onStreamingDataTesting(streamingPayload);
     } catch (error: any) {
       notification.error({
         message: error?.response?.data.errors ?? error?.message,

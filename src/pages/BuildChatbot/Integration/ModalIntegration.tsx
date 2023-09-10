@@ -1,12 +1,29 @@
+import Code from '@/components/code';
+import { useBuildChatbot } from '@/states/buildChatBot/buildChatBot.selector';
 import { Modal } from 'antd';
 import classNames from 'classnames';
-
+import Cookies from 'universal-cookie';
 interface Props {
   open?: boolean;
   onClose: () => void;
 }
 
 export default function ModalIntegration({ open, onClose }: Props) {
+
+  const { data, session_id } = useBuildChatbot()
+  const cookies = new Cookies();
+  const token = cookies.get('access_token');
+  const codeString = `
+    <script src="${window.location.origin}/Chat.js"></script>
+    <script>
+      window.chatbotConfig = {
+        bot_id: "${data?.id}",
+        session_id: "${session_id}",
+        user_id: "${data?.user_id}",
+        token: "${token}",
+      };
+    </script>
+  `;
   return (
     <Modal
       closable={false}
@@ -44,7 +61,7 @@ export default function ModalIntegration({ open, onClose }: Props) {
       </div>
       <p className="text-[15px] text-[#878787] mt-6">
         To add a chat bubble to the bottom right of your website add this script
-        tag toyour html
+        tag to your html
       </p>
       <div
         className={classNames(
@@ -54,16 +71,10 @@ export default function ModalIntegration({ open, onClose }: Props) {
         <div
           className={classNames('w-full bg-[#f1f5f9] rounded-[5px] px-4 py-2')}
         >
-          <p>
-            &lt;script&gt;
-            <br />
-            src="/default.asp" <br />
-            id="100%" <br />
-            type="text/javascript" <br />
-            document.write("Welcome to Chatfly");
-            <br />
-            &lt;/script&gt;
-          </p>
+          <Code language='html'
+          >
+            {codeString}
+          </Code>
         </div>
       </div>
     </Modal>

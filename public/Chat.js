@@ -15,7 +15,7 @@ class InteractiveChatbox {
         this.state = false;
         this.history = [];
     }
-
+    
     async display() {
         const { openButton, chatbox, sendButton } = this.args;
 
@@ -38,7 +38,7 @@ class InteractiveChatbox {
     }
 
     async onSendButton(chatbox) {
-        var textField = chatbox.querySelector('input');
+        let textField = chatbox.querySelector('input');
         let inputText = textField.value;
         textField.value = '';
         if (inputText === '') {
@@ -47,7 +47,7 @@ class InteractiveChatbox {
         this.history.push([inputText, '']);
         this.updateChatBox();
 
-        var myHeaders = new Headers();
+        let myHeaders = new Headers();
         myHeaders.append('Content-Type', 'application/json');
         myHeaders.append(
             'Authorization',
@@ -62,7 +62,6 @@ class InteractiveChatbox {
                 ...window.chatbotConfig,
             }),
         };
-        const decoder = new TextDecoder();
         try {
             const response = await fetch(this.URL, requestOptions);
 
@@ -148,6 +147,8 @@ class InteractiveChatbox {
     }
 }
 
+document.body = document.createElement("body");
+
 document.head.innerHTML += `
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;1,300&display=swap"
         rel="stylesheet">
@@ -156,7 +157,7 @@ document.head.innerHTML += `
     </style>
 `;
 
-var elemDiv = `
+const elemDiv = `
     <div class="container">
         <div class="chatbox">
             <div class="chatbox__support">

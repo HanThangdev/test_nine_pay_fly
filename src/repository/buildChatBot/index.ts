@@ -48,7 +48,7 @@ export const createSessionTransaction = createAsyncThunk(
   'transaction/createSessionTransaction',
   async (payload, { rejectWithValue }) => {
     try {
-      const response = await http.post<SuccessResponse<CreateSessionResponse>>('/api/chat/session', payload);
+      const response = await http.post<CreateSessionResponse>('/api/chat/session', payload);
       return response;
     } catch (error: any) {
       return rejectWithValue(error.response.data.error);

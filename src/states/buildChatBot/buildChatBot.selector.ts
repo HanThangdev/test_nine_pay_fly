@@ -8,11 +8,11 @@ import { loadFetchLink, setGenerateChatIntoListHistory, setNewChatIntoListHistor
 
 export const useBuildChatbot = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { fetchLink, data } = useSelector((state: RootState) => state.buildChatBot, shallowEqual);
+  const { fetchLink, data, activeTab, session_id } = useSelector((state: RootState) => state.buildChatBot, shallowEqual);
   const onStreamingDataTesting = useCallback(
     async (payload: GetChatStreamingRequest) => {
       const { message } = payload
-      await dispatch(setNewChatIntoListHistory(message))
+      dispatch(setNewChatIntoListHistory(message))
       const callBack = (data: string) => {
         dispatch(setGenerateChatIntoListHistory(data))
       }
@@ -62,7 +62,10 @@ export const useBuildChatbot = () => {
     data,
     onStreamingDataTesting,
     onStreamingUploadUrl,
+    onCreateSession,
     onDeleteURL, 
-    onUploadFile
+    onUploadFile,
+    activeTab,
+    session_id
   };
 };

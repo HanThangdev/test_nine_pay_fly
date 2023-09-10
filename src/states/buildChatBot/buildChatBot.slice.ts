@@ -17,7 +17,7 @@ const initialState: BuildChatBotState = {
   data: null,
   loading: false,
   activeTab: '',
-  session: '',
+  session_id: '',
   listIncludesLink: [],
   listIncludesFile: [],
   history: [],
@@ -107,16 +107,17 @@ export const buildChatbotSlice = createSlice({
     // start createSession
 
     builder.addCase(createSessionTransaction.pending, (state) => {
-      state.session = '';
+      state.session_id = '';
       state.loading = true;
     });
     builder.addCase(createSessionTransaction.fulfilled, (state, action) => {
+      console.log(action.payload.data.session_id)
       state.loading = false;
-      state.session = action.payload.data.data.session_id;
+      state.session_id = action.payload.data.session_id;
     });
     builder.addCase(createSessionTransaction.rejected, (state) => {
       state.loading = false;
-      state.session = '';
+      state.session_id = '';
     });
 
     // end createSession

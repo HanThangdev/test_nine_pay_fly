@@ -3,7 +3,7 @@ export interface BuildChatBotState {
   data:  any | null;
   history: string[];
   loading: boolean;
-  session: string;
+  session_id: string;
   activeTab: string;
   listIncludesLink: DataFetchLink[];
   fetchLink: DataFetchLink;
