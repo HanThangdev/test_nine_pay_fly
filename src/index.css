@@ -6,7 +6,7 @@
 @layer base {
   body {
     @apply font-normal text-base text-body bg-[#FAFAFD] relative z-1;
-    font-family: 'Futura';
+    font-family: 'Assistant', sans-serif;
   }
 }
 

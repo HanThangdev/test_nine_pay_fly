@@ -155,10 +155,10 @@ const PricingPlan = ({ onClick }: Props) => {
             {t('Yearly', { ns: 'pricing_plan' })}
           </p>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pt-8 m-auto">
+        <div className="block lg:flex justify-center m-auto gap-8 pt-8">
           <div
             className={classNames(
-              'border-[1px] border-[#DCDEED] rounded-[10px]',
+              'w-full lg:w-1/3 border-[1px] border-[#DCDEED] rounded-[10px]',
               'bg-[#F9F9FC] text-black py-5 px-8 relative',
             )}
           >
@@ -178,7 +178,7 @@ const PricingPlan = ({ onClick }: Props) => {
             ))}
             <div className="bottom-0 lg:absolute m-auto w-[calc(100%-64px)] mb-[20px]">
               <p className="text-[26px] lg:text-[40px] flex justify-center items-end text-[#4AC1FF] mb-4 font-black">
-                $0
+              $0
               </p>
               <button
                 onClick={onClick}

@@ -85,11 +85,13 @@ const Conversations = () => {
           <DatePicker
             placeholder={`${t('From', { ns: 'conversation' })}`}
             value={fromDate}
+            allowClear={false}
           />
           <p className="mb-0">~</p>
           <DatePicker
             placeholder={`${t('To', { ns: 'conversation' })}`}
             value={toDate}
+            allowClear={false}
           />
         </div>
       </div>
