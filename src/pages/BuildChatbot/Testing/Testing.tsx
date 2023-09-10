@@ -122,7 +122,7 @@ const Testing = () => {
           history.map((message, index) => getDivForResponse(index, message))}
       </div>
       <div className="absolute bottom-0 w-full">
-        <div className="flex gap-x-3 ml-[26px]">
+        {/* <div className="flex gap-x-3 ml-[26px]">
           <button
             className="bg-[#F1F7FF] p-2 rounded-lg w-fit"
             onClick={() => onSendMessage("What's ChatFly?")}
@@ -137,8 +137,8 @@ const Testing = () => {
             {' '}
             Policy
           </button>
-        </div>
-        <p className="text-[#878787] ml-[26px]">48 massage credits left</p>
+        </div> */}
+        {/* <p className="text-[#878787] ml-[26px]">48 massage credits left</p> */}
         <div className="h-[62px] items-center border-t-[1px] border-[#E7E8F2] p-2 flex gap-x-[12px]">
           <input
             type="text"

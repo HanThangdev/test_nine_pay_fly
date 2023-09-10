@@ -50,7 +50,6 @@ export const useBuildChatbot = () => {
       const callBack = (data: DataFetchFile) => {
         dispatch(loadFetchLink(data))
       }
-      console.log(payload)
        await dispatch(uploadFileTransaction({payload, callBack}));
     },
     [dispatch],

@@ -206,7 +206,6 @@ export const uploadFileTransaction = createAsyncThunk(
       const formData = new FormData();
       formData.append("bot_id", payload.bot_id);
       formData.append("file", payload.file);
-      console.log(formData);
       const response: any = await fetch(
         new URL(import.meta.env.VITE_API_URL).toString() + endPoint,
         {

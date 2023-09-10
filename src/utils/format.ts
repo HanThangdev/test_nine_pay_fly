@@ -10,7 +10,6 @@ export function formatTimeAgo(utcTime: Date): string {
   const years = Math.floor(months / 12);
 
   let formattedTimeAgo: string;
-  console.log("days", days)
   switch (true) {
     case years >= 1:
       formattedTimeAgo = `${years} year${years > 1 ? 's' : ''} ago`;
