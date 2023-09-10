@@ -52,8 +52,8 @@ const ChatbotConfig = () => {
   );
 
   // CollectCustomer variables
-  const [email, setEmail] = useState(true);
-  const [name, setName] = useState(true);
+  const [email, setEmail] = useState(false);
+  const [name, setName] = useState(false);
   const [phone, setPhone] = useState(false);
   const [custom, setCustom] = useState<CustomField[]>([]);
   // const [field, setField] = useState('Custom field');
