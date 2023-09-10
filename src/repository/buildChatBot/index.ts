@@ -166,9 +166,9 @@ export const deleteURLTransaction = createAsyncThunk(
   'transaction/deleteURLTransaction',
   async (payload: DeleteURLPayload, { rejectWithValue }) => {
     try {
-      const queryString = objectToQueryString(payload);
+      const base64Url = btoa(payload.url)
       const response = await http.delete<SuccessResponse<string>>(
-        `/api/import/url?${queryString}`,
+        `/api/scraping/url?bot_id=${payload.bot_id}&base64_url=${base64Url}`,
       );
       return response;
     } catch (error: any) {
@@ -183,7 +183,7 @@ export const getAllURLTransaction = createAsyncThunk(
     try {
       const queryString = objectToQueryString(payload);
       const response = await http.get<SuccessResponse<GetAllURLResponse>>(
-        `/api/import/url?${queryString}`,
+        `/api/scraping/url?${queryString}`,
       );
       return response;
     } catch (error: any) {

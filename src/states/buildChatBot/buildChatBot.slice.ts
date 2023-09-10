@@ -59,9 +59,10 @@ export const buildChatbotSlice = createSlice({
     },
 
     deletedListIncludes: (state, action) => {
-      const newList = Array.from(state.listIncludesLink);
-      newList.splice(action.payload, 1);
-      state.listIncludesLink = action.payload;
+      const newList = Array.from(state.listIncludesLink).filter((_, index) => {
+        return index !== action.payload
+      });
+      state.listIncludesLink = newList;
     },
 
     setGenerateChatIntoListHistory: (state, action) => {
@@ -111,7 +112,6 @@ export const buildChatbotSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(createSessionTransaction.fulfilled, (state, action) => {
-      console.log(action.payload.data.session_id)
       state.loading = false;
       state.session_id = action.payload.data.session_id;
     });
@@ -176,6 +176,7 @@ export const buildChatbotSlice = createSlice({
       state.loadingFetchLink = true;
     });
     builder.addCase(deleteURLTransaction.fulfilled, (state) => { 
+      state.listIncludesLink
       state.loadingFetchLink = false;
     });
     builder.addCase(deleteURLTransaction.rejected, (state) => {

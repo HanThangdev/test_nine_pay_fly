@@ -184,7 +184,7 @@ const Website = () => {
         </p>
         {!isEmptyObjectOrArray(listLink) &&
           listLink.map((item, idx) => {
-            return <FetchLinkItem item={item} key={idx} />;
+            return <FetchLinkItem item={item} key={idx} index={idx}/>;
           })}
       </div>
       <div className="mt-[25px]">

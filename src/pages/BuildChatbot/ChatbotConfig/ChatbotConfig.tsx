@@ -20,6 +20,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { getBotTransaction } from '@/repository/manageChatbot';
+import { OPTION_TONE } from '@/constants/configs_bot';
 
 const ChatbotConfig = () => {
   const { t } = useTranslation();
@@ -30,18 +31,45 @@ const ChatbotConfig = () => {
     {
       value: '2',
       label: 'Customer Support',
+      prompt: "customer_support_prompt"
     },
     {
       value: '3',
       label: 'Knowledge Management',
+      prompt: "knowledge_management_prompt"
     },
     {
       value: '4',
       label: 'Teaching Education',
+      prompt: "teaching_assistant_prompt"
     },
     {
       value: '1',
       label: 'Other',
+      prompt: "default_prompt"
+    },
+  ];
+
+  const optionsTone = [
+    {
+      value: '2',
+      label: 'Customer Support',
+      prompt: "customer_support_prompt"
+    },
+    {
+      value: '3',
+      label: 'Knowledge Management',
+      prompt: "knowledge_management_prompt"
+    },
+    {
+      value: '4',
+      label: 'Teaching Education',
+      prompt: "teaching_assistant_prompt"
+    },
+    {
+      value: '1',
+      label: 'Other',
+      prompt: "default_prompt"
     },
   ];
 
@@ -50,6 +78,7 @@ const ChatbotConfig = () => {
   // BotConfig variables
   const [botName, setBotName] = useState('');
   const [caseStudy, setCaseStudy] = useState(options[0].value);
+  const [conversationTone, setConversationTone] = useState(OPTION_TONE[0].value);
   const [model, setModel] = useState('GPT - 3.5');
   const [visibility, setVisibility] = useState('Public');
 
@@ -154,13 +183,13 @@ const ChatbotConfig = () => {
       const queryString = objectToQueryString({ id, user_id });
       navigate(`/build-chatbots?${queryString}`);
 
-      setBotName(bot_name);
-      setCaseStudy(case_study);
-      setModel(gpt_model_name);
+      bot_name && setBotName(bot_name);
+      case_study && setCaseStudy(case_study);
+      gpt_model_name && setModel(gpt_model_name);
 
-      setCreativity(temperature);
-      setPromptExample(custom_prompt);
-      setRules(rules);
+      temperature && setCreativity(temperature);
+      custom_prompt && setPromptExample(custom_prompt);
+      rules && setRules(rules);
       setEmail(collect_customer_info?.email);
       setName(collect_customer_info?.name);
       setPhone(collect_customer_info?.phone);
@@ -184,6 +213,9 @@ const ChatbotConfig = () => {
         setVisibility={setVisibility}
         options={options}
         isUpdate={isUpdate}
+        setPromptExample={setPromptExample}
+        setConversationTone={setConversationTone}
+        conversationTone={conversationTone}
       />
       <Prompt
         creativity={creativity}

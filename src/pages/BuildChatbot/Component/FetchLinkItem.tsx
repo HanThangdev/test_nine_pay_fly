@@ -1,6 +1,7 @@
 import ModalComponent from '@/components/Modal';
 import { API_STATUS } from '@/constants';
 import { deleteURLTransaction, getAllURLTransaction } from '@/repository/buildChatBot';
+import { deletedListIncludes } from '@/states/buildChatBot/buildChatBot.slice';
 import { DataFetchLink } from '@/states/buildChatBot/type';
 import { AppDispatch, RootState } from '@/states/store';
 import { notification } from 'antd';
@@ -10,9 +11,10 @@ import { useDispatch, useSelector } from 'react-redux';
 
 interface FetchLinkItemProps {
   item: DataFetchLink;
+  index: number
 }
 
-const FetchLinkItem = ({ item }: FetchLinkItemProps) => {
+const FetchLinkItem = ({ item, index }: FetchLinkItemProps) => {
   const [visibleDeleteModal, setVisibleDeleteModal] = useState<boolean>(false);
   const { data } = useSelector((state: RootState) => state.buildChatBot);
   const dispatch = useDispatch<AppDispatch>();
@@ -30,12 +32,14 @@ const FetchLinkItem = ({ item }: FetchLinkItemProps) => {
       if (meta.requestStatus == API_STATUS.REJECTED) {
         return;
       }
+
+      dispatch(deletedListIncludes(index))
       notification.success({
         message: 'Delete URL success',
       });
-      await dispatch(
-        getAllURLTransaction({ bot_id: id}),
-      );
+      // await dispatch(
+      //   getAllURLTransaction({ bot_id: id}),
+      // );
     } catch (error: any) {
       notification.error({
         message: error?.response?.data.errors ?? error?.message,

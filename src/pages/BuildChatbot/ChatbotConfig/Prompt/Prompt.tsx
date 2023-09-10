@@ -86,7 +86,7 @@ const Prompt: React.FC<PromptProps> = ({
             <textarea
               value={value}
               onChange={(e) => setValue(e.target.value)}
-              className="w-full h-[120px] !h-min-[150px] text-[15px] px-[20px] focus-visible:outline-none focus:border-[#DCDEED] py-[11px] border-[1px] border-[#DCDEED] mt-[11px] rounded-[5px]"
+              className="w-full h-[300px] !h-min-[150px] text-[15px] px-[20px] focus-visible:outline-none focus:border-[#DCDEED] py-[11px] border-[1px] border-[#DCDEED] mt-[11px] rounded-[5px]"
             />
           </div>
 

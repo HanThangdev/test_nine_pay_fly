@@ -1,10 +1,12 @@
 import classNames from 'classnames';
 import IconRobot from '@/components/IconRobot/IconRobot';
 import { AiOutlineQuestionCircle } from 'react-icons/ai';
-import { Input, Radio, Tooltip } from 'antd';
+import { Input, Radio, Select, Tooltip } from 'antd';
 import React from 'react';
 import { BiLockOpenAlt, BiLockAlt } from 'react-icons/bi';
 import { useTranslation } from 'react-i18next';
+import { PROMPT_EXAM } from '@/constants';
+import { OPTION_TONE } from '@/constants/configs_bot';
 
 const optionsModal = [
   { label: 'GPT - 3.5', value: 'GPT - 3.5' },
@@ -15,6 +17,7 @@ const optionsModal = [
 interface Option {
   value: string;
   label: string;
+  prompt: string;
 }
 
 interface BotConfigProps {
@@ -26,7 +29,10 @@ interface BotConfigProps {
   setModel: (value: string) => void;
   visibility: string;
   setVisibility: (value: string) => void;
+  setPromptExample: (value: string) => void;
   options: Option[];
+  conversationTone: string,
+  setConversationTone: (value: string) => void,
   isUpdate: boolean;
 }
 
@@ -40,9 +46,13 @@ const BotConfig: React.FC<BotConfigProps> = ({
   visibility,
   setVisibility,
   options,
+  conversationTone,
+  setConversationTone,
   isUpdate,
+  setPromptExample,
 }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation(["config_bot"]);
+
   return (
     <div
       className={classNames(
@@ -55,7 +65,7 @@ const BotConfig: React.FC<BotConfigProps> = ({
         {t('BotConfig', { ns: 'config_bot' })}
       </h2>
       <div className="flex text-[15px] mt-[16px] items-center">
-        <p className="w-[150px] font-bold">
+        <p className="w-[170px] font-bold">
           {t('NameBot', { ns: 'config_bot' })}
         </p>
         <Input
@@ -68,15 +78,37 @@ const BotConfig: React.FC<BotConfigProps> = ({
         />
       </div>
       <div className="flex text-[15px] mt-[16px] items-center">
-        <p className="w-[150px] flex gap-x-[10px] font-bold items-center">
+        <p className="w-[170px] flex gap-x-[10px] font-bold items-center">
           {t('SelectCase', { ns: 'config_bot' })}
         </p>
         <select
           value={caseStudy}
-          onChange={(e) => setCaseStudy(e.target.value)}
+          onChange={(e) => {
+            setCaseStudy(e.target.value);
+            const itemPromptFromCaseStudy = options.find(option => option.value === e.target.value)
+            setPromptExample(`${t(`${itemPromptFromCaseStudy?.prompt}`) || ""}`)
+          }}
           className="h-[41px] w-[calc(100%-150px)] rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
         >
           {options.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="flex text-[15px] mt-[16px] items-center">
+        <p className="w-[170px] flex gap-x-[10px] font-bold items-center">
+          {t('Conversational tone', { ns: 'config_bot' })}
+        </p>
+        <select
+          value={conversationTone}
+          onChange={(e) => {
+            setConversationTone(e.target.value);
+          }}
+          className="h-[41px] w-[calc(100%-150px)] rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
+        >
+          {OPTION_TONE.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}
             </option>

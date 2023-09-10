@@ -41,3 +41,14 @@ export function formatTimeAgo(utcTime: Date): string {
 
   return formattedTimeAgo;
 }
+
+
+export function convertStringToParagraphs(inputString: string) {
+  const paragraphs = inputString.split(/\n|\r\n/);
+
+  const cleanedParagraphs = paragraphs.map((paragraph) => paragraph.trim());
+
+  const result = cleanedParagraphs.join('\n\n');
+
+  return result;
+}
