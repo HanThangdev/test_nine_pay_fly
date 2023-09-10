@@ -86,7 +86,7 @@ const BotConfig: React.FC<BotConfigProps> = ({
           onChange={(e) => {
             setCaseStudy(e.target.value);
             const itemPromptFromCaseStudy = options.find(option => option.value === e.target.value)
-            setPromptExample(`${t(`${itemPromptFromCaseStudy?.prompt}`) || ""}`)
+            setPromptExample(`${t(itemPromptFromCaseStudy?.prompt || "")}`)
           }}
           className="h-[41px] w-[calc(100%-150px)] rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
         >
