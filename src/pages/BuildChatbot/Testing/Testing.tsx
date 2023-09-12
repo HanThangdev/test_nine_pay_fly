@@ -11,6 +11,7 @@ import { GetChatStreamingRequest } from '@/repository/buildChatBot/type';
 import { LOADING_TEXT } from '@/constants';
 import { TypeAnimation } from 'react-type-animation';
 import { resetHistoryChatTest } from '@/states/buildChatBot/buildChatBot.slice';
+import { convertStringToParagraphs } from '@/utils/format';
 
 const Testing = () => {
   const { data, history, session_id } = useSelector(
@@ -57,7 +58,7 @@ const Testing = () => {
                 cursor={false}
               />
             ) : (
-              message
+              convertStringToParagraphs(message)
             )}
           </p>
         </div>
@@ -76,7 +77,7 @@ const Testing = () => {
               cursor={false}
             />
           ) : (
-            message
+            convertStringToParagraphs(message)
           )}
         </div>
       );
@@ -129,7 +130,7 @@ const Testing = () => {
         </div>
       </div>
       <div
-        className="py-[37px] px-[27px] gap-y-[10px] grid overflow-y-auto"
+        className="py-[37px] px-[27px] gap-y-[10px] grid overflow-y-auto overflow-hidden"
         style={{ maxHeight: 'calc(100% - 20px)' }}
         ref={messagesEndRef}
       >

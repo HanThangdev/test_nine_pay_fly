@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react';
 import enFlag from '@/images/lang/en.png';
 import jpFlag from '@/images/lang/ja.png';
 import vnFlag from '@/images/lang/vn.png';
+import { logoImg } from '@/images/logo';
 
 const urlParams = new URLSearchParams(window.location.search);
 const getLanguageFromURL = urlParams.get('language');
@@ -143,7 +144,7 @@ const Header = (props: {
 
               <Link className="flex items-center flex-shrink-0" to="/">
                 <Image
-                  src={'/logo.png'}
+                  src={logoImg}
                   alt="Chatfly"
                   width={30}
                   height={30}

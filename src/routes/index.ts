@@ -14,6 +14,11 @@ const coreRoutes = [
     component: BuildChatbox,
   },
   {
+    path: '/build-chatbots/:id',
+    title: 'Build-chatbots',
+    component: BuildChatbox,
+  },
+  {
     path: '/conversations',
     title: 'Conversations',
     component: Conversations,

@@ -20,13 +20,14 @@ import { isEmptyObjectOrArray } from '@/utils/utils';
 import { getBotInfoTransaction } from '@/repository/buildChatBot';
 import { useBuildChatbot } from '@/states/buildChatBot/buildChatBot.selector';
 import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 const urlParams = new URLSearchParams(window.location.search);
 const getLanguageFromURL = urlParams.get('language');
 const BuildChatbot = () => {
   const { data, activeTab, onCreateSession } = useBuildChatbot();
   const { t } = useTranslation();
   const lang = getLanguageFromURL || localStorage.getItem('LANGUAGE') || 'en';
-
+  const { id } = useParams();
   const items: TabsProps['items'] = [
     {
       key: 'chatbogConfig',
@@ -76,8 +77,8 @@ const BuildChatbot = () => {
     }
 
     dispatch(setDataWhenUpdate(obj));
-    if (urlParams.get('id')) {
-      dispatch(getBotInfoTransaction({ bot_id: urlParams.get('id') || '' }));
+    if (id) {
+      dispatch(getBotInfoTransaction({ bot_id: id || '' }));
     }
     onCreateSession();
   }, []);

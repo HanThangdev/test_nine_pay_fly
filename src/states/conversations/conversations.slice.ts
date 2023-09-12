@@ -3,7 +3,7 @@ import { ConversationsState } from './type';
 import { getAllConversations } from '@/repository/conversations';
 
 const initialState: ConversationsState = {
-  conversations: [],
+  conversations: "",
   loading: false,
 };
 
@@ -19,7 +19,7 @@ export const buildChatbotSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(getAllConversations.fulfilled, (state, action) => {
-      state.conversations = action.payload.data.data.chat_history_response;
+      state.conversations = action.payload.data.data;
       state.loading = false;
     });
     builder.addCase(getAllConversations.rejected, (state) => {

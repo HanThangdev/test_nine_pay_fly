@@ -58,10 +58,9 @@ const ChatbotElement = ({ info }: ChatbotElementProps) => {
   };
 
   const redirectToUpdateBot = () => {
-    const { id, user_id } = info;
-    const queryString = objectToQueryString({ id, user_id });
+    const { id } = info;
     dispatch(resetStateBuild());
-    navigate(`/build-chatbots?${queryString}`);
+    navigate(`/build-chatbots/${id}`);
   };
 
   return (

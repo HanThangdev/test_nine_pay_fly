@@ -47,10 +47,9 @@ const Conversations = () => {
 
   useEffect(() => {
     if(!isEmptyObjectOrArray(botSelect)){
-      const { bot_id, user_id } = botSelect;
+      const { bot_id } = botSelect;
       const paramsGetAllConversations: GetAllConversationsPayload = {
         bot_id,
-        user_id,
         date_from: fromDate.format().toString(),
         date_to: toDate.format().toString(),
       };

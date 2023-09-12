@@ -149,7 +149,6 @@ const ChatbotConfig = () => {
     if (!isEmptyObjectOrArray(data)) {
       const {
         id,
-        user_id,
         bot_name,
         case_study,
         gpt_model_name,
@@ -158,8 +157,7 @@ const ChatbotConfig = () => {
         custom_prompt,
         collect_customer_info,
       } = data;
-      const queryString = objectToQueryString({ id, user_id });
-      navigate(`/build-chatbots?${queryString}`);
+      navigate(`/build-chatbots/${id}`);
 
       bot_name && setBotName(bot_name);
       case_study && setCaseStudy(case_study);
