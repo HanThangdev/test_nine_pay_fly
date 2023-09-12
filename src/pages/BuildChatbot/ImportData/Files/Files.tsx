@@ -2,30 +2,66 @@ import classNames from 'classnames';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { RiDeleteBinLine } from 'react-icons/ri';
 import { Upload, UploadFile, notification } from 'antd';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { hasDuplicateFiles, isEmptyObjectOrArray } from '@/utils/utils';
 import { useBuildChatbot } from '@/states/buildChatBot/buildChatBot.selector';
 import { useTranslation } from 'react-i18next';
+import FetchFileItem from '../../Component/FetchFileItem';
+import { API_STATUS } from '@/constants';
+import { TypeAnimation } from 'react-type-animation';
 const Files = () => {
   const { t } = useTranslation();
-  const [listFile, setListFile] = useState<File[]>([]);
-  const { onUploadFile, data } = useBuildChatbot();
+  const [listFileWaitingImport, setListFileWaitingImport] = useState<File[]>(
+    [],
+  );
+  const {
+    onUploadFile,
+    data,
+    listIncludesFile,
+    loadingFetchFile,
+    onGetAllFile,
+  } = useBuildChatbot();
   const UploadToWaitList = useCallback(
     (file: File) => {
-      if (hasDuplicateFiles(file, listFile)) {
+      if (hasDuplicateFiles(file, listFileWaitingImport)) {
         notification.error({
           message: 'File is already',
         });
         return;
       }
-      setListFile([...listFile, file]);
+      setListFileWaitingImport([...listFileWaitingImport, file]);
     },
-    [listFile],
+    [listFileWaitingImport],
   );
 
   const onUpload = (file: File) => {
-    onUploadFile({ file, bot_id: data?.id });
+    onUploadFile({ file, bot_id: data?.id }).then((response) => {
+      if (response.meta.requestStatus === API_STATUS.FULFILLED) {
+        const newList = Array.from(listFileWaitingImport).filter((_) => {
+          return _.name !== file.name;
+        });
+        setListFileWaitingImport(newList);
+        onGetAllFile({ bot_id: data?.id });
+      }
+    });
   };
+
+  const totalTokens = useMemo(() => {
+    let total = 0;
+    if (listIncludesFile && !isEmptyObjectOrArray(listIncludesFile)) {
+      total = listIncludesFile.reduce(
+        (accumulator, item) => accumulator + (item.num_token || 0),
+        0,
+      );
+    }
+    return total;
+  }, [listIncludesFile]);
+
+  const listLink = useMemo(() => listIncludesFile, [listIncludesFile]);
+
+  useEffect(() => {
+    onGetAllFile({ bot_id: data?.id });
+  }, []);
 
   return (
     <>
@@ -66,19 +102,20 @@ const Files = () => {
           </p>
         </Upload.Dragger>
       </div>
-      {!isEmptyObjectOrArray(listFile) &&
-        listFile.map((item, idx) => {
+      {!isEmptyObjectOrArray(listFileWaitingImport) &&
+        listFileWaitingImport.map((item, idx) => {
           return (
             <div className="flex justify-between mt-[27px]" key={idx}>
               <div className="text-[15px] flex justify-between items-center w-full pr-4">
                 {item.name || 'File_Name'}
                 <div
                   onClick={() => {
-                    const newListFile = Array.from(listFile);
-                    setListFile(
+                    const newListFile = Array.from(listFileWaitingImport);
+                    setListFileWaitingImport(
                       newListFile.filter((it) => it.name !== item.name),
                     );
                   }}
+                  className="cursor-pointer"
                 >
                   <RiDeleteBinLine size={18} color="#F44336" />
                 </div>
@@ -87,7 +124,17 @@ const Files = () => {
                 className="w-[150px] h-[43px] bg-[#E8E9F4] text-[#01058A] rounded-[10px] text-[15px] font-bold justify-center"
                 onClick={() => onUpload(item)}
               >
-                {t('Import', { ns: 'config_bot' })}
+                {loadingFetchFile ? (
+                  <div>
+                    <TypeAnimation
+                      sequence={['.', 800, '..', 800, '...', 800]}
+                      repeat={Infinity}
+                      cursor={false}
+                    />
+                  </div>
+                ) : (
+                  `${t('Import', { ns: 'config_bot' })}`
+                )}
               </button>
             </div>
           );
@@ -96,45 +143,26 @@ const Files = () => {
       <div className="mt-[25px]">
         <p className="text-[16px] font-bold">
           {' '}
-          {t('Attached', { ns: 'config_bot' })} (40{' '}
+          {t('Attached', { ns: 'config_bot' })} ({totalTokens}{' '}
           {t('chars', { ns: 'config_bot' })})
         </p>
-        <div className="flex justify-between">
-          <p className="text-[15px]">
-            File_Test_ChatFly_Not_Finished.docx
-            <span className="text-[#A7A7B0]">
-              (20 {t('chars', { ns: 'config_bot' })})
-            </span>
-          </p>
-          {/* <button className="w-[150px] h-[43px] bg-[#E8E9F4] text-[#01058A] rounded-[10px] text-[15px] font-bold justify-cente">
-            Training
-          </button> */}
-        </div>
-        <div className="flex justify-between mt-[15px]">
-          <p className="text-[15px] flex items-center">
-            File_Test_ChatFly_Not_Finished.docx
-            <span className="text-[#A7A7B0 mr-[48px]">
-              (20 {t('chars', { ns: 'config_bot' })})
-            </span>
-            <RiDeleteBinLine size={18} color="#F44336" />
-          </p>
-          {/* <button className="w-[150px] h-[43px] bg-[#4AC1FF;] text-white rounded-[10px] text-[15px] font-bold justify-cente">
-            Done
-          </button> */}
-        </div>
+        {listLink && !isEmptyObjectOrArray(listLink) &&
+          listLink.map((item, idx) => {
+            return <FetchFileItem item={item} key={idx} index={idx} />;
+          })}
       </div>
       <div className="mt-[25px]">
         <p className="text-[16px] font-bold">
           {t('IncludedSource', { ns: 'config_bot' })}:
         </p>
         <p className="text-[15px]">
-          2 {t('Files', { ns: 'config_bot' })}
+          {listIncludesFile?.length || 0} {t('Files', { ns: 'config_bot' })}
           <span className="text-[#A7A7B0]">
-            (40 {t('chars', { ns: 'config_bot' })})
+            ({totalTokens} {t('chars', { ns: 'config_bot' })})
           </span>
         </p>
         <p className="text-[15px]">
-          {t('TotalChar', { ns: 'config_bot' })}: 40/400,000{' '}
+          {t('TotalChar', { ns: 'config_bot' })}: {totalTokens}/400,000{' '}
           {t('limit', { ns: 'config_bot' })}
         </p>
       </div>

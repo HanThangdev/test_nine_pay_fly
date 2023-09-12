@@ -15,10 +15,14 @@ import {
   UpdateBotPayload,
   UpdateBotDataResponse,
   UploadFilePayload,
+  GetAllFilePayload,
+  GetAllFileResponse,
+  DeleteFilePayload,
 } from './type';
 import Cookies from 'universal-cookie';
 import { SuccessResponse } from '../type';
 import { objectToQueryString } from '@/utils/utils';
+import { DataFetchFile } from '@/states/buildChatBot/type';
 const FORM_DATA_HEADER = { 'Content-Type': 'multipart/form-data' };
 export const createBotTransaction = createAsyncThunk(
   'transaction/createBotTransaction',
@@ -88,7 +92,6 @@ export const getChatStreamingTransaction = createAsyncThunk(
           body: JSON.stringify(payload),
         },
       );
-      // console.log("response", response)
       const reader = response.body.getReader();
       const decoder = new TextDecoder('utf-8');
       while (true) {
@@ -213,9 +216,8 @@ export const getAllURLTransaction = createAsyncThunk(
   'transaction/getAllURLTransaction',
   async (payload: GetAllURLPayload, { rejectWithValue }) => {
     try {
-      const queryString = objectToQueryString(payload);
       const response = await http.get<SuccessResponse<GetAllURLResponse>>(
-        `/api/scraping/url?${queryString}`,
+        `/api/scraping/url/${payload.bot_id}`,
       );
       return response;
     } catch (error: any) {
@@ -270,21 +272,45 @@ export const uploadFileTransaction = createAsyncThunk(
 
       while (true) {
         const { done, value } = await reader.read();
-
-        if (done) {
-          break;
-        }
-        // Massage and parse the chunk of data
-        const chunk = decoder.decode(value);
-        const lines = chunk.split('\n');
-
-        data = JSON.parse(lines[0]);
-        console.log(lines);
-        callBack(lines[0]);
+        if (done) break;
+        data = decoder.decode(value, { stream: true });
+      }
+      if(!!data){
+        callBack(JSON.parse(data));
+        return JSON.parse(data);
       }
       return data;
     } catch (error: any) {
       console.log(error);
+      return rejectWithValue(error.response.data.error);
+    }
+  },
+);
+
+export const deleteFileImportedTransaction = createAsyncThunk(
+  'transaction/deleteFileImportedTransaction',
+  async (payload: DeleteFilePayload, { rejectWithValue }) => {
+    try {
+      const queryString = objectToQueryString(payload);
+      const response = await http.delete<SuccessResponse<string>>(
+        `/api/scraping/file?${queryString}`,
+      );
+      return response;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data.error);
+    }
+  },
+);
+
+export const getAllFileTransaction = createAsyncThunk(
+  'transaction/getAllFileTransaction',
+  async (payload: GetAllFilePayload, { rejectWithValue }) => {
+    try {
+      const response = await http.get<SuccessResponse<GetAllFileResponse>>(
+        `/api/scraping/file/${payload.bot_id}`,
+      );
+      return response;
+    } catch (error: any) {
       return rejectWithValue(error.response.data.error);
     }
   },

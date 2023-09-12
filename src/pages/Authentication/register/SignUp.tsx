@@ -71,7 +71,11 @@ const SignUp = () => {
               <h2 className="text-center sm:text-[36px] text-2xl mt-[33px] text-white font-bold">
                 Create your account
               </h2>
-
+              {/* {isSuccess && ( */}
+                  <p className="w-[396px] m-auto flex items-center bg-gradient-radial from-cyan-500 to-blue-500 justify-center h-[48px] rounded-[8px] text-white transition">
+                    Check your email for the confirmation link.
+                  </p>
+              {/* )}  */}
               <form onSubmit={onSubmit} className="w-[396px] m-auto">
                 <div className="mt-6">
                   <label className="mb-2.5 h-[21px] block font-medium text-white">
@@ -210,11 +214,7 @@ const SignUp = () => {
                     </Link>
                   </p>
                 </div>
-                {isSuccess && (
-                  <p className="w-full m-auto flex items-center bg-[#15257c] justify-center h-[48px] rounded-[8px] text-white transition">
-                    Check your email for the confirmation link.
-                  </p>
-                )}
+               
               </form>
             </div>
           </div>

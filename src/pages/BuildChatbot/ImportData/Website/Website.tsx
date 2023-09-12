@@ -2,7 +2,7 @@ import { ImportURLPayload } from '@/repository/buildChatBot/type';
 import { AppDispatch, RootState } from '@/states/store';
 import { isEmptyObjectOrArray } from '@/utils/utils';
 import { Progress, notification } from 'antd';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { AiOutlineQuestionCircle } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import { TextLoadingWebsite } from './type';
@@ -12,11 +12,12 @@ import FetchLinkItem from '../../Component/FetchLinkItem';
 import { useTranslation } from 'react-i18next';
 import { loadFetchLink } from '@/states/buildChatBot/buildChatBot.slice';
 import { validURL } from '@/utils/validate';
+import { API_STATUS } from '@/constants';
 
 const Website = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
-  const { onStreamingUploadUrl, fetchLink } = useBuildChatbot();
+  const { onStreamingUploadUrl, fetchLink, onGetAllUrl } = useBuildChatbot();
   const { data, listIncludesLink, loadingFetchLink } = useSelector(
     (state: RootState) => state.buildChatBot,
   );
@@ -24,7 +25,7 @@ const Website = () => {
   const [directPageUrl, setDirectPageUrl] = useState<string>('');
   const [loadingFullPage, setLoadingFullPage] = useState<boolean>(false);
   const [loadingDirectPage, setLoadingDirectPage] = useState<boolean>(false);
-  
+
   const SCRAPE_TYPE = {
     FULL_PAGE: 1,
     DIRECT_PAGE: 2,
@@ -34,44 +35,55 @@ const Website = () => {
       return;
     }
 
-    if(!validURL(scrapeType === SCRAPE_TYPE.FULL_PAGE ? fullPageUrl : directPageUrl)){
-      notification.error({
-        message: "Invalid Url"
-      });
-      return;
-    }
-
-    dispatch(loadFetchLink({
-      num_token: 0,
-      progress: 0,
-      url:""
-    }))
-
-    if(scrapeType == SCRAPE_TYPE.FULL_PAGE){
-      setLoadingFullPage(true)
-    }else{
-      setLoadingDirectPage(true)
-    }
-    
-    const { id, user_id } = data;
-
-    const importUrlPayload: ImportURLPayload = {
-      bot_id: id,
-      user_id,
-      scrape_url:
-        scrapeType === SCRAPE_TYPE.FULL_PAGE ? fullPageUrl : directPageUrl,
-      scrape_type: scrapeType,
-    };
-
+   
     try {
-      await onStreamingUploadUrl(importUrlPayload);
+      if (scrapeType == SCRAPE_TYPE.FULL_PAGE) {
+        setLoadingFullPage(true);
+      } else {
+        setLoadingDirectPage(true);
+      }
+
+      if (
+        !validURL(
+          scrapeType === SCRAPE_TYPE.FULL_PAGE ? fullPageUrl : directPageUrl,
+        )
+      ) {
+        notification.error({
+          message: 'Invalid Url',
+        });
+        return;
+      }
+
+      dispatch(
+        loadFetchLink({
+          num_token: 0,
+          progress: 0,
+          url: '',
+        }),
+      );
+
+      const { id, user_id } = data;
+
+      const importUrlPayload: ImportURLPayload = {
+        bot_id: id,
+        user_id,
+        scrape_url:
+          scrapeType === SCRAPE_TYPE.FULL_PAGE ? fullPageUrl : directPageUrl,
+        scrape_type: scrapeType,
+      };
+
+
+      await onStreamingUploadUrl(importUrlPayload).then((response) => {
+        if (response.meta.requestStatus === API_STATUS.FULFILLED) {
+          onGetAllUrl({bot_id: id})
+        }})
     } catch (error: any) {
       notification.error({
         message: error?.response?.data.errors ?? error?.message,
       });
     } finally {
-      setLoadingFullPage(false)
-      setLoadingDirectPage(false)
+      setLoadingFullPage(false);
+      setLoadingDirectPage(false);
     }
     resetUrl();
   };
@@ -91,7 +103,11 @@ const Website = () => {
     setFullPageUrl('');
     setDirectPageUrl('');
   };
-  
+
+  useEffect(() => {
+    onGetAllUrl({ bot_id: data?.id });
+  }, []);
+
   return (
     <>
       <div>
@@ -169,7 +185,7 @@ const Website = () => {
             )}
           </button>
         </div>
-        {!isEmptyObjectOrArray(fetchLink) && loadingDirectPage&& (
+        {!isEmptyObjectOrArray(fetchLink) && loadingDirectPage && (
           <Progress
             className="mt-[10px]"
             percent={+(fetchLink.progress * 100).toFixed(2)}
@@ -185,7 +201,7 @@ const Website = () => {
         </p>
         {!isEmptyObjectOrArray(listLink) &&
           listLink.map((item, idx) => {
-            return <FetchLinkItem item={item} key={idx} index={idx}/>;
+            return <FetchLinkItem item={item} key={idx} index={idx} />;
           })}
       </div>
       <div className="mt-[25px]">

@@ -1,4 +1,5 @@
 import { DataFetchLink } from "@/states/auth/type";
+import { DataFetchFile } from "@/states/buildChatBot/type";
 
 export interface BotPayload {
   bot_name: string;
@@ -117,4 +118,27 @@ export interface GetBotInfoPayload {
 export interface UploadFilePayload {
   bot_id: string;
   file: File;
+}
+
+export interface DeleteFileImportedPayload {
+  bot_id: string;
+  knowledge_base_id: string;
+}
+
+export interface DeleteFileImportedResponse {
+  bot_id: string;
+  file: File;
+}
+
+export interface GetAllFilePayload {
+  bot_id: string
+}
+
+export interface GetAllFileResponse {
+  file: DataFetchFile[]
+}
+
+export interface DeleteFilePayload {
+  knowledge_base_id: string
+  bot_id: string
 }

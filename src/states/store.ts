@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import buildChatBotReducer from '@/states/buildChatBot/buildChatBot.slice';
 import manageChatBotReducer from '@/states/manageBot/manageBot.slice';
 import authReducer from '@/states/auth/auth.slice';
+import pricingPlanReducer from '@/states/pricingPlan/pricingPlan.slice';
 
 const store = configureStore({
   middleware: (getDefaultMiddleware) =>
@@ -12,6 +13,7 @@ const store = configureStore({
     buildChatBot: buildChatBotReducer,
     manageBot: manageChatBotReducer,
     auth: authReducer,
+    pricing: pricingPlanReducer,
   },
 });
 

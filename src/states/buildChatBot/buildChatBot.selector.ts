@@ -2,13 +2,13 @@ import { useCallback } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../store';
 import { DataFetchFile, DataFetchLink } from './type';
-import { createSessionTransaction, deleteURLTransaction, getChatStreamingTransaction, importURLTransaction, uploadFileTransaction } from '@/repository/buildChatBot';
-import { DeleteURLPayload, GetChatStreamingRequest, ImportURLPayload, UploadFilePayload } from '@/repository/buildChatBot/type';
-import { loadFetchLink, setGenerateChatIntoListHistory, setNewChatIntoListHistory } from './buildChatBot.slice';
+import { createSessionTransaction, deleteFileImportedTransaction, deleteURLTransaction, getAllFileTransaction, getAllURLTransaction, getChatStreamingTransaction, importURLTransaction, uploadFileTransaction } from '@/repository/buildChatBot';
+import { DeleteFileImportedPayload, DeleteURLPayload, GetAllFilePayload, GetAllURLPayload, GetChatStreamingRequest, ImportURLPayload, UploadFilePayload } from '@/repository/buildChatBot/type';
+import { loadFetchFile, loadFetchLink, setGenerateChatIntoListHistory, setNewChatIntoListHistory } from './buildChatBot.slice';
 
 export const useBuildChatbot = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { fetchLink, data, activeTab, session_id } = useSelector((state: RootState) => state.buildChatBot, shallowEqual);
+  const { fetchLink, data, activeTab, session_id, listIncludesFile, loadingFetchFile } = useSelector((state: RootState) => state.buildChatBot, shallowEqual);
   const onStreamingDataTesting = useCallback(
     async (payload: GetChatStreamingRequest) => {
       const { message } = payload
@@ -49,13 +49,33 @@ export const useBuildChatbot = () => {
   const onUploadFile = useCallback(
     async (payload: UploadFilePayload) => {
       const callBack = (data: DataFetchFile) => {
-        dispatch(loadFetchLink(data))
+        dispatch(loadFetchFile(data))
       }
-       await dispatch(uploadFileTransaction({payload, callBack}));
+       return await dispatch(uploadFileTransaction({payload, callBack}));
     },
     [dispatch],
   );
 
+  const onGetAllUrl = useCallback(
+    async (payload: GetAllURLPayload) => {
+       return await dispatch(getAllURLTransaction(payload));
+    },
+    [dispatch],
+  );
+
+  const onGetAllFile= useCallback(
+    async (payload: GetAllFilePayload) => {
+       return await dispatch(getAllFileTransaction(payload));
+    },
+    [dispatch],
+  );
+
+  const onDeleteFileImported = useCallback(
+    async (payload: DeleteFileImportedPayload) => {
+       return await dispatch(deleteFileImportedTransaction(payload));
+    },
+    [dispatch],
+  );
   
   return {
     fetchLink,
@@ -66,6 +86,11 @@ export const useBuildChatbot = () => {
     onDeleteURL, 
     onUploadFile,
     activeTab,
-    session_id
+    session_id,
+    listIncludesFile,
+    loadingFetchFile,
+    onGetAllUrl,
+    onGetAllFile,
+    onDeleteFileImported,
   };
 };

@@ -4,17 +4,19 @@ import IconReload from '@/components/IconReload/IconReload';
 import { AiFillRightCircle } from 'react-icons/ai';
 import React, { useEffect, useRef, useState } from 'react';
 import { notification } from 'antd';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/states/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '@/states/store';
 import { useBuildChatbot } from '@/states/buildChatBot/buildChatBot.selector';
 import { GetChatStreamingRequest } from '@/repository/buildChatBot/type';
 import { LOADING_TEXT } from '@/constants';
 import { TypeAnimation } from 'react-type-animation';
+import { resetHistoryChatTest } from '@/states/buildChatBot/buildChatBot.slice';
 
 const Testing = () => {
   const { data, history, session_id } = useSelector(
     (state: RootState) => state.buildChatBot,
   );
+  const dispatch = useDispatch<AppDispatch>();
   const [loading, setLoading] = useState<boolean>();
   const [message, setMessage] = useState<string>('');
   const messagesEndRef = useRef<HTMLInputElement | null>(null);
@@ -88,6 +90,16 @@ const Testing = () => {
     }
   };
 
+  const reloadHistoryMessage = () => {
+    if(loading) {
+      notification.warning({
+        message: "You do not perform this action!"
+      });
+      return;
+    }
+    dispatch(resetHistoryChatTest())
+  }
+
   useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.addEventListener(
@@ -112,11 +124,13 @@ const Testing = () => {
           <IconInterface />
           Chat fly
         </p>
-        <IconReload />
+        <div className="cursor-pointer" onClick={reloadHistoryMessage}>
+          <IconReload />
+        </div>
       </div>
       <div
         className="py-[37px] px-[27px] gap-y-[10px] grid overflow-y-auto"
-        style={{ maxHeight: 'calc(100% - 230px)' }}
+        style={{ maxHeight: 'calc(100% - 20px)' }}
         ref={messagesEndRef}
       >
         {!!history.length &&

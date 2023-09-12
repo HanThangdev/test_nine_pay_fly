@@ -1,77 +1,81 @@
 import ModalComponent from '@/components/Modal';
 import { API_STATUS } from '@/constants';
-import { deleteURLTransaction, getAllURLTransaction } from '@/repository/buildChatBot';
+import {
+  deleteURLTransaction,
+  getAllURLTransaction,
+} from '@/repository/buildChatBot';
 import { useBuildChatbot } from '@/states/buildChatBot/buildChatBot.selector';
 import { deletedListIncludes } from '@/states/buildChatBot/buildChatBot.slice';
-import { DataFetchLink } from '@/states/buildChatBot/type';
+import { DataFetchFile } from '@/states/buildChatBot/type';
 import { AppDispatch, RootState } from '@/states/store';
 import { notification } from 'antd';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { RiDeleteBinLine } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
 
-interface FetchLinkItemProps {
-  item: DataFetchLink;
-  index: number
+interface FetchFileItemProps {
+  item: DataFetchFile;
+  index: number;
 }
 
-const FetchLinkItem = ({ item, index }: FetchLinkItemProps) => {
+const FetchFileItem = ({ item, index }: FetchFileItemProps) => {
+  const { t } = useTranslation();
   const [visibleDeleteModal, setVisibleDeleteModal] = useState<boolean>(false);
   const { data } = useSelector((state: RootState) => state.buildChatBot);
   const dispatch = useDispatch<AppDispatch>();
-  const { onGetAllUrl } = useBuildChatbot()
+  const {onDeleteFileImported, onGetAllFile} = useBuildChatbot()
   const deleteUrl = async () => {
     if (!data) {
       return;
     }
     try {
       const { id } = data;
-      const { meta } = await dispatch(
-        deleteURLTransaction({ bot_id: id, url: item.url }),
-      );
-
-      if (meta.requestStatus == API_STATUS.REJECTED) {
-        return;
-      }
-
-      dispatch(deletedListIncludes(index))
-      notification.success({
-        message: 'Delete URL success',
-      });
-      onGetAllUrl({ bot_id: id })
-      // await dispatch(
-      //   getAllURLTransaction({ bot_id: id}),
-      // );
+      const { knowledge_base_id } = item;
+      
+      onDeleteFileImported({knowledge_base_id, bot_id: id}).then((response) => {
+        if (response.meta.requestStatus === API_STATUS.FULFILLED) {
+          dispatch(deletedListIncludes(index));
+          notification.success({
+            message: 'Delete URL success',
+          });
+          onGetAllFile({bot_id: id})
+        }
+      })
+     
+     
     } catch (error: any) {
       notification.error({
         message: error?.response?.data.errors ?? error?.message,
       });
-    } finally{
-      setVisibleDeleteModal(false)
+    } finally {
+      setVisibleDeleteModal(false);
     }
   };
 
   return (
     <div className="flex justify-between gap-x-[21px] mb-[20px]">
-      <input
-        disabled
-        type="text"
-        value={item.url}
-        className="h-[41px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
-      />
-      <div className="flex justify-between w-[150px] items-center">
-        <p className="mb-0">{item.num_token}</p>
-        <RiDeleteBinLine
-          size={18}
-          className="cursor-pointer"
-          color="#F44336"
-          onClick={() => {
-            setVisibleDeleteModal(true);
-          }}
-        />
+      <div className="flex justify-between mt-[15px] w-full">
+        <div className="w-full">{item.filename}</div>
+        <div className="text-[15px] flex items-center justify-end w-full">
+          <span className="text-[#A7A7B0 mr-[48px]">
+            ({item.num_token} {t('chars', { ns: 'config_bot' })})
+          </span>
+          <RiDeleteBinLine
+            className="cursor-pointer"
+            size={18}
+            color="#F44336"
+            onClick={() => {
+              setVisibleDeleteModal(true);
+            }}
+          />
+        </div>
+        {/* <button className="w-[150px] h-[43px] bg-[#4AC1FF;] text-white rounded-[10px] text-[15px] font-bold justify-cente">
+            Done
+          </button> */}
       </div>
       <ModalComponent
-        title={<div>Delete this Url</div>}
+        title={<div>Delete this File</div>}
         onCancel={() => {
           setVisibleDeleteModal(false);
         }}
@@ -95,7 +99,7 @@ const FetchLinkItem = ({ item, index }: FetchLinkItemProps) => {
         }
       >
         <div>
-          Are you sure you want to delete this URL? This action cannot be
+          Are you sure you want to delete this File? This action cannot be
           undone.
         </div>
       </ModalComponent>
@@ -103,4 +107,4 @@ const FetchLinkItem = ({ item, index }: FetchLinkItemProps) => {
   );
 };
 
-export default FetchLinkItem;
+export default FetchFileItem;

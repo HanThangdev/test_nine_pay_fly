@@ -10,7 +10,7 @@ export interface BuildChatBotState {
   loadingFetchLink: boolean;
   loadingChat: boolean;
   loadingFetchFile: boolean;
-  listIncludesFile: any,
+  listIncludesFile: DataFetchFile[],
   fetchFile: DataFetchFile;
 }
 
@@ -21,8 +21,8 @@ export interface DataFetchLink {
 }
 
 export interface DataFetchFile {
-  num_token: number | null;
-  progress: number;
-  url: string;
+  filename: string ;
+  num_token: number;
+  knowledge_base_id: string;
 }
 

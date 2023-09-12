@@ -4,6 +4,7 @@ import {
   createBotTransaction,
   createSessionTransaction,
   deleteURLTransaction,
+  getAllFileTransaction,
   getAllURLTransaction,
   getBotInfoTransaction,
   getChatStreamingTransaction,
@@ -31,8 +32,8 @@ const initialState: BuildChatBotState = {
   },
   fetchFile: {
     num_token: 0,
-    progress: 0,
-    url: '',
+    filename: "",
+    knowledge_base_id: '',
   },
 };
 
@@ -45,6 +46,10 @@ export const buildChatbotSlice = createSlice({
     },
 
     resetStateBuild: () => initialState,
+
+    resetHistoryChatTest: (state) => {
+      state.history = []
+    },
 
     setDataWhenUpdate: (state, action) => {
       state.data = action.payload
@@ -133,6 +138,9 @@ export const buildChatbotSlice = createSlice({
       state.loadingChat = false;
     });
     builder.addCase(getChatStreamingTransaction.rejected, (state) => {
+      let listUpdateHistory = Array.from(state.history);
+      listUpdateHistory.pop()
+      state.history = [...listUpdateHistory];
       state.loadingChat = false;
 
     });
@@ -142,19 +150,15 @@ export const buildChatbotSlice = createSlice({
 
     builder.addCase(importURLTransaction.pending, (state) => {
       state.loadingFetchLink = true;
-      state.fetchFile={
+      state.fetchLink={
         num_token: 0,
         progress: 0,
         url:""
       };
     });
     builder.addCase(importURLTransaction.fulfilled, (state, action: any) => {
-      const newListIncludesLink = Array.from(state.listIncludesLink)
-      newListIncludesLink.push(JSON.parse(action.payload));
-      
-      state.listIncludesLink = newListIncludesLink;
       state.loadingFetchLink = false;
-      state.fetchFile={
+      state.fetchLink={
         num_token: null,
         progress: 100,
         url:""
@@ -162,7 +166,7 @@ export const buildChatbotSlice = createSlice({
     });
     builder.addCase(importURLTransaction.rejected, (state) => {
       state.loadingFetchLink = false;
-      state.fetchFile={
+      state.fetchLink={
           num_token: null,
           progress: 0,
           url:""
@@ -176,7 +180,6 @@ export const buildChatbotSlice = createSlice({
       state.loadingFetchLink = true;
     });
     builder.addCase(deleteURLTransaction.fulfilled, (state) => { 
-      state.listIncludesLink
       state.loadingFetchLink = false;
     });
     builder.addCase(deleteURLTransaction.rejected, (state) => {
@@ -189,8 +192,8 @@ export const buildChatbotSlice = createSlice({
     builder.addCase(getAllURLTransaction.pending, (state) => {
       state.loadingFetchLink = true;
     });
-    builder.addCase(getAllURLTransaction.fulfilled, (state, action) => { 
-      state.listIncludesLink = action.payload.data.data.url
+    builder.addCase(getAllURLTransaction.fulfilled, (state, action: any) => { 
+      state.listIncludesLink = action.payload.data
       state.loadingFetchLink = false;
     });
     builder.addCase(getAllURLTransaction.rejected, (state) => {
@@ -220,16 +223,29 @@ export const buildChatbotSlice = createSlice({
     builder.addCase(uploadFileTransaction.pending, (state) => {
       state.loadingFetchFile = true;
     });
-    builder.addCase(uploadFileTransaction.fulfilled, (state, action) => { 
-      state.listIncludesFile.push(action.payload[0]);
+    builder.addCase(uploadFileTransaction.fulfilled, (state) => { 
       state.loadingFetchFile = false;
     });
     builder.addCase(uploadFileTransaction.rejected, (state) => {
       state.loadingFetchFile = false;
-      state.data = null
     });
 
-    // end getAllURLTransaction
+    // end uploadFile
+
+     // start getAllFileTransaction
+
+     builder.addCase(getAllFileTransaction.pending, (state) => {
+      state.loadingFetchFile = true;
+    });
+    builder.addCase(getAllFileTransaction.fulfilled, (state, action: any) => { 
+      state.listIncludesFile = action.payload.data
+      state.loadingFetchFile = false;
+    });
+    builder.addCase(getAllFileTransaction.rejected, (state) => {
+      state.loadingFetchFile = false;
+    });
+
+    // end getAllFileTransaction
   },
 });
 
@@ -237,10 +253,12 @@ export const {
   setActiveTab,
   resetStateBuild,
   loadFetchLink,
+  loadFetchFile,
   deletedListIncludes,
   setGenerateChatIntoListHistory,
   setNewChatIntoListHistory,
   setDataWhenUpdate,
+  resetHistoryChatTest
 } = buildChatbotSlice.actions;
 
 export default buildChatbotSlice.reducer;

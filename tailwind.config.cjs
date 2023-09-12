@@ -208,6 +208,7 @@ module.exports = {
       },
       backgroundImage: {
         video: "url('../images/video/video.png')",
+        'gradient-radial':'linear-gradient(135deg, #1F2F98 0%, #4ADEDE 100%)'
       },
       content: {
         'icon-copy': 'url("../images/icon/icon-copy-alt.svg")',

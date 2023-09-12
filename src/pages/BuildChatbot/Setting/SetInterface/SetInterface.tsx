@@ -124,7 +124,7 @@ const SetInterface = ({ dataSetinterface }: Props) => {
 
   const onSubmit = handleSubmit(async () => {
     try {
-      const res = botAvatarFile
+      const res: any = botAvatarFile
         ? await dispatch(
             uploadBotProfilePictureTransaction({
               bot_id: data.id,
@@ -167,7 +167,7 @@ const SetInterface = ({ dataSetinterface }: Props) => {
   });
 
   const getAdvance = async () => {
-    const res = await dispatch(
+    const res: any = await dispatch(
       getAdvanceSettingTransaction({ bot_id: data.id }),
     );
 
