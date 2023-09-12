@@ -4,32 +4,40 @@ import { loginTransaction } from '@/repository/auth/login';
 
 const initialState: AuthState = {
   data: {
-    access_token: "",
-    token_type: ""
+    access_token: '',
+    token_type: '',
   },
   loading: false,
+  emailVerify: '',
+  isForgotPass: false,
 };
 
-export const buildChatbotSlice = createSlice({
+export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    setEmailVerify: (state, action) => {
+      state.emailVerify = action.payload;
+    },
+    setIsForgotPass: (state, action) => {
+      state.isForgotPass = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(loginTransaction.pending, (state) => {
-      state.loading=true;
+      state.loading = true;
     });
     builder.addCase(loginTransaction.fulfilled, (state, action) => {
       state.data = action.payload.data.data;
-      state.loading=false;
+      state.loading = false;
       return state;
     });
     builder.addCase(loginTransaction.rejected, (state) => {
-      state.loading=false;
+      state.loading = false;
     });
   },
 });
 
-export const {} = buildChatbotSlice.actions;
+export const { setEmailVerify, setIsForgotPass } = authSlice.actions;
 
-export default buildChatbotSlice.reducer;
+export default authSlice.reducer;

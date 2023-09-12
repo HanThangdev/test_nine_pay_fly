@@ -106,7 +106,7 @@ const Files = () => {
         listFileWaitingImport.map((item, idx) => {
           return (
             <div className="flex justify-between mt-[27px]" key={idx}>
-              <div className="text-[15px] flex justify-between items-center w-full pr-4">
+              <div className="text-[15px] flex justify-between items-center w-full pr-4 font-bold">
                 {item.name || 'File_Name'}
                 <div
                   onClick={() => {
@@ -141,27 +141,30 @@ const Files = () => {
         })}
 
       <div className="mt-[25px]">
-        <p className="text-[16px] font-bold">
+        <p className="text-[16px]">
           {' '}
-          {t('Attached', { ns: 'config_bot' })} ({totalTokens}{' '}
-          {t('chars', { ns: 'config_bot' })})
+          {t('Attached', { ns: 'config_bot' })}{' '}
+          <span className="font-bold">
+            ({totalTokens} {t('chars', { ns: 'config_bot' })})
+          </span>
         </p>
-        {listLink && !isEmptyObjectOrArray(listLink) &&
+        {listLink &&
+          !isEmptyObjectOrArray(listLink) &&
           listLink.map((item, idx) => {
             return <FetchFileItem item={item} key={idx} index={idx} />;
           })}
       </div>
       <div className="mt-[25px]">
-        <p className="text-[16px] font-bold">
+        <p className="text-[16px]">
           {t('IncludedSource', { ns: 'config_bot' })}:
         </p>
-        <p className="text-[15px]">
+        <p className="text-[15px] font-bold">
           {listIncludesFile?.length || 0} {t('Files', { ns: 'config_bot' })}
           <span className="text-[#A7A7B0]">
             ({totalTokens} {t('chars', { ns: 'config_bot' })})
           </span>
         </p>
-        <p className="text-[15px]">
+        <p className="text-[15px] font-bold">
           {t('TotalChar', { ns: 'config_bot' })}: {totalTokens}/400,000{' '}
           {t('limit', { ns: 'config_bot' })}
         </p>

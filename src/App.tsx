@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import ManageChatbot from './pages/ManageChatbot';
 import SignIn from './pages/Authentication/login/SignIn';
 import SignUp from './pages/Authentication/register/SignUp';
+import Verify from './pages/Authentication/verify/Verify';
 import ForgotPassword from './pages/Authentication/forgot-password/ForgotPassword';
 import ForgotPasswordVerify from './pages/Authentication/forgot-passwordVerify/ForgotPasswordVerify';
 import routes from './routes';
@@ -30,6 +31,7 @@ function App() {
     Boolean(token) &&
     (location.pathname === '/auth/signin' ||
       location.pathname === '/auth/signup' ||
+      location.pathname === '/auth/verify' ||
       location.pathname.includes('/auth/forgot-password'))
   ) {
     navigate('/');
@@ -49,6 +51,7 @@ function App() {
         <Routes>
           <Route path="/auth/signin/:code" element={<SignIn />} />
           <Route path="/auth/signin" element={<SignIn />} />
+          <Route path="/auth/verify" element={<Verify />} />
           <Route path="/auth/signup" element={<SignUp />} />
           <Route
             path="/auth/forgot-password/:code"

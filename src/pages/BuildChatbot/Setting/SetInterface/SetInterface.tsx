@@ -139,9 +139,7 @@ const SetInterface = ({ dataSetinterface }: Props) => {
         suggest_messages: dataSet.suggest_messages,
         theme: dataSet.theme,
         display_name: dataSet.display_name,
-        bot_avatar_url: res
-          ? res.payload.data.data.s3_location_file
-          : bot_avatar_url,
+        bot_avatar_url: res ? res.payload.data.data.url : bot_avatar_url,
         chat_icon_url: dataSet.chat_icon_url,
         chat_bubble_button_color: dataSet.chat_bubble_button_color,
         chat_message_color: dataSet.chat_message_color,

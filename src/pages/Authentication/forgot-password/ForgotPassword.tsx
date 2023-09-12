@@ -1,18 +1,22 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FormData, schema } from './validation';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { notification } from 'antd';
 import Cookies from 'universal-cookie';
+import { setIsForgotPass, setEmailVerify } from '@/states/auth/auth.slice';
 
 import api from '@/repository/auth/reset-password';
+import { AppDispatch } from '@/states/store';
+import { useDispatch } from 'react-redux';
 
 const ForgotPassword = () => {
   const [loading, setLoading] = useState<boolean>();
+  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
   const cookies = new Cookies();
   const token = cookies.get('access_token');
-  const [success, setSuccess] = useState<boolean>(false);
   const {
     handleSubmit,
     register,
@@ -29,7 +33,9 @@ const ForgotPassword = () => {
 
     try {
       await api.resetPassword(formData.email);
-      setSuccess(true);
+      dispatch(setIsForgotPass(true));
+      dispatch(setEmailVerify(formData.email));
+      navigate('/auth/verify');
     } catch (error: any) {
       notification.error({
         message: error?.response?.data.errors ?? error?.message,
@@ -82,11 +88,6 @@ const ForgotPassword = () => {
                 </Link>
               </p>
             </div>
-            {success && (
-              <p className="w-[396px] m-auto flex items-center bg-[#15257c] justify-center h-[48px] rounded-[8px] text-white transition">
-                Check your email for the password reset link
-              </p>
-            )}
           </div>
         </div>
       </div>

@@ -24,7 +24,7 @@ const FetchFileItem = ({ item, index }: FetchFileItemProps) => {
   const [visibleDeleteModal, setVisibleDeleteModal] = useState<boolean>(false);
   const { data } = useSelector((state: RootState) => state.buildChatBot);
   const dispatch = useDispatch<AppDispatch>();
-  const {onDeleteFileImported, onGetAllFile} = useBuildChatbot()
+  const { onDeleteFileImported, onGetAllFile } = useBuildChatbot();
   const deleteUrl = async () => {
     if (!data) {
       return;
@@ -32,18 +32,18 @@ const FetchFileItem = ({ item, index }: FetchFileItemProps) => {
     try {
       const { id } = data;
       const { knowledge_base_id } = item;
-      
-      onDeleteFileImported({knowledge_base_id, bot_id: id}).then((response) => {
-        if (response.meta.requestStatus === API_STATUS.FULFILLED) {
-          dispatch(deletedListIncludes(index));
-          notification.success({
-            message: 'Delete URL success',
-          });
-          onGetAllFile({bot_id: id})
-        }
-      })
-     
-     
+
+      onDeleteFileImported({ knowledge_base_id, bot_id: id }).then(
+        (response) => {
+          if (response.meta.requestStatus === API_STATUS.FULFILLED) {
+            dispatch(deletedListIncludes(index));
+            notification.success({
+              message: 'Delete URL success',
+            });
+            onGetAllFile({ bot_id: id });
+          }
+        },
+      );
     } catch (error: any) {
       notification.error({
         message: error?.response?.data.errors ?? error?.message,
@@ -56,9 +56,9 @@ const FetchFileItem = ({ item, index }: FetchFileItemProps) => {
   return (
     <div className="flex justify-between gap-x-[21px] mb-[20px]">
       <div className="flex justify-between mt-[15px] w-full">
-        <div className="w-full">{item.filename}</div>
+        <div className="w-full font-bold text-[17px]">{item.filename}</div>
         <div className="text-[15px] flex items-center justify-end w-full">
-          <span className="text-[#A7A7B0 mr-[48px]">
+          <span className="text-[#A7A7B0 mr-[48px] font-bold text-[16px]">
             ({item.num_token} {t('chars', { ns: 'config_bot' })})
           </span>
           <RiDeleteBinLine

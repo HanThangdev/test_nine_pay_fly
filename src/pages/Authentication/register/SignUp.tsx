@@ -1,21 +1,25 @@
 import { FormData, schema } from './validation';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { PiEyeLight, PiEyeSlashLight } from 'react-icons/pi';
 import { useState } from 'react';
 import Cookies from 'universal-cookie';
 import { Image, notification } from 'antd';
 import userApi from '@/repository/auth/register';
 import { logoHaveTextImg } from '@/images/logo';
+import { setEmailVerify } from '@/states/auth/auth.slice';
+import { AppDispatch } from '@/states/store';
+import { useDispatch } from 'react-redux';
 
 const SignUp = () => {
   const [showPass, setShowPass] = useState(false);
   const [showPassConfirm, setShowPassConfirm] = useState(false);
   const cookies = new Cookies();
   const token = cookies.get('access_token');
+  const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>();
-  const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const dispatch = useDispatch<AppDispatch>();
   const {
     handleSubmit,
     register,
@@ -38,7 +42,8 @@ const SignUp = () => {
         message: 'You have successfully registered.',
         duration: 2,
       });
-      setIsSuccess(true);
+      dispatch(setEmailVerify(body.email));
+      navigate('/auth/verify');
     } catch (error: any) {
       notification.error({
         message: error?.response?.data.message ?? error?.message,
@@ -72,11 +77,6 @@ const SignUp = () => {
               <h2 className="text-center sm:text-[36px] text-2xl mt-[33px] text-white font-bold">
                 Create your account
               </h2>
-              {isSuccess && (
-                  <p className="w-[396px] m-auto flex items-center bg-gradient-radial from-cyan-500 to-blue-500 justify-center h-[48px] rounded-[8px] text-white transition">
-                    Check your email for the confirmation link.
-                  </p>
-              )} 
               <form onSubmit={onSubmit} className="w-[396px] m-auto">
                 <div className="mt-6">
                   <label className="mb-2.5 h-[21px] block font-medium text-white">
@@ -215,7 +215,6 @@ const SignUp = () => {
                     </Link>
                   </p>
                 </div>
-               
               </form>
             </div>
           </div>

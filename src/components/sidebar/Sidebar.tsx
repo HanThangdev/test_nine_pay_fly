@@ -2,11 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import classNames from 'classnames';
 import { BiMessageAltDetail } from 'react-icons/bi';
-import {
-  AiOutlineLeft,
-  AiOutlineAppstore,
-  AiFillDollarCircle,
-} from 'react-icons/ai';
+import { PiListLight } from 'react-icons/pi';
+import { AiOutlineAppstore, AiFillDollarCircle } from 'react-icons/ai';
 import { FiPieChart } from 'react-icons/fi';
 import { Image } from 'antd';
 import { useDispatch } from 'react-redux';
@@ -90,9 +87,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           }}
           aria-controls="sidebar"
           aria-expanded={sidebarOpen}
-          // className="block lg:hidden"
+          className="mt-[-2px]"
         >
-          <AiOutlineLeft size={22} color="#A7A9C0" />
+          <PiListLight size={32} color="#A7A9C0" />
         </button>
       </div>
       {/* <!-- SIDEBAR HEADER --> */}
