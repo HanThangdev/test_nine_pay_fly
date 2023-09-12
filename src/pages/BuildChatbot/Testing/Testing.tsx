@@ -131,7 +131,7 @@ const Testing = () => {
       </div>
       <div
         className="py-[37px] px-[27px] gap-y-[10px] grid overflow-y-auto overflow-hidden"
-        style={{ maxHeight: 'calc(100% - 20px)' }}
+        style={{ maxHeight: 'calc(100% - 110px)' }}
         ref={messagesEndRef}
       >
         {!!history.length &&
