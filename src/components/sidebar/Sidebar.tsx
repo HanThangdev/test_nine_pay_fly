@@ -72,23 +72,13 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       {/* <!-- SIDEBAR HEADER --> */}
       <div className="flex items-center justify-between gap-2 px-[20px] py-[20px] !border-b-[1px] border-[#ffffff82] border-solid">
         <div className="flex items-center">
-          <div className="bg-white h-[40px] w-[40px] mr-[19px] items-center justify-center rounded-[10px] flex">
+          <NavLink to="/">
             <Image
-              src={'/logo.png'}
+              src={'/src/images/logo.png'}
               alt="Chatfly"
-              width={30}
-              height={30}
+              className="!h-[35px]"
               preview={false}
             />
-          </div>
-          <NavLink to="/">
-            <p
-              className={classNames(
-                'text-[24px] text-[#4AC1FF] font-bold mb-0',
-              )}
-            >
-              Chatfly
-            </p>
           </NavLink>
         </div>
         <button

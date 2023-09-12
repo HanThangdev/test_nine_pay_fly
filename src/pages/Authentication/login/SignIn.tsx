@@ -86,16 +86,11 @@ const SignIn = () => {
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
               <div className="flex justify-center items-center">
                 <Image
-                  src={'/logo.png'}
+                  src={'/src/images/logo.png'}
                   alt="Chatfly"
-                  width={50}
-                  height={50}
+                  className="!h-[60px]"
                   preview={false}
                 />
-
-                <h1 className="ml-2 text-center sm:text-[36px] text-2xl font-bold text-[#4AC1FF] ">
-                  Chatfly
-                </h1>
               </div>
               <h2 className="text-center sm:text-[36px] text-2xl mt-[33px] text-white font-bold">
                 Welcome back!
