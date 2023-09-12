@@ -12,6 +12,7 @@ import { loginTransaction } from '@/repository/auth/login';
 import { API_STATUS } from '@/constants';
 import { useManageChatbot } from '@/states/manageBot/manageBot.selector';
 import { userApi } from '@/repository/auth/login';
+import { logoHaveTextImg } from '@/images/logo';
 
 const SignIn = () => {
   const { code } = useParams();
@@ -86,7 +87,7 @@ const SignIn = () => {
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
               <div className="flex justify-center items-center">
                 <Image
-                  src={'/src/images/logo.png'}
+                  src={logoHaveTextImg}
                   alt="Chatfly"
                   className="!h-[60px]"
                   preview={false}

@@ -7,6 +7,7 @@ import { useState } from 'react';
 import Cookies from 'universal-cookie';
 import { Image, notification } from 'antd';
 import userApi from '@/repository/auth/register';
+import { logoHaveTextImg } from '@/images/logo';
 
 const SignUp = () => {
   const [showPass, setShowPass] = useState(false);
@@ -59,7 +60,7 @@ const SignUp = () => {
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
               <div className="flex justify-center items-center">
                 <Image
-                  src={'/src/images/logo.png'}
+                  src={logoHaveTextImg}
                   alt="Chatfly"
                   className="!h-[60px]"
                   preview={false}
@@ -71,11 +72,11 @@ const SignUp = () => {
               <h2 className="text-center sm:text-[36px] text-2xl mt-[33px] text-white font-bold">
                 Create your account
               </h2>
-              {/* {isSuccess && ( */}
+              {isSuccess && (
                   <p className="w-[396px] m-auto flex items-center bg-gradient-radial from-cyan-500 to-blue-500 justify-center h-[48px] rounded-[8px] text-white transition">
                     Check your email for the confirmation link.
                   </p>
-              {/* )}  */}
+              )} 
               <form onSubmit={onSubmit} className="w-[396px] m-auto">
                 <div className="mt-6">
                   <label className="mb-2.5 h-[21px] block font-medium text-white">

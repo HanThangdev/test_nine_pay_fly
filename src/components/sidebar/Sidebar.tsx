@@ -13,6 +13,7 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/states/store';
 import { resetStateBuild } from '@/states/buildChatBot/buildChatBot.slice';
 import { useTranslation } from 'react-i18next';
+import { logoHaveTextImg } from '@/images/logo';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -74,7 +75,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         <div className="flex items-center">
           <NavLink to="/">
             <Image
-              src={'/src/images/logo.png'}
+              src={logoHaveTextImg}
               alt="Chatfly"
               className="!h-[35px]"
               preview={false}
