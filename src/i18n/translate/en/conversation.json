@@ -3,5 +3,7 @@
   "From": "From",
   "To": "To",
   "Customer": "Customer",
-  "ExportPDF": "Export PDF"
+  "ExportPDF": "Export PDF",
+  "NewBot": "New Chatbot",
+  "NoConversationFound": "No conversation found"
 }

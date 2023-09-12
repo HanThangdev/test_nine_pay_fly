@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import buildChatBotReducer from '@/states/buildChatBot/buildChatBot.slice';
 import manageChatBotReducer from '@/states/manageBot/manageBot.slice';
 import authReducer from '@/states/auth/auth.slice';
+import conversationReducer from "@/states/conversations/conversations.slice"
 import pricingPlanReducer from '@/states/pricingPlan/pricingPlan.slice';
 
 const store = configureStore({
@@ -14,6 +15,7 @@ const store = configureStore({
     manageBot: manageChatBotReducer,
     auth: authReducer,
     pricing: pricingPlanReducer,
+    conversations: conversationReducer
   },
 });
 

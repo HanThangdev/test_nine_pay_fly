@@ -1,16 +1,15 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import http from '..';
-import { SuccessResponse } from '../type';
 import { GetAllConversationsPayload, GetAllConversationsResponse } from './type';
-import { objectToQueryString } from '@/utils/utils';
 
 export const getAllConversations = createAsyncThunk(
   'transaction/getAllConversations',
-  async (payload: GetAllConversationsPayload, { rejectWithValue }) => {
+  async (params: GetAllConversationsPayload, { rejectWithValue }) => {
     try {
-      const queryString = objectToQueryString(payload);
-      const response = await http.get<SuccessResponse<string>>(
-        `/api/chat/conversions-history?${queryString}`,
+      const response = await http.get<GetAllConversationsResponse[]>(
+        '/api/chat/history', {
+            params
+          },
       );
       return response;
     } catch (error: any) {

@@ -3,5 +3,7 @@
   "From": "Từ",
   "To": "Dênd",
   "Customer": "Khách hàng",
-  "ExportPDF": "Xuất PDF"
+  "ExportPDF": "Xuất PDF",
+  "NewBot": "Tạo Chatbot",
+  "NoConversationFound": "Không tìm thấy đoạn chat nào"
 }

@@ -7,7 +7,7 @@ export default function IconTeams() {
       viewBox="0 0 26 26"
       fill="none"
     >
-      <g clip-path="url(#clip0_106_1396)">
+      <g clipPath="url(#clip0_106_1396)">
         <path
           d="M13 26C20.1797 26 26 20.1797 26 13C26 5.8203 20.1797 0 13 0C5.8203 0 0 5.8203 0 13C0 20.1797 5.8203 26 13 26Z"
           fill="#827DDC"

@@ -1,6 +1,5 @@
 export interface IOptionBotSelect {
-  key: string
-  value: string,
-  bot_id: string
-  user_id: string
+    value: string;
+    label: string;
+    bot_id: string;
 }
