@@ -29,7 +29,7 @@ export default function ModalIntegration({ open, onClose }: Props) {
 
   const codeStringEmbedIframe = `
     <iframe
-      src="${window.location.origin}/chat/${data?.id}
+      src="${window.location.origin}/chat/${data?.id}"
       width="100%"
       height="300"
       style="border:1px solid black;"
