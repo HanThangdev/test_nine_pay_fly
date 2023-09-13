@@ -53,23 +53,46 @@ export function objectToQueryString(obj: { [key: string]: any }): string {
 
   for (const key in obj) {
     if (obj.hasOwnProperty(key)) {
-      keyValuePairs.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]));
+      keyValuePairs.push(
+        encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]),
+      );
     }
   }
 
   return keyValuePairs.join('&');
 }
 
-export function convertCustomValue(obj: any): Array<{key: string}> {
-  if(isEmptyObjectOrArray(obj)){
-    return []
+export function convertCustomValue(obj: any): Array<{ key: string }> {
+  if (isEmptyObjectOrArray(obj)) {
+    return [];
   }
   const newArray = Object.keys(obj)
-  .filter(key => key !== 'name' && key !== 'phone' &&  key !== 'email')
-  .map(key => ({ key: key }));
+    .filter((key) => key !== 'name' && key !== 'phone' && key !== 'email')
+    .map((key) => ({ key: key }));
   return newArray;
 }
 
 export function hasDuplicateFiles(file: File, listFiles: File[]): boolean {
-  return listFiles.some(existingFile => existingFile.name === file.name);; // No duplicates found
+  return listFiles.some((existingFile) => existingFile.name === file.name); // No duplicates found
+}
+export function downloadPDFFromString(pdfString: string, fileName: string) {
+  // Convert binary content to a Blob
+  const byteArray = Uint8Array.from(pdfString, (char) => char.charCodeAt(0));
+  const blob = new Blob([byteArray], { type: 'application/pdf' });
+
+  // Create a URL for the Blob
+  const blobUrl = URL.createObjectURL(blob);
+
+  // Create a download link
+  const a = document.createElement('a');
+  a.href = blobUrl;
+  a.download = fileName;
+
+  // Trigger a click event on the link to initiate the download
+  document.body.appendChild(a);
+  a.click();
+
+  // Clean up
+  URL.revokeObjectURL(blobUrl);
+  document.body.removeChild(a);
 }

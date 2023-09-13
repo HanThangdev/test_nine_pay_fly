@@ -1,9 +1,9 @@
 export interface GetAllConversationsResponse {
   chat_history_response: ChatHistoriesResponse[];
-  created_at: string
-  bot_id: string
-  user_id: string
-  session_id: string
+  created_at: string;
+  bot_id: string;
+  user_id: string;
+  session_id: string;
 }
 
 export interface GetAllConversationsPayload {
@@ -13,6 +13,12 @@ export interface GetAllConversationsPayload {
 }
 
 export interface ChatHistoriesResponse {
-  sender_type: "assistant" | "user";
+  sender_type: 'assistant' | 'user';
   content: string;
+}
+
+export interface GetConversationPdfPayload {
+  conversation_history_response: GetAllConversationsResponse[];
+  date_from: string;
+  date_to: string;
 }

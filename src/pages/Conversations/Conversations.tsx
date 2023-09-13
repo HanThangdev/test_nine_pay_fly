@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { BiSolidFileExport } from 'react-icons/bi';
 import { DatePicker, Select } from 'antd';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { isEmptyObjectOrArray } from '@/utils/utils';
+import { downloadPDFFromString, isEmptyObjectOrArray } from '@/utils/utils';
 import { useManageChatbot } from '@/states/manageBot/manageBot.selector';
 import { ResponseManageChatbot } from '@/states/manageBot/type';
 import { IOptionBotSelect } from './type';
@@ -13,15 +13,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/states/store';
 import { getBotTransaction } from '@/repository/manageChatbot';
 import dayjs from 'dayjs';
-import { getAllConversations } from '@/repository/conversations';
+import {
+  getAllConversations,
+  getConversationPdf,
+} from '@/repository/conversations';
 import classNames from 'classnames';
 import { GetAllConversationsPayload } from '@/repository/conversations/type';
 import useScrollToLastElementChild from '@/hooks/useScrollToLastElementChild';
-import relativeTime from 'dayjs/plugin/relativeTime';
-import { convertStringToParagraphs } from '@/utils/format';
+import { convertStringToParagraphs, formatTimeAgo } from '@/utils/format';
 import { HistoryChat } from '@/states/chat/type';
-
-dayjs.extend(relativeTime);
 
 const { RangePicker } = DatePicker;
 
@@ -94,7 +94,13 @@ const Conversations = () => {
 
   // Set the latest conversation as default
   useEffect(() => {
-    if (selectedBot && conversations.length) {
+    if (
+      selectedBot &&
+      conversations.length &&
+      !conversations.some(
+        (conversation) => conversation.session_id === selectedConversationId,
+      )
+    ) {
       const latestConversationId = conversations[0].session_id;
       setSelectedConversationId(latestConversationId);
     }
@@ -117,6 +123,29 @@ const Conversations = () => {
     onGetBot(true);
   };
 
+  const handleDownloadPdf = async (conversationId: string) => {
+    const conversation = conversations.find(
+      (conversation) => conversation.session_id === conversationId,
+    );
+    if (conversation) {
+      const response: any = await dispatch(
+        getConversationPdf({
+          conversation_history_response: [conversation],
+          date_from: fromDate.toISOString(),
+          date_to: toDate.toISOString(),
+        }),
+      );
+
+      const fileName = `${
+        conversation.session_id
+      }--conversations_${fromDate.format('DD-MM-YYYY')}~${toDate.format(
+        'DD-MM-YYYY',
+      )}`;
+
+      downloadPDFFromString(response.payload.data, fileName);
+    }
+  };
+
   const renderEmptyConversation = () => {
     return (
       <div className="flex flex-col gap-4 items-center">
@@ -132,6 +161,8 @@ const Conversations = () => {
       </div>
     );
   };
+
+  console.log({ selectedConversation, selectedConversationId });
 
   return (
     <div
@@ -186,7 +217,7 @@ const Conversations = () => {
                 >
                   <div className="flex justify-between text-[15px] text-[#33343D]">
                     <p>{t('Customer', { ns: 'conversation' })}:</p>
-                    <p>{dayjs(conversation.created_at).fromNow()}</p>
+                    <p>{formatTimeAgo(new Date(conversation.created_at))}</p>
                   </div>
                   <div className="flex justify-between gap-x-4 text-[20px] text-[#33343D]">
                     <p className="mb-0 w-[85%]">
@@ -194,7 +225,13 @@ const Conversations = () => {
                       {conversation.chat_history_response[0].content}
                     </p>
                     <p className="flex items-end">
-                      <IconDown />
+                      <button
+                        onClick={() =>
+                          handleDownloadPdf(conversation.session_id)
+                        }
+                      >
+                        <IconDown />
+                      </button>
                     </p>
                   </div>
                 </div>
@@ -240,7 +277,11 @@ const Conversations = () => {
             </div>
           </div>
           <div className="flex justify-end mt-[30px]">
-            <button className="w-[150px] flex items-center gap-x-2 justify-center h-[43px] bg-[#4AC1FF] text-white rounded-[10px] text-[15px] font-bold justify-cente">
+            <button
+              disabled={!selectedConversation}
+              className="w-[150px] flex items-center gap-x-2 justify-center h-[43px] bg-[#4AC1FF] text-white rounded-[10px] text-[15px] font-bold justify-center"
+              onClick={() => handleDownloadPdf(selectedConversation.session_id)}
+            >
               <BiSolidFileExport size={24} />
               {t('ExportPDF', { ns: 'conversation' })}
             </button>
