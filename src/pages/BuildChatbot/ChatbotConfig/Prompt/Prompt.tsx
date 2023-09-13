@@ -54,11 +54,7 @@ const Prompt: React.FC<PromptProps> = ({
         <IconPrompt />
         {t('Prompt', { ns: 'config_bot' })}
         <span className="mt-[2px]">
-          {dropdownOpen ? (
-            <AiOutlineCaretDown size={18} color="black" />
-          ) : (
-            <AiOutlineCaretRight size={18} color="black" />
-          )}
+            <AiOutlineCaretRight size={18} color="black" className={`${dropdownOpen && 'rotate-90'} transition-all`}/>
         </span>
       </h2>
       {dropdownOpen && (

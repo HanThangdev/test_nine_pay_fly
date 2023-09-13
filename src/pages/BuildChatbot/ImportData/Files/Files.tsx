@@ -123,6 +123,7 @@ const Files = () => {
               <button
                 className="w-[150px] h-[43px] bg-[#E8E9F4] text-[#01058A] rounded-[10px] text-[15px] font-bold justify-center"
                 onClick={() => onUpload(item)}
+                disabled={loadingFetchFile}
               >
                 {loadingFetchFile ? (
                   <div>
@@ -140,7 +141,7 @@ const Files = () => {
           );
         })}
 
-      <div className="mt-[25px]">
+<div className="mt-[25px]">
         <p className="text-[16px]">
           {' '}
           {t('Attached', { ns: 'config_bot' })}{' '}

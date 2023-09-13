@@ -1,19 +1,22 @@
 import { useCallback } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../store';
-import { DataFetchFile, DataFetchLink } from './type';
-import { createSessionTransaction, deleteFileImportedTransaction, deleteURLTransaction, getAllFileTransaction, getAllURLTransaction, getChatStreamingTransaction, importURLTransaction, uploadFileTransaction } from '@/repository/buildChatBot';
-import { DeleteFileImportedPayload, DeleteURLPayload, GetAllFilePayload, GetAllURLPayload, GetChatStreamingRequest, ImportURLPayload, UploadFilePayload } from '@/repository/buildChatBot/type';
+import { DataFetchFile, DataFetchLink, HistoryChat } from './type';
+import { createSessionTransaction, deleteFileImportedTransaction, deleteURLTransaction, getAllFileTransaction, getAllURLTransaction, getBotInfoTransaction, getChatStreamingTransaction, importURLTransaction, uploadFileTransaction } from '@/repository/buildChatBot';
+import { DeleteFileImportedPayload, DeleteURLPayload, GetAllFilePayload, GetAllURLPayload, GetBotInfoPayload, GetChatStreamingRequest, ImportURLPayload, UploadFilePayload } from '@/repository/buildChatBot/type';
 import { loadFetchFile, loadFetchLink, setGenerateChatIntoListHistory, setNewChatIntoListHistory } from './buildChatBot.slice';
 
 export const useBuildChatbot = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { fetchLink, data, activeTab, session_id, listIncludesFile, loadingFetchFile } = useSelector((state: RootState) => state.buildChatBot, shallowEqual);
+  const { fetchLink, data, activeTab, session_id, listIncludesFile, loadingFetchFile, loadingChat } = useSelector((state: RootState) => state.buildChatBot, shallowEqual);
   const onStreamingDataTesting = useCallback(
     async (payload: GetChatStreamingRequest) => {
       const { message } = payload
-      dispatch(setNewChatIntoListHistory(message))
-      const callBack = (data: string) => {
+      dispatch(setNewChatIntoListHistory({
+        sender_type:"user",
+        content: message
+      }))
+      const callBack = (data: HistoryChat) => {
         dispatch(setGenerateChatIntoListHistory(data))
       }
        await dispatch(getChatStreamingTransaction({payload, callBack}));
@@ -76,6 +79,13 @@ export const useBuildChatbot = () => {
     },
     [dispatch],
   );
+
+  const onGetInfoCurrentBot = useCallback(
+    async (payload: GetBotInfoPayload) => {
+       await dispatch(getBotInfoTransaction(payload));
+    },
+    [dispatch],
+  );
   
   return {
     fetchLink,
@@ -92,5 +102,7 @@ export const useBuildChatbot = () => {
     onGetAllUrl,
     onGetAllFile,
     onDeleteFileImported,
+    loadingChat,
+    onGetInfoCurrentBot
   };
 };

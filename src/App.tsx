@@ -13,6 +13,7 @@ import routes from './routes';
 import Cookies from 'universal-cookie';
 import store from './states/store';
 import Loader from './components/Loader';
+import Chat from './pages/Chat/Chat';
 
 const DefaultLayout = lazy(() => import('./layout/DefaultLayout'));
 
@@ -53,6 +54,7 @@ function App() {
           <Route path="/auth/signin" element={<SignIn />} />
           <Route path="/auth/verify" element={<Verify />} />
           <Route path="/auth/signup" element={<SignUp />} />
+          <Route path="/chat/:id" element={<Chat />} />
           <Route
             path="/auth/forgot-password/:code"
             element={<ForgotPasswordVerify />}

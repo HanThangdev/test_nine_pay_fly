@@ -12,13 +12,14 @@ import { LOADING_TEXT } from '@/constants';
 import { TypeAnimation } from 'react-type-animation';
 import { resetHistoryChatTest } from '@/states/buildChatBot/buildChatBot.slice';
 import { convertStringToParagraphs } from '@/utils/format';
+import { HistoryChat } from '@/states/buildChatBot/type';
 
 const Testing = () => {
   const { data, history, session_id } = useSelector(
     (state: RootState) => state.buildChatBot,
   );
   const dispatch = useDispatch<AppDispatch>();
-  const [loading, setLoading] = useState<boolean>();
+  const [loading, setLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
   const messagesEndRef = useRef<HTMLInputElement | null>(null);
   const { onStreamingDataTesting } = useBuildChatbot();
@@ -46,39 +47,31 @@ const Testing = () => {
     setLoading(false);
   };
 
-  const getDivForResponse = (index: number, message: string) => {
-    if (index % 2 === 0) {
+  const getDivForResponse = (index: number, message: HistoryChat) => {
+    if (message.sender_type === 'user') {
       return (
         <div className="w-full justify-end flex" key={index}>
           <p className="bg-[#D1EFFF] p-2 rounded-t-lg rounded-bl-lg w-fit">
-            {message === LOADING_TEXT ? (
-              <TypeAnimation
-                sequence={['.', 200, '..', 200, '...', 200]}
-                repeat={Infinity}
-                cursor={false}
-              />
-            ) : (
-              convertStringToParagraphs(message)
-            )}
+          {convertStringToParagraphs(message.content)}
           </p>
         </div>
       );
     } else {
       return (
         <div
-          className="bg-[#F1F7FF] p-2 rounded-t-lg rounded-br-lg w-fit"
+        className="bg-[#F1F7FF] p-2 rounded-t-lg rounded-br-lg w-fit"
           key={index}
           style={{ whiteSpace: 'pre-wrap' }}
         >
-          {message === LOADING_TEXT ? (
-            <TypeAnimation
-              sequence={['.', 200, '..', 200, '...', 200]}
-              repeat={Infinity}
-              cursor={false}
-            />
-          ) : (
-            convertStringToParagraphs(message)
-          )}
+            {message.content===LOADING_TEXT ? (
+              <TypeAnimation
+                sequence={['.', 200, '..', 200, '...', 200]}
+                repeat={Infinity}
+                cursor={false}
+              />
+            ) : (
+              convertStringToParagraphs(message?.content || "")
+            )}
         </div>
       );
     }

@@ -18,6 +18,8 @@ import classNames from 'classnames';
 import { GetAllConversationsPayload } from '@/repository/conversations/type';
 import useScrollToLastElementChild from '@/hooks/useScrollToLastElementChild';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { convertStringToParagraphs } from '@/utils/format';
+import { HistoryChat } from '@/states/chat/type';
 
 dayjs.extend(relativeTime);
 
@@ -179,7 +181,7 @@ const Conversations = () => {
                       'bg-[#F9F9FC]':
                         conversation.session_id === selectedConversationId,
                     },
-                    'cursor-pointer border-[1px] border-[#DCDEED] rounded-[5px] p-4',
+                    'cursor-pointer border-[1px] border-[#DCDEED] rounded-[5px] p-4 mb-2',
                   )}
                 >
                   <div className="flex justify-between text-[15px] text-[#33343D]">
@@ -217,18 +219,18 @@ const Conversations = () => {
                 ref={chatContentRef}
               >
                 {selectedConversation.chat_history_response.map(
-                  ({ sender_type, content }, index) => {
+                  ({ sender_type, content }: HistoryChat, index) => {
                     return sender_type === 'assistant' ? (
                       <div
                         className="bg-[#F1F7FF] p-2 rounded-t-lg rounded-br-lg w-fit"
                         key={index}
                       >
-                        {content}
+                        {convertStringToParagraphs(content)}
                       </div>
                     ) : (
                       <div className="w-full justify-end flex" key={index}>
                         <p className="bg-[#D1EFFF] p-2 rounded-t-lg rounded-bl-lg w-fit">
-                          {content}
+                          {convertStringToParagraphs(content)}
                         </p>
                       </div>
                     );

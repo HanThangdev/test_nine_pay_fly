@@ -4,6 +4,7 @@ import manageChatBotReducer from '@/states/manageBot/manageBot.slice';
 import authReducer from '@/states/auth/auth.slice';
 import conversationReducer from "@/states/conversations/conversations.slice"
 import pricingPlanReducer from '@/states/pricingPlan/pricingPlan.slice';
+import chatReducer from '@/states/chat/chat.slice';
 
 const store = configureStore({
   middleware: (getDefaultMiddleware) =>
@@ -15,7 +16,8 @@ const store = configureStore({
     manageBot: manageChatBotReducer,
     auth: authReducer,
     pricing: pricingPlanReducer,
-    conversations: conversationReducer
+    conversations: conversationReducer,
+    chat: chatReducer
   },
 });
 

@@ -1,7 +1,7 @@
 
 export interface BuildChatBotState {
   data:  any | null;
-  history: string[];
+  history: HistoryChat[];
   loading: boolean;
   session_id: string;
   activeTab: string;
@@ -26,3 +26,7 @@ export interface DataFetchFile {
   knowledge_base_id: string;
 }
 
+export interface HistoryChat {
+  sender_type: "assistant" | "user";
+  content: string;
+}

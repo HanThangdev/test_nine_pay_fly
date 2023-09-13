@@ -22,7 +22,7 @@ import {
 import Cookies from 'universal-cookie';
 import { SuccessResponse } from '../type';
 import { objectToQueryString } from '@/utils/utils';
-import { DataFetchFile } from '@/states/buildChatBot/type';
+import { HistoryChat } from '@/states/buildChatBot/type';
 const FORM_DATA_HEADER = { 'Content-Type': 'multipart/form-data' };
 export const createBotTransaction = createAsyncThunk(
   'transaction/createBotTransaction',
@@ -72,7 +72,7 @@ export const createSessionTransaction = createAsyncThunk(
 export const getChatStreamingTransaction = createAsyncThunk(
   'transaction/getStreamingResponse',
   async (
-    { payload, callBack }: GetStreamingPayload<GetChatStreamingRequest, string>,
+    { payload, callBack }: GetStreamingPayload<GetChatStreamingRequest, HistoryChat>,
     { rejectWithValue },
   ) => {
     const endPoint = 'api/chat/get-streaming-response';
@@ -98,7 +98,10 @@ export const getChatStreamingTransaction = createAsyncThunk(
         const { done, value } = await reader.read();
         if (done) break;
         textContainer += decoder.decode(value, { stream: true });
-        callBack(textContainer);
+        callBack({
+          content: textContainer,
+          sender_type: "assistant"
+        });
       }
       return response;
     } catch (error: any) {

@@ -130,7 +130,7 @@ export const buildChatbotSlice = createSlice({
 
     builder.addCase(getChatStreamingTransaction.pending, (state) => {
       const listUpdateHistory = Array.from(state.history);
-      state.history = [...listUpdateHistory, LOADING_TEXT];
+      state.history = [...listUpdateHistory, {content: LOADING_TEXT, sender_type: 'assistant'}];
       state.loadingChat = true;
     });
     builder.addCase(getChatStreamingTransaction.fulfilled, (state) => {

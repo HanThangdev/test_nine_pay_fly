@@ -1,8 +1,8 @@
 import { lazy } from 'react';
 
 const Conversations = lazy(() => import('../pages/Conversations'));
-const Profile = lazy(() => import('../pages/profile'));
-const Settings = lazy(() => import('../pages/setting'));
+const Profile = lazy(() => import('../pages/Profile'));
+const Settings = lazy(() => import('../pages/Setting'));
 const BuildChatbox = lazy(() => import('../pages/BuildChatbot'));
 const PricingPlan = lazy(() => import('../pages/PricingPlan'));
 const Notfound = lazy(() => import('../pages/Notfound'));
