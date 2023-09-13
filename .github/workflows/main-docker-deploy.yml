@@ -23,6 +23,7 @@ jobs:
           PROD_SSH_KEY: ${{ secrets.PROD_SSH_KEY }}
           PROD_ENV: ${{ vars.PROD_ENV }}
         run: |
+          cp public/ChatProduction.js public/Chat.js
           echo -e "$PROD_ENV" >> .env
           echo -e "$PROD_SSH_KEY" > id_rsa.txt
           chmod 600 id_rsa.txt

@@ -23,6 +23,7 @@ jobs:
           DEV_SSH_KEY: ${{ secrets.DEV_SSH_KEY }}
           DEV_ENV: ${{ vars.DEV_ENV }}
         run: |
+          cp public/ChatDevelopment.js public/Chat.js
           echo -e "$DEV_ENV" >> .env
           echo -e "$DEV_SSH_KEY" > id_rsa.txt
 
