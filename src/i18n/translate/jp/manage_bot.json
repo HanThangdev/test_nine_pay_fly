@@ -1,9 +1,9 @@
 {
-  "All": "All Chatbots",
-  "New": "New Chatbot",
-  "textDelete": "Delete your chatbot",
-  "confirm": "Are you sure you want to delete your chatbot?  This action cannot be undone.",
-  "Cancel": "Cancel",
-  "Delete": "Delete",
-  "DeleteSuccess": "Delete bot success"
+  "All": "すべてのチャットボット",
+  "New": "新規チャットボット",
+  "textDelete": "チャットボット削除",
+  "confirm": "こちらのチャットボットを削除してもよろしいですか。この操作は元に戻すことができません。",
+  "Cancel": "キャンセル",
+  "Delete": "削除",
+  "DeleteSuccess": "チャットボットを削除しました。"
 }

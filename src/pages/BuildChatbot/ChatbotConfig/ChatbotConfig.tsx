@@ -31,32 +31,33 @@ const ChatbotConfig = () => {
     {
       value: '2',
       label: 'Customer Support',
-      prompt: "customer_support_prompt"
+      prompt: 'customer_support_prompt',
     },
     {
       value: '3',
       label: 'Knowledge Management',
-      prompt: "knowledge_management_prompt"
+      prompt: 'knowledge_management_prompt',
     },
     {
       value: '4',
       label: 'Teaching Education',
-      prompt: "teaching_assistant_prompt"
+      prompt: 'teaching_assistant_prompt',
     },
     {
       value: '1',
       label: 'Other',
-      prompt: "default_prompt"
+      prompt: 'default_prompt',
     },
   ];
-
 
   const [loading, setLoading] = useState<boolean>();
 
   // BotConfig variables
   const [botName, setBotName] = useState('');
   const [caseStudy, setCaseStudy] = useState(options[0].value);
-  const [conversationTone, setConversationTone] = useState(OPTION_TONE[0].value);
+  const [conversationTone, setConversationTone] = useState(
+    OPTION_TONE[0].value,
+  );
   const [model, setModel] = useState('GPT - 3.5');
   const [visibility, setVisibility] = useState('Public');
 
@@ -65,13 +66,14 @@ const ChatbotConfig = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [rules, setRules] = useState<Array<string>>(['']);
   const [promptExample, setPromptExample] = useState(
-    'I want you to act as a customer service consultant of the business below. You will come up with your answers from the context and questions below, full citation of reference materials. Your answers should be clear, concise, and aim to address any issues or concerns they may have. The tone of the response will be professional. If you don\'t know the answer, you can use phrases like \"Let me check for you\" or \"I\'d be happy to look into that for you.\" Never break character.',
+    'I want you to act as a customer service consultant of the business below. You will come up with your answers from the context and questions below, full citation of reference materials. Your answers should be clear, concise, and aim to address any issues or concerns they may have. The tone of the response will be professional. If you don\'t know the answer, you can use phrases like "Let me check for you" or "I\'d be happy to look into that for you." Never break character.',
   );
 
   // CollectCustomer variables
   const [email, setEmail] = useState(false);
   const [name, setName] = useState(false);
   const [phone, setPhone] = useState(false);
+  const [numberShowing, setNumberShowing] = useState(0);
   const [custom, setCustom] = useState<CustomField[]>([]);
   // const [field, setField] = useState('Custom field');
 
@@ -95,6 +97,7 @@ const ChatbotConfig = () => {
         email: email,
         name: name,
         phone: phone,
+        numberShowing: numberShowing,
         ...resultObject,
       },
       rules: rules,
@@ -170,6 +173,7 @@ const ChatbotConfig = () => {
       setName(collect_customer_info?.name);
       setPhone(collect_customer_info?.phone);
       setCustom(convertCustomValue(collect_customer_info));
+      setNumberShowing(collect_customer_info.numberShowing);
     }
   }, [data]);
 
@@ -212,6 +216,8 @@ const ChatbotConfig = () => {
         setPhone={setPhone}
         custom={custom}
         setCustom={setCustom}
+        numberShowing={numberShowing}
+        setNumberShowing={setNumberShowing}
       />
       <div className="flex justify-end">
         <Button

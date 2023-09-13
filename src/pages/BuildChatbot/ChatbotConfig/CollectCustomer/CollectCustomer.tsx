@@ -15,6 +15,8 @@ interface CollectCustomerProps {
   setPhone: (value: boolean) => void;
   custom: CustomField[];
   setCustom: (value: CustomField[]) => void;
+  numberShowing: number;
+  setNumberShowing: (value: number) => void;
 }
 
 const CollectCustomer: React.FC<CollectCustomerProps> = ({
@@ -26,6 +28,8 @@ const CollectCustomer: React.FC<CollectCustomerProps> = ({
   setPhone,
   custom,
   setCustom,
+  numberShowing,
+  setNumberShowing,
 }) => {
   const { t } = useTranslation();
   return (
@@ -139,6 +143,17 @@ const CollectCustomer: React.FC<CollectCustomerProps> = ({
         ) : (
           <></>
         )}
+        <div className="flex gap-x-4 mt-[12px] items-center">
+          <input
+            type="number"
+            placeholder=""
+            min={0}
+            value={numberShowing}
+            onChange={(e) => setNumberShowing(Number(e.target.value))}
+            className="h-[41px] w-[150px] rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
+          />
+          <p className="mb-0">{t('showing', { ns: 'config_bot' })}</p>
+        </div>
       </div>
     </div>
   );

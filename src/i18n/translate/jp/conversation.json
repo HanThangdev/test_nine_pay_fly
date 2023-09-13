@@ -1,9 +1,9 @@
 {
-  "SelectBot": "Select Chatbot",
-  "From": "From",
-  "To": "To",
-  "Customer": "Customer",
-  "ExportPDF": "Export PDF",
-  "NewBot": "New Chatbot",
-  "NoConversationFound": "No conversation found"
+  "SelectBot": "チャットボット選択",
+  "From": "から",
+  "To": "まで",
+  "Customer": "お客様：",
+  "ExportPDF": "PDFエクスポート",
+  "NewBot": "新しいチャットボット",
+  "NoConversationFound": "会話が見つかりません"
 }

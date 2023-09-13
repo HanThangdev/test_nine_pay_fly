@@ -34,7 +34,7 @@
   "CustomField": "Tùy chỉnh",
   "Form": "Tiêu đề biểu mẫu",
   "Letus": "Hãy cho chúng tôi biết cách liên hệ với bạn",
-  "showing": "{Số lượng} câu hỏi và câu trả lời trước khi hiển thị  biểu mẫu",
+  "showing": "Câu hỏi và câu trả lời trước khi hiển thị  biểu mẫu",
   "tooltipModel": "GPT-3.5 là tốt nhất cho mục đích sử dụng thông thường. Đó là sự cân bằng tốt giữa tốc độ và chất lượng đầu ra. \n GPT-3.5 turbo-16k là phiên bản nâng cấp của GPT-3.5, sử dụng ngữ cảnh nhiều hơn gấp 4 lần từ tài liệu của bạn khi tạo đầu ra. \n GPT-3.5-16k: 8 tín dụng tin nhắn cho mỗi tin nhắn. \n GPT-3.5: 1 tín dụng tin nhắn cho mỗi tin nhắn.",
   "tooltipPrivate": "Riêng tư: Không ai có thể truy cập chatbot của bạn ngoại trừ bạn (tài khoản của bạn). \n Công khai: Bất kỳ ai có liên kết đều có thể truy cập liên kết đó trên ChatFly.com và có thể được nhúng vào trang web của bạn.",
   "tooltipLimit": "Giới hạn số lượng tin nhắn được gửi từ một thiết bị trên iframe và bong bóng trò chuyện (giới hạn này sẽ không áp dụng cho bạn trên ChatFly, chỉ áp dụng trên các trang web để người dùng của bạn tránh lạm dụng).",
