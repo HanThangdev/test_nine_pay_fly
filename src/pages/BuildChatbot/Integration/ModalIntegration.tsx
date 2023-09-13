@@ -16,7 +16,7 @@ export default function ModalIntegration({ open, onClose }: Props) {
   const cookies = new Cookies();
   const token = cookies.get('access_token');
   const codeStringEmbedBubble = `
-    <script src="${window.location.origin}/Chat.js"></script>
+    <script src="${window.location.origin}/${window.location.origin==="https://app.chatfly.co" ? "Chat.js":"ChatDevelopment.js"}"></script>
     <script>
       window.chatbotConfig = {
         bot_id:"${data?.id}",
@@ -35,6 +35,7 @@ export default function ModalIntegration({ open, onClose }: Props) {
       style="border:1px solid black;"
     ></iframe>
   `;
+  
   return (
     <Modal
       closable={false}
