@@ -103,5 +103,6 @@
   "Website": "Trang mạng",
   "Q&A": "Q&A",
   "Update": "Cập nhập",
-  "Create": "Tạo"
+  "Create": "Tạo",
+  "file_large_msg": "File quá lớn, vui lòng chọn file dưới 25MB"
 }

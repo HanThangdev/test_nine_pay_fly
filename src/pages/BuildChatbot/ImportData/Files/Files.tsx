@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import FetchFileItem from '../../Component/FetchFileItem';
 import { API_STATUS } from '@/constants';
 import { TypeAnimation } from 'react-type-animation';
+import { MAX_SIZE_FILE } from '@/constants/configs_bot';
 const Files = () => {
   const { t } = useTranslation();
   const [listFileWaitingImport, setListFileWaitingImport] = useState<File[]>(
@@ -35,15 +36,27 @@ const Files = () => {
   );
 
   const onUpload = (file: File) => {
-    onUploadFile({ file, bot_id: data?.id }).then((response) => {
-      if (response.meta.requestStatus === API_STATUS.FULFILLED) {
-        const newList = Array.from(listFileWaitingImport).filter((_) => {
-          return _.name !== file.name;
+    if (file.size >= MAX_SIZE_FILE) {
+      notification.warning({
+        message: t('file_large_msg', { ns: 'config_bot' }),
+      });
+      return;
+    }
+    onUploadFile({ file, bot_id: data?.id })
+      .then((response) => {
+        if (response.meta.requestStatus === API_STATUS.FULFILLED) {
+          const newList = Array.from(listFileWaitingImport).filter((_) => {
+            return _.name !== file.name;
+          });
+          setListFileWaitingImport(newList);
+          onGetAllFile({ bot_id: data?.id });
+        }
+      })
+      .catch((e) => {
+        notification.warning({
+          message: e?.message || '',
         });
-        setListFileWaitingImport(newList);
-        onGetAllFile({ bot_id: data?.id });
-      }
-    });
+      });
   };
 
   const totalTokens = useMemo(() => {
@@ -141,7 +154,7 @@ const Files = () => {
           );
         })}
 
-<div className="mt-[25px]">
+      <div className="mt-[25px]">
         <p className="text-[16px]">
           {' '}
           {t('Attached', { ns: 'config_bot' })}{' '}

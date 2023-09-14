@@ -20,3 +20,5 @@ export const OPTION_TONE = [
     label: 'Academic',
   },
 ];
+
+export const MAX_SIZE_FILE = 25 * 1024

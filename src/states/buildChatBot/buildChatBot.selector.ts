@@ -1,14 +1,14 @@
 import { useCallback } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../store';
-import { DataFetchFile, DataFetchLink, HistoryChat } from './type';
-import { createSessionTransaction, deleteFileImportedTransaction, deleteURLTransaction, getAllFileTransaction, getAllURLTransaction, getBotInfoTransaction, getChatStreamingTransaction, importURLTransaction, uploadFileTransaction } from '@/repository/buildChatBot';
+import { DataFetchFile, DataFetchLink, GetAdvanceSettingPayload, HistoryChat } from './type';
+import { createSessionTransaction, deleteFileImportedTransaction, deleteURLTransaction, getAdvanceSettingTransaction, getAllFileTransaction, getAllURLTransaction, getBotInfoTransaction, getChatStreamingTransaction, importURLTransaction, uploadFileTransaction } from '@/repository/buildChatBot';
 import { DeleteFileImportedPayload, DeleteURLPayload, GetAllFilePayload, GetAllURLPayload, GetBotInfoPayload, GetChatStreamingRequest, ImportURLPayload, UploadFilePayload } from '@/repository/buildChatBot/type';
 import { loadFetchFile, loadFetchLink, setGenerateChatIntoListHistory, setNewChatIntoListHistory } from './buildChatBot.slice';
 
 export const useBuildChatbot = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { fetchLink, data, activeTab, session_id, listIncludesFile, loadingFetchFile, loadingChat } = useSelector((state: RootState) => state.buildChatBot, shallowEqual);
+  const { fetchLink, data, activeTab, session_id, listIncludesFile, loadingFetchFile, loadingChat, advanceSetting } = useSelector((state: RootState) => state.buildChatBot, shallowEqual);
   const onStreamingDataTesting = useCallback(
     async (payload: GetChatStreamingRequest) => {
       const { message } = payload
@@ -86,6 +86,13 @@ export const useBuildChatbot = () => {
     },
     [dispatch],
   );
+
+  const onGetAdvanceSetting = useCallback(
+    async (payload: GetAdvanceSettingPayload) => {
+       await dispatch(getAdvanceSettingTransaction(payload));
+    },
+    [dispatch],
+  );
   
   return {
     fetchLink,
@@ -103,6 +110,8 @@ export const useBuildChatbot = () => {
     onGetAllFile,
     onDeleteFileImported,
     loadingChat,
-    onGetInfoCurrentBot
+    onGetInfoCurrentBot,
+    onGetAdvanceSetting,
+    advanceSetting
   };
 };

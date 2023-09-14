@@ -1,3 +1,4 @@
+import { AdvancePayload } from "@/repository/buildChatBot/type";
 
 export interface BuildChatBotState {
   data:  any | null;
@@ -12,6 +13,7 @@ export interface BuildChatBotState {
   loadingFetchFile: boolean;
   listIncludesFile: DataFetchFile[],
   fetchFile: DataFetchFile;
+  advanceSetting: AdvancePayload;
 }
 
 export interface DataFetchLink {
@@ -30,3 +32,8 @@ export interface HistoryChat {
   sender_type: "assistant" | "user";
   content: string;
 }
+
+export interface GetAdvanceSettingPayload {
+  bot_id: string
+}
+
