@@ -261,6 +261,7 @@ const Conversations = () => {
                       <div
                         className="bg-[#F1F7FF] p-2 rounded-t-lg rounded-br-lg w-fit"
                         key={index}
+                        style={{ whiteSpace: 'pre-wrap' }}
                       >
                         {convertStringToParagraphs(content)}
                       </div>
