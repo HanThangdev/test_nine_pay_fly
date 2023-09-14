@@ -25,12 +25,10 @@ const Chat = () => {
   const {
     onStreamingConversation,
     chatConversations,
-    onCreateSessionChat,
     session_id
   } = useConversationsChatbot();
   const { onGetInfoCurrentBot, data,  } = useBuildChatbot();
   const onSendMessage = async (msg: string | undefined = '') => {
-    console.log('hello', id);
     if (loading || (!message && !msg) || !id || !session_id) {
       return;
     }
@@ -51,7 +49,6 @@ const Chat = () => {
     }
     setLoading(false);
   };
-  console.log(loading, id);
   const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
     e.preventDefault();
     if (e.key === 'Enter') {
@@ -61,7 +58,6 @@ const Chat = () => {
 
   useEffect(() => {
     if (id) {
-      onCreateSessionChat();
       onGetInfoCurrentBot({ bot_id: id });
     }
   }, [id]);
@@ -70,8 +66,8 @@ const Chat = () => {
     if (message.sender_type === 'user') {
       return (
         <div className="chat-message">
-          <div className="flex items-end justify-end">
-            <div className="flex flex-col space-y-2 text-lg max-w-xs mx-2 order-1 items-end">
+          <div className="flex items-center justify-end">
+            <div className="flex flex-col space-y-2 text-lg max-w-xs mx-2 order-1 items-center">
               <div>
                 <span className="px-4 py-2 rounded-lg inline-block rounded-br-none bg-blue-600 text-black ">
                   {convertStringToParagraphs(message?.content || '')}
@@ -90,8 +86,8 @@ const Chat = () => {
     } else {
       return (
         <div className="chat-message">
-          <div className="flex items-end">
-            <div className="flex flex-col space-y-2 text-lg max-w-xs mx-2 order-2 items-start">
+          <div className="flex items-center">
+            <div className="flex flex-col space-y-2 text-lg max-w-xs mx-2 order-2 items-center">
               <div>
                 <span className="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600">
                   {message.content === LOADING_TEXT ? (

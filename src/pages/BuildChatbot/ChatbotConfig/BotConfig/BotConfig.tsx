@@ -1,18 +1,11 @@
 import classNames from 'classnames';
 import IconRobot from '@/components/IconRobot/IconRobot';
 import { AiOutlineQuestionCircle } from 'react-icons/ai';
-import { Input, Radio, Select, Tooltip } from 'antd';
+import { Input, Tooltip } from 'antd';
 import React from 'react';
 import { BiLockOpenAlt, BiLockAlt } from 'react-icons/bi';
 import { useTranslation } from 'react-i18next';
-import { PROMPT_EXAM } from '@/constants';
 import { OPTION_TONE } from '@/constants/configs_bot';
-
-const optionsModal = [
-  { label: 'GPT - 3.5', value: 'GPT - 3.5' },
-  { label: 'GPT - 3.5 - 16k', value: 'GPT - 3.5 - 16k' },
-  { label: 'GPT - 4.0', value: 'GPT - 4.0', disabled: true },
-];
 
 interface Option {
   value: string;
@@ -25,8 +18,7 @@ interface BotConfigProps {
   setBotName: (value: string) => void;
   caseStudy: string;
   setCaseStudy: (value: string) => void;
-  model: string;
-  setModel: (value: string) => void;
+  
   visibility: string;
   setVisibility: (value: string) => void;
   setPromptExample: (value: string) => void;
@@ -41,8 +33,7 @@ const BotConfig: React.FC<BotConfigProps> = ({
   setBotName,
   caseStudy,
   setCaseStudy,
-  model,
-  setModel,
+  
   visibility,
   setVisibility,
   options,
@@ -115,28 +106,7 @@ const BotConfig: React.FC<BotConfigProps> = ({
           ))}
         </select>
       </div>
-      <div className="text-[15px] mt-[16px]">
-        <p className="flex gap-x-[10px] font-bold items-center">
-          {t('Model', { ns: 'config_bot' })}
-          <Tooltip
-            color="#212121"
-            placement="rightTop"
-            overlayStyle={{ whiteSpace: 'pre-line', width: '400px' }}
-            title={t('tooltipModel', { ns: 'config_bot' })}
-          >
-            <AiOutlineQuestionCircle size={18} color="#E77964" />
-          </Tooltip>
-        </p>
-        <div className="mt-[13px]">
-          <Radio.Group
-            options={optionsModal}
-            onChange={(e) => setModel(e.target.value)}
-            value={model}
-            optionType="button"
-            buttonStyle="solid"
-          />
-        </div>
-      </div>
+      
       <div className="text-[15px] mt-[16px]">
         <p className="w-[240px] flex gap-x-[10px] font-bold items-center">
           {t('Visibility', { ns: 'config_bot' })}
@@ -178,7 +148,7 @@ const BotConfig: React.FC<BotConfigProps> = ({
           </button>
         </div>
       </div>
-      <div className="text-[15px] mt-[16px]">
+      {/* <div className="text-[15px] mt-[16px]">
         <p className="w-[240px] flex gap-x-[10px] mb-0 font-bold items-center">
           {t('Rate', { ns: 'config_bot' })}
           <Tooltip
@@ -203,7 +173,7 @@ const BotConfig: React.FC<BotConfigProps> = ({
           placeholder={`${t('ManyMessage', { ns: 'config_bot' })}`}
           className="h-[41px] mt-[12px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
         />
-      </div>
+      </div> */}
     </div>
   );
 };

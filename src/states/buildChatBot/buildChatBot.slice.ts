@@ -13,12 +13,13 @@ import {
   uploadFileTransaction,
 } from '@/repository/buildChatBot';
 import { LOADING_TEXT } from '@/constants';
+import uuid from 'react-uuid';
 
 const initialState: BuildChatBotState = {
   data: null,
   loading: false,
   activeTab: '',
-  session_id: '',
+  session_id: uuid(),
   listIncludesLink: [],
   listIncludesFile: [],
   history: [],
@@ -209,6 +210,7 @@ export const buildChatbotSlice = createSlice({
     });
     builder.addCase(getBotInfoTransaction.fulfilled, (state, action) => { 
       state.data = action.payload.data
+      state.session_id = uuid()
       state.loading = false;
     });
     builder.addCase(getBotInfoTransaction.rejected, (state) => {
