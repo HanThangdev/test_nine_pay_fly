@@ -10,6 +10,7 @@ import FetchFileItem from '../../Component/FetchFileItem';
 import { API_STATUS } from '@/constants';
 import { TypeAnimation } from 'react-type-animation';
 import { MAX_SIZE_FILE } from '@/constants/configs_bot';
+import { formatNumber } from '@/utils/format';
 const Files = () => {
   const { t } = useTranslation();
   const [listFileWaitingImport, setListFileWaitingImport] = useState<File[]>(
@@ -159,7 +160,7 @@ const Files = () => {
           {' '}
           {t('Attached', { ns: 'config_bot' })}{' '}
           <span className="font-bold">
-            ({totalTokens} {t('chars', { ns: 'config_bot' })})
+            ({formatNumber(totalTokens)} {t('tokens', { ns: 'config_bot' })})
           </span>
         </p>
         {listLink &&
@@ -175,11 +176,11 @@ const Files = () => {
         <p className="text-[15px] font-bold">
           {listIncludesFile?.length || 0} {t('Files', { ns: 'config_bot' })}
           <span className="text-[#A7A7B0]">
-            ({totalTokens} {t('chars', { ns: 'config_bot' })})
+            ({formatNumber(totalTokens)} {t('tokens', { ns: 'config_bot' })})
           </span>
         </p>
         <p className="text-[15px] font-bold">
-          {t('TotalChar', { ns: 'config_bot' })}: {totalTokens}/400,000{' '}
+          {t('TotalChar', { ns: 'config_bot' })}: {formatNumber(totalTokens)}/10.000.000{' '}
           {t('limit', { ns: 'config_bot' })}
         </p>
       </div>

@@ -10,7 +10,7 @@
     "title": "無料",
     "item1": "100メッセージクレジット/月",
     "item2": "1チャットボット",
-    "item3": "10,000,000 文字/チャットボット",
+    "item3": "10.000.000 文字/チャットボット",
     "item4": "無制限のウェブサイトに埋め込む",
     "item5": "複数ファイルをアップロード可能",
     "item6": "会話の履歴を表示する",
@@ -18,9 +18,9 @@
   },
   "Basic": {
     "title": "基本",
-    "item1": "2,000メッセージクレジット/月",
+    "item1": "2.000メッセージクレジット/月",
     "item2": "2チャットボット",
-    "item3": "11,000,000文字/チャットボット",
+    "item3": "11.000.000文字/チャットボット",
     "item4": "無制限のウェブサイトに埋め込む",
     "item5": "複数ファイルをアップロード可能",
     "item6": "会話の履歴を表示する",
@@ -30,9 +30,9 @@
   },
   "Starter": {
     "title": "スターター",
-    "item1": "12,000メッセージクレジット/月",
+    "item1": "12.000メッセージクレジット/月",
     "item2": "4チャットボット",
-    "item3": "11,000,000文字/チャットボット",
+    "item3": "11.000.000文字/チャットボット",
     "item4": "無制限のウェブサイトに埋め込む",
     "item5": "複数ファイルをアップロード可能",
     "item6": "会話の履歴を表示する",
@@ -44,9 +44,9 @@
   },
   "Standard": {
     "title": "標準",
-    "item1": "20,000メッセージクレジット/月",
+    "item1": "20.000メッセージクレジット/月",
     "item2": "8チャットボット",
-    "item3": "11,000,000文字/チャットボット",
+    "item3": "11.000.000文字/チャットボット",
     "item4": "無制限のウェブサイトに埋め込む",
     "item5": "複数ファイルをアップロード可能",
     "item6": "会話の履歴を表示する",
@@ -60,9 +60,9 @@
   },
   "Business": {
     "title": "ビジネス",
-    "item1": "50,000メッセージクレジット/月（制限を超えるメッセージには OpenAIのAPI キーが使用されます）",
+    "item1": "50.000メッセージクレジット/月（制限を超えるメッセージには OpenAIのAPI キーが使用されます）",
     "item2": "10チャットボット",
-    "item3": "11,000,000文字/チャットボット",
+    "item3": "11.000.000文字/チャットボット",
     "item4": "無制限のウェブサイトに埋め込む",
     "item5": "複数ファイルをアップロード可能",
     "item6": "会話の履歴を表示する",
@@ -96,6 +96,6 @@
     "answer6": "Once you attach your document(s) for upload, chatbase will show you the character count of all the attached documents.",
     "answer7": "Yes, if you have a paid plan you can upload multiple files to one chatbot. Just click ctrl (windows) or cmd (mac) and select as many files as you want.",
     "answer8": "Free plan: 400K Characters (~5MB) | Hobby/Standard/Unlimited: 11M Characters (~140MB)",
-    "answer9": "You get 40,000 message credits included in the plan when you subscribe. Every message after that will use your OpenAI API key that you can add in your account page. So you get the cheapest possible price per message after you hit the limit."
+    "answer9": "You get 40.000 message credits included in the plan when you subscribe. Every message after that will use your OpenAI API key that you can add in your account page. So you get the cheapest possible price per message after you hit the limit."
   }
 }

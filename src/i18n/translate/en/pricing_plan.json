@@ -10,7 +10,7 @@
     "title": "Free",
     "item1": "100 message credits/month",
     "item2": "1 chatbot",
-    "item3": "10,000,000 characters/chatbot",
+    "item3": "10.000.000 characters/chatbot",
     "item4": "Embed on unlimited websites",
     "item5": "Upload multiple files",
     "item6": "View conversation history",
@@ -18,9 +18,9 @@
   },
   "Basic": {
     "title": "Basic",
-    "item1": "2,000 message credits/month",
+    "item1": "2.000 message credits/month",
     "item2": "2 chatbots",
-    "item3": "11,000,000 characters/chatbot",
+    "item3": "11.000.000 characters/chatbot",
     "item4": "Embed on unlimited websites",
     "item5": "Upload multiple files",
     "item6": "View conversation history",
@@ -30,9 +30,9 @@
   },
   "Starter": {
     "title": "Starter",
-    "item1": "12,000 message credits/month",
+    "item1": "12.000 message credits/month",
     "item2": "4 chatbots",
-    "item3": "11,000,000 characters/chatbot",
+    "item3": "11.000.000 characters/chatbot",
     "item4": "Embed on unlimited websites",
     "item5": "Upload multiple files",
     "item6": "View conversation history",
@@ -44,9 +44,9 @@
   },
   "Standard": {
     "title": "Standard",
-    "item1": "20,000 message credits/month",
+    "item1": "20.000 message credits/month",
     "item2": "8 chatbots",
-    "item3": "11,000,000 characters/chatbot",
+    "item3": "11.000.000 characters/chatbot",
     "item4": "Embed on unlimited websites",
     "item5": "Upload multiple files",
     "item6": "View conversation history",
@@ -60,9 +60,9 @@
   },
   "Business": {
     "title": "Business",
-    "item1": "50,000 message credits/month included (Messages over the limit will use your OpenAI API Key)",
+    "item1": "50.000 message credits/month included (Messages over the limit will use your OpenAI API Key)",
     "item2": "10 chatbots",
-    "item3": "11,000,000 characters/chatbot",
+    "item3": "11.000.000 characters/chatbot",
     "item4": "Embed on unlimited websites",
     "item5": "Upload multiple files",
     "item6": "View conversation history",
@@ -96,6 +96,6 @@
     "answer6": "Once you attach your document(s) for upload, chatbase will show you the character count of all the attached documents.",
     "answer7": "Yes, if you have a paid plan you can upload multiple files to one chatbot. Just click ctrl (windows) or cmd (mac) and select as many files as you want.",
     "answer8": "Free plan: 400K Characters (~5MB) | Hobby/Standard/Unlimited: 11M Characters (~140MB)",
-    "answer9": "You get 40,000 message credits included in the plan when you subscribe. Every message after that will use your OpenAI API key that you can add in your account page. So you get the cheapest possible price per message after you hit the limit."
+    "answer9": "You get 40.000 message credits included in the plan when you subscribe. Every message after that will use your OpenAI API key that you can add in your account page. So you get the cheapest possible price per message after you hit the limit."
   }
 }

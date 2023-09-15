@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next';
 import { loadFetchLink } from '@/states/buildChatBot/buildChatBot.slice';
 import { validURL } from '@/utils/validate';
 import { API_STATUS } from '@/constants';
+import { formatNumber } from '@/utils/format';
 
 const Website = () => {
   const { t } = useTranslation();
@@ -196,7 +197,7 @@ const Website = () => {
         <p className="text-[15px] font-bold flex gap-x-[10px] items-center">
           {t('IncludedLinks', { ns: 'config_bot' })}
           <span className="text-[#A7A7B0] font-thin">
-            ({totalTokens} {t('tokens', { ns: 'config_bot' })})
+            ({formatNumber(totalTokens)} {t('tokens', { ns: 'config_bot' })})
           </span>
         </p>
         {!isEmptyObjectOrArray(listLink) &&
@@ -211,11 +212,11 @@ const Website = () => {
         <p className="text-[15px]">
           {listLink.length} Links
           <span className="text-[#A7A7B0]">
-            ({totalTokens} {t('tokens', { ns: 'config_bot' })})
+            ({formatNumber(totalTokens)} {t('tokens', { ns: 'config_bot' })})
           </span>
         </p>
         <p className="text-[15px]">
-          {t('TotalToken', { ns: 'config_bot' })}: {totalTokens}/400,000{' '}
+          {t('TotalToken', { ns: 'config_bot' })}: {formatNumber(totalTokens)}/10.000.000{' '}
           {t('limit', { ns: 'config_bot' })}
         </p>
       </div>

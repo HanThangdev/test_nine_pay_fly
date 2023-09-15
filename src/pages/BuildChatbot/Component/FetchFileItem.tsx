@@ -8,6 +8,7 @@ import { useBuildChatbot } from '@/states/buildChatBot/buildChatBot.selector';
 import { deletedListIncludes } from '@/states/buildChatBot/buildChatBot.slice';
 import { DataFetchFile } from '@/states/buildChatBot/type';
 import { AppDispatch, RootState } from '@/states/store';
+import { formatNumber } from '@/utils/format';
 import { notification } from 'antd';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -59,7 +60,7 @@ const FetchFileItem = ({ item, index }: FetchFileItemProps) => {
         <div className="w-full font-bold text-[17px]">{item.filename}</div>
         <div className="text-[15px] flex items-center justify-end w-full">
           <span className="text-[#A7A7B0 mr-[48px] font-bold text-[16px]">
-            ({item.num_token} {t('chars', { ns: 'config_bot' })})
+            ({formatNumber(item.num_token)} {t('tokens', { ns: 'config_bot' })})
           </span>
           <RiDeleteBinLine
             className="cursor-pointer"
