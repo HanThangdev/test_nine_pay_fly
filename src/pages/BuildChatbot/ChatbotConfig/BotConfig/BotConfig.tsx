@@ -31,8 +31,8 @@ interface BotConfigProps {
   setVisibility: (value: string) => void;
   setPromptExample: (value: string) => void;
   options: Option[];
-  conversationTone: string,
-  setConversationTone: (value: string) => void,
+  conversationTone: string;
+  setConversationTone: (value: string) => void;
   isUpdate: boolean;
 }
 
@@ -51,7 +51,30 @@ const BotConfig: React.FC<BotConfigProps> = ({
   isUpdate,
   setPromptExample,
 }) => {
-  const { t } = useTranslation(["config_bot"]);
+  const { t } = useTranslation(['config_bot']);
+
+  const OPTION_TONE = [
+    {
+      value: '1',
+      label: `${t('Professional', { ns: 'config_bot' })}`,
+    },
+    {
+      value: '2',
+      label: `${t('Humorous', { ns: 'config_bot' })}`,
+    },
+    {
+      value: '3',
+      label: `${t('Empathetic', { ns: 'config_bot' })}`,
+    },
+    {
+      value: '4',
+      label: `${t('NormalConversation', { ns: 'config_bot' })}`,
+    },
+    {
+      value: '5',
+      label: `${t('Academic', { ns: 'config_bot' })}`,
+    },
+  ];
 
   return (
     <div
@@ -85,8 +108,10 @@ const BotConfig: React.FC<BotConfigProps> = ({
           value={caseStudy}
           onChange={(e) => {
             setCaseStudy(e.target.value);
-            const itemPromptFromCaseStudy = options.find(option => option.value === e.target.value)
-            setPromptExample(`${t(itemPromptFromCaseStudy?.prompt || "")}`)
+            const itemPromptFromCaseStudy = options.find(
+              (option) => option.value === e.target.value,
+            );
+            setPromptExample(`${t(itemPromptFromCaseStudy?.prompt || '')}`);
           }}
           className="h-[41px] w-[calc(100%-150px)] rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
         >
@@ -99,7 +124,7 @@ const BotConfig: React.FC<BotConfigProps> = ({
       </div>
       <div className="flex text-[15px] mt-[16px] items-center">
         <p className="w-[170px] flex gap-x-[10px] font-bold items-center">
-          {t('Conversational tone', { ns: 'config_bot' })}
+          {t('ConversationalTone', { ns: 'config_bot' })}
         </p>
         <select
           value={conversationTone}

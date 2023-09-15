@@ -23,7 +23,7 @@ const Integration = () => {
           <h2 className="text-[20px] flex justify-center text-[#33343d] font-black gap-x-3 items-center">
             {t('INTEGRATIONS', { ns: 'config_bot' })}
           </h2>
-          <div className="grid gap-y-[25px] mt-[38px] w-[530px]">
+          <div className="grid gap-y-[25px] mt-[38px] w-[590px]">
             <p
               onClick={() => setOpenModal(true)}
               className={classNames(
@@ -35,7 +35,6 @@ const Integration = () => {
               {t('Embed', { ns: 'config_bot' })}
             </p>
             <p
-              onClick={() => setOpenModal(true)}
               className={classNames(
                 'mb-0 w-full h-[55px] gap-x-4 bg-[#E8E9F4] flex items-center justify-center',
                 'text-[20px] text-[#01058A] font-bold rounded-[5px] hover:cursor-pointer hover:scale-105 duration-500 transition-all',
@@ -44,8 +43,7 @@ const Integration = () => {
               <IconSlack />
               {t('addSlack', { ns: 'config_bot' })}
             </p>
-            <p
-              onClick={() => setOpenModal(true)}
+            <picture
               className={classNames(
                 'mb-0 w-full h-[55px] gap-x-4 bg-[#E8E9F4] flex items-center justify-center',
                 'text-[20px] text-[#01058A] font-bold rounded-[5px] hover:cursor-pointer hover:scale-105 duration-500 transition-all',
@@ -53,9 +51,8 @@ const Integration = () => {
             >
               <IconTeams />
               {t('addTeam', { ns: 'config_bot' })}
-            </p>
+            </picture>
             <p
-              onClick={() => setOpenModal(true)}
               className={classNames(
                 'mb-0 w-full h-[55px] gap-x-4 bg-[#E8E9F4] flex items-center justify-center',
                 'text-[20px] text-[#01058A] font-bold rounded-[5px] hover:cursor-pointer hover:scale-105 duration-500 transition-all',

@@ -190,7 +190,7 @@ const Conversations = () => {
                   </div>
                   <div className="flex justify-between gap-x-4 text-[20px] text-[#33343D]">
                     <p className="mb-0 w-[85%]">
-                      Initial message:{' '}
+                      {t('InitialConv', { ns: 'config_bot' })}:{' '}
                       {conversation.chat_history_response[0].content}
                     </p>
                     <p className="flex items-end">
@@ -240,7 +240,7 @@ const Conversations = () => {
             </div>
           </div>
           <div className="flex justify-end mt-[30px]">
-            <button className="w-[150px] flex items-center gap-x-2 justify-center h-[43px] bg-[#4AC1FF] text-white rounded-[10px] text-[15px] font-bold justify-cente">
+            <button className="w-[165px] flex items-center gap-x-2 justify-center h-[43px] bg-[#4AC1FF] text-white rounded-[10px] text-[15px] font-bold justify-cente">
               <BiSolidFileExport size={24} />
               {t('ExportPDF', { ns: 'conversation' })}
             </button>
