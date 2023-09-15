@@ -21,4 +21,4 @@ export const OPTION_TONE = [
   },
 ];
 
-export const MAX_SIZE_FILE = 25 * 1024
+export const MAX_SIZE_FILE = 25 * 1024 * 1024;
