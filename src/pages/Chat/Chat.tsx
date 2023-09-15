@@ -25,12 +25,10 @@ const Chat = () => {
   const {
     onStreamingConversation,
     chatConversations,
-    onCreateSessionChat,
     session_id
   } = useConversationsChatbot();
-  const { onGetInfoCurrentBot, data,  } = useBuildChatbot();
+  const { onGetInfoCurrentBot, data, onGetAdvanceSetting, advanceSetting } = useBuildChatbot();
   const onSendMessage = async (msg: string | undefined = '') => {
-    console.log('hello', id);
     if (loading || (!message && !msg) || !id || !session_id) {
       return;
     }
@@ -51,7 +49,6 @@ const Chat = () => {
     }
     setLoading(false);
   };
-  console.log(loading, id);
   const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
     e.preventDefault();
     if (e.key === 'Enter') {
@@ -61,8 +58,8 @@ const Chat = () => {
 
   useEffect(() => {
     if (id) {
-      onCreateSessionChat();
       onGetInfoCurrentBot({ bot_id: id });
+      onGetAdvanceSetting({ bot_id: id });
     }
   }, [id]);
 
@@ -70,8 +67,8 @@ const Chat = () => {
     if (message.sender_type === 'user') {
       return (
         <div className="chat-message">
-          <div className="flex items-end justify-end">
-            <div className="flex flex-col space-y-2 text-lg max-w-xs mx-2 order-1 items-end">
+          <div className="flex items-center justify-end">
+            <div className="flex flex-col space-y-2 text-lg max-w-[80%] mx-2 order-1 items-center">
               <div>
                 <span className="px-4 py-2 rounded-lg inline-block rounded-br-none bg-blue-600 text-black ">
                   {convertStringToParagraphs(message?.content || '')}
@@ -90,8 +87,8 @@ const Chat = () => {
     } else {
       return (
         <div className="chat-message">
-          <div className="flex items-end">
-            <div className="flex flex-col space-y-2 text-lg max-w-xs mx-2 order-2 items-start">
+          <div className="flex items-center">
+            <div className="flex flex-col space-y-2 text-lg max-w-[80%] mx-2 order-2 items-center">
               <div>
                 <span className="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600">
                   {message.content === LOADING_TEXT ? (
@@ -152,17 +149,20 @@ const Chat = () => {
             getDivForResponse(index, message),
           )}
       </div>
-      <div className="border-t-2 border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
-        <div className="relative flex">
-          <input
-            type="text"
-            value={message}
-            onKeyUp={(e) => handleKeyUp(e)}
-            onChange={(e) => setMessage(e.target.value)}
-            placeholder="Write your message!"
-            className="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-12 bg-gray-200 rounded-md py-3"
-          />
-          <div className="absolute right-0 items-center inset-y-0 hidden sm:flex">
+      <div className="border-t-2 border-gray-200 pt-4 mb-2 sm:mb-0">
+        <div className="flex items-center bg-white">
+          <div className="w-full">
+            <input
+              type="text"
+              value={message}
+              onKeyUp={(e) => handleKeyUp(e)}
+              onChange={(e) => setMessage(e.target.value)}
+              placeholder="Write your message!"
+              className="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-4 pr-4 bg-gray-200 rounded-md py-3"
+            />
+          </div>
+          
+          <div className="right-0 items-center inset-y-0 sm:flex">
             <button
               type="button"
               onClick={() => onSendMessage()}

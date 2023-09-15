@@ -8,6 +8,12 @@
     @apply font-normal text-base text-body bg-[#FAFAFD] relative z-1;
     font-family: 'Assistant', sans-serif;
   }
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 }
 
 @layer components {

@@ -9,6 +9,8 @@ import { useTranslation } from 'react-i18next';
 import FetchFileItem from '../../Component/FetchFileItem';
 import { API_STATUS } from '@/constants';
 import { TypeAnimation } from 'react-type-animation';
+import { MAX_SIZE_FILE } from '@/constants/configs_bot';
+import { formatNumber } from '@/utils/format';
 const Files = () => {
   const { t } = useTranslation();
   const [listFileWaitingImport, setListFileWaitingImport] = useState<File[]>(
@@ -35,15 +37,27 @@ const Files = () => {
   );
 
   const onUpload = (file: File) => {
-    onUploadFile({ file, bot_id: data?.id }).then((response) => {
-      if (response.meta.requestStatus === API_STATUS.FULFILLED) {
-        const newList = Array.from(listFileWaitingImport).filter((_) => {
-          return _.name !== file.name;
+    if (file.size >= MAX_SIZE_FILE) {
+      notification.warning({
+        message: t('file_large_msg', { ns: 'config_bot' }),
+      });
+      return;
+    }
+    onUploadFile({ file, bot_id: data?.id })
+      .then((response) => {
+        if (response.meta.requestStatus === API_STATUS.FULFILLED) {
+          const newList = Array.from(listFileWaitingImport).filter((_) => {
+            return _.name !== file.name;
+          });
+          setListFileWaitingImport(newList);
+          onGetAllFile({ bot_id: data?.id });
+        }
+      })
+      .catch((e) => {
+        notification.warning({
+          message: e?.message || '',
         });
-        setListFileWaitingImport(newList);
-        onGetAllFile({ bot_id: data?.id });
-      }
-    });
+      });
   };
 
   const totalTokens = useMemo(() => {
@@ -143,7 +157,7 @@ const Files = () => {
           {' '}
           {t('Attached', { ns: 'config_bot' })}{' '}
           <span className="font-bold">
-            ({totalTokens} {t('chars', { ns: 'config_bot' })})
+            ({formatNumber(totalTokens)} {t('tokens', { ns: 'config_bot' })})
           </span>
         </p>
         {listLink &&
@@ -159,11 +173,11 @@ const Files = () => {
         <p className="text-[15px] font-bold">
           {listIncludesFile?.length || 0} {t('Files', { ns: 'config_bot' })}
           <span className="text-[#A7A7B0]">
-            ({totalTokens} {t('chars', { ns: 'config_bot' })})
+            ({formatNumber(totalTokens)} {t('tokens', { ns: 'config_bot' })})
           </span>
         </p>
         <p className="text-[15px] font-bold">
-          {t('TotalChar', { ns: 'config_bot' })}: {totalTokens}/400,000{' '}
+          {t('TotalChar', { ns: 'config_bot' })}: {formatNumber(totalTokens)}/10.000.000{' '}
           {t('limit', { ns: 'config_bot' })}
         </p>
       </div>

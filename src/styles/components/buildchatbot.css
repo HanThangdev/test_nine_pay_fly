@@ -121,3 +121,35 @@
 .Setting .ant-checkbox-inner:after {
   @apply w-[8px] h-[12px];
 }
+
+.Prompt .ant-radio-group {
+  @apply !flex;
+}
+
+.Prompt .ant-radio-button-wrapper {
+  @apply text-[15px] mr-[30px] h-[41px] w-[145px] rounded-[10px] flex items-center justify-center bg-[#E8E9F4] text-[#01058A];
+}
+
+.Prompt .ant-radio-button-wrapper:nth-child(3) {
+  @apply opacity-50;
+}
+
+.Prompt .ant-radio-button-wrapper:not(:first-child)::before {
+  @apply hidden;
+}
+
+.Prompt
+  .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
+  @apply bg-[#4AC1FF] font-bold border-none;
+}
+
+.Prompt .ant-select-selector {
+  @apply !h-full items-center;
+}
+
+.Prompt
+  .ant-radio-button-wrapper-checked:not(
+    .ant-radio-button-wrapper-disabled
+  ):hover {
+  @apply hover:bg-[#4ac1ff];
+}

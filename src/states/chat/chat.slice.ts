@@ -5,11 +5,12 @@ import {
 } from '@/repository/buildChatBot';
 import { LOADING_TEXT } from '@/constants';
 import { createSessionChatTransaction } from '@/repository/chat';
+import uuid from 'react-uuid';
 
 const initialState: ChatState = {
   chatConversations:[],
   loading: false,
-  session_id: '', 
+  session_id: uuid(), 
   currentBot: {}
 };
 

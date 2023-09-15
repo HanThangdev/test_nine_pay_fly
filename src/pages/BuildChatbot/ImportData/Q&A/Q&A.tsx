@@ -33,19 +33,19 @@ const QuestionAnswer = () => {
         <p className="text-[15px]">
           2 {t('Files', { ns: 'config_bot' })}
           <span className="text-[#A7A7B0]">
-            (40 {t('chars', { ns: 'config_bot' })})
+            (40 {t('tokens', { ns: 'config_bot' })})
           </span>{' '}
           | 2 {t('Links', { ns: 'config_bot' })}
           <span className="text-[#A7A7B0]">
-            (4000 {t('chars', { ns: 'config_bot' })})
+            (4000 {t('tokens', { ns: 'config_bot' })})
           </span>{' '}
           | 1 Q&A
           <span className="text-[#A7A7B0]">
-            (4000 {t('chars', { ns: 'config_bot' })})
+            (4000 {t('tokens', { ns: 'config_bot' })})
           </span>
         </p>
         <p className="text-[15px]">
-          {t('TotalChar', { ns: 'config_bot' })}: 40/400,000{' '}
+          {t('TotalChar', { ns: 'config_bot' })}: 40/10.000.000{' '}
           {t('limit', { ns: 'config_bot' })}
         </p>
       </div>

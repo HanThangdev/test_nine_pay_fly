@@ -23,6 +23,7 @@ import Cookies from 'universal-cookie';
 import { SuccessResponse } from '../type';
 import { objectToQueryString } from '@/utils/utils';
 import { HistoryChat } from '@/states/buildChatBot/type';
+import { notification } from 'antd';
 const FORM_DATA_HEADER = { 'Content-Type': 'multipart/form-data' };
 export const createBotTransaction = createAsyncThunk(
   'transaction/createBotTransaction',
@@ -147,7 +148,11 @@ export const importURLTransaction = createAsyncThunk(
       }
       return data
     } catch (error: any) {
-      console.log(error);
+      if(error){
+        notification.warning({
+          message: "Import url fail",
+        });
+      }
       return rejectWithValue(error.response.data.error);
     }
   },
@@ -168,7 +173,7 @@ export const getAdvanceSettingTransaction = createAsyncThunk(
 );
 
 export const updateAdvanceSettingTransaction = createAsyncThunk(
-  'transaction/AdvanceSettingTransaction',
+  'transaction/updateAdvanceSettingTransaction',
   async (payload: AdvancePayload, { rejectWithValue }) => {
     try {
       const response = await http.put<SuccessResponse<AdvancePayload>>(
@@ -284,6 +289,11 @@ export const uploadFileTransaction = createAsyncThunk(
       }
       return data;
     } catch (error: any) {
+      if(error){
+        notification.warning({
+          message: "Import file fail",
+        });
+      }
       console.log(error);
       return rejectWithValue(error.response.data.error);
     }

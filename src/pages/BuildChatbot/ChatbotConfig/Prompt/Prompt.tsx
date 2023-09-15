@@ -1,11 +1,18 @@
 import classNames from 'classnames';
 import IconPrompt from '@/components/IconPrompt/IconPrompt';
 import { AiOutlineQuestionCircle } from 'react-icons/ai';
-import { Slider, Switch, Tooltip } from 'antd';
+import { Radio, Slider, Switch, Tooltip } from 'antd';
 import React from 'react';
 import { AiOutlineCaretRight, AiOutlineCaretDown } from 'react-icons/ai';
 import { RiDeleteBinLine } from 'react-icons/ri';
 import { useTranslation } from 'react-i18next';
+import { PROMPT_EXAM } from '@/constants';
+
+const optionsModal = [
+  { label: 'GPT - 3.5', value: 'GPT - 3.5' },
+  { label: 'GPT - 3.5 - 16k', value: 'GPT - 3.5 - 16k' },
+  { label: 'GPT - 4.0', value: 'GPT - 4.0', disabled: true },
+];
 
 interface PromptProps {
   creativity: number;
@@ -19,6 +26,9 @@ interface PromptProps {
 
   value: string;
   setValue: (newValue: string) => void;
+
+  model: string;
+  setModel: (value: string) => void;
 }
 
 const Prompt: React.FC<PromptProps> = ({
@@ -30,6 +40,8 @@ const Prompt: React.FC<PromptProps> = ({
   setRules,
   value,
   setValue,
+  model,
+  setModel,
 }) => {
   const { t } = useTranslation();
   const addItem = () => {
@@ -54,11 +66,37 @@ const Prompt: React.FC<PromptProps> = ({
         <IconPrompt />
         {t('Prompt', { ns: 'config_bot' })}
         <span className="mt-[2px]">
-            <AiOutlineCaretRight size={18} color="black" className={`${dropdownOpen && 'rotate-90'} transition-all`}/>
+          <AiOutlineCaretRight
+            size={18}
+            color="black"
+            className={`${dropdownOpen && 'rotate-90'} transition-all`}
+          />
         </span>
       </h2>
       {dropdownOpen && (
         <>
+          <div className="text-[15px] mt-[16px]">
+            <p className="flex gap-x-[10px] font-bold items-center">
+              {t('Model', { ns: 'config_bot' })}
+              <Tooltip
+                color="#212121"
+                placement="rightTop"
+                overlayStyle={{ whiteSpace: 'pre-line', width: '400px' }}
+                title={t('tooltipModel', { ns: 'config_bot' })}
+              >
+                <AiOutlineQuestionCircle size={18} color="#E77964" />
+              </Tooltip>
+            </p>
+            <div className="mt-[13px]">
+              <Radio.Group
+                options={optionsModal}
+                onChange={(e) => setModel(e.target.value)}
+                value={model}
+                optionType="button"
+                buttonStyle="solid"
+              />
+            </div>
+          </div>
           <div className="flex items-center justify-between">
             <p className="mt-[12px] text-[15px] text-[#A7A7B0]">
               {t('Guiding', { ns: 'config_bot' })}
@@ -67,6 +105,7 @@ const Prompt: React.FC<PromptProps> = ({
               {t('PromptEx', { ns: 'config_bot' })}
             </button>
           </div>
+
           <div className="text-[15px] mt-[16px]">
             <p className="w-[240px] flex gap-x-[10px] font-bold items-center">
               {t('Base', { ns: 'config_bot' })}

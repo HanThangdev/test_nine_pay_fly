@@ -60,7 +60,7 @@
   "IncludedLinks": "Liên kết đi kèm",
   "IncludedSource": "Các nguồn đi kèm",
   "Links": "Liên kết",
-  "tokens": "từ khóa",
+  "tokens": "Từ",
   "TotalToken": "Tổng số từ khóa được phát hiện",
   "limit": "giới hạn",
   "Import": "Nhập",
@@ -111,5 +111,6 @@
   "Website": "Trang mạng",
   "Q&A": "Q&A",
   "Update": "Cập nhập",
-  "Create": "Tạo"
+  "Create": "Tạo",
+  "file_large_msg": "File quá lớn, vui lòng chọn file dưới 25MB"
 }

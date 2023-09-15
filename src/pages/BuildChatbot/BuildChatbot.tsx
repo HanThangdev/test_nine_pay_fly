@@ -24,7 +24,7 @@ import { useParams } from 'react-router-dom';
 const urlParams = new URLSearchParams(window.location.search);
 const getLanguageFromURL = urlParams.get('language');
 const BuildChatbot = () => {
-  const { data, activeTab, onCreateSession } = useBuildChatbot();
+  const { data, activeTab } = useBuildChatbot();
   const { t } = useTranslation();
   const lang = getLanguageFromURL || localStorage.getItem('LANGUAGE') || 'en';
   const { id } = useParams();
@@ -80,7 +80,6 @@ const BuildChatbot = () => {
     if (id) {
       dispatch(getBotInfoTransaction({ bot_id: id || '' }));
     }
-    onCreateSession();
   }, []);
 
   const listTab = useMemo(() => {

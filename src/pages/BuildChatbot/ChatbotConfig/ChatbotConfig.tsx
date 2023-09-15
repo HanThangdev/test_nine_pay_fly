@@ -187,8 +187,6 @@ const ChatbotConfig = () => {
         setBotName={setBotName}
         caseStudy={caseStudy}
         setCaseStudy={setCaseStudy}
-        model={model}
-        setModel={setModel}
         visibility={visibility}
         setVisibility={setVisibility}
         options={options}
@@ -198,6 +196,8 @@ const ChatbotConfig = () => {
         conversationTone={conversationTone}
       />
       <Prompt
+        model={model}
+        setModel={setModel}
         creativity={creativity}
         setCreativity={setCreativity}
         dropdownOpen={dropdownOpen}

@@ -188,7 +188,7 @@ class InteractiveChatbox {
       _0x87ee9f += _0xf89358(0x92) + _0x311038[0x0] + '</div>';
       if (_0x311038[0x1])
         _0x87ee9f +=
-          '<div\x20class=\x22messages__item\x20messages__item--visitor\x22>' +
+          '<div\x20class=\x22messages__item\x20messages__item--visitor\x22\x20style=\x22white-space:\x20pre-wrap\x22>' +
           _0x311038[0x1] +
           '</div>';
       else _0x87ee9f += _0xf89358(0x7d);
