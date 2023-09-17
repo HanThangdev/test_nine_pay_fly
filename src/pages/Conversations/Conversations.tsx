@@ -221,7 +221,7 @@ const Conversations = () => {
                   </div>
                   <div className="flex justify-between gap-x-4 text-[20px] text-[#33343D]">
                     <p className="mb-0 w-[85%]">
-                      Initial message:{' '}
+                      {t('InitialConv', { ns: 'config_bot' })}:{' '}
                       {conversation.chat_history_response[0].content}
                     </p>
                     <p className="flex items-end">

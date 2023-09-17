@@ -30,22 +30,22 @@ const ChatbotConfig = () => {
   const options = [
     {
       value: '2',
-      label: 'Customer Support',
+      label: `${t('Customer', { ns: 'config_bot' })}`,
       prompt: 'customer_support_prompt',
     },
     {
       value: '3',
-      label: 'Knowledge Management',
+      label: `${t('Knowledge', { ns: 'config_bot' })}`,
       prompt: 'knowledge_management_prompt',
     },
     {
       value: '4',
-      label: 'Teaching Education',
+      label: `${t('Teaching', { ns: 'config_bot' })}`,
       prompt: 'teaching_assistant_prompt',
     },
     {
       value: '1',
-      label: 'Other',
+      label: `${t('Other', { ns: 'config_bot' })}`,
       prompt: 'default_prompt',
     },
   ];
@@ -66,7 +66,7 @@ const ChatbotConfig = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [rules, setRules] = useState<Array<string>>(['']);
   const [promptExample, setPromptExample] = useState(
-    'I want you to act as a customer service consultant of the business below. You will come up with your answers from the context and questions below, full citation of reference materials. Your answers should be clear, concise, and aim to address any issues or concerns they may have. The tone of the response will be professional. If you don\'t know the answer, you can use phrases like "Let me check for you" or "I\'d be happy to look into that for you." Never break character.',
+    `${t('PromptExample', { ns: 'config_bot' })}`,
   );
 
   // CollectCustomer variables

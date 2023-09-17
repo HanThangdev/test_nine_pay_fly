@@ -68,7 +68,11 @@ const CollectCustomer: React.FC<CollectCustomerProps> = ({
         </div>
         <button
           onClick={() =>
-            custom.length < 2 && setCustom([...custom, { key: 'Custom field' }])
+            custom.length < 2 &&
+            setCustom([
+              ...custom,
+              { key: `${t('CustomField', { ns: 'config_bot' })}` },
+            ])
           }
           className="w-[150px] h-[43px] bg-[#E8E9F4] text-[#01058A] rounded-[10px] text-[14px] font-bold justify-cente"
         >

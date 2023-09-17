@@ -111,9 +111,6 @@ const Files = () => {
           <p className="text-[#A7A7B0] text-[15px] mb-0">
             {t('Drag', { ns: 'config_bot' })}
           </p>
-          <p className="text-[#A7A7B0] text-[15px]">
-            {t('support', { ns: 'config_bot' })}
-          </p>
         </Upload.Dragger>
       </div>
       {!isEmptyObjectOrArray(listFileWaitingImport) &&

@@ -36,7 +36,6 @@ const Website = () => {
       return;
     }
 
-   
     try {
       if (scrapeType == SCRAPE_TYPE.FULL_PAGE) {
         setLoadingFullPage(true);
@@ -73,11 +72,11 @@ const Website = () => {
         scrape_type: scrapeType,
       };
 
-
       await onStreamingUploadUrl(importUrlPayload).then((response) => {
         if (response.meta.requestStatus === API_STATUS.FULFILLED) {
-          onGetAllUrl({bot_id: id})
-        }})
+          onGetAllUrl({ bot_id: id });
+        }
+      });
     } catch (error: any) {
       notification.error({
         message: error?.response?.data.errors ?? error?.message,
@@ -151,7 +150,9 @@ const Website = () => {
       </div>
       <div className="flex justify-between gap-x-3 my-6 items-center">
         <div className="bg-[#E7E8F2] h-[1px] w-full"></div>
-        <span className="font-bold">{t('OR', { ns: 'config_bot' })}</span>
+        <span className="font-bold min-w-fit">
+          {t('OR', { ns: 'config_bot' })}
+        </span>
         <div className="bg-[#E7E8F2] h-[1px] w-full"></div>
       </div>
 
@@ -210,7 +211,7 @@ const Website = () => {
           {t('IncludedSource', { ns: 'config_bot' })}:
         </p>
         <p className="text-[15px]">
-          {listLink.length} Links
+          {listLink.length} {t('Links', { ns: 'config_bot' })}
           <span className="text-[#A7A7B0]">
             ({formatNumber(totalTokens)} {t('tokens', { ns: 'config_bot' })})
           </span>
