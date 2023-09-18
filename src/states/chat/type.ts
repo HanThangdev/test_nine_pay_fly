@@ -6,6 +6,7 @@ export interface ChatState {
   currentBot: any;
   isCollectedCustomer: boolean;
   theme: boolean;
+  isSendedInitialMessage: boolean;
 }
 
 export interface HistoryChat {

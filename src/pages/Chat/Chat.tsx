@@ -1,11 +1,6 @@
 import { useTranslation } from 'react-i18next';
-import { notification } from 'antd';
-import {
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { Tooltip, notification } from 'antd';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { AiFillRightCircle } from 'react-icons/ai';
 import { convertStringToParagraphs } from '@/utils/format';
 import { HistoryChat } from '@/states/chat/type';
@@ -24,11 +19,10 @@ import {
 } from '@/states/chat/chat.slice';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/states/store';
-import { TfiReload } from 'react-icons/tfi';
+import { TfiHeadphone, TfiReload } from 'react-icons/tfi';
 import { PiSunDimLight } from 'react-icons/pi';
 import { MdOutlineDarkMode } from 'react-icons/md';
-import FormCollectCustomer from '@/components/formCollectCustomer';
-
+// import FormCollectCustomer from '@/components/formCollectCustomer';
 
 const Chat = () => {
   const { t } = useTranslation();
@@ -44,7 +38,6 @@ const Chat = () => {
     onStreamingConversation,
     chatConversations,
     session_id,
-    isCollectedCustomer,
     theme
   } = useConversationsChatbot();
   const { onGetInfoCurrentBot, data, onGetAdvanceSetting, advanceSetting } =
@@ -89,8 +82,8 @@ const Chat = () => {
   };
 
   const onToogleTheme = () => {
-    dispatch(toogleTheme())
-  }
+    dispatch(toogleTheme(!theme));
+  };
 
   useEffect(() => {
     if (idBot) {
@@ -107,7 +100,9 @@ const Chat = () => {
           content: advanceSetting.initial_message,
         }),
       );
+      dispatch(toogleTheme(advanceSetting.theme === "dark" ? false : true));
     }
+    
   }, [advanceSetting]);
 
   useEffect(() => {
@@ -177,7 +172,13 @@ const Chat = () => {
   };
 
   return (
-    <div className={`flex-1 p:2 sm:p-6 justify-between flex flex-col h-screen ${advanceSetting?.theme === 'dark' && theme ? "bg-different text-white" : "bg-white"}`}>
+    <div
+      className={`flex-1 p:2 sm:p-6 justify-between flex flex-col h-screen ${
+         !theme
+          ? 'bg-different text-white'
+          : 'bg-[#fafafd]'
+      }`}
+    >
       <div className="flex sm:items-center justify-between py-3 border-b-2 border-gray-200 ">
         <div className="relative flex items-center space-x-4">
           <div className="relative">
@@ -218,7 +219,7 @@ const Chat = () => {
             type="button"
             className="inline-flex cursor-pointer items-center justify-center rounded-lg border h-10 w-10 transition duration-500 ease-in-out hover:bg-gray-300 focus:outline-none"
           >
-            {advanceSetting?.theme === 'dark' && theme ? (
+            {!theme ? (
               <PiSunDimLight size={25} />
             ) : (
               <MdOutlineDarkMode size={25} />
@@ -235,21 +236,23 @@ const Chat = () => {
           chatConversations.map((message, index) =>
             getDivForResponse(index, message),
           )}
-        {!!(chatConversations.filter((item) => item.sender_type == 'user')
+        {/* {!!(chatConversations.filter((item) => item.sender_type == 'user')
           .length >= (advanceSetting?.auto_show_initial_message_after || 0)) && 
           !!advanceSetting?.auto_show_initial_message_after &&
-          isCollectedCustomer && <FormCollectCustomer field={data.collect_customer_info}/>}
+          isCollectedCustomer && <FormCollectCustomer field={data.collect_customer_info}/>} */}
       </div>
-      <div className="flex gap-x-3 pb-2 pt-2 text-black">
+      <div className="flex gap-x-3 pb-2 pt-2 text-black overflow-x-auto">
         {!isEmptyObjectOrArray(advanceSetting?.suggest_messages) &&
           advanceSetting?.suggest_messages.map((it, index) => (
-            <button
-              key={index}
-              className="bg-[#F1F7FF] p-2 rounded-lg w-fit"
-              onClick={() => onSendMessage(it)}
-            >
-              {it}
-            </button>
+            <Tooltip title={it}>
+              <button
+                key={index}
+                className="bg-[#F1F7FF] p-2 rounded-lg truncate"
+                onClick={() => onSendMessage(it)}
+              >
+                {it}
+              </button>
+            </Tooltip>
           ))}
       </div>
       <div className="border-t-2 border-gray-200 pt-4 mb-2 sm:mb-0 ">

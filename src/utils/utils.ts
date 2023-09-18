@@ -75,6 +75,7 @@ export function convertCustomValue(obj: any): Array<{ key: string }> {
 export function hasDuplicateFiles(file: File, listFiles: File[]): boolean {
   return listFiles.some((existingFile) => existingFile.name === file.name); // No duplicates found
 }
+
 export function downloadPDFFromString(pdfString: string, fileName: string) {
   // Convert binary content to a Blob
   const byteArray = Uint8Array.from(pdfString, (char) => char.charCodeAt(0));
@@ -95,4 +96,18 @@ export function downloadPDFFromString(pdfString: string, fileName: string) {
   // Clean up
   URL.revokeObjectURL(blobUrl);
   document.body.removeChild(a);
+}
+
+export function removeDuplicates<T>(arr: T[]): T[] {
+  const uniqueValues: Record<string, boolean> = {};
+  const result: T[] = [];
+
+  for (const item of arr) {
+    if (!uniqueValues[item as any]) {
+      uniqueValues[item as any] = true;
+      result.push(item);
+    }
+  }
+
+  return result;
 }

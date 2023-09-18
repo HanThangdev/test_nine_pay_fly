@@ -45,7 +45,7 @@ const QuestionAnswer = () => {
           </span>
         </p>
         <p className="text-[15px]">
-          {t('TotalChar', { ns: 'config_bot' })}: 40/10.000.000{' '}
+          {t('TotalTokens', { ns: 'config_bot' })}: 40/10.000.000{' '}
           {t('limit', { ns: 'config_bot' })}
         </p>
       </div>

@@ -1,3 +1,4 @@
+import { Tooltip } from 'antd';
 import classNames from 'classnames';
 import { AiFillRightCircle } from 'react-icons/ai';
 import { TfiReload } from 'react-icons/tfi';
@@ -27,7 +28,7 @@ const Interface = ({ dataInterface }: Props) => {
           className={classNames(
             'rounded-[8px] border-[10px] border-[rgb(220,222,237)] h-[654px] relative',
             {
-              'bg-[#111827]': dataInterface.theme === 'dark',
+              'bg-different': dataInterface.theme === 'dark',
             },
           )}
         >
@@ -78,12 +79,14 @@ const Interface = ({ dataInterface }: Props) => {
               </p>
             </div>
           </div>
-          <div className="absolute bottom-[62px] flex gap-x-3 p-2">
+          <div className="absolute bottom-[62px] flex gap-x-3 p-2 overflow-x-auto w-full">
             {dataInterface.suggest_messages?.map((item, index) => (
-              <p key={index} className="bg-[#F1F7FF] mb-0 p-2 rounded-lg w-fit">
-                {' '}
-                {item}
-              </p>
+              <Tooltip title={item}>
+                <p key={index} className="bg-[#F1F7FF] mb-0 p-2 rounded-lg truncate">
+                  {' '}
+                  {item}
+                </p>
+              </Tooltip>
             ))}
           </div>
           <div className="absolute h-[62px] flex gap-x-[12px] bottom-0 w-full items-center border-t-[1px] border-[#E7E8F2] p-2">

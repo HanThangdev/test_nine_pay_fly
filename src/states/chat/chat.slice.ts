@@ -13,6 +13,7 @@ const initialState: ChatState = {
   session_id: uuid(), 
   currentBot: {},
   isCollectedCustomer: true,
+  isSendedInitialMessage: true,
   theme: true
 };
 
@@ -41,8 +42,11 @@ export const chatSlice = createSlice({
     setCloseFormCollect: (state) => {
       state.isCollectedCustomer = false;
     },
-    toogleTheme: (state) => {
-      state.theme = !state.theme;
+    toogleTheme: (state, action) => {
+      state.theme = action.payload;
+    },
+    setIsSendedInitialMessage: (state) => {
+      state.isSendedInitialMessage = false;
     },
   },
   extraReducers: (builder) => {
@@ -93,7 +97,8 @@ export const {
   resetConversations,
   setCloseFormCollect,
   setCollectedInfoSuccess,
-  toogleTheme
+  toogleTheme,
+  setIsSendedInitialMessage
 } = chatSlice.actions;
 
 export default chatSlice.reducer;

@@ -22,6 +22,7 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/states/store';
 import { convertFile2Base64 } from '@/utils/utils';
 import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 
 const optionsAlign = [
   {
@@ -40,6 +41,7 @@ interface Props {
 
 const SetInterface = ({ dataSetinterface }: Props) => {
   const { t } = useTranslation();
+  const { id } = useParams();
   const dispatch = useDispatch<AppDispatch>();
   const resultRef = useRef<any>(null);
   const resultRefButton = useRef<any>(null);
@@ -166,7 +168,7 @@ const SetInterface = ({ dataSetinterface }: Props) => {
 
   const getAdvance = async () => {
     const res: any = await dispatch(
-      getAdvanceSettingTransaction({ bot_id: data.id }),
+      getAdvanceSettingTransaction({ bot_id: data?.id || id}),
     );
 
     if (res.payload.data.theme) {
@@ -251,7 +253,7 @@ const SetInterface = ({ dataSetinterface }: Props) => {
             {t('EnterEach', { ns: 'config_bot' })}
           </p>
         </div>
-        <div className="text-[15px]">
+        {/* <div className="text-[15px]">
           <p className="font-bold mb-[8px]">
             {t('AutoShow', { ns: 'config_bot' })}
           </p>
@@ -269,7 +271,7 @@ const SetInterface = ({ dataSetinterface }: Props) => {
               })
             }
           />
-        </div>
+        </div> */}
         <div className="text-[15px]">
           <p className="font-bold mb-[8px]">
             {t('SuggesttedMess', { ns: 'config_bot' })}

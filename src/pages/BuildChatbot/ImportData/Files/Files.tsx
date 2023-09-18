@@ -177,7 +177,7 @@ const Files = () => {
           </span>
         </p>
         <p className="text-[15px] font-bold">
-          {t('TotalChar', { ns: 'config_bot' })}: {formatNumber(totalTokens)}/10.000.000{' '}
+          {t('TotalTokens', { ns: 'config_bot' })}: {formatNumber(totalTokens)}/10.000.000{' '}
           {t('limit', { ns: 'config_bot' })}
         </p>
       </div>

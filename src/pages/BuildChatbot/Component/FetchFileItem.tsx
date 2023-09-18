@@ -57,9 +57,9 @@ const FetchFileItem = ({ item, index }: FetchFileItemProps) => {
   return (
     <div className="flex justify-between gap-x-[21px] mb-[20px]">
       <div className="flex justify-between mt-[15px] w-full">
-        <div className="w-full font-bold text-[17px]">{item.filename}</div>
+        <div className="w-full text-[17px]">{item.filename}</div>
         <div className="text-[15px] flex items-center justify-end w-full">
-          <span className="text-[#A7A7B0 mr-[48px] font-bold text-[16px]">
+          <span className="text-[#A7A7B0 mr-[48px] font-bold text-[15px]">
             ({formatNumber(item.num_token)} {t('tokens', { ns: 'config_bot' })})
           </span>
           <RiDeleteBinLine

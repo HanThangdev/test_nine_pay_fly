@@ -1,25 +1,33 @@
 import ModalComponent from '@/components/Modal';
 import { API_STATUS } from '@/constants';
-import { deleteURLTransaction, getAllURLTransaction } from '@/repository/buildChatBot';
+import {
+  deleteURLTransaction,
+  getAllURLTransaction,
+} from '@/repository/buildChatBot';
 import { useBuildChatbot } from '@/states/buildChatBot/buildChatBot.selector';
 import { deletedListIncludes } from '@/states/buildChatBot/buildChatBot.slice';
 import { DataFetchLink } from '@/states/buildChatBot/type';
 import { AppDispatch, RootState } from '@/states/store';
-import { notification } from 'antd';
-import { useState } from 'react';
+import { Checkbox, notification } from 'antd';
+import { CheckboxChangeEvent } from 'antd/es/checkbox';
+import { Dispatch, SetStateAction, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { RiDeleteBinLine } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
 
 interface FetchLinkItemProps {
   item: DataFetchLink;
-  index: number
+  index: number;
+  setUrlSelected: Dispatch<SetStateAction<string[]>>
+  urlSelected: string[]
 }
 
-const FetchLinkItem = ({ item, index }: FetchLinkItemProps) => {
+const FetchLinkItem = ({ item, index, setUrlSelected, urlSelected }: FetchLinkItemProps) => {
+  const { t } = useTranslation();
   const [visibleDeleteModal, setVisibleDeleteModal] = useState<boolean>(false);
   const { data } = useSelector((state: RootState) => state.buildChatBot);
   const dispatch = useDispatch<AppDispatch>();
-  const { onGetAllUrl } = useBuildChatbot()
+  const { onGetAllUrl } = useBuildChatbot();
   const deleteUrl = async () => {
     if (!data) {
       return;
@@ -34,11 +42,11 @@ const FetchLinkItem = ({ item, index }: FetchLinkItemProps) => {
         return;
       }
 
-      dispatch(deletedListIncludes(index))
+      dispatch(deletedListIncludes(index));
       notification.success({
         message: 'Delete URL success',
       });
-      onGetAllUrl({ bot_id: id })
+      onGetAllUrl({ bot_id: id });
       // await dispatch(
       //   getAllURLTransaction({ bot_id: id}),
       // );
@@ -46,10 +54,19 @@ const FetchLinkItem = ({ item, index }: FetchLinkItemProps) => {
       notification.error({
         message: error?.response?.data.errors ?? error?.message,
       });
-    } finally{
-      setVisibleDeleteModal(false)
+    } finally {
+      setVisibleDeleteModal(false);
     }
   };
+
+  // const onChangeSelectedUrl = (e: CheckboxChangeEvent) => {
+  //   if(urlSelected.includes(e.target.value)){
+  //     const currentUrlSelected = Array.from(urlSelected)
+  //     setUrlSelected(currentUrlSelected.filter((item) => item !== e.target.value))
+  //   } else{
+  //     setUrlSelected([...urlSelected, e.target.value])
+  //   }
+  // } 
 
   return (
     <div className="flex justify-between gap-x-[21px] mb-[20px]">
@@ -57,10 +74,10 @@ const FetchLinkItem = ({ item, index }: FetchLinkItemProps) => {
         disabled
         type="text"
         value={item.url}
-        className="h-[41px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
+        className="h-[41px] w-full  bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
       />
       <div className="flex justify-between w-[150px] items-center">
-        <p className="mb-0">{item.num_token}</p>
+        <p className="mb-0 font-bold">{item.num_token} {t('tokens', { ns: 'config_bot' })}</p>
         <RiDeleteBinLine
           size={18}
           className="cursor-pointer"
@@ -69,6 +86,10 @@ const FetchLinkItem = ({ item, index }: FetchLinkItemProps) => {
             setVisibleDeleteModal(true);
           }}
         />
+        {/* <div className="text-success-color font-bold">Done</div>
+        <div className="">
+          <Checkbox onChange={onChangeSelectedUrl} value={item.url} checked={urlSelected.includes(item.url)}/>
+        </div> */}
       </div>
       <ModalComponent
         title={<div>Delete this Url</div>}
