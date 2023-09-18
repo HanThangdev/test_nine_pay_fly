@@ -27,19 +27,7 @@ const initialState: BuildChatBotState = {
   loadingFetchLink: false,
   loadingFetchFile: false,
   loadingChat: false,
-  advanceSetting: {
-    align_chat_bubble_button: '',
-    auto_show_initial_message_after: 0,
-    bot_avatar_url: '',
-    bot_id: '',
-    chat_bubble_button_color: '',
-    chat_icon_url: '',
-    chat_message_color: '',
-    display_name: '',
-    initial_message: '',
-    suggest_messages: [],
-    theme: '',
-  },
+  advanceSetting: null,
   fetchLink: {
     num_token: null,
     progress: 0,
@@ -222,6 +210,7 @@ export const buildChatbotSlice = createSlice({
     // start getBotInfoTransaction
 
     builder.addCase(getBotInfoTransaction.pending, (state) => {
+      state.data=null
       state.loading = true;
     });
     builder.addCase(getBotInfoTransaction.fulfilled, (state, action) => {
@@ -267,7 +256,9 @@ export const buildChatbotSlice = createSlice({
 
     // start getAdvanceSettingTransaction
 
-    builder.addCase(getAdvanceSettingTransaction.pending, (state) => state);
+    builder.addCase(getAdvanceSettingTransaction.pending, (state) => {
+      state.advanceSetting = null
+    });
     builder.addCase(
       getAdvanceSettingTransaction.fulfilled,
       (state, action: any) => {

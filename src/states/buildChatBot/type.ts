@@ -13,7 +13,7 @@ export interface BuildChatBotState {
   loadingFetchFile: boolean;
   listIncludesFile: DataFetchFile[],
   fetchFile: DataFetchFile;
-  advanceSetting: AdvancePayload;
+  advanceSetting: AdvancePayload | null;
 }
 
 export interface DataFetchLink {

@@ -4,20 +4,20 @@ import { AppDispatch, RootState } from '../store';
 import { HistoryChat } from './type';
 import { createSessionChatTransaction, getChatStreamingTransaction } from '@/repository/chat';
 import { GetConversationStreamingRequest } from '@/repository/chat/type';
-import { setGenerateChatIntoListConversation, setNewChatIntoListConversation } from './chat.slice';
+import { setConversationsWhenBotReply, setNewMessageIntoListConversation } from './chat.slice';
 
 export const useConversationsChatbot = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { chatConversations, session_id } = useSelector((state: RootState) => state.chat, shallowEqual);
+  const { chatConversations, session_id, isCollectedCustomer, theme } = useSelector((state: RootState) => state.chat, shallowEqual);
   const onStreamingConversation = useCallback(
     async (payload: GetConversationStreamingRequest) => {
       const { message } = payload
-      dispatch(setNewChatIntoListConversation({
+      dispatch(setNewMessageIntoListConversation({
         sender_type:"user",
         content: message
       }))
       const callBack = (data: HistoryChat) => {
-        dispatch(setGenerateChatIntoListConversation(data))
+        dispatch(setConversationsWhenBotReply(data))
       }
        await dispatch(getChatStreamingTransaction({payload, callBack}));
     },
@@ -35,6 +35,8 @@ export const useConversationsChatbot = () => {
     chatConversations,
     onStreamingConversation,
     onCreateSessionChat,
-    session_id
+    session_id,
+    isCollectedCustomer,
+    theme
   };
 };
