@@ -1,9 +1,9 @@
 {
   "PricingPlans": "プランと料金",
-  "Monthly": "Monthly billing",
-  "Yearly": "Yearly billing",
+  "Monthly": "月額課金",
+  "Yearly": "年間請求",
   "month": "月",
-  "year": "year",
+  "year": "年",
   "SignedIn": "ログイン済み",
   "Subscribe": "購入",
   "Free": {

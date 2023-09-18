@@ -28,7 +28,7 @@ const Integration = () => {
               onClick={() => setOpenModal(true)}
               className={classNames(
                 'mb-0 w-full h-[55px] gap-x-4 bg-[#E8E9F4] flex items-center justify-center',
-                'text-[20px] text-[#01058A] font-bold rounded-[5px] hover:cursor-pointer hover:scale-105 duration-500 transition-all',
+                'text-[20px] text-[#01058A] rounded-[5px] hover:cursor-pointer hover:scale-105 duration-500 transition-all',
               )}
             >
               <IconSite />
@@ -37,29 +37,38 @@ const Integration = () => {
             <p
               className={classNames(
                 'mb-0 w-full h-[55px] gap-x-4 bg-[#E8E9F4] flex items-center justify-center',
-                'text-[20px] text-[#01058A] font-bold rounded-[5px] hover:cursor-pointer hover:scale-105 duration-500 transition-all',
+                'text-[20px] text-[#01058A] rounded-[5px] hover:cursor-pointer hover:scale-105 duration-500 transition-all',
               )}
             >
               <IconSlack />
-              {t('addSlack', { ns: 'config_bot' })}
+              {t('addSlack', { ns: 'config_bot' })}{' '}
+              <span className="font-bold">
+                {t('coming', { ns: 'config_bot' })}
+              </span>
             </p>
             <picture
               className={classNames(
                 'mb-0 w-full h-[55px] gap-x-4 bg-[#E8E9F4] flex items-center justify-center',
-                'text-[20px] text-[#01058A] font-bold rounded-[5px] hover:cursor-pointer hover:scale-105 duration-500 transition-all',
+                'text-[20px] text-[#01058A] rounded-[5px] hover:cursor-pointer hover:scale-105 duration-500 transition-all',
               )}
             >
               <IconTeams />
-              {t('addTeam', { ns: 'config_bot' })}
+              {t('addTeam', { ns: 'config_bot' })}{' '}
+              <span className="font-bold">
+                {t('coming', { ns: 'config_bot' })}
+              </span>
             </picture>
             <p
               className={classNames(
                 'mb-0 w-full h-[55px] gap-x-4 bg-[#E8E9F4] flex items-center justify-center',
-                'text-[20px] text-[#01058A] font-bold rounded-[5px] hover:cursor-pointer hover:scale-105 duration-500 transition-all',
+                'text-[20px] text-[#01058A] rounded-[5px] hover:cursor-pointer hover:scale-105 duration-500 transition-all',
               )}
             >
               <IconMess />
-              {t('addMess', { ns: 'config_bot' })}
+              {t('addMess', { ns: 'config_bot' })}{' '}
+              <span className="font-bold">
+                {t('coming', { ns: 'config_bot' })}
+              </span>
             </p>
           </div>
         </div>
