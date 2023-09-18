@@ -171,6 +171,10 @@ span.flatpickr-weekday,
   background-image: url(./images/icon/icon-arrow-down.svg);
 }
 
+.bg-different {
+  background: linear-gradient(235deg, #1f203d 0%, #323353 0.01%, #181930 100%);
+}
+
 [x-cloak] {
   display: none !important;
 }

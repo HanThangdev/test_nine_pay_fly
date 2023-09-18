@@ -44,6 +44,7 @@ module.exports = {
       success: '#219653',
       danger: '#D34053',
       warning: '#FFA70B',
+      '--tw-gradient-stops': 'gradient(circle at 10% 20%, rgb(69, 86, 102) 0%, rgb(34, 34, 34) 90%);',
       'spinner-color': 'rgba(0, 0, 0, 0.3);',
     },
     screens: {
@@ -53,6 +54,8 @@ module.exports = {
       ...defaultTheme.screens,
     },
     extend: {
+      backgroundColor: ['dark'],
+      textColor: ['dark'],
       fontSize: {
         'title-xxl': ['44px', '55px'],
         'title-xl': ['36px', '45px'],

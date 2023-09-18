@@ -11,23 +11,38 @@ const initialState: ChatState = {
   chatConversations:[],
   loading: false,
   session_id: uuid(), 
-  currentBot: {}
+  currentBot: {},
+  isCollectedCustomer: true,
+  theme: true
 };
 
 export const chatSlice = createSlice({
   name: 'chat',
   initialState,
   reducers: {
-    setGenerateChatIntoListConversation: (state, action) => {
+    setConversationsWhenBotReply: (state, action) => {
       const newConversation = Array.from(state.chatConversations).splice(
         0,
         state.chatConversations.length - 1,
       );
       state.chatConversations = [...newConversation, action.payload];
     },
-    setNewChatIntoListConversation: (state, action) => {
+    setNewMessageIntoListConversation: (state, action) => {
       const newConversation = Array.from(state.chatConversations);
       state.chatConversations = [...newConversation, action.payload];
+    },
+    resetConversations: (state) => {
+      state.session_id= uuid();
+      state.chatConversations = [];
+    },
+    setCollectedInfoSuccess: (state) => {
+      state.isCollectedCustomer = false;
+    },
+    setCloseFormCollect: (state) => {
+      state.isCollectedCustomer = false;
+    },
+    toogleTheme: (state) => {
+      state.theme = !state.theme;
     },
   },
   extraReducers: (builder) => {
@@ -73,8 +88,12 @@ export const chatSlice = createSlice({
 });
 
 export const {
-  setGenerateChatIntoListConversation,
-  setNewChatIntoListConversation
+  setConversationsWhenBotReply,
+  setNewMessageIntoListConversation,
+  resetConversations,
+  setCloseFormCollect,
+  setCollectedInfoSuccess,
+  toogleTheme
 } = chatSlice.actions;
 
 export default chatSlice.reducer;
