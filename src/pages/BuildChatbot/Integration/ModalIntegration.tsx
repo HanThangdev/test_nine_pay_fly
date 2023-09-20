@@ -3,7 +3,6 @@ import { useBuildChatbot } from '@/states/buildChatBot/buildChatBot.selector';
 import { Modal } from 'antd';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import Cookies from 'universal-cookie';
 interface Props {
   open?: boolean;
   onClose: () => void;
@@ -12,16 +11,11 @@ interface Props {
 export default function ModalIntegration({ open, onClose }: Props) {
   const { t } = useTranslation();
 
-  const { data, session_id } = useBuildChatbot();
-  const cookies = new Cookies();
-  const token = cookies.get('access_token');
+  const { data } = useBuildChatbot();
   const codeStringEmbedBubble = `
     <script>
       window.chatbotConfig = {
         bot_id:"${data?.id}",
-        session_id:"${session_id}",
-        user_id:"${data?.user_id}",
-        token:"${token}",
       };
     </script>
     <script src="${window.location.origin}/Chat.js"></script>
