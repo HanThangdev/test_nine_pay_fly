@@ -35,7 +35,7 @@ function _0xa0f2() {
     '80px',
     '<div\x20class=\x22close__button\x22><svg\x20fill=\x22#E04F5F\x22\x20xmlns=\x22http://www.w3.org/2000/svg\x22\x20width=\x2226\x22\x20height=\x2226\x22\x20viewBox=\x220\x200\x2024\x2024\x22>\x20<g>\x20<path\x20fill=\x22none\x22\x20d=\x22M0\x200h24v24H0z\x22/>\x20<path\x20d=\x22M12\x2022C6.477\x2022\x202\x2017.523\x202\x2012S6.477\x202\x2012\x202s10\x204.477\x2010\x2010-4.477\x2010-10\x2010zm0-11.414L9.172\x207.757\x207.757\x209.172\x2010.586\x2012l-2.829\x202.828\x201.415\x201.415L12\x2013.414l2.828\x202.829\x201.415-1.415L13.414\x2012l2.829-2.828-1.415-1.415L12\x2010.586z\x22/>\x20</g>\x20</svg></div>',
     'https://chatfly.co/static/media/logo.ece8dfcb2b9f337ddd55.png',
-    'localhost',
+    'chat',
     '#fff',
     '.chatbox__send--footer',
     'baseUrl',
@@ -366,7 +366,7 @@ class InteractiveChatbox {
       _0x498a77 = _0x2a152c(0x240),
       _0x488ade = _0x2a152c(0x203),
       _0x1f5af1 = window[_0x2a152c(0x26c)][_0x2a152c(0x266)][_0x2a152c(0x257)](
-        'localhost',
+        'chatfly',
       )
         ? _0x488ade
         : _0x498a77,
