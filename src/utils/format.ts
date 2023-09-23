@@ -9,52 +9,93 @@ export function formatTimeAgo(utcTime: Date): string {
   const months = Math.floor(days / 30.44); // Approximate average number of days in a month
   const years = Math.floor(months / 12);
 
+  const urlParams = new URLSearchParams(window.location.search);
+  const getLanguageFromURL = urlParams.get('language');
+  const lang = getLanguageFromURL || localStorage.getItem('LANGUAGE') || 'en';
+
   let formattedTimeAgo: string;
   switch (true) {
     case years >= 1:
-      formattedTimeAgo = `${years} year${years > 1 ? 's' : ''} ago`;
+      formattedTimeAgo = `${years} ${
+        lang === 'en' ? ' year' : lang === 'jp' ? '年' : ' năm'
+      } ${years > 1 ? (lang === 'en' ? 's' : lang === 'jp' ? '間' : '') : ''}${
+        lang === 'en' ? ' ago' : lang === 'jp' ? '前' : ' trước'
+      }`;
       break;
     case months >= 1:
-      formattedTimeAgo = `${months} month${months > 1 ? 's' : ''} ago`;
+      formattedTimeAgo = `${months}  ${
+        lang === 'en' ? ' month' : lang === 'jp' ? '月' : ' tháng'
+      }${months > 1 ? (lang === 'en' ? 's' : lang === 'jp' ? '間' : '') : ''}${
+        lang === 'en' ? ' ago' : lang === 'jp' ? '前' : ' trước'
+      }`;
       break;
     case weeks >= 1:
-      formattedTimeAgo = `${weeks} week${weeks > 1 ? 's' : ''} ago`;
+      formattedTimeAgo = `${weeks} ${
+        lang === 'en' ? ' week' : lang === 'jp' ? '週' : ' tuần'
+      }${weeks > 1 ? (lang === 'en' ? 's' : lang === 'jp' ? '間' : '') : ''}${
+        lang === 'en' ? ' ago' : lang === 'jp' ? '前' : ' trước'
+      }`;
       break;
     case days >= 1:
-      formattedTimeAgo = `${days} day${days > 1 ? 's' : ''} ago`;
+      formattedTimeAgo = `${days} ${
+        lang === 'en' ? ' day' : lang === 'jp' ? '日' : ' ngày'
+      }${days > 1 ? (lang === 'en' ? 's' : lang === 'jp' ? '間' : '') : ''}${
+        lang === 'en' ? ' ago' : lang === 'jp' ? '前' : ' trước'
+      }`;
       break;
     case hours >= 2:
-      formattedTimeAgo = `${hours} hour${hours > 1 ? 's' : ''} ago`;
+      formattedTimeAgo = `${hours} ${
+        lang === 'en' ? ' hour' : lang === 'jp' ? '時' : 'giờ'
+      }${hours > 1 ? (lang === 'en' ? 's' : lang === 'jp' ? '間' : '') : ''}${
+        lang === 'en' ? ' ago' : lang === 'jp' ? '前' : ' trước'
+      }`;
       break;
     case hours >= 1:
-      formattedTimeAgo = 'an hour ago';
+      formattedTimeAgo = `${
+        lang === 'en'
+          ? 'an hour ago'
+          : lang === 'jp'
+          ? '1時間前'
+          : '1 giờ trước'
+      }`;
       break;
     case minutes >= 2:
-      formattedTimeAgo = `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+      formattedTimeAgo = `${minutes} ${
+        lang === 'en' ? 'minute' : lang === 'jp' ? '分' : 'phút'
+      }${minutes > 1 ? (lang === 'en' ? 's' : lang === 'jp' ? '間' : '') : ''}${
+        lang === 'en' ? 'ago' : lang === 'jp' ? '前' : 'trước'
+      }`;
       break;
     case minutes >= 1:
-      formattedTimeAgo = 'a minute ago';
+      formattedTimeAgo = `${
+        lang === 'en'
+          ? 'a minute ago'
+          : lang === 'jp'
+          ? '1分前'
+          : '1 phút trước'
+      }`;
       break;
     default:
-      formattedTimeAgo = 'just now';
+      formattedTimeAgo = `${
+        lang === 'en' ? 'just now' : lang === 'jp' ? '今' : 'ngay bây giờ'
+      }`;
   }
 
   return formattedTimeAgo;
 }
 
-
 export function convertStringToParagraphs(inputString: string) {
   return inputString;
 }
 
-export function formatNumber(number: string | number){
-    number = Number(number).toFixed(0) + '';
-    let x = number.split('.');
-    let x1 = x[0];
-    let x2 = x.length > 1 ? '.' + x[1] : '';
-    var rgx = /(\d+)(\d{3})/;
-    while (rgx.test(x1)) {
-        x1 = x1.replace(rgx, '$1' + '.' + '$2');
-    }
-    return x1 + x2;
+export function formatNumber(number: string | number) {
+  number = Number(number).toFixed(0) + '';
+  let x = number.split('.');
+  let x1 = x[0];
+  let x2 = x.length > 1 ? '.' + x[1] : '';
+  var rgx = /(\d+)(\d{3})/;
+  while (rgx.test(x1)) {
+    x1 = x1.replace(rgx, '$1' + '.' + '$2');
+  }
+  return x1 + x2;
 }
