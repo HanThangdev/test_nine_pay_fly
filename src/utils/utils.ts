@@ -79,8 +79,9 @@ export function hasDuplicateFiles(file: File, listFiles: File[]): boolean {
 export function downloadPDFFromString(pdfString: string, fileName: string) {
   // Convert binary content to a Blob
   const byteArray = Uint8Array.from(pdfString, (char) => char.charCodeAt(0));
-  const blob = new Blob([byteArray], { type: 'application/pdf' });
+  const textDecode =  new TextDecoder("utf-8").decode(byteArray);
 
+  const blob = new Blob([textDecode], { type: 'application/pdf;charset=utf-8' });
   // Create a URL for the Blob
   const blobUrl = URL.createObjectURL(blob);
 

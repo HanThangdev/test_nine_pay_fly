@@ -9,6 +9,7 @@ import {
   getAllURLTransaction,
   getBotInfoTransaction,
   getChatStreamingTransaction,
+  getIncludesResources,
   importURLTransaction,
   updateBotTransaction,
   uploadFileTransaction,
@@ -28,6 +29,7 @@ const initialState: BuildChatBotState = {
   loadingFetchFile: false,
   loadingChat: false,
   advanceSetting: null,
+  includesResource: null,
   fetchLink: {
     num_token: null,
     progress: 0,
@@ -268,6 +270,21 @@ export const buildChatbotSlice = createSlice({
     builder.addCase(getAdvanceSettingTransaction.rejected, (state) => state);
 
     // end getAdvanceSettingTransaction
+
+    // start getIncludesResources
+
+    builder.addCase(getIncludesResources.pending, (state) => {
+      state.includesResource = null
+    });
+    builder.addCase(
+      getIncludesResources.fulfilled,
+      (state, action: any) => {
+        state.includesResource = action.payload.data;
+      },
+    );
+    builder.addCase(getIncludesResources.rejected, (state) => state);
+
+    // end getIncludesResources
   },
 });
 

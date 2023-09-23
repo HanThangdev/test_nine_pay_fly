@@ -18,7 +18,10 @@ export interface ChatHistoriesResponse {
 }
 
 export interface GetConversationPdfPayload {
-  conversation_history_response: GetAllConversationsResponse[];
+  // conversation_history_response: GetAllConversationsResponse[];
   date_from: string;
   date_to: string;
+  bot_id: string;
+  user_id: string;
+  order: string;
 }

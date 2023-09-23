@@ -2,13 +2,13 @@ import { useCallback } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../store';
 import { DataFetchFile, DataFetchLink, GetAdvanceSettingPayload, HistoryChat } from './type';
-import { createSessionTransaction, deleteFileImportedTransaction, deleteURLTransaction, getAdvanceSettingTransaction, getAllFileTransaction, getAllURLTransaction, getBotInfoTransaction, getChatStreamingTransaction, importURLTransaction, uploadFileTransaction } from '@/repository/buildChatBot';
+import { createSessionTransaction, deleteFileImportedTransaction, deleteURLTransaction, getAdvanceSettingTransaction, getAllFileTransaction, getAllURLTransaction, getBotInfoTransaction, getChatStreamingTransaction, getIncludesResources, importURLTransaction, uploadFileTransaction } from '@/repository/buildChatBot';
 import { DeleteFileImportedPayload, DeleteURLPayload, GetAllFilePayload, GetAllURLPayload, GetBotInfoPayload, GetChatStreamingRequest, ImportURLPayload, UploadFilePayload } from '@/repository/buildChatBot/type';
 import { loadFetchFile, loadFetchLink, setGenerateChatIntoListHistory, setNewChatIntoListHistory } from './buildChatBot.slice';
 
 export const useBuildChatbot = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { fetchLink, data, activeTab, session_id, listIncludesFile, loadingFetchFile, loadingChat, advanceSetting } = useSelector((state: RootState) => state.buildChatBot, shallowEqual);
+  const { fetchLink, data, activeTab, session_id, listIncludesFile, loadingFetchFile, loadingChat, advanceSetting, includesResource } = useSelector((state: RootState) => state.buildChatBot, shallowEqual);
   const onStreamingDataTesting = useCallback(
     async (payload: GetChatStreamingRequest) => {
       const { message } = payload
@@ -61,6 +61,7 @@ export const useBuildChatbot = () => {
 
   const onGetAllUrl = useCallback(
     async (payload: GetAllURLPayload) => {
+      await dispatch(getIncludesResources(payload))
        return await dispatch(getAllURLTransaction(payload));
     },
     [dispatch],
@@ -68,6 +69,7 @@ export const useBuildChatbot = () => {
 
   const onGetAllFile= useCallback(
     async (payload: GetAllFilePayload) => {
+        await dispatch(getIncludesResources(payload))
        return await dispatch(getAllFileTransaction(payload));
     },
     [dispatch],
@@ -112,6 +114,7 @@ export const useBuildChatbot = () => {
     loadingChat,
     onGetInfoCurrentBot,
     onGetAdvanceSetting,
-    advanceSetting
+    advanceSetting,
+    includesResource
   };
 };

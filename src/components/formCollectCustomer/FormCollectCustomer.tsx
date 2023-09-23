@@ -33,10 +33,6 @@ function CollectForm() {
 
   const onSubmit = handleSubmit((data) => console.log(data));
 
-  console.log(watch("email"));
-
-  console.log(errors);
-
   const onCloseForm = () => {
     dispatch(setCloseFormCollect())
   }

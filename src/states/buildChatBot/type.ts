@@ -1,4 +1,4 @@
-import { AdvancePayload } from "@/repository/buildChatBot/type";
+import { AdvancePayload, GetIncludesResourcesItem } from "@/repository/buildChatBot/type";
 
 export interface BuildChatBotState {
   data:  any | null;
@@ -14,6 +14,7 @@ export interface BuildChatBotState {
   listIncludesFile: DataFetchFile[],
   fetchFile: DataFetchFile;
   advanceSetting: AdvancePayload | null;
+  includesResource: GetIncludesResourcesData | null
 }
 
 export interface DataFetchLink {
@@ -37,3 +38,7 @@ export interface GetAdvanceSettingPayload {
   bot_id: string
 }
 
+export interface GetIncludesResourcesData{
+  resource: GetIncludesResourcesItem[],
+  total_token: number,
+}

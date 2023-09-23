@@ -142,3 +142,18 @@ export interface DeleteFilePayload {
   knowledge_base_id: string
   bot_id: string
 }
+
+export interface GetIncludesResourcesPayload {
+  bot_id: string
+}
+
+export interface GetIncludesResourcesResponse {
+  resource: GetIncludesResourcesItem[],
+  total_token: number,
+}
+
+export interface GetIncludesResourcesItem {
+  type: string,
+  token: number,
+  number_of_resources: number,
+}

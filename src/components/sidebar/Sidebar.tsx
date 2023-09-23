@@ -117,6 +117,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </li>
               <li>
                 <NavLink
+                   onClick={() => {
+                    dispatch(resetStateBuild());
+                  }}
                   to="/build-chatbots"
                   className={`h-[44px] group relative flex items-center gap-[18px] rounded-r-[5px] py-2 px-4 font-medium text-[#A7A9C0] duration-300 ease-in-out hover:bg-[#1AA8E9] hover:text-white ${
                     pathname.includes('build-chatbots') &&

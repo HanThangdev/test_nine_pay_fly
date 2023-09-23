@@ -18,6 +18,8 @@ import {
   GetAllFilePayload,
   GetAllFileResponse,
   DeleteFilePayload,
+  GetIncludesResourcesPayload,
+  GetIncludesResourcesResponse,
 } from './type';
 import Cookies from 'universal-cookie';
 import { SuccessResponse } from '../type';
@@ -321,6 +323,20 @@ export const getAllFileTransaction = createAsyncThunk(
     try {
       const response = await http.get<SuccessResponse<GetAllFileResponse>>(
         `/api/scraping/file/${payload.bot_id}`,
+      );
+      return response;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data.error);
+    }
+  },
+);
+
+export const getIncludesResources = createAsyncThunk(
+  'transaction/getIncludesData',
+  async (payload: GetIncludesResourcesPayload, { rejectWithValue }) => {
+    try {
+      const response = await http.get<SuccessResponse<GetIncludesResourcesResponse>>(
+        `/api/scraping/include-resources/${payload.bot_id}`,
       );
       return response;
     } catch (error: any) {

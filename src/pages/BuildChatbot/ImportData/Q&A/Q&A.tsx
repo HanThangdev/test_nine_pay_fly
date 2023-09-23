@@ -1,7 +1,17 @@
 import { RiDeleteBinLine } from 'react-icons/ri';
 import { useTranslation } from 'react-i18next';
+import { useMemo } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/states/store';
+import { formatNumber } from '@/utils/format';
+
 const QuestionAnswer = () => {
   const { t } = useTranslation();
+  const {includesResource} = useSelector(
+    (state: RootState) => state.buildChatBot,
+  );
+  const includesResourceData = useMemo(() => includesResource, [includesResource]);
+
   return (
     <>
       <div>
@@ -30,22 +40,22 @@ const QuestionAnswer = () => {
         <p className="text-[16px] font-bold">
           {t('IncludedSource', { ns: 'config_bot' })}:
         </p>
-        <p className="text-[15px]">
-          2 {t('Files', { ns: 'config_bot' })}
+        <p className="text-[15px] font-bold">
+          {includesResourceData?.resource[1]?.number_of_resources || 0} {t('Files', { ns: 'config_bot' })}
           <span className="text-[#A7A7B0]">
-            (40 {t('tokens', { ns: 'config_bot' })})
+            ({formatNumber(includesResourceData?.resource[1]?.token || 0)} {t('tokens', { ns: 'config_bot' })})
           </span>{' '}
-          | 2 {t('Links', { ns: 'config_bot' })}
+          | {includesResourceData?.resource[0]?.number_of_resources || 0} {t('Links', { ns: 'config_bot' })}
           <span className="text-[#A7A7B0]">
-            (4000 {t('tokens', { ns: 'config_bot' })})
+            ({formatNumber(includesResourceData?.resource[0]?.token || 0)} {t('tokens', { ns: 'config_bot' })})
           </span>{' '}
-          | 1 Q&A
+          | {includesResourceData?.resource[2]?.number_of_resources || 0} Q&A
           <span className="text-[#A7A7B0]">
-            (4000 {t('tokens', { ns: 'config_bot' })})
+            ({formatNumber(includesResourceData?.resource[2]?.token || 0)} {t('tokens', { ns: 'config_bot' })})
           </span>
         </p>
-        <p className="text-[15px]">
-          {t('TotalTokens', { ns: 'config_bot' })}: 40/10.000.000{' '}
+        <p className="text-[15px] font-bold">
+          {t('TotalTokens', { ns: 'config_bot' })}: {formatNumber(includesResourceData?.total_token || 0)} /10.000.000{' '}
           {t('limit', { ns: 'config_bot' })}
         </p>
       </div>

@@ -130,12 +130,14 @@ const Conversations = () => {
     if (conversation) {
       const response: any = await dispatch(
         getConversationPdf({
-          conversation_history_response: [conversation],
+          // conversation_history_response: [conversation],
           date_from: fromDate.toISOString(),
           date_to: toDate.toISOString(),
+          bot_id: conversation.bot_id,
+          user_id: conversation.user_id,
+          order: "created_at.desc"
         }),
       );
-
       const fileName = `${
         conversation.session_id
       }--conversations_${fromDate.format('DD-MM-YYYY')}~${toDate.format(
@@ -161,8 +163,6 @@ const Conversations = () => {
       </div>
     );
   };
-
-  console.log({ selectedConversation, selectedConversationId });
 
   return (
     <div

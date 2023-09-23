@@ -2,14 +2,13 @@ import ModalComponent from '@/components/Modal';
 import { API_STATUS } from '@/constants';
 import {
   deleteURLTransaction,
-  getAllURLTransaction,
 } from '@/repository/buildChatBot';
 import { useBuildChatbot } from '@/states/buildChatBot/buildChatBot.selector';
 import { deletedListIncludes } from '@/states/buildChatBot/buildChatBot.slice';
 import { DataFetchLink } from '@/states/buildChatBot/type';
 import { AppDispatch, RootState } from '@/states/store';
-import { Checkbox, notification } from 'antd';
-import { CheckboxChangeEvent } from 'antd/es/checkbox';
+import { formatNumber } from '@/utils/format';
+import { notification } from 'antd';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RiDeleteBinLine } from 'react-icons/ri';
@@ -77,7 +76,7 @@ const FetchLinkItem = ({ item, index, setUrlSelected, urlSelected }: FetchLinkIt
         className="h-[41px] w-full  bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
       />
       <div className="flex justify-between w-[150px] items-center">
-        <p className="mb-0 font-bold">{item.num_token} {t('tokens', { ns: 'config_bot' })}</p>
+        <p className="mb-0 font-bold">{formatNumber(item?.num_token || 0)} {t('tokens', { ns: 'config_bot' })}</p>
         <RiDeleteBinLine
           size={18}
           className="cursor-pointer"

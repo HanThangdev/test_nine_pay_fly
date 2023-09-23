@@ -23,7 +23,7 @@ const Website = () => {
   const [visibleDeleteModal, setVisibleDeleteModal] = useState<boolean>(false);
 
   const { onStreamingUploadUrl, fetchLink, onGetAllUrl } = useBuildChatbot();
-  const { data, listIncludesLink, loadingFetchLink } = useSelector(
+  const { data, listIncludesLink, loadingFetchLink, includesResource} = useSelector(
     (state: RootState) => state.buildChatBot,
   );
   const [fullPageUrl, setFullPageUrl] = useState<string>('');
@@ -94,6 +94,7 @@ const Website = () => {
   };
 
   const listLink = useMemo(() => listIncludesLink, [listIncludesLink]);
+  const includesResourceData = useMemo(() => includesResource, [includesResource]);
 
   const totalTokens = useMemo(
     () =>
@@ -105,7 +106,6 @@ const Website = () => {
   );
 
   const deleteUrl = () => {
-    console.log(urlSelected)
     setVisibleDeleteModal(false);
   }
 
@@ -229,6 +229,29 @@ const Website = () => {
           {t('IncludedSource', { ns: 'config_bot' })}:
         </p>
         <p className="text-[15px] font-bold">
+          {includesResourceData?.resource[1]?.number_of_resources || 0} {t('Files', { ns: 'config_bot' })}
+          <span className="text-[#A7A7B0]">
+            ({formatNumber(includesResourceData?.resource[1]?.token || 0)} {t('tokens', { ns: 'config_bot' })})
+          </span>{' '}
+          | {includesResourceData?.resource[0]?.number_of_resources || 0} {t('Links', { ns: 'config_bot' })}
+          <span className="text-[#A7A7B0]">
+            ({formatNumber(includesResourceData?.resource[0]?.token || 0)} {t('tokens', { ns: 'config_bot' })})
+          </span>{' '}
+          | {includesResourceData?.resource[2]?.number_of_resources || 0} Q&A
+          <span className="text-[#A7A7B0]">
+            ({formatNumber(includesResourceData?.resource[2]?.token || 0)} {t('tokens', { ns: 'config_bot' })})
+          </span>
+        </p>
+        <p className="text-[15px] font-bold">
+          {t('TotalTokens', { ns: 'config_bot' })}: {formatNumber(includesResourceData?.total_token || 0)} /10.000.000{' '}
+          {t('limit', { ns: 'config_bot' })}
+        </p>
+      </div>
+      {/* <div className="mt-[25px]">
+        <p className="text-[16px] font-bold">
+          {t('IncludedSource', { ns: 'config_bot' })}:
+        </p>
+        <p className="text-[15px] font-bold">
           {listLink.length}{' '}{t('Links', { ns: 'config_bot' })}
           <span className="text-[#A7A7B0]">
             ({formatNumber(totalTokens)} {t('tokens', { ns: 'config_bot' })})
@@ -238,7 +261,7 @@ const Website = () => {
           {t('TotalToken', { ns: 'config_bot' })}: {formatNumber(totalTokens)}/10.000.000{' '}
           {t('limit', { ns: 'config_bot' })}
         </p>
-      </div>
+      </div> */}
       {/* <div className="flex justify-end mt-[30px]">
         <button className="w-[150px] h-[43px] bg-[#4AC1FF;] text-white rounded-[10px] text-[15px] font-bold justify-cente">
           Import

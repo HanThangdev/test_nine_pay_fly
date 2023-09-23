@@ -11,10 +11,15 @@ import { API_STATUS } from '@/constants';
 import { TypeAnimation } from 'react-type-animation';
 import { MAX_SIZE_FILE } from '@/constants/configs_bot';
 import { formatNumber } from '@/utils/format';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/states/store';
 const Files = () => {
   const { t } = useTranslation();
   const [listFileWaitingImport, setListFileWaitingImport] = useState<File[]>(
     [],
+  );
+  const {includesResource} = useSelector(
+    (state: RootState) => state.buildChatBot,
   );
   const {
     onUploadFile,
@@ -72,6 +77,7 @@ const Files = () => {
   }, [listIncludesFile]);
 
   const listLink = useMemo(() => listIncludesFile, [listIncludesFile]);
+  const includesResourceData = useMemo(() => includesResource, [includesResource]);
 
   useEffect(() => {
     onGetAllFile({ bot_id: data?.id });
@@ -167,17 +173,31 @@ const Files = () => {
           })}
       </div>
       <div className="mt-[25px]">
-        <p className="text-[16px]">
+        <p className="text-[16px] font-bold">
           {t('IncludedSource', { ns: 'config_bot' })}:
         </p>
         <p className="text-[15px] font-bold">
-          {listIncludesFile?.length || 0} {t('Files', { ns: 'config_bot' })}
+          {includesResourceData?.resource[1]?.number_of_resources || 0}{' '}
+          {t('Files', { ns: 'config_bot' })}
           <span className="text-[#A7A7B0]">
-            ({formatNumber(totalTokens)} {t('tokens', { ns: 'config_bot' })})
+            ({formatNumber(includesResourceData?.resource[1]?.token || 0)}{' '}
+            {t('tokens', { ns: 'config_bot' })})
+          </span>{' '}
+          | {includesResourceData?.resource[0]?.number_of_resources || 0}{' '}
+          {t('Links', { ns: 'config_bot' })}
+          <span className="text-[#A7A7B0]">
+            ({formatNumber(includesResourceData?.resource[0]?.token || 0)}{' '}
+            {t('tokens', { ns: 'config_bot' })})
+          </span>{' '}
+          | {includesResourceData?.resource[2]?.number_of_resources || 0} Q&A
+          <span className="text-[#A7A7B0]">
+            ({formatNumber(includesResourceData?.resource[2]?.token || 0)}{' '}
+            {t('tokens', { ns: 'config_bot' })})
           </span>
         </p>
         <p className="text-[15px] font-bold">
-          {t('TotalTokens', { ns: 'config_bot' })}: {formatNumber(totalTokens)}/10.000.000{' '}
+          {t('TotalTokens', { ns: 'config_bot' })}:{' '}
+          {formatNumber(includesResourceData?.total_token || 0)} /10.000.000{' '}
           {t('limit', { ns: 'config_bot' })}
         </p>
       </div>
