@@ -2,13 +2,11 @@ import classNames from 'classnames';
 import React, { useState } from 'react';
 import IconCheck from '@/components/IconCheck/IconCheck';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 import { AiOutlineDollarCircle, AiOutlineQuestionCircle } from 'react-icons/ai';
-interface Props {
-  onClick: () => void;
-}
 
-const PricingPlan = ({ onClick }: Props) => {
+const PricingPlan = () => {
   const { t } = useTranslation();
   const itemFree = [
     `${t('Free.item1', { ns: 'pricing_plan' })}`,
@@ -178,12 +176,9 @@ const PricingPlan = ({ onClick }: Props) => {
             ))}
             <div className="bottom-0 lg:absolute m-auto w-[calc(100%-64px)] mb-[20px]">
               <p className="text-[26px] lg:text-[40px] flex justify-center items-end text-[#4AC1FF] mb-4 font-black">
-              $0
+                $0
               </p>
-              <button
-                onClick={onClick}
-                className="flex justify-center items-center m-auto w-[150px] h-[43px] bg-[#E8E9F4] text-[#01058A] rounded-[50px] text-[18px] font-bold justify-cente"
-              >
+              <button className="flex justify-center items-center m-auto w-[150px] h-[43px] bg-[#E8E9F4] text-[#01058A] rounded-[50px] text-[18px] font-bold justify-cente">
                 {t('SignedIn', { ns: 'pricing_plan' })}
               </button>
             </div>
@@ -217,11 +212,10 @@ const PricingPlan = ({ onClick }: Props) => {
                     : `${t('year', { ns: 'pricing_plan' })}`}
                 </span>
               </p>
-              <button
-                onClick={onClick}
-                className="flex justify-center items-center m-auto w-[150px] h-[43px] bg-[#4AC1FF] text-white rounded-[50px] text-[18px] font-bold justify-cente"
-              >
-                {t('Subscribe', { ns: 'pricing_plan' })}
+              <button className="flex justify-center items-center m-auto w-[150px] h-[43px] bg-[#4AC1FF] text-white rounded-[50px] text-[18px] font-bold justify-cente">
+                <Link to="/register-pricing-plan">
+                  {t('Subscribe', { ns: 'pricing_plan' })}
+                </Link>
               </button>
             </div>
           </div>
@@ -254,11 +248,10 @@ const PricingPlan = ({ onClick }: Props) => {
                     : `${t('year', { ns: 'pricing_plan' })}`}
                 </span>
               </p>
-              <button
-                onClick={onClick}
-                className="flex justify-center items-center m-auto w-[150px] h-[43px] bg-[#4AC1FF] text-white rounded-[50px] text-[18px] font-bold justify-cente"
-              >
-                {t('Subscribe', { ns: 'pricing_plan' })}
+              <button className="flex justify-center items-center m-auto w-[150px] h-[43px] bg-[#4AC1FF] text-white rounded-[50px] text-[18px] font-bold justify-cente">
+                <Link to="/register-pricing-plan">
+                  {t('Subscribe', { ns: 'pricing_plan' })}
+                </Link>
               </button>
             </div>
           </div>
@@ -293,11 +286,10 @@ const PricingPlan = ({ onClick }: Props) => {
                     : `${t('year', { ns: 'pricing_plan' })}`}
                 </span>
               </p>
-              <button
-                onClick={onClick}
-                className="flex justify-center items-center m-auto w-[150px] h-[43px] bg-[#4AC1FF] text-white rounded-[50px] text-[18px] font-bold justify-cente"
-              >
-                {t('Subscribe', { ns: 'pricing_plan' })}
+              <button className="flex justify-center items-center m-auto w-[150px] h-[43px] bg-[#4AC1FF] text-white rounded-[50px] text-[18px] font-bold justify-cente">
+                <Link to="/register-pricing-plan">
+                  {t('Subscribe', { ns: 'pricing_plan' })}
+                </Link>
               </button>
             </div>
           </div>
@@ -330,11 +322,10 @@ const PricingPlan = ({ onClick }: Props) => {
                     : `${t('year', { ns: 'pricing_plan' })}`}
                 </span>
               </p>
-              <button
-                onClick={onClick}
-                className="flex justify-center items-center m-auto w-[150px] h-[43px] bg-[#4AC1FF] text-white rounded-[50px] text-[18px] font-bold justify-cente"
-              >
-                {t('Subscribe', { ns: 'pricing_plan' })}
+              <button className="flex justify-center items-center m-auto w-[150px] h-[43px] bg-[#4AC1FF] text-white rounded-[50px] text-[18px] font-bold justify-cente">
+                <Link to="/register-pricing-plan">
+                  {t('Subscribe', { ns: 'pricing_plan' })}
+                </Link>
               </button>
             </div>
           </div>
