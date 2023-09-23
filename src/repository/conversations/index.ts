@@ -27,7 +27,7 @@ export const getConversationPdf = createAsyncThunk<
   GetConversationPdfPayload
 >('transaction/getConversationPdf', async (payload, { rejectWithValue }) => {
   try {
-    return await http.post('/api/chat/history.pdf', payload);
+    return await http.post('/api/chat/history.pdf', payload, { responseType: 'blob' });
   } catch (error: any) {
     return rejectWithValue(error.response.data.error);
   }
