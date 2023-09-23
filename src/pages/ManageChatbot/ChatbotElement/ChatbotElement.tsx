@@ -23,6 +23,7 @@ import { objectToQueryString } from '@/utils/utils';
 import { resetStateBuild } from '@/states/buildChatBot/buildChatBot.slice';
 import { useTranslation } from 'react-i18next';
 import { formatTimeAgo } from '@/utils/format';
+import Code from '@/components/code';
 
 interface ChatbotElementProps {
   info: ResponseManageChatbot;
@@ -33,6 +34,7 @@ const ChatbotElement = ({ info }: ChatbotElementProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const [visibleDeleteModal, setVisibleDeleteModal] = useState<boolean>(false);
+  const [visibleShareModal, setVisibleShareModal] = useState<boolean>(false);
   const [openPopover, setOpenPopover] = useState<boolean>(false);
   // const [visibleShareodal, setVisibleShareModal] = useState<boolean>(false);
 
@@ -88,7 +90,13 @@ const ChatbotElement = ({ info }: ChatbotElementProps) => {
               >
                 <IconEdit />
               </p>
-              <p className="m-auto cursor-pointer pb-2">
+              <p
+                className="m-auto cursor-pointer pb-2"
+                onClick={() => {
+                  setOpenPopover(!openPopover);
+                  setVisibleShareModal(true);
+                }}
+              >
                 <IconShare />
               </p>
               <p
@@ -149,6 +157,17 @@ const ChatbotElement = ({ info }: ChatbotElementProps) => {
         }
       >
         <div>{t('confirm', { ns: 'manage_bot' })}</div>
+      </ModalComponent>
+      <ModalComponent
+        title={<div>Share chatbot</div>}
+        onCancel={() => {
+          setVisibleShareModal(false);
+        }}
+        open={visibleShareModal}
+        centered={true}
+        footer={false}
+      >
+        <Code language="html">{`${window.location.origin}/chat/${info.id}`}</Code>
       </ModalComponent>
     </div>
   );

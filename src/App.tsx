@@ -14,6 +14,7 @@ import Cookies from 'universal-cookie';
 import store from './states/store';
 import Loader from './components/Loader';
 import Chat from './pages/Chat/Chat';
+import RegisterPricingPlan from './pages/RegisterPricingPlan';
 
 const DefaultLayout = lazy(() => import('./layout/DefaultLayout'));
 
@@ -55,6 +56,7 @@ function App() {
           <Route path="/auth/verify" element={<Verify />} />
           <Route path="/auth/signup" element={<SignUp />} />
           <Route path="/chat/:id" element={<Chat />} />
+          <Route path="/register-pricing-plan" element={<RegisterPricingPlan />} />
           <Route
             path="/auth/forgot-password/:code"
             element={<ForgotPasswordVerify />}

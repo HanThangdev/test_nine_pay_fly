@@ -93,11 +93,11 @@ const Chat = () => {
   }, [idBot]);
 
   useEffect(() => {
-    if (!isEmptyObjectOrArray(advanceSetting) && advanceSetting) {
+    if (!isEmptyObjectOrArray(advanceSetting) && advanceSetting?.initial_message) {
       dispatch(
         setNewMessageIntoListConversation({
           sender_type: 'assistant',
-          content: advanceSetting.initial_message,
+          content: advanceSetting?.initial_message,
         }),
       );
       dispatch(toogleTheme(advanceSetting.theme === "dark" ? false : true));

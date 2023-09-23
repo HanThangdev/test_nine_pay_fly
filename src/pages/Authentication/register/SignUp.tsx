@@ -42,12 +42,15 @@ const SignUp = () => {
         message: 'You have successfully registered.',
         duration: 2,
       });
-      dispatch(setEmailVerify(body.email));
+      dispatch(setEmailVerify(true));
       navigate('/auth/verify');
     } catch (error: any) {
-      notification.error({
-        message: error?.response?.data.message ?? error?.message,
-      });
+      if(error?.response?.data.message == 'Email already registered.'){
+        navigate('/auth/verify')
+      }
+      // notification.error({
+      //   message: error?.response?.data.message ?? error?.message,
+      // });
 
       setLoading(false);
     }
