@@ -37,10 +37,6 @@ const ForgotPassword = () => {
       dispatch(setEmailVerify(formData.email));
       navigate('/auth/verify');
     } catch (error: any) {
-      notification.error({
-        message: error?.response?.data.errors ?? error?.message,
-      });
-
       setLoading(false);
     }
   });

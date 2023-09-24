@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { PricingPlanState } from './type';
-import { getCurrentPricingPlan, getVnpayRedirect, getVnpayReturn, upgradeBillingTransaction } from '@/repository/pricingPlan';
+import { getCurrentPricingPlanTransaction, getVnpayRedirectTransaction, getVnpayReturnTransaction, registerUpgradeBillingTransaction, upgradeBillingTransaction } from '@/repository/pricingPlan';
 
 const initialState: PricingPlanState = {
   billingType: 1,
@@ -13,17 +13,17 @@ export const pricingPlaningSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    //start getCurrentPricingPlan
-    builder.addCase(getCurrentPricingPlan.pending, (state) => {
+    //start getCurrentPricingPlanTransaction
+    builder.addCase(getCurrentPricingPlanTransaction.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(getCurrentPricingPlan.fulfilled, (state,) => {
+    builder.addCase(getCurrentPricingPlanTransaction.fulfilled, (state,) => {
       state.loading = false;
     });
-    builder.addCase(getCurrentPricingPlan.rejected, (state) => {
+    builder.addCase(getCurrentPricingPlanTransaction.rejected, (state) => {
       state.loading = false;
     });
-    //end getCurrentPricingPlan
+    //end getCurrentPricingPlanTransaction
 
     //start upgradeBillingTransaction
     builder.addCase(upgradeBillingTransaction.pending, (state) => {
@@ -38,28 +38,40 @@ export const pricingPlaningSlice = createSlice({
     //end upgradeBillingTransaction
 
     //start getVnpayReturn
-    builder.addCase(getVnpayReturn.pending, (state) => {
+    builder.addCase(getVnpayReturnTransaction.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(getVnpayReturn.fulfilled, (state) => {
+    builder.addCase(getVnpayReturnTransaction.fulfilled, (state) => {
       state.loading = false;
     });
-    builder.addCase(getVnpayReturn.rejected, (state) => {
+    builder.addCase(getVnpayReturnTransaction.rejected, (state) => {
       state.loading = false;
     });
-    //end getVnpayReturn
+    //end getVnpayReturnTransaction
 
-    //start getVnpayReturn
-    builder.addCase(getVnpayRedirect.pending, (state) => {
+    //start getVnpayRedirectTransaction
+    builder.addCase(getVnpayRedirectTransaction.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(getVnpayRedirect.fulfilled, (state) => {
+    builder.addCase(getVnpayRedirectTransaction.fulfilled, (state) => {
       state.loading = false;
     });
-    builder.addCase(getVnpayRedirect.rejected, (state) => {
+    builder.addCase(getVnpayRedirectTransaction.rejected, (state) => {
       state.loading = false;
     });
-    //end getVnpayReturn
+    //end getVnpayRedirectTransaction
+
+    //start registerUpgradeBillingTransaction
+    builder.addCase(registerUpgradeBillingTransaction.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(registerUpgradeBillingTransaction.fulfilled, (state) => {
+      state.loading = false;
+    });
+    builder.addCase(registerUpgradeBillingTransaction.rejected, (state) => {
+      state.loading = false;
+    });
+    //end registerUpgradeBillingTransaction
   },
 });
 

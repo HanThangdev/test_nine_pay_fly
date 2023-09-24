@@ -1,10 +1,10 @@
 import { useCallback } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../store';
-import { getCurrentPricingPlan, getVnpayRedirect, getVnpayReturn, upgradeBillingTransaction } from '@/repository/pricingPlan';
+import { getCurrentPricingPlanTransaction, getVnpayRedirectTransaction, getVnpayReturnTransaction, registerUpgradeBillingTransaction, upgradeBillingTransaction } from '@/repository/pricingPlan';
 import { UpgradeBillingPayload } from '@/repository/pricingPlan/type';
 
-export const useManageChatbot = () => {
+export const usePricingPlan = () => {
   const dispatch = useDispatch<AppDispatch>();
   const {  } = useSelector(
     (state: RootState) => state.pricing,
@@ -13,12 +13,12 @@ export const useManageChatbot = () => {
 
   const onGetCurrentPricingPlan = useCallback(
     async () => {
-       return await dispatch(getCurrentPricingPlan());
+       return await dispatch(getCurrentPricingPlanTransaction());
     },
     [dispatch],
   );
 
-  const onUpgradeBillingTransaction = useCallback(
+  const onUpgradeBilling= useCallback(
     async (payload: UpgradeBillingPayload) => {
        return await dispatch(upgradeBillingTransaction(payload));
     },
@@ -27,14 +27,21 @@ export const useManageChatbot = () => {
 
   const onGetVnpayReturn = useCallback(
     async () => {
-       return await dispatch(getVnpayReturn());
+       return await dispatch(getVnpayReturnTransaction());
     },
     [dispatch],
   );
 
   const onGetVnpayRedirect = useCallback(
     async () => {
-       return await dispatch(getVnpayRedirect());
+       return await dispatch(getVnpayRedirectTransaction());
+    },
+    [dispatch],
+  );
+
+  const onRegisterUpgradeBilling= useCallback(
+    async (payload: string) => {
+       return await dispatch(registerUpgradeBillingTransaction(payload));
     },
     [dispatch],
   );
@@ -43,6 +50,7 @@ export const useManageChatbot = () => {
     onGetCurrentPricingPlan,
     onGetVnpayRedirect,
     onGetVnpayReturn,
-    onUpgradeBillingTransaction
+    onUpgradeBilling,
+    onRegisterUpgradeBilling
   };
 };

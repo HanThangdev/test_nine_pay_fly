@@ -34,7 +34,12 @@
 }
 
 .button-pricing{
-  background: linear-gradient(89.79deg, #45E7F3 0.15%, #4B90E4 48.16%, #E019C1 98.45%);
+  background: linear-gradient(89.79deg, #45E7F3 0.15%, #4B90E4 48.16%, #E019C1 98.45%) !important;
+}
+
+.button-pricing:hover{
+  color: white !important;
+  border-color: none !important;
 }
 
 .input-email-register:focus-visible{

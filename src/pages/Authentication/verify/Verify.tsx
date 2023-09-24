@@ -21,7 +21,6 @@ const Verify = () => {
     }
   };
 
-  console.log(emailVerify);
   return (
     <>
       <div className="h-full auth-background bg-cover min-h-screen shadow-default flex items-center">

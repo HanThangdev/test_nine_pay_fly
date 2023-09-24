@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { FC, PropsWithChildren, useState } from 'react';
 import Header from '@/components/header';
 import Sidebar from '@/components/sidebar';
 import { Outlet } from 'react-router-dom';
 
-const DefaultLayout = () => {
+const DefaultLayout: FC<PropsWithChildren>  = ({children}) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
@@ -23,7 +23,7 @@ const DefaultLayout = () => {
           {/* <!-- ===== Main Content Start ===== --> */}
           <main>
             <div className="mx-auto py-4 px-10">
-              <Outlet />
+              {children}
             </div>
           </main>
           {/* <!-- ===== Main Content End ===== --> */}

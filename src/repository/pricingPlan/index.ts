@@ -16,8 +16,8 @@ export const upgradeBillingTransaction = createAsyncThunk(
   }
 );
 
-export const getCurrentPricingPlan = createAsyncThunk(
-  "transaction/getCurrentPricingPlan",
+export const getCurrentPricingPlanTransaction = createAsyncThunk(
+  "transaction/getCurrentPricingPlanTransaction",
   async (payload, { rejectWithValue }) => {
     try {
       const response = await http.get<SuccessResponse<string>>('/api/billing/get-current-pricing-plan')
@@ -28,8 +28,8 @@ export const getCurrentPricingPlan = createAsyncThunk(
   }
 );
 
-export const getVnpayReturn = createAsyncThunk(
-  "transaction/getVnpayReturn",
+export const getVnpayReturnTransaction = createAsyncThunk(
+  "transaction/getVnpayReturnTransaction",
   async (payload, { rejectWithValue }) => {
     try {
       const response = await http.get<SuccessResponse<string>>('/api/billing/upgrade/vnpay-return')
@@ -40,11 +40,23 @@ export const getVnpayReturn = createAsyncThunk(
   }
 );
 
-export const getVnpayRedirect = createAsyncThunk(
-  "transaction/getVnpayRedirect",
+export const getVnpayRedirectTransaction = createAsyncThunk(
+  "transaction/getVnpayRedirectTransaction",
   async (payload, { rejectWithValue }) => {
     try {
       const response = await http.get<SuccessResponse<string>>('/api/billing/upgrade/vnpay-sanbox')
+      return response;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data.error);
+    }
+  }
+);
+
+export const registerUpgradeBillingTransaction = createAsyncThunk(
+  "transaction/registerUpgradeBillingTransaction",
+  async (payload: string, { rejectWithValue }) => {
+    try {
+      const response = await http.post<SuccessResponse<string>>(`/api/user/billing-upgrade-request?email=${payload}`)
       return response;
     } catch (error: any) {
       return rejectWithValue(error.response.data.error);
