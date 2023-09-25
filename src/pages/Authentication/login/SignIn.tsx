@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { FormData, schema } from './validation';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
@@ -18,7 +18,7 @@ const SignIn = () => {
   const { code } = useParams();
   const [showPass, setShowPass] = useState(false);
   const { loading } = useSelector((state: RootState) => state.auth);
-
+  const navigate = useNavigate();
   const { onGetBot } = useManageChatbot();
   const dispatch = useDispatch<AppDispatch>();
   const cookies = new Cookies();
@@ -49,6 +49,12 @@ const SignIn = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [code]);
+
+  useEffect(() => {
+    if (token) {
+      navigate('/');
+    }
+  }, []);
 
   const onSubmit = handleSubmit(async (formData) => {
     const dataForm = new URLSearchParams();
