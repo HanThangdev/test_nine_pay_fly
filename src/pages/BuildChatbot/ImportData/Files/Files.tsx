@@ -162,10 +162,9 @@ const Files = () => {
         })}
 
       <div className="mt-[25px]">
-        <p className="text-[16px]">
-          {' '}
-          {t('Attached', { ns: 'config_bot' })}{' '}
-          <span className="font-bold">
+        <p className="text-[15px] font-bold flex gap-x-[10px] items-center">
+          {t('Attached', { ns: 'config_bot' })}
+          <span className="text-[#A7A7B0] font-thin">
             ({formatNumber(totalTokens)} {t('tokens', { ns: 'config_bot' })})
           </span>
         </p>

@@ -42,7 +42,7 @@ const QuestionAnswer = () => {
       <p className="text-[15px] font-bold flex gap-x-[10px] items-center">
         {t('IncludedQ&A', { ns: 'config_bot' })}
         <span className="text-[#A7A7B0] font-thin">
-          0 {t('tokens', { ns: 'config_bot' })}
+          (0 {t('tokens', { ns: 'config_bot' })})
         </span>
       </p>
       <div className="mt-[25px]">
