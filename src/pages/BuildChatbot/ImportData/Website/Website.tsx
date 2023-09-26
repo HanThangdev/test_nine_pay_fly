@@ -10,7 +10,10 @@ import { TypeAnimation } from 'react-type-animation';
 import { useBuildChatbot } from '@/states/buildChatBot/buildChatBot.selector';
 import FetchLinkItem from '../../Component/FetchLinkItem';
 import { useTranslation } from 'react-i18next';
-import { deletedListIncludes, loadFetchLink } from '@/states/buildChatBot/buildChatBot.slice';
+import {
+  deletedListIncludes,
+  loadFetchLink,
+} from '@/states/buildChatBot/buildChatBot.slice';
 import { validURL } from '@/utils/validate';
 import { API_STATUS } from '@/constants';
 import { formatNumber } from '@/utils/format';
@@ -23,9 +26,8 @@ const Website = () => {
   const [visibleDeleteModal, setVisibleDeleteModal] = useState<boolean>(false);
 
   const { onStreamingUploadUrl, fetchLink, onGetAllUrl } = useBuildChatbot();
-  const { data, listIncludesLink, loadingFetchLink, includesResource} = useSelector(
-    (state: RootState) => state.buildChatBot,
-  );
+  const { data, listIncludesLink, loadingFetchLink, includesResource } =
+    useSelector((state: RootState) => state.buildChatBot);
   const [fullPageUrl, setFullPageUrl] = useState<string>('');
   const [directPageUrl, setDirectPageUrl] = useState<string>('');
   const [loadingFullPage, setLoadingFullPage] = useState<boolean>(false);
@@ -94,7 +96,10 @@ const Website = () => {
   };
 
   const listLink = useMemo(() => listIncludesLink, [listIncludesLink]);
-  const includesResourceData = useMemo(() => includesResource, [includesResource]);
+  const includesResourceData = useMemo(
+    () => includesResource,
+    [includesResource],
+  );
 
   const totalTokens = useMemo(
     () =>
@@ -107,7 +112,7 @@ const Website = () => {
 
   const deleteUrl = () => {
     setVisibleDeleteModal(false);
-  }
+  };
 
   const resetUrl = () => {
     setFullPageUrl('');
@@ -212,10 +217,16 @@ const Website = () => {
           </span>
         </p>
         {!isEmptyObjectOrArray(listLink) &&
-          listLink.map((item, idx) => 
-           <FetchLinkItem item={item} key={idx} index={idx} setUrlSelected={setUrlSelected} urlSelected={urlSelected}/>
-          )}
-          {/* <div className='flex justify-end'>
+          listLink.map((item, idx) => (
+            <FetchLinkItem
+              item={item}
+              key={idx}
+              index={idx}
+              setUrlSelected={setUrlSelected}
+              urlSelected={urlSelected}
+            />
+          ))}
+        {/* <div className='flex justify-end'>
             <button
               onClick={() => setVisibleDeleteModal(true)}
               className="w-[150px] h-[41px] bg-[#E8E9F4] text-[#01058A] rounded-[10px] text-[15px] font-bold justify-end cursor-pointer"
@@ -229,21 +240,31 @@ const Website = () => {
           {t('IncludedSource', { ns: 'config_bot' })}:
         </p>
         <p className="text-[15px] font-bold">
-          {includesResourceData?.resource[1]?.number_of_resources || 0} {t('Files', { ns: 'config_bot' })}
+          {includesResourceData?.resource[1]?.number_of_resources || 0}{' '}
+          {(includesResourceData?.resource[1]?.number_of_resources || 0) > 1
+            ? `${t('Files', { ns: 'config_bot' })}`
+            : `${t('File', { ns: 'config_bot' })}`}
           <span className="text-[#A7A7B0]">
-            ({formatNumber(includesResourceData?.resource[1]?.token || 0)} {t('tokens', { ns: 'config_bot' })})
+            ({formatNumber(includesResourceData?.resource[1]?.token || 0)}{' '}
+            {t('tokens', { ns: 'config_bot' })})
           </span>{' '}
-          | {includesResourceData?.resource[0]?.number_of_resources || 0} {t('Links', { ns: 'config_bot' })}
+          | {includesResourceData?.resource[0]?.number_of_resources || 0}{' '}
+          {(includesResourceData?.resource[0]?.number_of_resources || 0) > 1
+            ? `${t('Links', { ns: 'config_bot' })}`
+            : `${t('Link', { ns: 'config_bot' })}`}
           <span className="text-[#A7A7B0]">
-            ({formatNumber(includesResourceData?.resource[0]?.token || 0)} {t('tokens', { ns: 'config_bot' })})
+            ({formatNumber(includesResourceData?.resource[0]?.token || 0)}{' '}
+            {t('tokens', { ns: 'config_bot' })})
           </span>{' '}
           | {includesResourceData?.resource[2]?.number_of_resources || 0} Q&A
           <span className="text-[#A7A7B0]">
-            ({formatNumber(includesResourceData?.resource[2]?.token || 0)} {t('tokens', { ns: 'config_bot' })})
+            ({formatNumber(includesResourceData?.resource[2]?.token || 0)}{' '}
+            {t('tokens', { ns: 'config_bot' })})
           </span>
         </p>
         <p className="text-[15px] font-bold">
-          {t('TotalTokens', { ns: 'config_bot' })}: {formatNumber(includesResourceData?.total_token || 0)} /10.000.000{' '}
+          {t('TotalTokens', { ns: 'config_bot' })}:{' '}
+          {formatNumber(includesResourceData?.total_token || 0)} /10.000.000{' '}
           {t('limit', { ns: 'config_bot' })}
         </p>
       </div>

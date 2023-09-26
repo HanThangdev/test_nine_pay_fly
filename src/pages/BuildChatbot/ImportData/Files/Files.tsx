@@ -18,7 +18,7 @@ const Files = () => {
   const [listFileWaitingImport, setListFileWaitingImport] = useState<File[]>(
     [],
   );
-  const {includesResource} = useSelector(
+  const { includesResource } = useSelector(
     (state: RootState) => state.buildChatBot,
   );
   const {
@@ -77,7 +77,10 @@ const Files = () => {
   }, [listIncludesFile]);
 
   const listLink = useMemo(() => listIncludesFile, [listIncludesFile]);
-  const includesResourceData = useMemo(() => includesResource, [includesResource]);
+  const includesResourceData = useMemo(
+    () => includesResource,
+    [includesResource],
+  );
 
   useEffect(() => {
     onGetAllFile({ bot_id: data?.id });
@@ -178,13 +181,17 @@ const Files = () => {
         </p>
         <p className="text-[15px] font-bold">
           {includesResourceData?.resource[1]?.number_of_resources || 0}{' '}
-          {t('Files', { ns: 'config_bot' })}
+          {(includesResourceData?.resource[1]?.number_of_resources || 0) > 1
+            ? `${t('Files', { ns: 'config_bot' })}`
+            : `${t('File', { ns: 'config_bot' })}`}
           <span className="text-[#A7A7B0]">
             ({formatNumber(includesResourceData?.resource[1]?.token || 0)}{' '}
             {t('tokens', { ns: 'config_bot' })})
           </span>{' '}
           | {includesResourceData?.resource[0]?.number_of_resources || 0}{' '}
-          {t('Links', { ns: 'config_bot' })}
+          {(includesResourceData?.resource[0]?.number_of_resources || 0) > 1
+            ? `${t('Links', { ns: 'config_bot' })}`
+            : `${t('Link', { ns: 'config_bot' })}`}
           <span className="text-[#A7A7B0]">
             ({formatNumber(includesResourceData?.resource[0]?.token || 0)}{' '}
             {t('tokens', { ns: 'config_bot' })})
