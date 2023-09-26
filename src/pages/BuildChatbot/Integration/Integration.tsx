@@ -36,7 +36,7 @@ const Integration = () => {
             </p>
             <a
               target='_blank'
-              href='https://slack.com/oauth/v2/authorize?client_id=5697154391091.5942177894499&scope=app_mentions:read,channels:history,chat:write,commands,im:history&user_scope=chat:write,im:history,channels:history,groups:history"'
+              href='https://slack.com/oauth/v2/authorize?client_id=5697154391091.5942177894499&scope=app_mentions:read,channels:history,chat:write,commands,im:history&user_scope=chat:write,im:history,channels:history,groups:history'
               className={classNames(
                 'mb-0 w-full h-[55px] gap-x-4 bg-[#E8E9F4] flex items-center justify-center',
                 'text-[20px] text-[#01058A] rounded-[5px] hover:cursor-pointer hover:scale-105 duration-500 transition-all',
