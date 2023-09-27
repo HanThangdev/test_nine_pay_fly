@@ -94,7 +94,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       </div>
       {/* <!-- SIDEBAR HEADER --> */}
 
-      <div className="no-scrollbar w-[220px] flex flex-col overflow-y-auto duration-300 ease-linear">
+      <div className="no-scrollbar w-[220px] flex flex-col duration-300 ease-linear">
         {/* <!-- Sidebar Menu --> */}
         <nav className="py-8 ">
           {/* <!-- Menu Group --> */}
@@ -117,7 +117,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </li>
               <li>
                 <NavLink
-                   onClick={() => {
+                  onClick={() => {
                     dispatch(resetStateBuild());
                   }}
                   to="/build-chatbots"
@@ -163,11 +163,31 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   {t('Pricing')}
                 </NavLink>
               </li>
+
               {/* <!-- Menu Item price --> */}
             </ul>
           </div>
         </nav>
+
         {/* <!-- Sidebar Menu --> */}
+      </div>
+      <div className='h-full flex flex-col justify-end'>
+        <NavLink
+          to="/terms"
+          className={`h-[44px] group relative flex items-center gap-[18px] rounded-r-[5px] py-2 px-4 font-medium text-[#A7A9C0] duration-300 ease-in-out hover:bg-[#1AA8E9] hover:text-white ${
+            pathname.includes('price') && 'bg-[#1AA8E9] !text-white !font-bold'
+          }`}
+        >
+          Terms of Service
+        </NavLink>
+        <NavLink
+          to="/policy"
+          className={`h-[44px] group relative flex items-center gap-[18px] rounded-r-[5px] py-2 px-4 font-medium text-[#A7A9C0] duration-300 ease-in-out hover:bg-[#1AA8E9] hover:text-white ${
+            pathname.includes('price') && 'bg-[#1AA8E9] !text-white !font-bold'
+          }`}
+        >
+          Privacy Policy
+        </NavLink>
       </div>
     </aside>
   );

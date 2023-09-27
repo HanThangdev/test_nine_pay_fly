@@ -15,6 +15,8 @@ const Verify = lazy(() => import('../pages/Authentication/verify/Verify'));
 const SignIn = lazy(() => import('../pages/Authentication/login/SignIn'));
 const ForgotPassword = lazy(() => import('../pages/Authentication/forgot-password/ForgotPassword'));
 const ForgotPasswordVerify = lazy(() => import('../pages/Authentication/forgot-passwordVerify/ForgotPasswordVerify'));
+const TermsOfService = lazy(() => import('../pages/PoliciesAndTerms/TermsOfService'));
+const PrivacyPolicy = lazy(() => import('../pages/PoliciesAndTerms/PrivacyPolicy'));
 
 const coreRoutes = [
   {
@@ -119,6 +121,18 @@ const coreRoutes = [
     path: '*',
     title: 'Notfound',
     component: Notfound,
+  },
+  {
+    path: '/terms',
+    title: 'Terms of Service',
+    component: TermsOfService,
+    layout: DefaultLayout,
+  },
+  {
+    path: '/policy',
+    title: 'Privacy Policye',
+    component: PrivacyPolicy,
+    layout: DefaultLayout,
   },
 ];
 
