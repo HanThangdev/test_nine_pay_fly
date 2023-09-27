@@ -48,55 +48,6 @@ function App() {
               );
             })}
           </Routes>
-          {/* <Routes>
-          <Route path="/auth/signin/:code" element={<SignIn />} />
-          <Route path="/auth/signin" element={<SignIn />} />
-          <Route path="/auth/verify" element={<Verify />} />
-          <Route path="/auth/signup" element={<SignUp />} />
-          <Route path="/chat/:id" element={<Chat />} />
-          <Route
-            path="/register-pricing-plan"
-            element={
-              !Boolean(token) ? (
-                <Navigate to="/auth/signin" />
-              ) : (
-                <RegisterPricingPlan />
-              )
-            }
-          />
-          <Route
-            path="/auth/forgot-password/:code"
-            element={<ForgotPasswordVerify />}
-          />
-          <Route path="/auth/forgot-password" element={<ForgotPassword />} />
-          <Route element={<DefaultLayout />}>
-            <Route
-              index
-              element={
-                !Boolean(token) ? (
-                  <Navigate to="/auth/signin" />
-                ) : (
-                  <ManageChatbot />
-                )
-              }
-            />
-            {routes.map(({ path, component: Component }) => (
-              <Route
-                path={path}
-                key={path}
-                element={
-                  !Boolean(token) ? (
-                    <Navigate to="/auth/signin" />
-                  ) : (
-                    <Suspense fallback={<Loader />}>
-                      <Component />
-                    </Suspense>
-                  )
-                }
-              />
-            ))}
-          </Route>
-        </Routes> */}
         </Provider>
     </>
   );

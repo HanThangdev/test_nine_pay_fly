@@ -1,9 +1,20 @@
 import classNames from 'classnames';
+import { useEffect, useRef } from 'react';
 
 const TermsOfService = () => {
+  const termsOfServiceRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (termsOfServiceRef.current) {
+      termsOfServiceRef.current.scrollIntoView({
+        behavior: "smooth",
+        block:'nearest'
+      });
+    }
+  }, []);
   return (
-    <>
-      <main
+      <div
+        ref={termsOfServiceRef}
         className={classNames(
           'bg-[#FFF] rounded-[10px] p-6 mt-[20px] py-[22px] px-[29px]',
           'shadow-[0_0px_4px_0px_rgba(32,32,62,0.16)] font-sans',
@@ -30,7 +41,7 @@ const TermsOfService = () => {
           all of these Legal Terms. If you do not agree or comply with these
           legal terms, you will not be entitled to continue using Chatfly.
         </p>
-        <p className="mb-4">
+        <p className="mb-4" id="head">
           Additional terms and conditions or documents are always updated
           regularly. Any change or modification of these Legal Terms is our
           right. We will notify you of any changes by updating the "Last
@@ -48,27 +59,28 @@ const TermsOfService = () => {
           agree to these Legal Terms before you use the Service.
         </p>
         <h2 className="text-xl font-bold mb-4">Index of Contents</h2>
-        <ul className="list-decimal list-inside">
-          <li className="mb-2">Our Services.</li>
-          <li className="mb-2">Intellectual Property Rights</li>
-          <li className="mb-2">Free Trial</li>
-          <li className="mb-2">User Registration</li>
-          <li className="mb-2">Use Representations</li>
-          <li className="mb-2">Purchases and Payment</li>
-          <li className="mb-2">Cancellation</li>
-          <li className="mb-2">Prohibited Activities</li>
-          <li className="mb-2">User Generated Contributions</li>
-          <li className="mb-2">Privacy Policy</li>
-          <li className="mb-2">Services Management</li>
-          <li className="mb-2">Term and Termination</li>
-          <li className="mb-2">User Data</li>
-          <li className="mb-2">Modifications and Interruptions</li>
+        <ul className="list-decimal list-inside"  id="our_service">
+          <li className="mb-2"><a href="#our_service">Our Services.</a></li>
+          <li className="mb-2"><a href="#intellectual">Intellectual Property Rights</a></li>
+          <li className="mb-2"><a href="#free_trial">Free Trial</a></li>
+          <li className="mb-2"><a href="#user_registration">User Registration</a></li>
+          <li className="mb-2"><a href="#use_representations">Use Representations</a></li>
+          <li className="mb-2"><a href="#purchases_payment">Purchases and Payment</a></li>
+          <li className="mb-2"><a href="#cancellation">Cancellation</a></li>
+          <li className="mb-2"><a href="#prohibited_activities">Prohibited Activities</a></li>
+          <li className="mb-2"><a href="#user_generated">User Generated Contributions</a></li>
+          <li className="mb-2"><a href="#privacy_policy">Privacy Policy</a></li>
+          <li className="mb-2"><a href="#services_management">Services Management</a></li>
+          <li className="mb-2"><a href="#term_and_termination">Term and Termination</a></li>
+          <li className="mb-2"><a href="#contact_us">User Data</a></li>
+          <li className="mb-2"><a href="#contact_us">Modifications and Interruptions</a></li>
           <li className="mb-2">
-            Electronic Communications, Transaction and Signatures
+          <a href="#contact_us">Electronic Communications, Transaction and Signatures</a>
           </li>
-          <li className="mb-2">Contact us</li>
+          <li className="mb-2"><a href="#contact_us">Contact us</a></li>
         </ul>
-        <h2 className="text-xl font-bold mb-4">1. OUR SERVICES</h2>
+        <section id="our_service">
+        <h2 className="text-xl font-bold mb-4" id="intellectual">1. OUR SERVICES</h2>
         <p className="mb-4">
           The information provided when using the Service is not intended for
           distribution to or use by any person or entity in any region or
@@ -79,7 +91,7 @@ const TermsOfService = () => {
           on their own and are solely responsible for compliance with local
           laws, if and when local laws apply.
         </p>
-
+          </section>
         <h2 className="text-xl font-bold mb-4">
           2. INTELLECTUAL PROPERTY RIGHTS
         </h2>
@@ -129,7 +141,7 @@ const TermsOfService = () => {
           unrestricted manner for any lawful purpose, commercial or
           non-commercial, without acknowledgment or compensation to you.
         </p>
-        <p className="mb-4">
+        <p className="mb-4" id="free_trial">
           <strong>You are responsible for what you post or upload:</strong> By
           submitting Submissions to us via any part of Chatfly, you confirm that
           you have read and agree to their "PROHIBITED ACTIVITIES" section and
@@ -147,14 +159,14 @@ const TermsOfService = () => {
           Submissions do not include confidential information.
         </p>
 
-        <h2 className="text-xl font-bold mb-4">3. FREE TRIAL</h2>
+        <h2 className="text-xl font-bold mb-4" id="user_registration" >3. FREE TRIAL</h2>
         <p className="mb-4">
           We offer a 14 days free trial to new users who register Chatfly
           accounts. The accounts will be deleted after 14 days of trial if users
           do not upgrade to higher plans.
         </p>
 
-        <h2 className="text-xl font-bold mb-4">4. USER REGISTRATION</h2>
+        <h2 className="text-xl font-bold mb-4" id="use_representations">4. USER REGISTRATION</h2>
         <p className="mb-4">
           You must create an account to use the Service. You agree to keep your
           password confidential and will be responsible for all use of your
@@ -163,7 +175,7 @@ const TermsOfService = () => {
           the regulations.
         </p>
 
-        <h2 className="text-xl font-bold mb-4">5. USER REPRESENTATIONS</h2>
+        <h2 className="text-xl font-bold mb-4" id="purchases_payment">5. USER REPRESENTATIONS</h2>
         <p className="mb-4">
           When using Chatfly, you represent the following: (1) all registration
           information you submit will be accurate, current and complete; (2) you
@@ -183,7 +195,7 @@ const TermsOfService = () => {
           and refuse any current or future use of your account for Chatfly.
         </p>
 
-        <h2 className="text-xl font-bold mb-4">6. PURCHASES AND PAYMENT</h2>
+        <h2 className="text-xl font-bold mb-4" id="cancellation">6. PURCHASES AND PAYMENT</h2>
         <p className="mb-4">We accept the following forms of payment:</p>
         <ul className="list-disc list-inside">
           <li className="mb-1">Electronic wallets</li>
@@ -195,11 +207,11 @@ const TermsOfService = () => {
         <p className="mb-4">You agree to pay all charges at the then current prices for your purchases and any applicable shipping charges. You authorize us to charge your chosen payment provider for any amounts after you place your order. If your order is subject to recurring payments, you agree to allow us to deduct funds from your payment method on a recurring basis without requiring prior approval for each recurring payment. , until you cancel the respective order. </p>
         <p className="mb-4">We reserve the right to correct any errors or omissions in pricing, even if we have previously requested or received payment.</p>
 
-        <h2 className="text-xl font-bold mb-4">7. CANCELLATION</h2>
+        <h2 className="text-xl font-bold mb-4" id="prohibited_activities">7. CANCELLATION</h2>
         <p className="mb-4">All purchases are non-refundable. You can cancel your subscription at any time by logging into your account. Your cancellation will take effect at the end of the current paid term.</p>
         <p className="mb-4">If you are unsatisfied with our Services, please email us at contact@chatfly.co.</p>
 
-        <h2 className="text-xl font-bold mb-4">8. PROHIBITED ACTIVITIES</h2>
+        <h2 className="text-xl font-bold mb-4" id="user_generated">8. PROHIBITED ACTIVITIES</h2>
         <p className="mb-4">You may not access or use the Services for any purpose other than that for which we make the Services available. The Services may not be used in connection with any commercial endeavors except those that are specifically endorsed or approved by us.</p>
         <p className="mb-4">As a user of the Services, you agree not to:</p>
         <ul className="list-disc list-inside">
@@ -224,7 +236,7 @@ const TermsOfService = () => {
           <li className="mb-1">Except as may be the result of standard search engine or Internet browser usage, use, launch, develop, or distribute any automated system, including without limitation, any spider, robot, cheat utility, scraper, or offline reader that accesses the Services, or use or launch any unauthorized script or other software.</li>
         </ul>
 
-        <h2 className="text-xl font-bold mb-4">9. USER GENERATED CONTRIBUTIONS</h2>
+        <h2 className="text-xl font-bold mb-4"  id="privacy_policy">9. USER GENERATED CONTRIBUTIONS</h2>
         <p className="mb-4">The Services does not offer users to submit or post content. We may provide you with the opportunity to create, submit, post, display, transmit, perform, publish, distribute, or broadcast content and materials to us or on the Services, including but not limited to text, writings, video, audio, photographs, graphics, comments, suggestions, or personal information or other material (collectively, "Contributions"). Contributions may be viewable by other users of the Services and through third-party websites. As such, any Contributions you transmit may be treated in accordance with the Services' Privacy Policy. When you create or make available any Contributions, you thereby represent and warrant that:</p>
         <ul className="list-disc list-inside">
           <li className="mb-1">The creation, distribution, transmission, public display, or performance, and the accessing, downloading, or copying of your Contributions do not and will not infringe the proprietary rights, including but not limited to the copyright, patent, trademark, trade secret, or moral rights of any third party.</li>
@@ -236,22 +248,22 @@ const TermsOfService = () => {
           <li className="mb-1">Your Contributions do not otherwise violate, or link to material that violates, any provision of these Legal Terms, or any applicable law or regulation.</li>
         </ul>
 
-        <h2 className="text-xl font-bold mb-4">10. PRIVACY POLICY</h2>
+        <h2 className="text-xl font-bold mb-4"  id="services_management">10. PRIVACY POLICY</h2>
         <p className="mb-4">We care about data privacy and security. Please review our Privacy Policy: chatfly.co#privacy. By using the Services, you agree to be bound by our Privacy Policy, which is incorporated into these Legal Terms. </p>
 
-        <h2 className="text-xl font-bold mb-4">11. SERVICES MANAGEMENT</h2>
+        <h2 className="text-xl font-bold mb-4"  id="term_and_termination">11. SERVICES MANAGEMENT</h2>
         <p className="mb-4">We reserve the right, but not the obligation, to: (1) monitor the Services for violations of these Legal Terms; (2) take appropriate legal action against anyone who, in our sole discretion, violates the law or these Legal Terms, including without limitation, reporting such user to law enforcement authorities; (3) in our sole discretion and without limitation, refuse, restrict access to, limit the availability of, or disable (to the extent technologically feasible) any of your Contributions or any portion thereof; (4) in our sole discretion and without limitation, notice, or liability, to remove from the Services or otherwise disable all files and content that are excessive in size or are in any way burdensome to our systems; and (5) otherwise manage the Services in a manner designed to protect our rights and property and to facilitate the proper functioning of the Services.</p>
 
-        <h2 className="text-xl font-bold mb-4">12. TERM AND TERMINATION</h2>
+        <h2 className="text-xl font-bold mb-4"  id="contact_us">12. TERM AND TERMINATION</h2>
         <p className="mb-4">These Legal Terms shall remain in full force and effect while you use the Services. WITHOUT LIMITING ANY OTHER PROVISION OF THESE LEGAL TERMS, WE RESERVE THE RIGHT TO, IN OUR SOLE DISCRETION AND WITHOUT NOTICE OR LIABILITY, DENY ACCESS TO AND USE OF THE SERVICES (INCLUDING BLOCKING CERTAIN IP ADDRESSES), TO ANY PERSON FOR ANY REASON OR FOR NO REASON, INCLUDING WITHOUT LIMITATION FOR BREACH OF ANY REPRESENTATION, WARRANTY, OR COVENANT CONTAINED IN THESE LEGAL TERMS OR OF ANY APPLICABLE LAW OR REGULATION. WE MAY TERMINATE YOUR USE OR PARTICIPATION IN THE SERVICES OR DELETE YOUR ACCOUNT AND ANY CONTENT OR INFORMATION THAT YOU POSTED AT ANY TIME, WITHOUT WARNING, IN OUR SOLE DISCRETION. If we terminate or suspend your account for any reason, you are prohibited from registering and creating a new account under your name, a fake or borrowed name, or the name of any third party, even if you may be acting on behalf of the third party. In addition to terminating or suspending your account, we reserve the right to take appropriate legal action, including without limitation pursuing civil, criminal, and injunctive redress.</p>
 
-        <h2 className="text-xl font-bold mb-4">13. USER DATA</h2>
+        <h2 className="text-xl font-bold mb-4"  id="contact_us">13. USER DATA</h2>
         <p className="mb-4">We will maintain certain data that you transmit to the Services for the purpose of managing the performance of the Services, as well as data relating to your use of the Services. Although we perform regular routine backups of data, you are solely responsible for all data that you transmit or that relates to any activity you have undertaken using the Services. You agree that we shall have no liability to you for any loss or corruption of any such data, and you hereby waive any right of action against us arising from any such loss or corruption of such data.</p>
 
-        <h2 className="text-xl font-bold mb-4">14. MODIFICATIONS AND INTERRUPTIONS</h2>
+        <h2 className="text-xl font-bold mb-4"  id="contact_us">14. MODIFICATIONS AND INTERRUPTIONS</h2>
         <p className="mb-4">We reserve the right to change, modify, or remove the contents of the Services at any time or for any reason at our sole discretion without notice. However, we have no obligation to update any information on our Services. We will not be liable to you or any third party for any modification, price change, suspension, or discontinuance of the Services. We cannot guarantee the Services will be available at all times. We may experience hardware, software, or other problems or need to perform maintenance related to the Services, resulting in interruptions, delays, or errors. We reserve the right to change, revise, update, suspend, discontinue, or otherwise modify the Services at any time or for any reason without notice to you. You agree that we have no liability whatsoever for any loss, damage, or inconvenience caused by your inability to access or use the Services during any downtime or discontinuance of the Services. Nothing in these Legal Terms will be construed to obligate us to maintain and support the Services or to supply any corrections, updates, or releases in connection therewith.</p>
 
-        <h2 className="text-xl font-bold mb-4">15. ELECTRONIC COMMUNICATIONS, TRANSACTIONS AND SIGNATURES</h2>
+        <h2 className="text-xl font-bold mb-4"  id="contact_us">15. ELECTRONIC COMMUNICATIONS, TRANSACTIONS AND SIGNATURES</h2>
         <p className="mb-4">Visiting the Services, sending us emails, and completing online forms constitute electronic communications. You consent to receive electronic communications, and you agree that all agreements, notices, disclosures, and other communications we provide to you electronically, via email and on the Services, satisfy any legal requirement that such communication be in writing. YOU HEREBY AGREE TO THE USE OF ELECTRONIC SIGNATURES, CONTRACTS, ORDERS, AND OTHER RECORDS, AND TO ELECTRONIC DELIVERY OF NOTICES, POLICIES, AND RECORDS OF TRANSACTIONS INITIATED OR COMPLETED BY US OR VIA THE SERVICES. You hereby waive any rights or requirements under any statutes, regulations, rules, ordinances, or other laws in any jurisdiction which require an original signature or delivery or retention of non-electronic records, or to payments or the granting of credits by any means other than electronic means.</p>
 
         <h2 className="text-xl font-bold mb-4">16. CONTACT US</h2>
@@ -260,8 +272,7 @@ const TermsOfService = () => {
         <footer className="bg-gray-200 p-4 text-center">
           &copy; 2023 ChatFly. All rights reserved.
         </footer>
-      </main>
-    </>
+      </div>
   );
 };
 
