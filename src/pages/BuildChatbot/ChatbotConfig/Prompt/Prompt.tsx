@@ -61,7 +61,7 @@ const Prompt: React.FC<PromptProps> = ({
     >
       <h2
         onClick={() => setDropdownOpen(!dropdownOpen)}
-        className="text-[20px] text-[#01058A] font-black flex items-center gap-x-3"
+        className="text-[20px] text-[#01058A] font-black flex items-center gap-x-3 cursor-pointer"
       >
         <IconPrompt />
         {t('Prompt', { ns: 'config_bot' })}

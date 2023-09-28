@@ -156,7 +156,7 @@ const PricingPlan = () => {
         <div className="block lg:flex justify-center m-auto gap-8 pt-8">
           <div
             className={classNames(
-              'w-full lg:w-1/3 border-[1px] border-[#DCDEED] rounded-[10px]',
+              'border-[1px] border-[#DCDEED] rounded-[10px] min-w-[20vw]',
               'bg-[#F9F9FC] text-black py-5 px-8 relative',
             )}
           >
@@ -186,7 +186,7 @@ const PricingPlan = () => {
           <div
             className={classNames(
               'border-[1px] border-[#DCDEED] rounded-[10px]',
-              'bg-[#F9F9FC] text-black py-5 px-8 relative',
+              'bg-[#F9F9FC] text-black py-5 px-8 relative min-w-[20vw]',
             )}
           >
             <p className="text-[24px] font-black mb-4 flex justify-center">
@@ -222,7 +222,7 @@ const PricingPlan = () => {
           <div
             className={classNames(
               'border-[1px] border-[#DCDEED] rounded-[10px]',
-              'bg-[#F9F9FC] text-black py-5 px-8 relative',
+              'bg-[#F9F9FC] text-black py-5 px-8 relative min-w-[20vw]',
             )}
           >
             <p className="text-[24px] font-black mb-4 flex justify-center">

@@ -114,7 +114,7 @@ const CollectCustomer: React.FC<CollectCustomerProps> = ({
           />
         )}
         {custom?.length ? (
-          custom.map((item, idx) => {
+          custom.filter((it) => it.key !== 'numberShowing').map((item, idx) => {
             return (
               <div className="flex items-center mt-[12px]" key={idx}>
                 <input
