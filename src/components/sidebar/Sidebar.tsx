@@ -171,7 +171,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
         {/* <!-- Sidebar Menu --> */}
       </div>
-      <div className='h-full flex flex-col justify-end'>
+      <div className="h-full flex flex-col justify-end w-[220px]">
         <NavLink
           to="/terms"
           className={`h-[44px] group relative flex items-center gap-[18px] rounded-r-[5px] py-2 px-4 font-medium text-[#A7A9C0] duration-300 ease-in-out hover:bg-[#1AA8E9] hover:text-white ${
