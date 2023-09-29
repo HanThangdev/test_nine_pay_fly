@@ -178,3 +178,15 @@ span.flatpickr-weekday,
 [x-cloak] {
   display: none !important;
 }
+
+.input-showing-number{
+  padding-left: 0px;
+  min-height: 41px;
+  display: flex;
+  align-items: center;
+  color: red;
+}
+
+.input-showing-number > .ant-input-number-handler-wrap{
+  display: none;
+}

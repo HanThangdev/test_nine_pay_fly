@@ -95,6 +95,13 @@ export const useBuildChatbot = () => {
     },
     [dispatch],
   );
+
+  const onGetIncludesSource= useCallback(
+    async (payload: {bot_id: string}) => {
+       await dispatch(getIncludesResources(payload));
+    },
+    [dispatch],
+  );
   
   return {
     fetchLink,
@@ -115,6 +122,7 @@ export const useBuildChatbot = () => {
     onGetInfoCurrentBot,
     onGetAdvanceSetting,
     advanceSetting,
-    includesResource
+    includesResource,
+    onGetIncludesSource
   };
 };

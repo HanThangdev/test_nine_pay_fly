@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import IconCollectCustomer from '@/components/IconCollectCustomer/IconCollectCustomer';
-import { Checkbox, Tooltip } from 'antd';
+import { Checkbox, InputNumber, Tooltip } from 'antd';
 import { AiOutlineQuestionCircle } from 'react-icons/ai';
 import { RiDeleteBinLine } from 'react-icons/ri';
 import React from 'react';
@@ -114,47 +114,51 @@ const CollectCustomer: React.FC<CollectCustomerProps> = ({
           />
         )}
         {custom?.length ? (
-          custom.filter((it) => it.key !== 'numberShowing').map((item, idx) => {
-            return (
-              <div className="flex items-center mt-[12px]" key={idx}>
-                <input
-                  type="text"
-                  value={item?.key}
-                  onChange={(e) => {
-                    const newCustomValue = Array.from(custom);
-                    newCustomValue[idx].key = e.target.value;
-                    setCustom(newCustomValue);
-                  }}
-                  className="h-[41px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
-                />
-                <RiDeleteBinLine
-                  size={18}
-                  color="#F44336"
-                  onClick={() => {
-                    const newCustomValue = Array.from(custom);
-                    newCustomValue.splice(idx, 1);
-                    setCustom(newCustomValue);
-                  }}
-                  style={{
-                    position: 'absolute',
-                    right: '5px',
-                    cursor: 'pointer',
-                  }}
-                />
-              </div>
-            );
-          })
+          custom
+            .filter((it) => it.key !== 'numberShowing')
+            .map((item, idx) => {
+              return (
+                <div className="flex items-center mt-[12px]" key={idx}>
+                  <input
+                    type="text"
+                    value={item?.key}
+                    onChange={(e) => {
+                      const newCustomValue = Array.from(custom);
+                      newCustomValue[idx].key = e.target.value;
+                      setCustom(newCustomValue);
+                    }}
+                    className="h-[41px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
+                  />
+                  <RiDeleteBinLine
+                    size={18}
+                    color="#F44336"
+                    onClick={() => {
+                      const newCustomValue = Array.from(custom);
+                      newCustomValue.splice(idx, 1);
+                      setCustom(newCustomValue);
+                    }}
+                    style={{
+                      position: 'absolute',
+                      right: '5px',
+                      cursor: 'pointer',
+                    }}
+                  />
+                </div>
+              );
+            })
         ) : (
           <></>
         )}
         <div className="flex gap-x-4 mt-[12px] items-center">
-          <input
-            type="number"
+          <InputNumber
             placeholder=""
-            min={0}
             value={numberShowing}
-            onChange={(e) => setNumberShowing(Number(e.target.value))}
-            className="h-[41px] w-[150px] rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
+            min={0}
+            max={100}
+            onChange={(value: number | null) => {
+                setNumberShowing(value || 0);
+            }}
+            className={`${classNames('rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none input-showing-number')}`}
           />
           <p className="mb-0">{t('showing', { ns: 'config_bot' })}</p>
         </div>

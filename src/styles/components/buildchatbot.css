@@ -153,3 +153,7 @@
   ):hover {
   @apply hover:bg-[#4ac1ff];
 }
+
+.input-showing-number{
+  color: red;
+}

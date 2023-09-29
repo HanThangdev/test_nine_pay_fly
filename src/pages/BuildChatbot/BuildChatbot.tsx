@@ -17,14 +17,19 @@ import {
   setDataWhenUpdate,
 } from '@/states/buildChatBot/buildChatBot.slice';
 import { isEmptyObjectOrArray } from '@/utils/utils';
-import { getBotInfoTransaction } from '@/repository/buildChatBot';
 import { useBuildChatbot } from '@/states/buildChatBot/buildChatBot.selector';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 const urlParams = new URLSearchParams(window.location.search);
 const getLanguageFromURL = urlParams.get('language');
 const BuildChatbot = () => {
-  const { data, activeTab } = useBuildChatbot();
+  const {
+    data,
+    activeTab,
+    onGetInfoCurrentBot,
+    onGetIncludesSource,
+    includesResource,
+  } = useBuildChatbot();
   const { t } = useTranslation();
   const lang = getLanguageFromURL || localStorage.getItem('LANGUAGE') || 'en';
   const { id } = useParams();
@@ -78,7 +83,13 @@ const BuildChatbot = () => {
 
     dispatch(setDataWhenUpdate(obj));
     if (id) {
-      dispatch(getBotInfoTransaction({ bot_id: id || '' }));
+      onGetInfoCurrentBot({ bot_id: id })
+        .then(() => {
+          onGetIncludesSource({ bot_id: id });
+        })
+        .catch((err) => {
+          console.log('err', err);
+        });
     }
   }, []);
 
@@ -87,14 +98,18 @@ const BuildChatbot = () => {
       ? items.map((item, index) =>
           index != 0 ? { ...item, disabled: true } : item,
         )
-      : items;
-  }, [data, lang]);
+      : !!includesResource?.total_token
+      ? items
+      : items.map((item, index) =>
+          ![0, 1].includes(index) ? { ...item, disabled: true } : item,
+        );
+  }, [data, lang, includesResource]);
 
   const onChange = (key: string) => {
     setActiveKey(key);
     dispatch(setActiveTab(key));
   };
-
+  
   return (
     <div className="flex">
       <Tabs

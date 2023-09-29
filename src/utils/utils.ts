@@ -67,7 +67,7 @@ export function convertCustomValue(obj: any): Array<{ key: string }> {
     return [];
   }
   const newArray = Object.keys(obj)
-    .filter((key) => key !== 'name' && key !== 'phone' && key !== 'email')
+    .filter((key) => key !== 'name' && key !== 'phone' && key !== 'email' && key !== 'numberShowing')
     .map((key) => ({ key: key }));
   return newArray;
 }

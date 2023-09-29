@@ -85,6 +85,14 @@ const coreRoutes = [
 
   },
   {
+    path: '/conversations/:id',
+    title: 'Conversations',
+    component: Conversations,
+    isProtected: true,
+    layout: DefaultLayout,
+
+  },
+  {
     path: '/profile',
     title: 'Profile',
     component: Profile,

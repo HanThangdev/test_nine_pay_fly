@@ -22,6 +22,7 @@ import { GetAllConversationsPayload } from '@/repository/conversations/type';
 import useScrollToLastElementChild from '@/hooks/useScrollToLastElementChild';
 import { convertStringToParagraphs, formatTimeAgo } from '@/utils/format';
 import { HistoryChat } from '@/states/chat/type';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const { RangePicker } = DatePicker;
 
@@ -33,6 +34,8 @@ const Conversations = () => {
     (state: RootState) => state.conversations,
   );
   const { onGetBot } = useManageChatbot();
+  const { id } = useParams();
+  const  navigate = useNavigate();
 
   const DEFAULT_FROM_DATE = dayjs().subtract(1, 'month');
   const DEFAULT_TO_DATE = dayjs();
@@ -95,6 +98,7 @@ const Conversations = () => {
   // Set the latest conversation as default
   useEffect(() => {
     if (
+      !id &&
       selectedBot &&
       conversations.length &&
       !conversations.some(
@@ -103,6 +107,9 @@ const Conversations = () => {
     ) {
       const latestConversationId = conversations[0].session_id;
       setSelectedConversationId(latestConversationId);
+    }
+    if(id && conversations.length) {
+      setSelectedConversationId(id)
     }
   }, [selectedBot, conversations]);
 
@@ -147,6 +154,19 @@ const Conversations = () => {
       downloadPDFFromString(response.payload.data, fileName);
     }
   };
+
+  const scrollToElement = (elementId: string) => {
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  useEffect(() => {
+    if(selectedConversationId ){
+      scrollToElement(selectedConversationId)
+    }
+  },[selectedConversationId])
 
   const renderEmptyConversation = () => {
     return (
@@ -204,8 +224,11 @@ const Conversations = () => {
               {conversations.map((conversation) => (
                 <div
                   onClick={() =>
-                    setSelectedConversationId(conversation.session_id)
+                    {setSelectedConversationId(conversation.session_id)
+                    navigate(`/conversations/${conversation.session_id}`)
+                    }
                   }
+                  id={conversation.session_id}
                   key={conversation.session_id}
                   className={classNames(
                     {
