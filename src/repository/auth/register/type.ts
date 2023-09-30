@@ -12,3 +12,9 @@ export type RequestRegisterData = {
   token: string
   token_type: string
 }
+
+export interface RegisterRequest {
+  full_name: string,
+  email: string,
+  password: string,
+}

@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { PiEyeLight, PiEyeSlashLight } from 'react-icons/pi';
 import { useState, useEffect } from 'react';
-import { notification, Image, Checkbox } from 'antd';
+import { notification, Image, Checkbox, Button } from 'antd';
 import Cookies from 'universal-cookie';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/states/store';
@@ -13,6 +13,8 @@ import { API_STATUS } from '@/constants';
 import { useManageChatbot } from '@/states/manageBot/manageBot.selector';
 import { userApi } from '@/repository/auth/login';
 import { logoHaveTextImg } from '@/images/logo';
+// import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
+// import LoginGoogleBtn from '@/components/LoginGoogleButton';
 
 const SignIn = () => {
   const { code } = useParams();
@@ -71,7 +73,7 @@ const SignIn = () => {
       notification.success({
         message: 'You have successfully logged in.',
       });
-      
+
       const isLogin = true;
       await onGetBot(isLogin);
     } catch (error: any) {
@@ -172,13 +174,30 @@ const SignIn = () => {
                   </p>
                 </div>
                 <div className="mb-5">
-                  <input
-                    type="submit"
+                  <Button
+                    htmlType="submit"
                     disabled={loading}
-                    value="Sign in"
-                    className="w-full h-[48px] cursor-pointer rounded-[8px] bg-button-login text-white transition hover:bg-opacity-90"
-                  />
+                    loading={loading}
+                    className="w-full h-[48px] cursor-pointer rounded-[8px] bg-button-login text-white transition hover:bg-opacity-90 button-antd"
+                  >
+                    Sign in
+                  </Button>
                 </div>
+                {/* <div className="w-full">
+                  <GoogleOAuthProvider clientId="664422196919-e2dkku6sj5ums77phncm4ascinss55fe.apps.googleusercontent.com">
+                    <GoogleLogin
+                      onSuccess={(credentialResponse) => {
+                        console.log(credentialResponse);
+                      }}
+                      text='signin_with'
+                      shape="square"
+                      onError={() => {
+                        console.log('Login Failed');
+                      }}
+                      width={396}
+                    />
+                  </GoogleOAuthProvider>
+                </div> */}
               </form>
             </div>
           </div>

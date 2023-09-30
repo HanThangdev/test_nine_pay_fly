@@ -3,7 +3,7 @@ import { FormData, schema } from './validation';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
-import { notification } from 'antd';
+import { Button, notification } from 'antd';
 import Cookies from 'universal-cookie';
 import { setIsForgotPass, setEmailVerify } from '@/states/auth/auth.slice';
 
@@ -68,12 +68,12 @@ const ForgotPassword = () => {
                 </div>
               </div>
               <div className="mb-5 mt-4">
-                <input
-                  type="submit"
+                <Button
+                  htmlType="submit"
+                  loading={loading}
                   disabled={isSubmitting || loading}
-                  value="Send reset password instructions"
-                  className="w-full h-[48px] cursor-pointer rounded-[8px] bg-button-login text-white transition hover:bg-opacity-90"
-                />
+                  className="w-full h-[48px] cursor-pointer rounded-[8px] bg-button-login text-white transition hover:bg-opacity-90 button-antd"
+                >Send reset password instructions</Button>
               </div>
             </form>
             <div className="mt-6 text-center">

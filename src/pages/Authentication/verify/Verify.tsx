@@ -4,10 +4,12 @@ import { Image } from 'antd';
 import { useAuth } from '@/states/auth/auth.selector';
 import api from '@/repository/auth/reset-password';
 import { notification } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const Verify = () => {
   const { emailVerify, isForgotPass } = useAuth();
-
+  const navigate = useNavigate();
   const onResend = async () => {
     try {
       await api.resetPassword(emailVerify);
@@ -15,11 +17,15 @@ const Verify = () => {
         message: 'Check your email for the password reset link',
       });
     } catch (error: any) {
-      notification.error({
-        message: error?.response?.data.errors ?? error?.message,
-      });
+      console.log(error)
     }
   };
+
+  useEffect(() => {
+    if(!emailVerify){
+      navigate('/')
+    }
+  },[emailVerify])
 
   return (
     <>
@@ -47,9 +53,9 @@ const Verify = () => {
             <span className="font-bold">{emailVerify}</span>
           </p>
           <p className="my-6">
-            Just click on the link in that email to complete your signup.
+            To complete your registration, simply click the link in the email.
             <br />
-            If you don't see it, you may need to{' '}
+            If you can’t find it, please{' '}
             <span className="font-bold">check your spam</span> folder.
           </p>
           {isForgotPass && (

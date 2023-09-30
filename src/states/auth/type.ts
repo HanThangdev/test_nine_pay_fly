@@ -12,3 +12,17 @@ export interface DataFetchLink {
   progress: number;
   url: string;
 }
+
+export interface IBaseAPIRes {
+  status?: string;
+}
+
+export interface IErrorAPIRes extends IBaseAPIRes {
+  reason: string;
+  errors: IError[];
+}
+
+export interface IError {
+  field: string;
+  code: string;
+}

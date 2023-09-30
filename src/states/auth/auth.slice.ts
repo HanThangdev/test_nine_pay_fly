@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { AuthState } from './type';
 import { loginTransaction } from '@/repository/auth/login';
+import { registerTransaction } from '@/repository/auth/register';
 
 const initialState: AuthState = {
   data: {
@@ -33,6 +34,17 @@ export const authSlice = createSlice({
       return state;
     });
     builder.addCase(loginTransaction.rejected, (state) => {
+      state.loading = false;
+    });
+
+    builder.addCase(registerTransaction.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(registerTransaction.fulfilled, (state, action) => {
+      state.loading = false;
+      return state;
+    });
+    builder.addCase(registerTransaction.rejected, (state) => {
       state.loading = false;
     });
   },

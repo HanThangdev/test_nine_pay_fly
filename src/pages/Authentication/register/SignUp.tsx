@@ -5,12 +5,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { PiEyeLight, PiEyeSlashLight } from 'react-icons/pi';
 import { useState } from 'react';
 import Cookies from 'universal-cookie';
-import { Image, notification } from 'antd';
-import userApi from '@/repository/auth/register';
+import { Button, Image, Input, notification } from 'antd';
 import { logoHaveTextImg } from '@/images/logo';
 import { setEmailVerify } from '@/states/auth/auth.slice';
 import { AppDispatch } from '@/states/store';
 import { useDispatch } from 'react-redux';
+import { registerTransaction } from '@/repository/auth/register';
+import { API_STATUS } from '@/constants';
 
 const SignUp = () => {
   const [showPass, setShowPass] = useState(false);
@@ -18,7 +19,7 @@ const SignUp = () => {
   const cookies = new Cookies();
   const token = cookies.get('access_token');
   const navigate = useNavigate();
-  const [loading, setLoading] = useState<boolean>();
+  const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useDispatch<AppDispatch>();
   const {
     handleSubmit,
@@ -37,17 +38,18 @@ const SignUp = () => {
     };
 
     try {
-      await userApi.register(body);
+      const {meta} = await dispatch(registerTransaction(body));
+      if(meta.requestStatus == API_STATUS.REJECTED){
+        throw(meta);
+      }
       notification.success({
         message: 'You have successfully registered.',
         duration: 2,
       });
-      dispatch(setEmailVerify(true));
+      setLoading(false);
+      dispatch(setEmailVerify(body.email));
       navigate('/auth/verify');
     } catch (error: any) {
-      // notification.error({
-      //   message: error?.response?.data.message ?? error?.message,
-      // });
       setLoading(false);
     }
   });
@@ -195,12 +197,13 @@ const SignUp = () => {
                   </div>
                 </div>
                 <div className="mb-5">
-                  <input
-                    type="submit"
+                  <Button
+                    htmlType="submit"
+                    loading={loading}
                     disabled={isSubmitting || loading}
                     value="Create account"
-                    className="w-full h-[48px] cursor-pointer rounded-[8px] bg-button-login text-white transition hover:bg-opacity-90"
-                  />
+                    className="w-full h-[48px] cursor-pointer rounded-[8px] bg-button-login text-white transition hover:bg-opacity-90 button-antd"
+                  >Create account</Button>
                 </div>
 
                 <div className="mt-6 text-center">
