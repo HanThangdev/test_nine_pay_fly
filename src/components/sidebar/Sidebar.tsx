@@ -178,7 +178,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             pathname.includes('terms') && 'bg-[#1AA8E9] !text-white !font-bold'
           }`}
         >
-          Terms of Service
+          {t('titleSidebar', { ns: 'term_of_service' })}
         </NavLink>
         <NavLink
           to="/policy"
@@ -186,7 +186,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             pathname.includes('policy') && 'bg-[#1AA8E9] !text-white !font-bold'
           }`}
         >
-          Privacy Policy
+          {t('titleSidebar', { ns: 'privacy_policy' })}
         </NavLink>
       </div>
     </aside>

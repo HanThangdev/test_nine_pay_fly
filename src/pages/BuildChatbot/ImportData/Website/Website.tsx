@@ -263,7 +263,7 @@ const Website = () => {
           </span>
         </p>
         <p className="text-[15px] font-bold">
-          {t('TotalTokens', { ns: 'config_bot' })}:{' '}
+          {t('TotalToken', { ns: 'config_bot' })}:{' '}
           {formatNumber(includesResourceData?.total_token || 0)} /10.000.000{' '}
           {t('limit', { ns: 'config_bot' })}
         </p>

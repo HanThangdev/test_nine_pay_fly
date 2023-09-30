@@ -261,7 +261,7 @@ const TermsOfService = () => {
       <p className="mb-4">{t('text15', { ns: 'term_of_service' })}</p>
 
       <h2 className="text-xl font-bold mb-4">
-        {t('16', { ns: 'term_of_service' })}S
+        {t('16', { ns: 'term_of_service' })}
       </h2>
       <p className="mb-4">{t('text16', { ns: 'term_of_service' })}</p>
 
