@@ -99,3 +99,11 @@ export function formatNumber(number: string | number) {
   }
   return x1 + x2;
 }
+
+export function truncateString(str: string, maxLength = 50) {
+  if (str.length <= maxLength) {
+    return str;
+  } else {
+    return str.slice(0, maxLength) + '...';
+  }
+}

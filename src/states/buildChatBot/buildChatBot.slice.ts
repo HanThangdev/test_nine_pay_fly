@@ -1,11 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { BuildChatBotState } from './type';
 import {
+  addQuestionAndAnswerTransaction,
   createBotTransaction,
   createSessionTransaction,
+  deleteQuestionAndAnswerTransaction,
   deleteURLTransaction,
   getAdvanceSettingTransaction,
   getAllFileTransaction,
+  getAllQuestionAndAnswerTransaction,
   getAllURLTransaction,
   getBotInfoTransaction,
   getChatStreamingTransaction,
@@ -24,9 +27,11 @@ const initialState: BuildChatBotState = {
   session_id: uuid(),
   listIncludesLink: [],
   listIncludesFile: [],
+  listIncludesQandA: [],
   history: [],
   loadingFetchLink: false,
   loadingFetchFile: false,
+  loadingQuestionAndAnswer: false,
   loadingChat: false,
   advanceSetting: null,
   includesResource: null,
@@ -285,6 +290,49 @@ export const buildChatbotSlice = createSlice({
     builder.addCase(getIncludesResources.rejected, (state) => state);
 
     // end getIncludesResources
+
+    // start addQuestionAndAnswerTransaction
+
+    builder.addCase(addQuestionAndAnswerTransaction.pending, (state) => {
+      state.loadingQuestionAndAnswer = true;
+    });
+    builder.addCase(addQuestionAndAnswerTransaction.fulfilled, (state) => {
+      state.loadingQuestionAndAnswer = false;
+    });
+    builder.addCase(addQuestionAndAnswerTransaction.rejected, (state) => {
+      state.loadingQuestionAndAnswer = false;
+    });
+
+    // end addQuestionAndAnswerTransaction
+
+    // start deleteQuestionAndAnswerTransaction
+
+    builder.addCase(deleteQuestionAndAnswerTransaction.pending, (state) => {
+      state.loadingQuestionAndAnswer = true;
+    });
+    builder.addCase(deleteQuestionAndAnswerTransaction.fulfilled, (state) => {
+      state.loadingQuestionAndAnswer = false;
+    });
+    builder.addCase(deleteQuestionAndAnswerTransaction.rejected, (state) => {
+      state.loadingQuestionAndAnswer = false;
+    });
+
+    // end deleteQuestionAndAnswerTransaction
+
+    // start getAllQuestionAndAnswerTransaction
+
+    builder.addCase(getAllQuestionAndAnswerTransaction.pending, (state) => {
+      state.loadingQuestionAndAnswer = true;
+    });
+    builder.addCase(getAllQuestionAndAnswerTransaction.fulfilled, (state, action: any) => {
+      state.loadingQuestionAndAnswer = false;
+      state.listIncludesQandA = action.payload.data;
+    });
+    builder.addCase(getAllQuestionAndAnswerTransaction.rejected, (state) => {
+      state.loadingQuestionAndAnswer = false;
+    });
+
+    // end getAllQuestionAndAnswerTransaction
   },
 });
 

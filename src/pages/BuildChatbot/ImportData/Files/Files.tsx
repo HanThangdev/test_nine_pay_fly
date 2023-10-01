@@ -6,7 +6,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { hasDuplicateFiles, isEmptyObjectOrArray } from '@/utils/utils';
 import { useBuildChatbot } from '@/states/buildChatBot/buildChatBot.selector';
 import { useTranslation } from 'react-i18next';
-import FetchFileItem from '../../Component/FetchFileItem';
+import FileItem from '../../Component/FileItem';
 import { API_STATUS } from '@/constants';
 import { TypeAnimation } from 'react-type-animation';
 import { MAX_SIZE_FILE } from '@/constants/configs_bot';
@@ -171,7 +171,7 @@ const Files = () => {
         {listLink &&
           !isEmptyObjectOrArray(listLink) &&
           listLink.map((item, idx) => {
-            return <FetchFileItem item={item} key={idx} index={idx} />;
+            return <FileItem item={item} key={idx} index={idx} />;
           })}
       </div>
       <div className="mt-[25px]">

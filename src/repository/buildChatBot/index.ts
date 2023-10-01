@@ -20,6 +20,11 @@ import {
   DeleteFilePayload,
   GetIncludesResourcesPayload,
   GetIncludesResourcesResponse,
+  AddQuestionAndAnswerResponse,
+  AddQuestionAndAnswerPayload,
+  GetAllQuestionAndAnswerPayload,
+  GetAllQuestionAndAnswerResponse,
+  DeleteQuestionAndAnswerPayload,
 } from './type';
 import Cookies from 'universal-cookie';
 import { SuccessResponse } from '../type';
@@ -337,6 +342,49 @@ export const getIncludesResources = createAsyncThunk(
     try {
       const response = await http.get<SuccessResponse<GetIncludesResourcesResponse>>(
         `/api/scraping/include-resources/${payload.bot_id}`,
+      );
+      return response;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data.error);
+    }
+  },
+);
+
+export const addQuestionAndAnswerTransaction = createAsyncThunk(
+  'transaction/addQuestionAndAnswerTransaction',
+  async (payload: AddQuestionAndAnswerPayload, { rejectWithValue }) => {
+    try {
+      const response = await http.post<SuccessResponse<AddQuestionAndAnswerResponse>>(
+        `/api/scraping/question-answer/${payload.bot_id}`,
+        payload
+      );
+      return response;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data.error);
+    }
+  },
+);
+
+export const deleteQuestionAndAnswerTransaction = createAsyncThunk(
+  'transaction/deleteQuestionAndAnswerTransaction',
+  async (payload: DeleteQuestionAndAnswerPayload, { rejectWithValue }) => {
+    try {
+      const response = await http.delete<SuccessResponse<string>>(
+        `/api/scraping/question-answer/${payload.bot_id}/${payload.question_answer_id}`,
+      );
+      return response;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data.error);
+    }
+  },
+);
+
+export const getAllQuestionAndAnswerTransaction = createAsyncThunk(
+  'transaction/getAllQuestionAndAnswerTransaction',
+  async (payload: GetAllQuestionAndAnswerPayload, { rejectWithValue }) => {
+    try {
+      const response = await http.get<SuccessResponse<GetAllQuestionAndAnswerResponse>>(
+        `/api/scraping/question-answer/${payload.bot_id}`,
       );
       return response;
     } catch (error: any) {

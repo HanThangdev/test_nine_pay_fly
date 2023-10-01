@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { SelectedItem, TextLoadingWebsite } from './type';
 import { TypeAnimation } from 'react-type-animation';
 import { useBuildChatbot } from '@/states/buildChatBot/buildChatBot.selector';
-import FetchLinkItem from '../../Component/FetchLinkItem';
+import LinkItem from '../../Component/LinkItem';
 import { useTranslation } from 'react-i18next';
 import {
   deletedListIncludes,
@@ -218,7 +218,7 @@ const Website = () => {
         </p>
         {!isEmptyObjectOrArray(listLink) &&
           listLink.map((item, idx) => (
-            <FetchLinkItem
+            <LinkItem
               item={item}
               key={idx}
               index={idx}

@@ -44,9 +44,6 @@ const Integration = () => {
             >
               <IconSlack />
               {t('addSlack', { ns: 'config_bot' })}{' '}
-              <span className="font-bold">
-                {t('coming', { ns: 'config_bot' })}
-              </span>
             </a>
             <picture
               className={classNames(

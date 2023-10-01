@@ -15,12 +15,12 @@ import { useTranslation } from 'react-i18next';
 import { RiDeleteBinLine } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
 
-interface FetchFileItemProps {
+interface FileItemProps {
   item: DataFetchFile;
   index: number;
 }
 
-const FetchFileItem = ({ item, index }: FetchFileItemProps) => {
+const FileItem = ({ item, index }: FileItemProps) => {
   const { t } = useTranslation();
   const [visibleDeleteModal, setVisibleDeleteModal] = useState<boolean>(false);
   const { data } = useSelector((state: RootState) => state.buildChatBot);
@@ -108,4 +108,4 @@ const FetchFileItem = ({ item, index }: FetchFileItemProps) => {
   );
 };
 
-export default FetchFileItem;
+export default FileItem;

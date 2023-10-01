@@ -157,3 +157,40 @@ export interface GetIncludesResourcesItem {
   token: number,
   number_of_resources: number,
 }
+
+export interface AddQuestionAndAnswerPayload {
+  bot_id: string;
+  user_id: string;
+  question: string;
+  answer: string;
+}
+
+export interface AddQuestionAndAnswerResponse {
+  bot_id: string;
+  id: string;
+  question: string;
+  answer: string;
+  created_at: string
+}
+
+export interface GetAllQuestionAndAnswerPayload {
+  bot_id: string
+}
+
+export interface GetAllQuestionAndAnswerResponse {
+  file: DataQuestionAndAnswerItem[]
+}
+
+export interface DataQuestionAndAnswerItem {
+  bot_id: string;
+  id: string;
+  question: string;
+  answer: string;
+  created_at: string;
+  num_token: number
+}
+
+export interface DeleteQuestionAndAnswerPayload {
+  question_answer_id: string
+  bot_id: string
+}

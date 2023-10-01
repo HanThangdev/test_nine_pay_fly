@@ -1,4 +1,4 @@
-import { AdvancePayload, GetIncludesResourcesItem } from "@/repository/buildChatBot/type";
+import { AdvancePayload, DataQuestionAndAnswerItem, GetIncludesResourcesItem } from "@/repository/buildChatBot/type";
 
 export interface BuildChatBotState {
   data:  any | null;
@@ -15,6 +15,8 @@ export interface BuildChatBotState {
   fetchFile: DataFetchFile;
   advanceSetting: AdvancePayload | null;
   includesResource: GetIncludesResourcesData | null
+  loadingQuestionAndAnswer: boolean;
+  listIncludesQandA: DataQuestionAndAnswerItem[]
 }
 
 export interface DataFetchLink {
@@ -41,4 +43,12 @@ export interface GetAdvanceSettingPayload {
 export interface GetIncludesResourcesData{
   resource: GetIncludesResourcesItem[],
   total_token: number,
+}
+
+export interface DataQuestionAndAnswer {
+  bot_id: string;
+  id: string;
+  question: string;
+  answer: string;
+  created_at: string
 }

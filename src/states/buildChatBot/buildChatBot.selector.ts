@@ -2,13 +2,13 @@ import { useCallback } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../store';
 import { DataFetchFile, DataFetchLink, GetAdvanceSettingPayload, HistoryChat } from './type';
-import { createSessionTransaction, deleteFileImportedTransaction, deleteURLTransaction, getAdvanceSettingTransaction, getAllFileTransaction, getAllURLTransaction, getBotInfoTransaction, getChatStreamingTransaction, getIncludesResources, importURLTransaction, uploadFileTransaction } from '@/repository/buildChatBot';
-import { DeleteFileImportedPayload, DeleteURLPayload, GetAllFilePayload, GetAllURLPayload, GetBotInfoPayload, GetChatStreamingRequest, ImportURLPayload, UploadFilePayload } from '@/repository/buildChatBot/type';
+import { addQuestionAndAnswerTransaction, createSessionTransaction, deleteFileImportedTransaction, deleteQuestionAndAnswerTransaction, deleteURLTransaction, getAdvanceSettingTransaction, getAllFileTransaction, getAllQuestionAndAnswerTransaction, getAllURLTransaction, getBotInfoTransaction, getChatStreamingTransaction, getIncludesResources, importURLTransaction, uploadFileTransaction } from '@/repository/buildChatBot';
+import { AddQuestionAndAnswerPayload, DeleteFileImportedPayload, DeleteQuestionAndAnswerPayload, DeleteURLPayload, GetAllFilePayload, GetAllQuestionAndAnswerPayload, GetAllURLPayload, GetBotInfoPayload, GetChatStreamingRequest, ImportURLPayload, UploadFilePayload } from '@/repository/buildChatBot/type';
 import { loadFetchFile, loadFetchLink, setGenerateChatIntoListHistory, setNewChatIntoListHistory } from './buildChatBot.slice';
 
 export const useBuildChatbot = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { fetchLink, data, activeTab, session_id, listIncludesFile, loadingFetchFile, loadingChat, advanceSetting, includesResource } = useSelector((state: RootState) => state.buildChatBot, shallowEqual);
+  const { fetchLink, data, activeTab, session_id, listIncludesFile, loadingFetchFile, loadingChat, advanceSetting, includesResource, loadingQuestionAndAnswer } = useSelector((state: RootState) => state.buildChatBot, shallowEqual);
   const onStreamingDataTesting = useCallback(
     async (payload: GetChatStreamingRequest) => {
       const { message } = payload
@@ -103,6 +103,27 @@ export const useBuildChatbot = () => {
     [dispatch],
   );
   
+  const onGetAllQuestionAndAnswer= useCallback(
+    async (payload: GetAllQuestionAndAnswerPayload) => {
+        await dispatch(getIncludesResources(payload))
+       return await dispatch(getAllQuestionAndAnswerTransaction(payload));
+    },
+    [dispatch],
+  );
+
+  const onDeleteQuestionAndAnswer = useCallback(
+    async (payload: DeleteQuestionAndAnswerPayload) => {
+       return await dispatch(deleteQuestionAndAnswerTransaction(payload));
+    },
+    [dispatch],
+  );
+
+  const onAddQuestionAndAnswer = useCallback(
+    async (payload: AddQuestionAndAnswerPayload) => {
+       return await dispatch(addQuestionAndAnswerTransaction(payload));
+    },
+    [dispatch],
+  );
   return {
     fetchLink,
     data,
@@ -123,6 +144,9 @@ export const useBuildChatbot = () => {
     onGetAdvanceSetting,
     advanceSetting,
     includesResource,
-    onGetIncludesSource
+    onGetIncludesSource,
+    onGetAllQuestionAndAnswer,
+    onDeleteQuestionAndAnswer,
+    onAddQuestionAndAnswer
   };
 };

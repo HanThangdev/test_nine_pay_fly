@@ -14,14 +14,14 @@ import { useTranslation } from 'react-i18next';
 import { RiDeleteBinLine } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
 
-interface FetchLinkItemProps {
+interface LinkItemProps {
   item: DataFetchLink;
   index: number;
   setUrlSelected: Dispatch<SetStateAction<string[]>>
   urlSelected: string[]
 }
 
-const FetchLinkItem = ({ item, index, setUrlSelected, urlSelected }: FetchLinkItemProps) => {
+const LinkItem = ({ item, index, setUrlSelected, urlSelected }: LinkItemProps) => {
   const { t } = useTranslation();
   const [visibleDeleteModal, setVisibleDeleteModal] = useState<boolean>(false);
   const { data } = useSelector((state: RootState) => state.buildChatBot);
@@ -123,4 +123,4 @@ const FetchLinkItem = ({ item, index, setUrlSelected, urlSelected }: FetchLinkIt
   );
 };
 
-export default FetchLinkItem;
+export default LinkItem;
