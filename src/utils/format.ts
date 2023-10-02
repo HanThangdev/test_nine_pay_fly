@@ -107,3 +107,18 @@ export function truncateString(str: string, maxLength = 50) {
     return str.slice(0, maxLength) + '...';
   }
 }
+
+export function trimStringValuesInArray<T>(array: T[]): T[] {
+  return array.map((item) => {
+    const trimmedItem: ObjectWithStringValues = {};
+    for (const key in item) {
+      if (typeof item[key] === 'string') {
+        // Nếu giá trị là kiểu string, thực hiện trim
+        trimmedItem[key] = item[key]?.toString().trim();
+      } else {
+        trimmedItem[key] = item[key]?.toString();
+      }
+    }
+    return trimmedItem as T;
+  });
+}

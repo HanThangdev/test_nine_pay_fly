@@ -308,13 +308,13 @@ export const buildChatbotSlice = createSlice({
     // start deleteQuestionAndAnswerTransaction
 
     builder.addCase(deleteQuestionAndAnswerTransaction.pending, (state) => {
-      state.loadingQuestionAndAnswer = true;
+      // state.loadingQuestionAndAnswer = true;
     });
     builder.addCase(deleteQuestionAndAnswerTransaction.fulfilled, (state) => {
-      state.loadingQuestionAndAnswer = false;
+      // state.loadingQuestionAndAnswer = false;
     });
     builder.addCase(deleteQuestionAndAnswerTransaction.rejected, (state) => {
-      state.loadingQuestionAndAnswer = false;
+      // state.loadingQuestionAndAnswer = false;
     });
 
     // end deleteQuestionAndAnswerTransaction
@@ -322,14 +322,14 @@ export const buildChatbotSlice = createSlice({
     // start getAllQuestionAndAnswerTransaction
 
     builder.addCase(getAllQuestionAndAnswerTransaction.pending, (state) => {
-      state.loadingQuestionAndAnswer = true;
+      // state.loadingQuestionAndAnswer = true;
     });
     builder.addCase(getAllQuestionAndAnswerTransaction.fulfilled, (state, action: any) => {
-      state.loadingQuestionAndAnswer = false;
+      // state.loadingQuestionAndAnswer = false;
       state.listIncludesQandA = action.payload.data;
     });
     builder.addCase(getAllQuestionAndAnswerTransaction.rejected, (state) => {
-      state.loadingQuestionAndAnswer = false;
+      // state.loadingQuestionAndAnswer = false;
     });
 
     // end getAllQuestionAndAnswerTransaction

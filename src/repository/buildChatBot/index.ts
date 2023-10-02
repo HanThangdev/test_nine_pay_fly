@@ -355,7 +355,7 @@ export const addQuestionAndAnswerTransaction = createAsyncThunk(
   async (payload: AddQuestionAndAnswerPayload, { rejectWithValue }) => {
     try {
       const response = await http.post<SuccessResponse<AddQuestionAndAnswerResponse>>(
-        `/api/scraping/question-answer/${payload.bot_id}`,
+        `/api/scraping/question-answer/${payload.bot_id}/many`,
         payload
       );
       return response;

@@ -161,10 +161,12 @@ export interface GetIncludesResourcesItem {
 export interface AddQuestionAndAnswerPayload {
   bot_id: string;
   user_id: string;
-  question: string;
-  answer: string;
+  question_answers: AddQuestionAndAnswerItem[];
 }
-
+export interface AddQuestionAndAnswerItem {
+  question: string;
+  answers: string;
+}
 export interface AddQuestionAndAnswerResponse {
   bot_id: string;
   id: string;

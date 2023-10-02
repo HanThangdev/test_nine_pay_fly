@@ -60,13 +60,13 @@ const QuestionAndAnswerItem = ({ item, index }: QuestionAndAnswerItemProps) => {
         <div className="h-[41px] w-full whitespace-nowrap text-[17px] text-ellipsis">
           <Tooltip title={item.question}>
             <div>
-              <strong>Question:</strong>
+              <strong>Question:</strong>&ensp; 
               {truncateString(item.question)}
             </div>
           </Tooltip>
           <Tooltip title={item.answer}>
             <div>
-              <strong>Answer:</strong>
+              <strong>Answer:</strong>&ensp; 
               {truncateString(item.answer)}
             </div>
           </Tooltip>
