@@ -13,6 +13,7 @@ import {
   getBotInfoTransaction,
   getChatStreamingTransaction,
   getIncludesResources,
+  getTokenTelegramTransaction,
   importURLTransaction,
   updateBotTransaction,
   uploadFileTransaction,
@@ -330,6 +331,17 @@ export const buildChatbotSlice = createSlice({
     });
     builder.addCase(getAllQuestionAndAnswerTransaction.rejected, (state) => {
       // state.loadingQuestionAndAnswer = false;
+    });
+
+    // end getAllQuestionAndAnswerTransaction
+
+    // start getTokenTelegramTransaction
+
+    builder.addCase(getTokenTelegramTransaction.pending, (state) => {
+    });
+    builder.addCase(getTokenTelegramTransaction.fulfilled, (state, action: any) => {
+    });
+    builder.addCase(getTokenTelegramTransaction.rejected, (state) => {
     });
 
     // end getAllQuestionAndAnswerTransaction

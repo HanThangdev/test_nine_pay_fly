@@ -25,6 +25,8 @@ import {
   GetAllQuestionAndAnswerPayload,
   GetAllQuestionAndAnswerResponse,
   DeleteQuestionAndAnswerPayload,
+  GetTokenTelegramPayload,
+  GetTokenTelegramResponse,
 } from './type';
 import Cookies from 'universal-cookie';
 import { SuccessResponse } from '../type';
@@ -385,6 +387,20 @@ export const getAllQuestionAndAnswerTransaction = createAsyncThunk(
     try {
       const response = await http.get<SuccessResponse<GetAllQuestionAndAnswerResponse>>(
         `/api/scraping/question-answer/${payload.bot_id}`,
+      );
+      return response;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data.error);
+    }
+  },
+);
+
+export const getTokenTelegramTransaction = createAsyncThunk(
+  'transaction/getTokenTelegramTransaction',
+  async (payload: GetTokenTelegramPayload, { rejectWithValue }) => {
+    try {
+      const response = await http.get<SuccessResponse<GetTokenTelegramResponse>>(
+        `/api/integration/telegram/token?bot_id=${payload.bot_id}`,
       );
       return response;
     } catch (error: any) {

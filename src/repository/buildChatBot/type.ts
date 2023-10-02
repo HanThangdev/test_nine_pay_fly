@@ -196,3 +196,13 @@ export interface DeleteQuestionAndAnswerPayload {
   question_answer_id: string
   bot_id: string
 }
+
+export interface GetTokenTelegramPayload {
+  bot_id: string
+}
+
+export interface GetTokenTelegramResponse {
+    message_code: number,
+    message: string,
+    data: string,
+}

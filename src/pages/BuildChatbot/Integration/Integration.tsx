@@ -7,10 +7,37 @@ import IconTeams from '@/components/IconTeams/IconTeams';
 import { useTranslation } from 'react-i18next';
 
 import { useState } from 'react';
-import ModalIntegration from './ModalIntegration';
+import ModalEmbed from './Modal/ModalEmbed';
+import IconTelegram from '@/components/Icon\bTelegram/Icon\bTelegram';
+import ModalTelegram from './Modal/ModalTelegram';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '@/states/store';
+import { getTokenTelegramTransaction } from '@/repository/buildChatBot';
+import { useBuildChatbot } from '@/states/buildChatBot/buildChatBot.selector';
+import { API_STATUS } from '@/constants';
 const Integration = () => {
   const { t } = useTranslation();
-  const [openModal, setOpenModal] = useState(false);
+  const { data } = useBuildChatbot();
+  const [openModalEmbed, setOpenModalEmbed] = useState(false);
+  const [openModalTelegram, setOpenModalTelegram] = useState(false);
+  const [tokenTelegram, setTokenTelegram] = useState<string>('');
+  const dispatch = useDispatch<AppDispatch>();
+
+  const onIntergrationTelegram = async () => {
+    try {
+      const { meta, payload }: any = await dispatch(
+        getTokenTelegramTransaction({ bot_id: data.id }),
+      );
+      if (meta.requestStatus == API_STATUS.REJECTED) {
+        throw meta;
+      }
+      setTokenTelegram(payload?.data.data);
+      setOpenModalTelegram(true);
+      console.log('payload', payload);
+    } catch (error: any) {
+      console.log('error', error);
+    }
+  };
   return (
     <>
       <div
@@ -25,7 +52,7 @@ const Integration = () => {
           </h2>
           <div className="grid gap-y-[25px] mt-[38px] w-[590px]">
             <p
-              onClick={() => setOpenModal(true)}
+              onClick={() => setOpenModalEmbed(true)}
               className={classNames(
                 'mb-0 w-full h-[55px] gap-x-4 bg-[#E8E9F4] flex items-center justify-center',
                 'text-[20px] text-[#01058A] rounded-[5px] hover:cursor-pointer hover:scale-105 duration-500 transition-all',
@@ -35,8 +62,8 @@ const Integration = () => {
               {t('Embed', { ns: 'config_bot' })}
             </p>
             <a
-              target='_blank'
-              href='https://slack.com/oauth/v2/authorize?client_id=5697154391091.5942177894499&scope=app_mentions:read,channels:history,chat:write,commands,im:history&user_scope=chat:write,im:history,channels:history,groups:history'
+              target="_blank"
+              href="https://slack.com/oauth/v2/authorize?client_id=5697154391091.5942177894499&scope=app_mentions:read,channels:history,chat:write,commands,im:history&user_scope=chat:write,im:history,channels:history,groups:history"
               className={classNames(
                 'mb-0 w-full h-[55px] gap-x-4 bg-[#E8E9F4] flex items-center justify-center',
                 'text-[20px] text-[#01058A] rounded-[5px] hover:cursor-pointer hover:scale-105 duration-500 transition-all',
@@ -45,6 +72,16 @@ const Integration = () => {
               <IconSlack />
               {t('addSlack', { ns: 'config_bot' })}{' '}
             </a>
+            <div
+              onClick={onIntergrationTelegram}
+              className={classNames(
+                'mb-0 w-full h-[55px] gap-x-4 bg-[#E8E9F4] flex items-center justify-center',
+                'text-[20px] text-[#01058A] rounded-[5px] hover:cursor-pointer hover:scale-105 duration-500 transition-all',
+              )}
+            >
+              <IconTelegram />
+              {t('addTelegram', { ns: 'config_bot' })}{' '}
+            </div>
             <picture
               className={classNames(
                 'mb-0 w-full h-[55px] gap-x-4 bg-[#E8E9F4] flex items-center justify-center',
@@ -57,6 +94,7 @@ const Integration = () => {
                 {t('coming', { ns: 'config_bot' })}
               </span>
             </picture>
+
             <p
               className={classNames(
                 'mb-0 w-full h-[55px] gap-x-4 bg-[#E8E9F4] flex items-center justify-center',
@@ -72,12 +110,18 @@ const Integration = () => {
           </div>
         </div>
       </div>
-      {openModal && (
-        <ModalIntegration
-          open={openModal}
-          onClose={() => setOpenModal(false)}
-        />
-      )}
+      <ModalEmbed
+        open={openModalEmbed}
+        onClose={() => setOpenModalEmbed(false)}
+      />
+      <ModalTelegram
+        open={openModalTelegram}
+        onClose={() => {
+          setTokenTelegram('');
+          setOpenModalEmbed(false);
+        }}
+        token={tokenTelegram}
+      />
     </>
   );
 };

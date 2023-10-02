@@ -8,7 +8,7 @@ interface Props {
   onClose: () => void;
 }
 
-export default function ModalIntegration({ open, onClose }: Props) {
+export default function ModalEmbed({ open, onClose }: Props) {
   const { t } = useTranslation();
 
   const { data } = useBuildChatbot();
