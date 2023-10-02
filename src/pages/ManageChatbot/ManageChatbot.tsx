@@ -75,7 +75,6 @@ const ManageChatbot = () => {
       );
     }
   }, []);
-  console.log(typeIntegration, status);
   return (
     <div
       className={classNames(
