@@ -60,6 +60,12 @@ const coreRoutes = [
     component: ManageChatbot,
     isProtected: true,
     layout: DefaultLayout,
+  },{
+    path: '/:typeIntegration/:status',
+    title: 'Manage-chatbot',
+    component: ManageChatbot,
+    isProtected: true,
+    layout: DefaultLayout,
   },
   {
     path: '/build-chatbots',

@@ -203,7 +203,7 @@ const Prompt: React.FC<PromptProps> = ({
                   } h-[41px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none`}
                 />
 
-                <div className="w-[30px]">
+                <div className="w-[30px] cursor-pointer">
                   {index !== 0 && (
                     <RiDeleteBinLine
                       size={18}

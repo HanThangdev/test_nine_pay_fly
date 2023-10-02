@@ -122,12 +122,13 @@ const CollectCustomer: React.FC<CollectCustomerProps> = ({
                   <input
                     type="text"
                     value={item?.key}
+                    placeholder='Custom field'
                     onChange={(e) => {
                       const newCustomValue = Array.from(custom);
                       newCustomValue[idx].key = e.target.value;
                       setCustom(newCustomValue);
                     }}
-                    className="h-[41px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
+                    className="text-[#9da5b1] h-[41px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
                   />
                   <RiDeleteBinLine
                     size={18}

@@ -1,19 +1,20 @@
 import classNames from 'classnames';
 import IconManage from '@/components/IconManage/IconManage';
-import { notification } from 'antd';
+import { Modal, notification } from 'antd';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/states/store';
 import { isEmptyObjectOrArray } from '@/utils/utils';
 import Loader from '@/components/Loader';
 import ChatbotElement from './ChatbotElement';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { resetStateBuild } from '@/states/buildChatBot/buildChatBot.slice';
 import { useManageChatbot } from '@/states/manageBot/manageBot.selector';
 import { useTranslation } from 'react-i18next';
 
 const ManageChatbot = () => {
   const { t } = useTranslation();
+  const { typeIntegration, status } = useParams();
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { onGetBot } = useManageChatbot();
@@ -36,6 +37,45 @@ const ManageChatbot = () => {
     }
   }, []);
 
+  const renderModalStatusIntegration = (
+    typeIntegration: string,
+    status: string,
+  ) => {
+    if (status == 'success') {
+      Modal.error({
+        title: `Congratulations! Your integration with ${typeIntegration} is a success. 🎉🚀`,
+        // width: 500,
+        onOk: () => {
+          navigate('/');
+        },
+        okButtonProps: {
+          className: 'w-[120px] h-[40px] bg-[#E8E9F4] text-[#01058A] rounded-[10px] text-[14px] font-bold '
+        }
+      });
+    }
+    if (status == 'fail') {
+      Modal.error({
+        title: `Sorry, your integration on ${typeIntegration} fail, please try again or contact with Admin`,
+        // width: 500,
+        onOk: () => {
+          navigate('/');
+        },
+        okButtonProps: {
+          className: 'w-[120px] h-[40px] bg-[#E8E9F4] text-[#01058A] rounded-[10px] text-[14px] font-bold '
+        }
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (typeIntegration && status) {
+      renderModalStatusIntegration(
+        typeIntegration,
+        status,
+      );
+    }
+  }, []);
+  console.log(typeIntegration, status);
   return (
     <div
       className={classNames(
