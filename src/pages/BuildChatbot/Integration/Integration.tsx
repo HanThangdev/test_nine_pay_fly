@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useState } from 'react';
 import ModalEmbed from './Modal/ModalEmbed';
-import IconTelegram from '@/components/Icon\bTelegram/Icon\bTelegram';
+import IconTelegram from '@/components/IconTelegram/IconTelegram';
 import ModalTelegram from './Modal/ModalTelegram';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/states/store';
