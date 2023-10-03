@@ -42,7 +42,7 @@ const ManageChatbot = () => {
     status: string,
   ) => {
     if (status == 'success') {
-      Modal.error({
+      Modal.success({
         title: `Congratulations! Your integration with ${typeIntegration} is a success. 🎉🚀`,
         // width: 500,
         onOk: () => {

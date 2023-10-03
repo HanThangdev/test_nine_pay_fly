@@ -1,5 +1,4 @@
 import Code from '@/components/code';
-import { useBuildChatbot } from '@/states/buildChatBot/buildChatBot.selector';
 import { Modal } from 'antd';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +11,6 @@ interface Props {
 export default function ModalTelegram({ open, onClose, token}: Props) {
   const { t } = useTranslation();
 
-  const { data } = useBuildChatbot();
   return (
     <Modal
       closable={false}
@@ -29,6 +27,9 @@ export default function ModalTelegram({ open, onClose, token}: Props) {
       <p className="text-[15px] text-[#878787]">
         {t('addChatbotIntoTelegram', { ns: 'config_bot' })}
       </p>
+      <p className="text-[15px] text-[#878787]">
+        {t('step1AddTelegram', { ns: 'config_bot' })}
+      </p>
       <div
         className={classNames(
           'w-full bg-[#dfeafb] rounded-[5px] py-[20px] px-[30px]',
@@ -41,9 +42,13 @@ export default function ModalTelegram({ open, onClose, token}: Props) {
         </div>
 
       </div>
-      <div className='mt-2'>
-        <strong>Link:</strong>&nbsp;<a className={"hover:text-[#01168a]"} href="https://t.me/chatflysupport_bot" target="_blank">{t('addTelegram', { ns: 'config_bot' })}</a>
-      </div>
+      <p className="text-[15px] text-[#878787] mt-2">
+        {t('step2AddTelegram', { ns: 'config_bot' })}&nbsp;
+        <a className="text-[#38bdf8] hover:underline font-bold" href="https://t.me/chatflysupport_bot" target="_blank">{t('link', { ns: 'config_bot' })}</a>
+      </p>
+      <p className="text-[15px] text-[#878787]">
+        {t('step3AddTelegram', { ns: 'config_bot' })}
+      </p>
     </Modal>
   );
 }

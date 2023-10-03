@@ -38,6 +38,7 @@ const Integration = () => {
       console.log('error', error);
     }
   };
+  console.log(openModalTelegram)
   return (
     <>
       <div
@@ -116,10 +117,7 @@ const Integration = () => {
       />
       <ModalTelegram
         open={openModalTelegram}
-        onClose={() => {
-          setTokenTelegram('');
-          setOpenModalEmbed(false);
-        }}
+        onClose={() => setOpenModalTelegram(false)}
         token={tokenTelegram}
       />
     </>
