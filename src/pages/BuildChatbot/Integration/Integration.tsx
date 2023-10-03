@@ -5,6 +5,7 @@ import IconSlack from '@/components/IconSlack/IconSlack';
 import IconMess from '@/components/IconMess/IconMess';
 import IconTeams from '@/components/IconTeams/IconTeams';
 import { useTranslation } from 'react-i18next';
+import { iconWordpress, iconZalo } from '@/images';
 
 import { useState } from 'react';
 import ModalEmbed from './Modal/ModalEmbed';
@@ -38,7 +39,7 @@ const Integration = () => {
       console.log('error', error);
     }
   };
-  console.log(openModalTelegram)
+  console.log(openModalTelegram);
   return (
     <>
       <div
@@ -104,6 +105,30 @@ const Integration = () => {
             >
               <IconMess />
               {t('addMess', { ns: 'config_bot' })}{' '}
+              <span className="font-bold">
+                {t('coming', { ns: 'config_bot' })}
+              </span>
+            </p>
+            <p
+              className={classNames(
+                'mb-0 w-full h-[55px] gap-x-4 bg-[#E8E9F4] flex items-center justify-center',
+                'text-[20px] text-[#01058A] rounded-[5px] hover:cursor-pointer hover:scale-105 duration-500 transition-all',
+              )}
+            >
+              <img src={iconWordpress} width={25} />
+              {t('addWordpress', { ns: 'config_bot' })}{' '}
+              <span className="font-bold">
+                {t('coming', { ns: 'config_bot' })}
+              </span>
+            </p>
+            <p
+              className={classNames(
+                'mb-0 w-full h-[55px] gap-x-4 bg-[#E8E9F4] flex items-center justify-center',
+                'text-[20px] text-[#01058A] rounded-[5px] hover:cursor-pointer hover:scale-105 duration-500 transition-all',
+              )}
+            >
+              <img src={iconZalo} width={25} />
+              {t('addZalo', { ns: 'config_bot' })}{' '}
               <span className="font-bold">
                 {t('coming', { ns: 'config_bot' })}
               </span>
