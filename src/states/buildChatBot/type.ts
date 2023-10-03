@@ -16,7 +16,8 @@ export interface BuildChatBotState {
   advanceSetting: AdvancePayload | null;
   includesResource: GetIncludesResourcesData | null
   loadingQuestionAndAnswer: boolean;
-  listIncludesQandA: DataQuestionAndAnswerItem[]
+  listIncludesQandA: DataQuestionAndAnswerItem[],
+  num_message_left: number | null
 }
 
 export interface DataFetchLink {

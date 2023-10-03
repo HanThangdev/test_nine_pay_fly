@@ -52,6 +52,7 @@ export interface BotDataResponse {
   custom_error_message: string;
   created_at?: string;
   updated_at?: string;
+  num_message_left: number;
 }
 
 export interface UpdateBotDataResponse {

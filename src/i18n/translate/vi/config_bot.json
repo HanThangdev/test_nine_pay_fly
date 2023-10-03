@@ -125,5 +125,6 @@
   "Update": "Cập nhập",
   "Create": "Tạo",
   "Delete": "Xoá",
+  "num_message_left": "Tin nhắn còn lại",
   "file_large_msg": "File quá lớn, vui lòng chọn file dưới 25MB"
 }

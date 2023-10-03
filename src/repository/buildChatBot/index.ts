@@ -248,7 +248,7 @@ export const getBotInfoTransaction = createAsyncThunk(
   async (payload: GetBotInfoPayload, { rejectWithValue }) => {
     try {
       const queryString = objectToQueryString(payload);
-      const response = await http.get<SuccessResponse<BotDataResponse>>(
+      const response = await http.get<BotDataResponse>(
         `/api/bot/information?${queryString}`,
       );
       return response;

@@ -36,6 +36,7 @@ const initialState: BuildChatBotState = {
   loadingChat: false,
   advanceSetting: null,
   includesResource: null,
+  num_message_left: null,
   fetchLink: {
     num_token: null,
     progress: 0,
@@ -150,6 +151,7 @@ export const buildChatbotSlice = createSlice({
     builder.addCase(getChatStreamingTransaction.fulfilled, (state) => {
       state.history = Array.from(state.history);
       state.loadingChat = false;
+      state.num_message_left = state.num_message_left ? state.num_message_left-1 : state.num_message_left;
     });
     builder.addCase(getChatStreamingTransaction.rejected, (state) => {
       let listUpdateHistory = Array.from(state.history);
@@ -220,8 +222,11 @@ export const buildChatbotSlice = createSlice({
     builder.addCase(getBotInfoTransaction.pending, (state) => {
       state.data=null
       state.loading = true;
+      state.num_message_left = null
     });
     builder.addCase(getBotInfoTransaction.fulfilled, (state, action) => {
+      console.log(action.payload.data)
+      state.num_message_left = action.payload.data.num_message_left;
       state.data = action.payload.data;
       state.session_id = uuid();
       state.loading = false;
@@ -229,6 +234,7 @@ export const buildChatbotSlice = createSlice({
     builder.addCase(getBotInfoTransaction.rejected, (state) => {
       state.loading = false;
       state.data = null;
+      state.num_message_left = null
     });
 
     // end getBotInfoTransaction

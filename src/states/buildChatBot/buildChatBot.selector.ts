@@ -84,7 +84,8 @@ export const useBuildChatbot = () => {
 
   const onGetInfoCurrentBot = useCallback(
     async (payload: GetBotInfoPayload) => {
-       await dispatch(getBotInfoTransaction(payload));
+       const res = await dispatch(getBotInfoTransaction(payload));
+       return res
     },
     [dispatch],
   );

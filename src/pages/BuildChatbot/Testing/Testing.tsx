@@ -13,11 +13,13 @@ import { TypeAnimation } from 'react-type-animation';
 import { resetHistoryChatTest } from '@/states/buildChatBot/buildChatBot.slice';
 import { convertStringToParagraphs } from '@/utils/format';
 import { HistoryChat } from '@/states/buildChatBot/type';
+import { useTranslation } from 'react-i18next';
 
 const Testing = () => {
-  const { data, history, session_id } = useSelector(
+  const { data, history, session_id, num_message_left } = useSelector(
     (state: RootState) => state.buildChatBot,
   );
+  const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const [loading, setLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
@@ -52,26 +54,26 @@ const Testing = () => {
       return (
         <div className="w-full justify-end flex" key={index}>
           <p className="bg-[#D1EFFF] p-2 rounded-t-lg rounded-bl-lg w-fit">
-          {convertStringToParagraphs(message.content)}
+            {convertStringToParagraphs(message.content)}
           </p>
         </div>
       );
     } else {
       return (
         <div
-        className="bg-[#F1F7FF] p-2 rounded-t-lg rounded-br-lg w-fit"
+          className="bg-[#F1F7FF] p-2 rounded-t-lg rounded-br-lg w-fit"
           key={index}
           style={{ whiteSpace: 'pre-wrap' }}
         >
-            {message.content===LOADING_TEXT ? (
-              <TypeAnimation
-                sequence={['.', 200, '..', 200, '...', 200]}
-                repeat={Infinity}
-                cursor={false}
-              />
-            ) : (
-              convertStringToParagraphs(message?.content || "")
-            )}
+          {message.content === LOADING_TEXT ? (
+            <TypeAnimation
+              sequence={['.', 200, '..', 200, '...', 200]}
+              repeat={Infinity}
+              cursor={false}
+            />
+          ) : (
+            convertStringToParagraphs(message?.content || '')
+          )}
         </div>
       );
     }
@@ -85,14 +87,14 @@ const Testing = () => {
   };
 
   const reloadHistoryMessage = () => {
-    if(loading) {
+    if (loading) {
       notification.warning({
-        message: "You do not perform this action!"
+        message: 'You do not perform this action!',
       });
       return;
     }
-    dispatch(resetHistoryChatTest())
-  }
+    dispatch(resetHistoryChatTest());
+  };
 
   useEffect(() => {
     if (messagesEndRef.current) {
@@ -107,31 +109,32 @@ const Testing = () => {
   }, []);
 
   return (
-    <div
-      className={classNames(
-        'rounded-[8px] bg-white h-[654px] relative text-[18px]',
-        'shadow-[0_0px_4px_0px_rgba(32,32,62,0.16)] Bog-config',
-      )}
-    >
-      <div className="flex justify-between h-[45px] items-center px-[18px] border-b-[1px] border-[#E7E8F2]">
-        <p className="mb-0 flex items-center gap-x-[10px] font-bold text-[#01058A]">
-          <IconInterface />
-          Chat fly
-        </p>
-        <div className="cursor-pointer" onClick={reloadHistoryMessage}>
-          <IconReload />
-        </div>
-      </div>
+    <>
       <div
-        className="py-[37px] px-[27px] gap-y-[10px] grid overflow-y-auto overflow-hidden"
-        style={{ maxHeight: 'calc(100% - 110px)' }}
-        ref={messagesEndRef}
+        className={classNames(
+          'rounded-[8px] bg-white h-[80vh] relative text-[18px]',
+          'shadow-[0_0px_4px_0px_rgba(32,32,62,0.16)] Bog-config',
+        )}
       >
-        {!!history.length &&
-          history.map((message, index) => getDivForResponse(index, message))}
-      </div>
-      <div className="absolute bottom-0 w-full">
-        {/* <div className="flex gap-x-3 ml-[26px]">
+        <div className="flex justify-between h-[45px] items-center px-[18px] border-b-[1px] border-[#E7E8F2]">
+          <p className="mb-0 flex items-center gap-x-[10px] font-bold text-[#01058A]">
+            <IconInterface />
+            {data.bot_name}
+          </p>
+          <div className="cursor-pointer" onClick={reloadHistoryMessage}>
+            <IconReload />
+          </div>
+        </div>
+        <div
+          className="py-[37px] px-[27px] gap-y-[10px] grid overflow-y-auto overflow-hidden"
+          style={{ maxHeight: 'calc(100% - 110px)' }}
+          ref={messagesEndRef}
+        >
+          {!!history.length &&
+            history.map((message, index) => getDivForResponse(index, message))}
+        </div>
+        <div className="absolute bottom-0 w-full">
+          {/* <div className="flex gap-x-3 ml-[26px]">
           <button
             className="bg-[#F1F7FF] p-2 rounded-lg w-fit"
             onClick={() => onSendMessage("What's ChatFly?")}
@@ -147,21 +150,23 @@ const Testing = () => {
             Policy
           </button>
         </div> */}
-        {/* <p className="text-[#878787] ml-[26px]">48 massage credits left</p> */}
-        <div className="h-[62px] items-center border-t-[1px] border-[#E7E8F2] p-2 flex gap-x-[12px]">
-          <input
-            type="text"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            onKeyUp={(e) => handleKeyUp(e)}
-            className="h-[47px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
-          />
-          <button className="mb-0 w-[40px]" onClick={() => onSendMessage()}>
-            <AiFillRightCircle size={40} color="#4AC1FF" />
-          </button>
+          {/* <p className="text-[#878787] ml-[26px]">48 massage credits left</p> */}
+          <div className="h-[62px] items-center border-t-[1px] border-[#E7E8F2] p-2 flex gap-x-[12px]">
+            <input
+              type="text"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              onKeyUp={(e) => handleKeyUp(e)}
+              className="h-[47px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
+            />
+            <button className="mb-0 w-[40px]" onClick={() => onSendMessage()}>
+              <AiFillRightCircle size={40} color="#4AC1FF" />
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+      <div className='text-end mt-2'>{t('num_message_left', { ns: 'config_bot' })}: {num_message_left}</div>
+    </>
   );
 };
 
