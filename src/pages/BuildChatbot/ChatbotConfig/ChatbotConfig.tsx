@@ -44,6 +44,11 @@ const ChatbotConfig = () => {
       prompt: 'teaching_assistant_prompt',
     },
     {
+      value: '5',
+      label: `${t('Lecture', { ns: 'config_bot' })}`,
+      prompt: 'lecture_assistant_prompt',
+    },
+    {
       value: '1',
       label: `${t('Other', { ns: 'config_bot' })}`,
       prompt: 'default_prompt',

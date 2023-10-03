@@ -27,6 +27,10 @@ export const PROMPT_EXAM = {
     key: "4",
     value: "teaching_assistant_prompt"
   },
+  5: {
+    key: "4",
+    value: "lecture_assistant_prompt"
+  },
   1: {
     key: "1",
     value: "default_prompt"
