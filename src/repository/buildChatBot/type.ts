@@ -207,3 +207,13 @@ export interface GetTokenTelegramResponse {
     message: string,
     data: string,
 }
+
+export interface GetLinkIntegrationMSTeamPayload {
+  bot_id: string
+}
+
+export interface GetLinkIntegrationMSTeamResponse {
+  message_code: number,
+  message: string,
+  data: string,
+}

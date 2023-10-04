@@ -13,6 +13,7 @@ import {
   getBotInfoTransaction,
   getChatStreamingTransaction,
   getIncludesResources,
+  getLinkIntegrationMSTeamTransaction,
   getTokenTelegramTransaction,
   importURLTransaction,
   updateBotTransaction,
@@ -350,7 +351,18 @@ export const buildChatbotSlice = createSlice({
     builder.addCase(getTokenTelegramTransaction.rejected, (state) => {
     });
 
-    // end getAllQuestionAndAnswerTransaction
+    // end getTokenTelegramTransaction
+
+    // start getLinkIntegrationMSTeamTransaction
+
+    builder.addCase(getLinkIntegrationMSTeamTransaction.pending, (state) => {
+    });
+    builder.addCase(getLinkIntegrationMSTeamTransaction.fulfilled, (state, action: any) => {
+    });
+    builder.addCase(getLinkIntegrationMSTeamTransaction.rejected, (state) => {
+    });
+
+    // end getLinkIntegrationMSTeamTransaction
   },
 });
 

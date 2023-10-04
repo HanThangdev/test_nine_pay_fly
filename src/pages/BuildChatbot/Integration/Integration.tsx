@@ -13,7 +13,10 @@ import IconTelegram from '@/components/IconTelegram/IconTelegram';
 import ModalTelegram from './Modal/ModalTelegram';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/states/store';
-import { getTokenTelegramTransaction } from '@/repository/buildChatBot';
+import {
+  getLinkIntegrationMSTeamTransaction,
+  getTokenTelegramTransaction,
+} from '@/repository/buildChatBot';
 import { useBuildChatbot } from '@/states/buildChatBot/buildChatBot.selector';
 import { API_STATUS } from '@/constants';
 const Integration = () => {
@@ -24,7 +27,7 @@ const Integration = () => {
   const [tokenTelegram, setTokenTelegram] = useState<string>('');
   const dispatch = useDispatch<AppDispatch>();
 
-  const onIntergrationTelegram = async () => {
+  const onIntegrationTelegram = async () => {
     try {
       const { meta, payload }: any = await dispatch(
         getTokenTelegramTransaction({ bot_id: data.id }),
@@ -39,7 +42,20 @@ const Integration = () => {
       console.log('error', error);
     }
   };
-  console.log(openModalTelegram);
+  
+  const onIntegrationMSTeam = async () => {
+    try {
+      const { meta, payload }: any = await dispatch(
+        getLinkIntegrationMSTeamTransaction({ bot_id: data.id }),
+      );
+      if (meta.requestStatus == API_STATUS.REJECTED) {
+        throw meta;
+      }
+      window.open(payload?.data.data, '_blank');
+    } catch (error: any) {
+      console.log('error', error);
+    }
+  };
   return (
     <>
       <div
@@ -75,7 +91,7 @@ const Integration = () => {
               {t('addSlack', { ns: 'config_bot' })}{' '}
             </a>
             <div
-              onClick={onIntergrationTelegram}
+              onClick={onIntegrationTelegram}
               className={classNames(
                 'mb-0 w-full h-[55px] gap-x-4 bg-[#E8E9F4] flex items-center justify-center',
                 'text-[20px] text-[#01058A] rounded-[5px] hover:cursor-pointer hover:scale-105 duration-500 transition-all',
@@ -84,18 +100,16 @@ const Integration = () => {
               <IconTelegram />
               {t('addTelegram', { ns: 'config_bot' })}{' '}
             </div>
-            <picture
+            <div
               className={classNames(
                 'mb-0 w-full h-[55px] gap-x-4 bg-[#E8E9F4] flex items-center justify-center',
                 'text-[20px] text-[#01058A] rounded-[5px] hover:cursor-pointer hover:scale-105 duration-500 transition-all',
               )}
+              onClick={onIntegrationMSTeam}
             >
               <IconTeams />
               {t('addTeam', { ns: 'config_bot' })}{' '}
-              <span className="font-bold">
-                {t('coming', { ns: 'config_bot' })}
-              </span>
-            </picture>
+            </div>
 
             <p
               className={classNames(

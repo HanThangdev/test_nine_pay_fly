@@ -27,6 +27,8 @@ import {
   DeleteQuestionAndAnswerPayload,
   GetTokenTelegramPayload,
   GetTokenTelegramResponse,
+  GetLinkIntegrationMSTeamPayload,
+  GetLinkIntegrationMSTeamResponse,
 } from './type';
 import Cookies from 'universal-cookie';
 import { SuccessResponse } from '../type';
@@ -401,6 +403,20 @@ export const getTokenTelegramTransaction = createAsyncThunk(
     try {
       const response = await http.get<SuccessResponse<GetTokenTelegramResponse>>(
         `/api/integration/telegram/token?bot_id=${payload.bot_id}`,
+      );
+      return response;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data.error);
+    }
+  },
+);
+
+export const getLinkIntegrationMSTeamTransaction = createAsyncThunk(
+  'transaction/getLinkIntegrationMSTeamTransaction',
+  async (payload: GetLinkIntegrationMSTeamPayload, { rejectWithValue }) => {
+    try {
+      const response = await http.get<SuccessResponse<GetLinkIntegrationMSTeamResponse>>(
+        `/api/integration/ms-team/get-link-integration?bot_id=${payload.bot_id}`,
       );
       return response;
     } catch (error: any) {
