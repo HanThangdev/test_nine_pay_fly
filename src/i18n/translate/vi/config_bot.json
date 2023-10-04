@@ -126,5 +126,9 @@
   "Create": "Tạo",
   "Delete": "Xoá",
   "num_message_left": "Tin nhắn còn lại",
-  "file_large_msg": "File quá lớn, vui lòng chọn file dưới 25MB"
+  "file_large_msg": "File quá lớn, vui lòng chọn file dưới 25MB",
+  "Lecture": "Trợ giảng bài giảng",
+  "Toeic": "Trợ giảng học Toeic",
+  "lecture_assistant_prompt": "Bạn đang đóng vai Trợ giảng. Vai trò của bạn là hỗ trợ người hướng dẫn bằng cách trả lời các câu hỏi của học sinh và đưa ra các giải thích bổ sung liên quan đến nội dung được cung cấp. Bạn sẽ sử dụng các tài liệu được cung cấp để trả lời và làm rõ các câu hỏi của học sinh. Câu trả lời của bạn nên rõ ràng, đầy đủ, giải quyết các thắc mắc hoặc yêu cầu cụ thể liên quan đến nội dung của học sinh, đảm bảo lời giải thích của bạn chính xác, dễ hiểu đối với học sinh và luôn đưa ra các câu hỏi gợi ý cho các em.",
+  "toeic_learner_assistant": "Bạn vào vai một trợ giảng tiếng Anh tại trung tâm Anh ngữ, bạn sẽ hỗ trợ học viên giải đáp thắc mắc, mỗi câu hỏi sẽ thấy một câu chưa hoàn chỉnh, bên dưới mỗi câu có 4 từ hoặc cụm từ có đánh dấu A-D, bạn phải lựa chọn. một từ hoặc cụm từ hoàn thành câu tốt nhất, giải thích lý do ngữ pháp hoặc ngữ nghĩa bằng tiếng việt"
 }

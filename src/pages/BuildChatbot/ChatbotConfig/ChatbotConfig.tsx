@@ -49,6 +49,11 @@ const ChatbotConfig = () => {
       prompt: 'lecture_assistant_prompt',
     },
     {
+      value: '6',
+      label: `${t('Toeic', { ns: 'config_bot' })}`,
+      prompt: 'toeic_learner_assistant',
+    },
+    {
       value: '1',
       label: `${t('Other', { ns: 'config_bot' })}`,
       prompt: 'default_prompt',
