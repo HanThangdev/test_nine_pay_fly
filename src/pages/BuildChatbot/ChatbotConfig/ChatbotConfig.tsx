@@ -100,15 +100,16 @@ const ChatbotConfig = () => {
       {},
     );
 
+    let collectCustomerIfo = {...resultObject}
+    if(email) collectCustomerIfo.email = email;
+    if(name) collectCustomerIfo.name = name;
+    if(phone) collectCustomerIfo.phone = phone;
     const createBotPayload: BotPayload = {
       bot_name: botName,
       case_study: caseStudy,
       collect_customer_info: {
-        email: email,
-        name: name,
-        phone: phone,
         numberShowing: numberShowing,
-        ...resultObject,
+        ...collectCustomerIfo,
       },
       rules: rules,
       gpt_model_name: model,

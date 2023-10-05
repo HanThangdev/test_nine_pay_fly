@@ -226,7 +226,6 @@ export const buildChatbotSlice = createSlice({
       state.num_message_left = null
     });
     builder.addCase(getBotInfoTransaction.fulfilled, (state, action) => {
-      console.log(action.payload.data)
       state.num_message_left = action.payload.data.num_message_left;
       state.data = action.payload.data;
       state.session_id = uuid();

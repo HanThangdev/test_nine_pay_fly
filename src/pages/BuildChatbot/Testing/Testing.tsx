@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import IconInterface from '@/components/IconInterface/IconInterface';
 import IconReload from '@/components/IconReload/IconReload';
 import { AiFillRightCircle } from 'react-icons/ai';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { notification } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/states/store';
@@ -14,6 +14,7 @@ import { resetHistoryChatTest } from '@/states/buildChatBot/buildChatBot.slice';
 import { convertStringToParagraphs } from '@/utils/format';
 import { HistoryChat } from '@/states/buildChatBot/type';
 import { useTranslation } from 'react-i18next';
+import FormCollectCustomer from '@/components/formCollectCustomer';
 
 const Testing = () => {
   const { data, history, session_id, num_message_left } = useSelector(
@@ -23,6 +24,7 @@ const Testing = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [loading, setLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
+  const [showFormCollect, setShowFormCollect] = useState<boolean>(false)
   const messagesEndRef = useRef<HTMLInputElement | null>(null);
   const { onStreamingDataTesting } = useBuildChatbot();
 
@@ -108,6 +110,17 @@ const Testing = () => {
     }
   }, []);
 
+  const toggleForm = () => {
+    setShowFormCollect(!showFormCollect);
+  }
+  
+  useEffect(() => {
+    if(history?.filter(message => message.sender_type === 'user')?.length >= data?.collect_customer_info?.numberShowing){
+      setShowFormCollect(true);
+    }else{
+      setShowFormCollect(false);
+    }
+  },[history])
   return (
     <>
       <div
@@ -119,7 +132,7 @@ const Testing = () => {
         <div className="flex justify-between h-[45px] items-center px-[18px] border-b-[1px] border-[#E7E8F2]">
           <p className="mb-0 flex items-center gap-x-[10px] font-bold text-[#01058A]">
             <IconInterface />
-            {data.bot_name}
+            {data?.bot_name}
           </p>
           <div className="cursor-pointer" onClick={reloadHistoryMessage}>
             <IconReload />
@@ -130,27 +143,28 @@ const Testing = () => {
           style={{ maxHeight: 'calc(100% - 110px)' }}
           ref={messagesEndRef}
         >
-          {!!history.length &&
+          {!!history?.length &&
             history.map((message, index) => getDivForResponse(index, message))}
+          {showFormCollect && <FormCollectCustomer field={data?.collect_customer_info} toggleForm={toggleForm}/>}
         </div>
-        <div className="absolute bottom-0 w-full">
-          {/* <div className="flex gap-x-3 ml-[26px]">
-          <button
-            className="bg-[#F1F7FF] p-2 rounded-lg w-fit"
-            onClick={() => onSendMessage("What's ChatFly?")}
-          >
-            {' '}
-            What's ChatFly?
-          </button>
-          <button
-            className="bg-[#F1F7FF] p-2 rounded-lg w-fit"
-            onClick={() => onSendMessage('Policy')}
-          >
-            {' '}
-            Policy
-          </button>
-        </div> */}
-          {/* <p className="text-[#878787] ml-[26px]">48 massage credits left</p> */}
+        <div className="absolute bottom-0 w-full bg-white">
+          {/* <div className="flex gap-x-3 ml-[10px]">
+            <button
+              className="bg-[#F1F7FF] p-2 rounded-lg w-fit"
+              onClick={() => onSendMessage("What's ChatFly?")}
+            >
+              {' '}
+              What's ChatFly?
+            </button>
+            <button
+              className="bg-[#F1F7FF] p-2 rounded-lg w-fit"
+              onClick={() => onSendMessage('Policy')}
+            >
+              {' '}
+              Policy
+            </button>
+          </div> */}
+          
           <div className="h-[62px] items-center border-t-[1px] border-[#E7E8F2] p-2 flex gap-x-[12px]">
             <input
               type="text"
@@ -163,9 +177,12 @@ const Testing = () => {
               <AiFillRightCircle size={40} color="#4AC1FF" />
             </button>
           </div>
+          <div className="text-[#878787] ml-[10px] text-sm bg-white">
+            {t('num_message_left', { ns: 'config_bot' })}: {num_message_left}
+          </div>
         </div>
       </div>
-      <div className='text-end mt-2'>{t('num_message_left', { ns: 'config_bot' })}: {num_message_left}</div>
+      {/* <div className='text-end mt-2'>{t('num_message_left', { ns: 'config_bot' })}: {num_message_left}</div> */}
     </>
   );
 };

@@ -37,7 +37,6 @@ const Integration = () => {
       }
       setTokenTelegram(payload?.data.data);
       setOpenModalTelegram(true);
-      console.log('payload', payload);
     } catch (error: any) {
       console.log('error', error);
     }

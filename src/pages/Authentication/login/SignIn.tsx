@@ -183,9 +183,9 @@ const SignIn = () => {
                     Sign in
                   </Button>
                 </div>
-                {/* <div className="w-full">
-                  <GoogleOAuthProvider clientId="664422196919-e2dkku6sj5ums77phncm4ascinss55fe.apps.googleusercontent.com">
-                    <GoogleLogin
+                <div className="w-full">
+                  {/* <GoogleOAuthProvider clientId="664422196919-e2dkku6sj5ums77phncm4ascinss55fe.apps.googleusercontent.com"> */}
+                    {/* <GoogleLogin
                       onSuccess={(credentialResponse) => {
                         console.log(credentialResponse);
                       }}
@@ -195,9 +195,10 @@ const SignIn = () => {
                         console.log('Login Failed');
                       }}
                       width={396}
-                    />
-                  </GoogleOAuthProvider>
-                </div> */}
+                    /> */}
+                    {/* <LoginGoogleBtn/> */}
+                  {/* </GoogleOAuthProvider> */}
+                </div>
               </form>
             </div>
           </div>
