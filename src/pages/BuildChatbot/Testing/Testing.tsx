@@ -15,6 +15,7 @@ import { convertStringToParagraphs } from '@/utils/format';
 import { HistoryChat } from '@/states/buildChatBot/type';
 import { useTranslation } from 'react-i18next';
 import FormCollectCustomer from '@/components/formCollectCustomer';
+import { isEmptyObjectOrArray } from '@/utils/utils';
 
 const Testing = () => {
   const { data, history, session_id, num_message_left } = useSelector(
@@ -24,7 +25,7 @@ const Testing = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [loading, setLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
-  const [showFormCollect, setShowFormCollect] = useState<boolean>(false)
+  const [showFormCollect, setShowFormCollect] = useState<boolean>(false);
   const messagesEndRef = useRef<HTMLInputElement | null>(null);
   const { onStreamingDataTesting } = useBuildChatbot();
 
@@ -112,15 +113,21 @@ const Testing = () => {
 
   const toggleForm = () => {
     setShowFormCollect(!showFormCollect);
-  }
-  
+  };
+
   useEffect(() => {
-    if(history?.filter(message => message.sender_type === 'user')?.length >= data?.collect_customer_info?.numberShowing){
-      setShowFormCollect(true);
-    }else{
-      setShowFormCollect(false);
+    if (!isEmptyObjectOrArray(data)) {
+      const checkLengthMsg =
+        history?.filter((message) => message.sender_type === 'user')?.length >=
+        data?.collect_customer_info?.numberShowing;
+      const { numberShowing, ...collectInfo } = data?.collect_customer_info;
+      if (checkLengthMsg && !isEmptyObjectOrArray(collectInfo)) {
+        setShowFormCollect(true);
+      } else {
+        setShowFormCollect(false);
+      }
     }
-  },[history])
+  }, [history, data]);
   return (
     <>
       <div
@@ -145,7 +152,12 @@ const Testing = () => {
         >
           {!!history?.length &&
             history.map((message, index) => getDivForResponse(index, message))}
-          {showFormCollect && <FormCollectCustomer field={data?.collect_customer_info} toggleForm={toggleForm}/>}
+          {showFormCollect && (
+            <FormCollectCustomer
+              field={data?.collect_customer_info}
+              toggleForm={toggleForm}
+            />
+          )}
         </div>
         <div className="absolute bottom-0 w-full bg-white">
           {/* <div className="flex gap-x-3 ml-[10px]">
@@ -164,7 +176,7 @@ const Testing = () => {
               Policy
             </button>
           </div> */}
-          
+
           <div className="h-[62px] items-center border-t-[1px] border-[#E7E8F2] p-2 flex gap-x-[12px]">
             <input
               type="text"
