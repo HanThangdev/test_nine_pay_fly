@@ -27,6 +27,8 @@ import {
   DeleteQuestionAndAnswerPayload,
   GetTokenTelegramPayload,
   GetTokenTelegramResponse,
+  GetBotEvaluationStrongPayload,
+  GetBotEvaluationStrongResponse,
   GetLinkIntegrationMSTeamPayload,
   GetLinkIntegrationMSTeamResponse,
 } from './type';
@@ -84,7 +86,10 @@ export const createSessionTransaction = createAsyncThunk(
 export const getChatStreamingTransaction = createAsyncThunk(
   'transaction/getStreamingResponse',
   async (
-    { payload, callBack }: GetStreamingPayload<GetChatStreamingRequest, HistoryChat>,
+    {
+      payload,
+      callBack,
+    }: GetStreamingPayload<GetChatStreamingRequest, HistoryChat>,
     { rejectWithValue },
   ) => {
     const endPoint = 'api/chat/get-streaming-response';
@@ -112,7 +117,7 @@ export const getChatStreamingTransaction = createAsyncThunk(
         textContainer += decoder.decode(value, { stream: true });
         callBack({
           content: textContainer,
-          sender_type: "assistant"
+          sender_type: 'assistant',
         });
       }
       return response;
@@ -146,7 +151,7 @@ export const importURLTransaction = createAsyncThunk(
       );
       const reader = response.body?.getReader();
       const decoder = new TextDecoder('utf-8');
-      let data
+      let data;
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
@@ -154,14 +159,14 @@ export const importURLTransaction = createAsyncThunk(
         console.log(data);
         callBack(JSON.parse(data));
       }
-      if(!!data){
+      if (!!data) {
         callBack(JSON.parse(data));
       }
-      return data
+      return data;
     } catch (error: any) {
-      if(error){
+      if (error) {
         notification.warning({
-          message: "Import url fail",
+          message: 'Import url fail',
         });
       }
       return rejectWithValue(error.response.data.error);
@@ -220,7 +225,7 @@ export const deleteURLTransaction = createAsyncThunk(
   'transaction/deleteURLTransaction',
   async (payload: DeleteURLPayload, { rejectWithValue }) => {
     try {
-      const base64Url = btoa(payload.url)
+      const base64Url = btoa(payload.url);
       const response = await http.delete<SuccessResponse<string>>(
         `/api/scraping/url?bot_id=${payload.bot_id}&base64_url=${base64Url}`,
       );
@@ -294,15 +299,15 @@ export const uploadFileTransaction = createAsyncThunk(
         if (done) break;
         data = decoder.decode(value, { stream: true });
       }
-      if(!!data){
+      if (!!data) {
         callBack(JSON.parse(data));
         return JSON.parse(data);
       }
       return data;
     } catch (error: any) {
-      if(error){
+      if (error) {
         notification.warning({
-          message: "Import file fail",
+          message: 'Import file fail',
         });
       }
       console.log(error);
@@ -344,9 +349,9 @@ export const getIncludesResources = createAsyncThunk(
   'transaction/getIncludesData',
   async (payload: GetIncludesResourcesPayload, { rejectWithValue }) => {
     try {
-      const response = await http.get<SuccessResponse<GetIncludesResourcesResponse>>(
-        `/api/scraping/include-resources/${payload.bot_id}`,
-      );
+      const response = await http.get<
+        SuccessResponse<GetIncludesResourcesResponse>
+      >(`/api/scraping/include-resources/${payload.bot_id}`);
       return response;
     } catch (error: any) {
       return rejectWithValue(error.response.data.error);
@@ -358,10 +363,9 @@ export const addQuestionAndAnswerTransaction = createAsyncThunk(
   'transaction/addQuestionAndAnswerTransaction',
   async (payload: AddQuestionAndAnswerPayload, { rejectWithValue }) => {
     try {
-      const response = await http.post<SuccessResponse<AddQuestionAndAnswerResponse>>(
-        `/api/scraping/question-answer/${payload.bot_id}/many`,
-        payload
-      );
+      const response = await http.post<
+        SuccessResponse<AddQuestionAndAnswerResponse>
+      >(`/api/scraping/question-answer/${payload.bot_id}/many`, payload);
       return response;
     } catch (error: any) {
       return rejectWithValue(error.response.data.error);
@@ -387,9 +391,9 @@ export const getAllQuestionAndAnswerTransaction = createAsyncThunk(
   'transaction/getAllQuestionAndAnswerTransaction',
   async (payload: GetAllQuestionAndAnswerPayload, { rejectWithValue }) => {
     try {
-      const response = await http.get<SuccessResponse<GetAllQuestionAndAnswerResponse>>(
-        `/api/scraping/question-answer/${payload.bot_id}`,
-      );
+      const response = await http.get<
+        SuccessResponse<GetAllQuestionAndAnswerResponse>
+      >(`/api/scraping/question-answer/${payload.bot_id}`);
       return response;
     } catch (error: any) {
       return rejectWithValue(error.response.data.error);
@@ -401,9 +405,9 @@ export const getTokenTelegramTransaction = createAsyncThunk(
   'transaction/getTokenTelegramTransaction',
   async (payload: GetTokenTelegramPayload, { rejectWithValue }) => {
     try {
-      const response = await http.get<SuccessResponse<GetTokenTelegramResponse>>(
-        `/api/integration/telegram/token?bot_id=${payload.bot_id}`,
-      );
+      const response = await http.get<
+        SuccessResponse<GetTokenTelegramResponse>
+      >(`/api/integration/telegram/token?bot_id=${payload.bot_id}`);
       return response;
     } catch (error: any) {
       return rejectWithValue(error.response.data.error);
@@ -411,11 +415,26 @@ export const getTokenTelegramTransaction = createAsyncThunk(
   },
 );
 
+export const getBotEvaluationStrong = createAsyncThunk(
+  'transaction/getBotEvaluationStrong',
+  async (payload: GetBotEvaluationStrongPayload, { rejectWithValue }) => {
+    try {
+      const response = await http.get<
+        SuccessResponse<GetBotEvaluationStrongResponse>
+      >(`/api/bot/evaluation?bot_id=${payload.bot_id}`);
+      return response;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data.error);
+    }
+  },
+);
 export const getLinkIntegrationMSTeamTransaction = createAsyncThunk(
   'transaction/getLinkIntegrationMSTeamTransaction',
   async (payload: GetLinkIntegrationMSTeamPayload, { rejectWithValue }) => {
     try {
-      const response = await http.get<SuccessResponse<GetLinkIntegrationMSTeamResponse>>(
+      const response = await http.get<
+        SuccessResponse<GetLinkIntegrationMSTeamResponse>
+      >(
         `/api/integration/ms-team/get-link-integration?bot_id=${payload.bot_id}`,
       );
       return response;

@@ -6,6 +6,7 @@ import pricingPlan from './pricing_plan.json';
 import common from './common.json';
 import privacyPolicy from './privacy_policy.json';
 import termOfService from './term_of_service.json';
+import scoring from './scoring.json';
 
 export default {
   config_bot: configBot,
@@ -15,4 +16,5 @@ export default {
   common,
   privacy_policy: privacyPolicy,
   term_of_service: termOfService,
+  scoring: scoring,
 };

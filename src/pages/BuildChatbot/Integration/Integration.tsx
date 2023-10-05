@@ -41,7 +41,7 @@ const Integration = () => {
       console.log('error', error);
     }
   };
-  
+
   const onIntegrationMSTeam = async () => {
     try {
       const { meta, payload }: any = await dispatch(

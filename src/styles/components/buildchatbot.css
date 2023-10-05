@@ -18,11 +18,11 @@
   @apply !hidden;
 }
 
-.Chatbot-tabs .ant-tabs-tab:nth-child(5) .ant-tabs-tab-btn {
+.Chatbot-tabs .ant-tabs-tab:nth-child(6) .ant-tabs-tab-btn {
   @apply !text-[#01058A];
 }
 
-.Chatbot-tabs .ant-tabs-tab:nth-child(5) {
+.Chatbot-tabs .ant-tabs-tab:nth-child(6) {
   @apply absolute right-0 bg-[#E8E9F4] font-bold;
 }
 
@@ -154,6 +154,58 @@
   @apply hover:bg-[#4ac1ff];
 }
 
-.input-showing-number{
+.input-showing-number {
   color: red;
+}
+
+.chart {
+  padding: 20px;
+}
+
+.pie-chart {
+  position: relative;
+  font-size: 2em;
+  border-radius: 50%;
+}
+.pie-chart--donut:after {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: 50%;
+  background: #ffffff;
+  transform: translate(-50%, -50%);
+  content: '';
+}
+
+.pie-chart__value {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-weight: 700;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+[data-chart='2'] .pie-chart {
+  width: 200px;
+  height: 200px;
+  background: conic-gradient(
+    #fd7e15 70deg,
+    #fd7e15 50deg,
+    #be4adb 50deg,
+    #be4adb 140deg,
+    #f4a524 140deg,
+    #f4a524 220deg,
+    #09b7db 220deg,
+    #09b7db 287deg,
+    #4b6ef5 287deg
+  );
+}
+[data-chart='2'] .pie-chart--donut:after {
+  width: 150px;
+  height: 150px;
+}
+[data-chart='2'] .pie-chart__value {
+  font-size: 26px;
+  color: #0982db;
 }

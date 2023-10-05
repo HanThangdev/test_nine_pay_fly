@@ -1,5 +1,5 @@
-import { DataFetchLink } from "@/states/auth/type";
-import { DataFetchFile } from "@/states/buildChatBot/type";
+import { DataFetchLink } from '@/states/auth/type';
+import { DataFetchFile } from '@/states/buildChatBot/type';
 
 export interface BotPayload {
   bot_name: string;
@@ -30,9 +30,9 @@ export interface ImportURLPayload {
   scrape_type: number;
 }
 
-export interface GetStreamingPayload<T, D>{
-  payload: T
-  callBack: (data: D) => void
+export interface GetStreamingPayload<T, D> {
+  payload: T;
+  callBack: (data: D) => void;
 }
 
 export interface CustomField {
@@ -100,20 +100,20 @@ export interface GetNormalResponseRequest {
 }
 
 export interface DeleteURLPayload {
-  bot_id: string
-  url: string
+  bot_id: string;
+  url: string;
 }
 
 export interface GetAllURLPayload {
-  bot_id: string
+  bot_id: string;
 }
 
 export interface GetAllURLResponse {
-  url: DataFetchLink[]
+  url: DataFetchLink[];
 }
 
 export interface GetBotInfoPayload {
-  bot_id: string
+  bot_id: string;
 }
 
 export interface UploadFilePayload {
@@ -132,31 +132,31 @@ export interface DeleteFileImportedResponse {
 }
 
 export interface GetAllFilePayload {
-  bot_id: string
+  bot_id: string;
 }
 
 export interface GetAllFileResponse {
-  file: DataFetchFile[]
+  file: DataFetchFile[];
 }
 
 export interface DeleteFilePayload {
-  knowledge_base_id: string
-  bot_id: string
+  knowledge_base_id: string;
+  bot_id: string;
 }
 
 export interface GetIncludesResourcesPayload {
-  bot_id: string
+  bot_id: string;
 }
 
 export interface GetIncludesResourcesResponse {
-  resource: GetIncludesResourcesItem[],
-  total_token: number,
+  resource: GetIncludesResourcesItem[];
+  total_token: number;
 }
 
 export interface GetIncludesResourcesItem {
-  type: string,
-  token: number,
-  number_of_resources: number,
+  type: string;
+  token: number;
+  number_of_resources: number;
 }
 
 export interface AddQuestionAndAnswerPayload {
@@ -173,15 +173,15 @@ export interface AddQuestionAndAnswerResponse {
   id: string;
   question: string;
   answer: string;
-  created_at: string
+  created_at: string;
 }
 
 export interface GetAllQuestionAndAnswerPayload {
-  bot_id: string
+  bot_id: string;
 }
 
 export interface GetAllQuestionAndAnswerResponse {
-  file: DataQuestionAndAnswerItem[]
+  file: DataQuestionAndAnswerItem[];
 }
 
 export interface DataQuestionAndAnswerItem {
@@ -190,30 +190,38 @@ export interface DataQuestionAndAnswerItem {
   question: string;
   answer: string;
   created_at: string;
-  num_token: number
+  num_token: number;
 }
 
 export interface DeleteQuestionAndAnswerPayload {
-  question_answer_id: string
-  bot_id: string
+  question_answer_id: string;
+  bot_id: string;
 }
 
 export interface GetTokenTelegramPayload {
-  bot_id: string
+  bot_id: string;
 }
 
 export interface GetTokenTelegramResponse {
-    message_code: number,
-    message: string,
-    data: string,
+  message_code: number;
+  message: string;
+  data: string;
+}
+
+export interface GetBotEvaluationStrongPayload {
+  bot_id: string;
+}
+
+export interface GetBotEvaluationStrongResponse {
+  value: string;
 }
 
 export interface GetLinkIntegrationMSTeamPayload {
-  bot_id: string
+  bot_id: string;
 }
 
 export interface GetLinkIntegrationMSTeamResponse {
-  message_code: number,
-  message: string,
-  data: string,
+  message_code: number;
+  message: string;
+  data: string;
 }

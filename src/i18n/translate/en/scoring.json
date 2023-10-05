@@ -1,0 +1,8 @@
+{
+  "How": "How strong is your knowledge base?",
+  "note": "The more information you feed your AI, the more accurate it becomes",
+  "Tips": "Tips: Train your personalized AI with the following types of data",
+  "addUrl": "Add URLs and upload files under Train AI",
+  "rules": "Define your business rules",
+  "history": "Train AI with your ticket history"
+}

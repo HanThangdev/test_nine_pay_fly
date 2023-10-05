@@ -3,6 +3,7 @@ import ImportDataClient from '@/pages/BuildChatbot/ImportData';
 import TestingClient from '@/pages/BuildChatbot/Testing';
 import SettingClient from '@/pages/BuildChatbot/Setting';
 import IntegrationClient from '@/pages/BuildChatbot/Integration';
+import Scoring from '@/pages/BuildChatbot/Scoring';
 
 import Cookies from 'universal-cookie';
 
@@ -43,6 +44,11 @@ const BuildChatbot = () => {
       key: 'importData',
       label: `${t('ImportData')}`,
       children: <ImportDataClient />,
+    },
+    {
+      key: 'scoring',
+      label: `${t('Scoring')}`,
+      children: <Scoring />,
     },
     {
       key: 'testing',
@@ -109,7 +115,7 @@ const BuildChatbot = () => {
     setActiveKey(key);
     dispatch(setActiveTab(key));
   };
-  
+
   return (
     <div className="flex">
       <Tabs
