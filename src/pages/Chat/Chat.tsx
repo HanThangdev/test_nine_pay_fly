@@ -118,7 +118,7 @@ const Chat = () => {
           <div className="flex items-end justify-end">
             <div className="bg-[#D1EFFF] rounded-t-lg rounded-bl-lg flex flex-col space-y-2 text-lg max-w-[80%] mx-2 order-1 items-center">
               <div>
-                <span className="px-4 py-2 rounded-lg inline-block rounded-br-none bg-blue-600 ">
+                <span className="px-4 py-2 rounded-lg inline-block rounded-br-none bg-blue-600 whitespace-pre-wrap">
                   {convertStringToParagraphs(message?.content || '')}
                 </span>
               </div>
@@ -138,7 +138,7 @@ const Chat = () => {
           <div className="flex items-end">
             <div className="bg-[#e2e8f0] rounded-t-lg rounded-bl-lg flex flex-col space-y-2 text-lg max-w-[80%] mx-2 order-2 items-center">
               <div>
-                <span className="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300">
+                <span className="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 whitespace-pre-wrap">
                   {message.content === LOADING_TEXT ? (
                     <TypeAnimation
                       sequence={['.', 200, '..', 200, '...', 200]}
@@ -173,7 +173,7 @@ const Chat = () => {
 
   return (
     <div
-      className={`flex-1 p:2 sm:p-6 justify-between flex flex-col h-screen ${
+      className={`px-3 pb-3 flex-1 p:2 sm:p-6 justify-between flex flex-col h-screen ${
          !theme
           ? 'bg-different text-white'
           : 'bg-[#fafafd]'
@@ -245,13 +245,13 @@ const Chat = () => {
         {!isEmptyObjectOrArray(advanceSetting?.suggest_messages) &&
           advanceSetting?.suggest_messages.map((it, index) => (
             <Tooltip title={it}>
-              <button
+              <div
                 key={index}
-                className="bg-[#F1F7FF] p-2 rounded-lg truncate"
+                className="bg-[#F1F7FF] p-2 rounded-lg truncate h-[40px] px-2 align-middle mb-[10px]"
                 onClick={() => onSendMessage(it)}
               >
-                {it}
-              </button>
+                <span>{it}</span>
+              </div>
             </Tooltip>
           ))}
       </div>
