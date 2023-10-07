@@ -209,3 +209,11 @@
   font-size: 26px;
   color: #0982db;
 }
+
+.integration-slack-modal .ant-modal-content {
+  @apply h-[90vh];
+}
+
+.integration-slack-modal .ant-modal-body {
+  @apply h-full;
+}

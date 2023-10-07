@@ -132,7 +132,7 @@
   "lecture_assistant_prompt": "Bạn đang đóng vai Trợ giảng. Vai trò của bạn là hỗ trợ người hướng dẫn bằng cách trả lời các câu hỏi của học sinh và đưa ra các giải thích bổ sung liên quan đến nội dung được cung cấp. Bạn sẽ sử dụng các tài liệu được cung cấp để trả lời và làm rõ các câu hỏi của học sinh. Câu trả lời của bạn nên rõ ràng, đầy đủ, giải quyết các thắc mắc hoặc yêu cầu cụ thể liên quan đến nội dung của học sinh, đảm bảo lời giải thích của bạn chính xác, dễ hiểu đối với học sinh và luôn đưa ra các câu hỏi gợi ý cho các em.",
   "toeic_learner_assistant": "Bạn vào vai một trợ giảng tiếng Anh tại trung tâm Anh ngữ, bạn sẽ hỗ trợ học viên giải đáp thắc mắc, mỗi câu hỏi sẽ thấy một câu chưa hoàn chỉnh, bên dưới mỗi câu có 4 từ hoặc cụm từ có đánh dấu A-D, bạn phải lựa chọn. một từ hoặc cụm từ hoàn thành câu tốt nhất, giải thích lý do ngữ pháp hoặc ngữ nghĩa bằng tiếng việt",
   "integrationStepSlack": "Bước tích hợp:",
-  "step1AddSlack": "Bước 1: Nhấn vào ",
+  "step1AddSlack": "Bước 1: Nhấp vào nút bên dưới để Thêm ChatFly vào Slack.",
   "step2AddSlack": "Bước 2: Chọn không gian làm việc của bạn và cho phép truy cập không gian làm việc ChatFly to Slack",
   "step3AddSlack": "Bước 3: Tích hợp thành công ChatFly vào Slack",
   "successAddSlack": "Sau khi cài đặt thành công hãy làm theo các bước sau:",
@@ -152,5 +152,6 @@
   "success6AddSlack": "Bước 6: Đã thêm Chatbot vào Slack thành công, bây giờ bạn có thể nhắc đến @ChatFly để nói chuyện với Chatbot của mình",
   "success7AddSlack": "Bước 7: Đề cập và trò chuyện với ",
   "@ChatFly": "@ChatFly ",
-  "Bot": "Bot"
+  "Bot": "Bot",
+  "install": "Cài đặt"
 }

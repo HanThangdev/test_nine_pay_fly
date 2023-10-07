@@ -9,8 +9,8 @@
     font-family: 'Roboto', sans-serif;
   }
 
-  input[type="number"]::-webkit-inner-spin-button,
-  input[type="number"]::-webkit-outer-spin-button {
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
@@ -179,7 +179,7 @@ span.flatpickr-weekday,
   display: none !important;
 }
 
-.input-showing-number{
+.input-showing-number {
   padding-left: 0px;
   min-height: 41px;
   display: flex;
@@ -187,6 +187,24 @@ span.flatpickr-weekday,
   color: red;
 }
 
-.input-showing-number > .ant-input-number-handler-wrap{
+.input-showing-number > .ant-input-number-handler-wrap {
   display: none;
+}
+
+*::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px transparent;
+  border-radius: 10px;
+  background-color: transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 7px;
+  background-color: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px transparent;
+  background-color: rgb(214, 214, 214);
 }

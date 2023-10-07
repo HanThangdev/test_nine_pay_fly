@@ -3,6 +3,7 @@ import { useBuildChatbot } from '@/states/buildChatBot/buildChatBot.selector';
 import { Modal } from 'antd';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
+
 interface Props {
   open?: boolean;
   onClose: () => void;
