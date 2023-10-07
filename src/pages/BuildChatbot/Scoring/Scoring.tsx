@@ -21,7 +21,6 @@ const Scoring = () => {
       if (meta.requestStatus == API_STATUS.REJECTED) {
         throw meta;
       }
-      console.log('payload', payload);
     } catch (error: any) {
       console.log('error', error);
     }
@@ -29,7 +28,7 @@ const Scoring = () => {
 
   useEffect(() => {
     getEvaluationStrong();
-  });
+  },[]);
 
   return (
     <div

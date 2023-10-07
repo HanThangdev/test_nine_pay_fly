@@ -225,3 +225,8 @@ export interface GetLinkIntegrationMSTeamResponse {
   message: string;
   data: string;
 }
+
+export interface UpdateListDomainPayload {
+  bot_id: string;
+  domain: string[];
+}

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { AuthState } from './type';
-import { loginTransaction } from '@/repository/auth/login';
+import { loginTransaction, loginViaGoogleTransaction } from '@/repository/auth/login';
 import { registerTransaction } from '@/repository/auth/register';
 
 const initialState: AuthState = {
@@ -45,6 +45,17 @@ export const authSlice = createSlice({
       return state;
     });
     builder.addCase(registerTransaction.rejected, (state) => {
+      state.loading = false;
+    });
+
+    builder.addCase(loginViaGoogleTransaction.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(loginViaGoogleTransaction.fulfilled, (state, action) => {
+      state.loading = false;
+      return state;
+    });
+    builder.addCase(loginViaGoogleTransaction.rejected, (state) => {
       state.loading = false;
     });
   },

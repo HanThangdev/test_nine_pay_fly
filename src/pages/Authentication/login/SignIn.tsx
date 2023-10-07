@@ -13,8 +13,8 @@ import { API_STATUS } from '@/constants';
 import { useManageChatbot } from '@/states/manageBot/manageBot.selector';
 import { userApi } from '@/repository/auth/login';
 import { logoHaveTextImg } from '@/images/logo';
-// import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
-// import LoginGoogleBtn from '@/components/LoginGoogleButton';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import LoginGoogleBtn from '@/components/LoginGoogleButton';
 
 const SignIn = () => {
   const { code } = useParams();
@@ -184,20 +184,9 @@ const SignIn = () => {
                   </Button>
                 </div>
                 <div className="w-full">
-                  {/* <GoogleOAuthProvider clientId="664422196919-e2dkku6sj5ums77phncm4ascinss55fe.apps.googleusercontent.com"> */}
-                    {/* <GoogleLogin
-                      onSuccess={(credentialResponse) => {
-                        console.log(credentialResponse);
-                      }}
-                      text='signin_with'
-                      shape="square"
-                      onError={() => {
-                        console.log('Login Failed');
-                      }}
-                      width={396}
-                    /> */}
-                    {/* <LoginGoogleBtn/> */}
-                  {/* </GoogleOAuthProvider> */}
+                  <GoogleOAuthProvider clientId="664422196919-e2dkku6sj5ums77phncm4ascinss55fe.apps.googleusercontent.com">
+                    <LoginGoogleBtn/>
+                  </GoogleOAuthProvider>
                 </div>
               </form>
             </div>

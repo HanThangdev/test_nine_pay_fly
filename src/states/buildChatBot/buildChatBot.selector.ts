@@ -2,8 +2,8 @@ import { useCallback } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../store';
 import { DataFetchFile, DataFetchLink, GetAdvanceSettingPayload, HistoryChat } from './type';
-import { addQuestionAndAnswerTransaction, createSessionTransaction, deleteFileImportedTransaction, deleteQuestionAndAnswerTransaction, deleteURLTransaction, getAdvanceSettingTransaction, getAllFileTransaction, getAllQuestionAndAnswerTransaction, getAllURLTransaction, getBotInfoTransaction, getChatStreamingTransaction, getIncludesResources, importURLTransaction, uploadFileTransaction } from '@/repository/buildChatBot';
-import { AddQuestionAndAnswerPayload, DeleteFileImportedPayload, DeleteQuestionAndAnswerPayload, DeleteURLPayload, GetAllFilePayload, GetAllQuestionAndAnswerPayload, GetAllURLPayload, GetBotInfoPayload, GetChatStreamingRequest, ImportURLPayload, UploadFilePayload } from '@/repository/buildChatBot/type';
+import { addQuestionAndAnswerTransaction, createSessionTransaction, deleteFileImportedTransaction, deleteQuestionAndAnswerTransaction, deleteURLTransaction, getAdvanceSettingTransaction, getAllFileTransaction, getAllQuestionAndAnswerTransaction, getAllURLTransaction, getBotInfoTransaction, getChatStreamingTransaction, getIncludesResources, importURLTransaction, updateListDomainTransaction, uploadFileTransaction } from '@/repository/buildChatBot';
+import { AddQuestionAndAnswerPayload, DeleteFileImportedPayload, DeleteQuestionAndAnswerPayload, DeleteURLPayload, GetAllFilePayload, GetAllQuestionAndAnswerPayload, GetAllURLPayload, GetBotInfoPayload, GetChatStreamingRequest, ImportURLPayload, UpdateListDomainPayload, UploadFilePayload } from '@/repository/buildChatBot/type';
 import { loadFetchFile, loadFetchLink, setGenerateChatIntoListHistory, setNewChatIntoListHistory } from './buildChatBot.slice';
 
 export const useBuildChatbot = () => {
@@ -125,6 +125,13 @@ export const useBuildChatbot = () => {
     },
     [dispatch],
   );
+
+  const onUpdateListDomain= useCallback(
+    async (payload: UpdateListDomainPayload) => {
+       return await dispatch(updateListDomainTransaction(payload));
+    },
+    [dispatch],
+  );
   return {
     fetchLink,
     data,
@@ -148,6 +155,7 @@ export const useBuildChatbot = () => {
     onGetIncludesSource,
     onGetAllQuestionAndAnswer,
     onDeleteQuestionAndAnswer,
-    onAddQuestionAndAnswer
+    onAddQuestionAndAnswer,
+    onUpdateListDomain,
   };
 };

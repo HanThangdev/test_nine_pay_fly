@@ -20,7 +20,7 @@ const PrivacyPolicy = lazy(() => import('../pages/PoliciesAndTerms/PrivacyPolicy
 
 const coreRoutes = [
   {
-    path: '/auth/forgot-password/:code',
+    path: '/auth/forgot-password/verify',
     title: 'ForgotPassword',
     component: ForgotPasswordVerify,
   },

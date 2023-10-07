@@ -88,6 +88,8 @@
   "EnterEach": "新しい行に各メッセージを入力します。",
   "AutoShow": "～メッセージ後、初めのメッセージを自動的に表示します。",
   "SuggesttedMess": "おすすめのメッセージ",
+  "ListDomainYouCanEmbed": "埋め込みが許可されるドメイン",
+  "ListDomainYouCanEmbedMessage": "設定できるドメインの最大リンク数は 10 です。",
   "Light": "ライト",
   "Dark": "ダーク",
   "Theme": "テーマ",

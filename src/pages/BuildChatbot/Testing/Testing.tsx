@@ -100,6 +100,7 @@ const Testing = () => {
   };
 
   useEffect(() => {
+    localStorage.removeItem('isSubmitOrCloseForm');
     if (messagesEndRef.current) {
       messagesEndRef.current.addEventListener(
         'DOMNodeInserted',
@@ -112,16 +113,18 @@ const Testing = () => {
   }, []);
 
   const toggleForm = () => {
-    setShowFormCollect(!showFormCollect);
+    localStorage.setItem('isSubmitOrCloseForm', "true");
+    setShowFormCollect(false);
   };
 
   useEffect(() => {
     if (!isEmptyObjectOrArray(data)) {
+      const isSubmitOrCloseForm = localStorage.getItem('isSubmitOrCloseForm')
       const checkLengthMsg =
         history?.filter((message) => message.sender_type === 'user')?.length >=
         data?.collect_customer_info?.numberShowing;
       const { numberShowing, ...collectInfo } = data?.collect_customer_info;
-      if (checkLengthMsg && !isEmptyObjectOrArray(collectInfo)) {
+      if (checkLengthMsg && !isEmptyObjectOrArray(collectInfo) && !isSubmitOrCloseForm) {
         setShowFormCollect(true);
       } else {
         setShowFormCollect(false);

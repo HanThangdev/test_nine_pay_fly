@@ -17,6 +17,7 @@ import {
   getTokenTelegramTransaction,
   importURLTransaction,
   updateBotTransaction,
+  updateListDomainTransaction,
   uploadFileTransaction,
 } from '@/repository/buildChatBot';
 import { LOADING_TEXT } from '@/constants';
@@ -362,6 +363,17 @@ export const buildChatbotSlice = createSlice({
     });
 
     // end getLinkIntegrationMSTeamTransaction
+
+    // start updateListDomainTransaction
+
+    builder.addCase(updateListDomainTransaction.pending, (state) => {
+    });
+    builder.addCase(updateListDomainTransaction.fulfilled, (state, action: any) => {
+    });
+    builder.addCase(updateListDomainTransaction.rejected, (state) => {
+    });
+
+    // end updateListDomainTransaction
   },
 });
 

@@ -89,6 +89,8 @@
   "EnterEach": "Nhập từng tin nhắn vào một dòng mới",
   "AutoShow": "Tự động hiển thị tin nhắn ban đầu sau",
   "SuggesttedMess": "Tin nhắn được đề xuất",
+  "ListDomainYouCanEmbed": "Tên miền được phép nhúng",
+  "ListDomainYouCanEmbedMessage": "Tên miền tối đa bạn có thể đặt là 10 liên kết",
   "Light": "Sáng",
   "Dark": "Tối",
   "Theme": "Chủ đề",

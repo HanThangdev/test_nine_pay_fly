@@ -31,6 +31,7 @@ import {
   GetBotEvaluationStrongResponse,
   GetLinkIntegrationMSTeamPayload,
   GetLinkIntegrationMSTeamResponse,
+  UpdateListDomainPayload,
 } from './type';
 import Cookies from 'universal-cookie';
 import { SuccessResponse } from '../type';
@@ -437,6 +438,18 @@ export const getLinkIntegrationMSTeamTransaction = createAsyncThunk(
       >(
         `/api/integration/ms-team/get-link-integration?bot_id=${payload.bot_id}`,
       );
+      return response;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data.error);
+    }
+  },
+);
+
+export const updateListDomainTransaction = createAsyncThunk(
+  'transaction/updateListDomainTransaction',
+  async (payload: UpdateListDomainPayload, { rejectWithValue }) => {
+    try {
+      const response = await http.post<SuccessResponse<any>>(`/api/bot/domain-access`, payload);
       return response;
     } catch (error: any) {
       return rejectWithValue(error.response.data.error);

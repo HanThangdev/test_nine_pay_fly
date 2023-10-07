@@ -90,6 +90,8 @@
   "EnterEach": "Enter each message in a new line",
   "AutoShow": "Auto show initial messages after",
   "SuggesttedMess": "Suggestted Messages",
+  "ListDomainYouCanEmbed": "Domains allowed embed",
+  "ListDomainYouCanEmbedMessage": "Maximums domains you can setting is 10 links",
   "Light": "Light",
   "Dark": "Dark",
   "Theme": "Theme",
