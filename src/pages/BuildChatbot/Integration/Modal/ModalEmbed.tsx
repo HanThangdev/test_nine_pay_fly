@@ -94,10 +94,10 @@ export default function ModalEmbed({ open, onClose }: Props) {
         placeholder=""
         rows={4}
         value={listDomain}
-        className="h-[100px] w-full py-2 rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
+        className="h-[100px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
         onChange={(e) =>setListDomain(e.target.value)}
       />
-      <p className="text-[15px] text-[#878787]">
+      <p className="text-[15px] text-[#878787] pt-[20px]">
         {t('addChatbot', { ns: 'config_bot' })}
       </p>
       <div

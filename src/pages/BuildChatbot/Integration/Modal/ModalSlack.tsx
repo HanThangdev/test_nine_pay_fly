@@ -11,6 +11,10 @@ import {
   step2_6,
   step2_7,
 } from '@/images';
+import Code from '@/components/code';
+import Cookies from 'universal-cookie';
+import { RootState } from '@/states/store';
+import { useSelector } from 'react-redux';
 interface Props {
   open?: boolean;
   onClose: () => void;
@@ -18,7 +22,12 @@ interface Props {
 
 export default function ModalSlack({ open, onClose }: Props) {
   const { t } = useTranslation();
+  const { data } = useSelector((state: RootState) => state.buildChatBot);
 
+  const cookies = new Cookies();
+
+  const accessToken = cookies.get('access_token')
+  const commandCodeIntegrationSlack = `chatfly add ${accessToken}:${data.id}`
   return (
     <Modal
       closable={false}
@@ -85,14 +94,11 @@ export default function ModalSlack({ open, onClose }: Props) {
         <img src={step2_4} className="my-4" />
         <p className="text-[15px] ml-4 text-[#878787] mt-2">
           {t('success5AddSlack', { ns: 'config_bot' })}&nbsp;
-          <br />
-          <span className="ml-12 text-[13px] italic font-bold">
-            {t('Example', { ns: 'config_bot' })}
-          </span>
-          <br />
-          <span className="ml-12 text-[13px]">
-            {t('ExampleCommand', { ns: 'config_bot' })}
-          </span>
+          <br/>
+          <br/>
+          <div className='bg-[#f1f5f9] rounded-[5px] px-4 py-2'>
+            <Code language="html">{commandCodeIntegrationSlack}</Code>
+          </div>
         </p>
         <img src={step2_5} className="my-4" />
         <p className="text-[15px] ml-4 text-[#878787] mt-2">
