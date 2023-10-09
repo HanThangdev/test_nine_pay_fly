@@ -1,18 +1,18 @@
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { getBotEvaluationStrong } from '@/repository/buildChatBot';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { API_STATUS } from '@/constants';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/states/store';
 import { useBuildChatbot } from '@/states/buildChatBot/buildChatBot.selector';
+import { GetBotEvaluationStrongResponse } from '@/repository/buildChatBot/type';
 
 const Scoring = () => {
   const { t } = useTranslation();
-  const [value, setValue] = useState<string>('');
   const dispatch = useDispatch<AppDispatch>();
   const { data } = useBuildChatbot();
-
+  const [valueScoring, setValueScoring] = useState<GetBotEvaluationStrongResponse | null>(null)
   const getEvaluationStrong = async () => {
     try {
       const { meta, payload }: any = await dispatch(
@@ -21,14 +21,28 @@ const Scoring = () => {
       if (meta.requestStatus == API_STATUS.REJECTED) {
         throw meta;
       }
+      setValueScoring(payload.data)
     } catch (error: any) {
       console.log('error', error);
     }
   };
 
+  function calculatePercentageTrue(obj: GetBotEvaluationStrongResponse | null) {
+    if(obj){
+      const totalElements = Object.keys(obj).length;
+      const trueElements = Object.values(obj).filter(value => value === true).length;
+      return ((trueElements / totalElements) * 100).toFixed(2);
+    }
+    return 0;
+  }
+
   useEffect(() => {
     getEvaluationStrong();
   },[]);
+
+  const percentStrong = useMemo(() => {
+    return calculatePercentageTrue(valueScoring)
+  },[valueScoring])
 
   return (
     <div
@@ -63,7 +77,7 @@ const Scoring = () => {
       <div>
         <div className="chart" data-chart="2">
           <div className="pie-chart pie-chart--donut">
-            <span className="pie-chart__value">65%</span>
+            <span className="pie-chart__value">{percentStrong}%</span>
           </div>
         </div>
       </div>

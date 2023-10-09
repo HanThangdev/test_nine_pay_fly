@@ -213,7 +213,9 @@ export interface GetBotEvaluationStrongPayload {
 }
 
 export interface GetBotEvaluationStrongResponse {
-  value: string;
+  is_strong_question_answer: boolean;
+  is_strong_rules: boolean;
+  is_strong_token: boolean;
 }
 
 export interface GetLinkIntegrationMSTeamPayload {
