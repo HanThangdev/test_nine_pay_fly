@@ -13,10 +13,22 @@ const Chat = lazy(() => import('../pages/Chat'));
 const SignUp = lazy(() => import('../pages/Authentication/register/SignUp'));
 const Verify = lazy(() => import('../pages/Authentication/verify/Verify'));
 const SignIn = lazy(() => import('../pages/Authentication/login/SignIn'));
-const ForgotPassword = lazy(() => import('../pages/Authentication/forgot-password/ForgotPassword'));
-const ForgotPasswordVerify = lazy(() => import('../pages/Authentication/forgot-passwordVerify/ForgotPasswordVerify'));
-const TermsOfService = lazy(() => import('../pages/PoliciesAndTerms/TermsOfService'));
-const PrivacyPolicy = lazy(() => import('../pages/PoliciesAndTerms/PrivacyPolicy'));
+const ForgotPassword = lazy(
+  () => import('../pages/Authentication/forgot-password/ForgotPassword'),
+);
+const ForgotPasswordVerify = lazy(
+  () =>
+    import(
+      '../pages/Authentication/forgot-passwordVerify/ForgotPasswordVerify'
+    ),
+);
+const TermsOfService = lazy(
+  () => import('../pages/PoliciesAndTerms/TermsOfService'),
+);
+const PrivacyPolicy = lazy(
+  () => import('../pages/PoliciesAndTerms/PrivacyPolicy'),
+);
+const AnalysisBot = lazy(() => import('../pages/AnalysisBot'));
 
 const coreRoutes = [
   {
@@ -60,7 +72,8 @@ const coreRoutes = [
     component: ManageChatbot,
     isProtected: true,
     layout: DefaultLayout,
-  },{
+  },
+  {
     path: '/:typeIntegration/:status',
     title: 'Manage-chatbot',
     component: ManageChatbot,
@@ -80,7 +93,6 @@ const coreRoutes = [
     component: BuildChatbot,
     isProtected: true,
     layout: DefaultLayout,
-
   },
   {
     path: '/conversations',
@@ -88,7 +100,6 @@ const coreRoutes = [
     component: Conversations,
     isProtected: true,
     layout: DefaultLayout,
-
   },
   {
     path: '/conversations/:id',
@@ -96,7 +107,6 @@ const coreRoutes = [
     component: Conversations,
     isProtected: true,
     layout: DefaultLayout,
-
   },
   {
     path: '/profile',
@@ -146,6 +156,12 @@ const coreRoutes = [
     path: '/policy',
     title: 'Privacy Policye',
     component: PrivacyPolicy,
+    layout: DefaultLayout,
+  },
+  {
+    path: '/analysis',
+    title: 'Analysis',
+    component: AnalysisBot,
     layout: DefaultLayout,
   },
 ];
