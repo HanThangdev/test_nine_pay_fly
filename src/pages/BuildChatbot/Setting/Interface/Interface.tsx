@@ -47,7 +47,7 @@ const Interface = ({ dataInterface }: Props) => {
             >
               {dataInterface.bot_avatar_url && (
                 <img
-                  className="w-[25px] h-[25px]"
+                  className="h-[25px] object-cover"
                   src={dataInterface.bot_avatar_url}
                 />
               )}
@@ -82,7 +82,7 @@ const Interface = ({ dataInterface }: Props) => {
           <div className="absolute bottom-[62px] flex gap-x-3 p-2 overflow-x-auto w-full">
             {dataInterface.suggest_messages?.map((item, index) => (
               <Tooltip title={item}>
-                <p key={index} className="bg-[#F1F7FF] mb-0 p-2 rounded-lg truncate">
+                <p key={index} className="bg-[#F1F7FF] mb-0 p-2 rounded-lg text-ellipsis whitespace-nowrap">
                   {' '}
                   {item}
                 </p>

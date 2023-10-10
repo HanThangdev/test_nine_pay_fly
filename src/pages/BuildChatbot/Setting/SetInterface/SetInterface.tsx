@@ -229,6 +229,10 @@ const SetInterface = ({ dataSetinterface }: Props) => {
     setOpenButtonIcon(newOpen);
   };
 
+  const handleUploadIcon = async () => {
+    
+  }
+
   return (
     <div className="">
       <form onSubmit={onSubmit}>
@@ -421,6 +425,23 @@ const SetInterface = ({ dataSetinterface }: Props) => {
                     <img className="w-[30px] h-[30px]" src={item} />
                   </div>
                 ))}
+                <div
+                    className="w-[50px] h-[50px] flex items-center justify-center rounded-full p-2 hover:bg-[#e8e9f4]"
+                    onClick={handleUploadIcon}
+                  >
+                    <Upload
+                  accept="image/*"
+                  maxCount={1}
+                  showUploadList={false}
+                  customRequest={() => {
+                    return false;
+                  }}
+                  className="w-[30px] h-[30px] text-center"
+                  beforeUpload={beforeUpload}
+                >
+                  <FiUpload size={20} />{' '}
+                </Upload>
+                </div>
               </div>
             }
             title={false}
