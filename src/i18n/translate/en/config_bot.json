@@ -158,5 +158,13 @@
   "success7AddSlack": "Step 7: Mention and chat with ",
   "@ChatFly": "@ChatFly ",
   "Bot": "Bot",
-  "install": "Install"
+  "getLink": "Get link",
+  "addMsTeam": "Add to Microsoft Team Workspace",
+  "integrationStepMsTeam": "To integration the chatbot into Microsoft Team, please follow the instructions below:",
+  "step1AddMsTeam": "Step 1: Click the button get link to Add ChatFly to MsTeam. ",
+  "step2AddMsTeam": "Step 2: The screen asks you to choose the usage mode (Microsoft Teams already downloaded or via the web). ",
+  "step3": "Step 3:",
+  "step3_1AddMsTeam": "When you successfully log in to Microsoft Teams, there will be a code line structured as: @bot-id…",
+  "step3_2AddMsTeam": "Please press send to complete the integration process.",
+  "step4AddMsTeam": "Step 4: Now you can start chatting with your chatbot."
 }

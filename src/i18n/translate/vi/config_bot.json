@@ -155,5 +155,14 @@
   "success7AddSlack": "Bước 7: Đề cập và trò chuyện với ",
   "@ChatFly": "@ChatFly ",
   "Bot": "Bot",
-  "install": "Cài đặt"
+  "install": "Cài đặt",
+  "getLink": "Lấy liên kết",
+  "addMsTeam": "Thêm vào không gian Microsoft Teams",
+  "integrationStepMsTeam": "Để tích hợp chatbot vào Microsoft Teams, vui lòng tuân theo các hướng dẫn dưới đây:",
+  "step1AddMsTeam": "Bước 1: Nhấp vào nút 'Lấy liên kết' để Thêm ChatFly vào Microsoft Teams.",
+  "step2AddMsTeam": "Bước 2: Màn hình sẽ yêu cầu bạn chọn chế độ sử dụng (Microsoft Teams đã được tải xuống trước đó hay thông qua web).",
+  "step3": "Bước 3:",
+  "step3_1AddMsTeam": "Khi bạn đăng nhập thành công vào Microsoft Teams, sẽ có một dòng mã có cấu trúc như: @bot-id...",
+  "step3_2AddMsTeam": "Vui lòng nhấn nút 'Gửi' để hoàn thành quá trình tích hợp.",
+  "step4AddMsTeam": "Bước 4: Bây giờ bạn có thể bắt đầu trò chuyện với chatbot của bạn."
 }

@@ -15,16 +15,17 @@ import ModalSlack from './Modal/ModalSlack';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/states/store';
 import {
-  getLinkIntegrationMSTeamTransaction,
   getTokenTelegramTransaction,
 } from '@/repository/buildChatBot';
 import { useBuildChatbot } from '@/states/buildChatBot/buildChatBot.selector';
 import { API_STATUS } from '@/constants';
+import ModalMsTeam from './Modal/ModalMsTeam';
 const Integration = () => {
   const { t } = useTranslation();
   const { data } = useBuildChatbot();
   const [openModalEmbed, setOpenModalEmbed] = useState(false);
   const [openModalTelegram, setOpenModalTelegram] = useState(false);
+  const [openModalMsTeam, setOpenModalMsTeam] = useState(false);
   const [openModalSlack, setOpenModalSlack] = useState(false);
   const [tokenTelegram, setTokenTelegram] = useState<string>('');
   const dispatch = useDispatch<AppDispatch>();
@@ -44,19 +45,7 @@ const Integration = () => {
     }
   };
 
-  const onIntegrationMSTeam = async () => {
-    try {
-      const { meta, payload }: any = await dispatch(
-        getLinkIntegrationMSTeamTransaction({ bot_id: data.id }),
-      );
-      if (meta.requestStatus == API_STATUS.REJECTED) {
-        throw meta;
-      }
-      window.open(payload?.data.data, '_blank');
-    } catch (error: any) {
-      console.log('error', error);
-    }
-  };
+  
   return (
     <>
       <div
@@ -107,7 +96,7 @@ const Integration = () => {
                 'mb-0 w-full h-[55px] gap-x-4 bg-[#E8E9F4] flex items-center justify-center',
                 'text-[20px] text-[#01058A] rounded-[5px] hover:cursor-pointer hover:scale-105 duration-500 transition-all',
               )}
-              onClick={onIntegrationMSTeam}
+              onClick={() => setOpenModalMsTeam(true)}
             >
               <IconTeams />
               {t('addTeam', { ns: 'config_bot' })}{' '}
@@ -164,6 +153,10 @@ const Integration = () => {
       <ModalSlack
         open={openModalSlack}
         onClose={() => setOpenModalSlack(false)}
+      />
+      <ModalMsTeam
+        open={openModalMsTeam}
+        onClose={() => setOpenModalMsTeam(false)}
       />
     </>
   );
