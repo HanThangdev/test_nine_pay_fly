@@ -157,10 +157,14 @@
   "getLink": "リンクを取得",
   "addMsTeam": "Microsoft Teamワークスペースに追加",
   "integrationStepMsTeam": "チャットボットをMicrosoft Teamに統合するために、以下の手順に従ってください:",
-  "step1AddMsTeam": "ステップ1: リンクを取得ボタンをクリックして、ChatFlyをMsTeamに追加します。",
+  "step1_1AddMsTeam": "ステップ1: ボタンをクリックして、",
+  "step1_2AddMsTeam": "ChatFlyをMsTeamに追加します。",
   "step2AddMsTeam": "ステップ2: 画面では、使用モードを選択するよう求められます（Microsoft Teamsが既にダウンロードされているか、ウェブ経由か）。",
   "step3": "ステップ3:",
   "step3_1AddMsTeam": "Microsoft Teamsに正常にログインすると、@bot-id...のように構造化されたコード行が表示されます。",
   "step3_2AddMsTeam": "統合プロセスを完了するために送信ボタンを押してください。",
+  "step3_2_1AddMsTeam": "プレスしてください",
+  "send": "送信",
+  "step3_2_2AddMsTeam": "統合プロセスを完了するために。",
   "step4AddMsTeam": "ステップ4: これでチャットボットとチャットを開始できます。"
 }

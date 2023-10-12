@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Dropdown, Image, MenuProps } from 'antd';
 import DropdownNotification from '../dropdownNotification';
 import DropdownUser from '../dropdownUser';
@@ -24,7 +24,7 @@ const Header = (props: {
 }) => {
   const { t, i18n } = useTranslation();
   const lang = getLanguageFromURL || localStorage.getItem('LANGUAGE') || 'en';
-
+  const navigate = useNavigate()
   const [active, setActive] = useState(lang);
 
   const onChangeLanguage = (lang: string) => {
@@ -168,7 +168,7 @@ const Header = (props: {
                 </span>
               </p>
             </Dropdown>
-            <p className="flex mb-0">
+            <p className="flex mb-0 cursor-pointer" onClick={() => navigate('/help')}>
               <AiFillQuestionCircle size={20} color="black" />
               <span className="block text-sm ml-[15px] font-medium text-black dark:text-white">
                 {t('Help')}

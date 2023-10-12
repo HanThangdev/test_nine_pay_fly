@@ -23,10 +23,13 @@ const ForgotPasswordVerify = lazy(
     ),
 );
 const TermsOfService = lazy(
-  () => import('../pages/PoliciesAndTerms/TermsOfService'),
+  () => import('../pages/PageSupport/TermsOfService'),
 );
 const PrivacyPolicy = lazy(
-  () => import('../pages/PoliciesAndTerms/PrivacyPolicy'),
+  () => import('../pages/PageSupport/PrivacyPolicy'),
+);
+const Help = lazy(
+  () => import('../pages/PageSupport/Help'),
 );
 const AnalysisBot = lazy(() => import('../pages/AnalysisBot'));
 
@@ -156,6 +159,12 @@ const coreRoutes = [
     path: '/policy',
     title: 'Privacy Policye',
     component: PrivacyPolicy,
+    layout: DefaultLayout,
+  },
+  {
+    path: '/help',
+    title: 'Help',
+    component: Help,
     layout: DefaultLayout,
   },
   {

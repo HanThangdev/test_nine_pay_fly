@@ -51,7 +51,7 @@ export default function ModalMsTeam({ open, onClose }: Props) {
           {t('integrationStepMsTeam', { ns: 'config_bot' })}
         </p>
         <p className="text-[15px] ml-4 text-[#878787] gap-y-4">
-          {t('step1AddMsTeam', { ns: 'config_bot' })}
+          {t('step1_1AddMsTeam', { ns: 'config_bot' })} <strong>"{t('getLink', { ns: 'config_bot' })}"</strong> {t('step1_2AddMsTeam', { ns: 'config_bot' })}
         </p>
         <button
           className="font-bold mb-4 cursor-pointer mb-0 ml-4 bg-[#E8E9F4] text-[#01058A] py-2 px-[22px] rounded-[10px] h-[41px] hover:text-[#4ac1ff]"
@@ -69,8 +69,8 @@ export default function ModalMsTeam({ open, onClose }: Props) {
         <p className="text-[15px] ml-4 text-[#878787] mt-2">
           {t('step3_1AddMsTeam', { ns: 'config_bot' })}&nbsp;
         </p>
-        <p className="text-[15px] ml-4 text-[#878787]">
-          {t('step3_2AddMsTeam', { ns: 'config_bot' })}
+        <p className="text-[15px] ml-4 text-[#878787] mt-2">
+          {t('step3_2_1AddMsTeam', { ns: 'config_bot' })} <strong>"{t('send', { ns: 'config_bot' })}"</strong> {t('step3_2_2AddMsTeam', { ns: 'config_bot' })}&nbsp;
         </p>
         <img src={ms_team_step3} className="my-4" />
         <p className="text-[15px] ml-4 text-[#878787] mt-2">
