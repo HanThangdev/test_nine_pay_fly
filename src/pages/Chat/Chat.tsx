@@ -88,7 +88,7 @@ const Chat = () => {
   useEffect(() => {
     if (idBot) {
       onGetAdvanceSetting({ bot_id: idBot });
-      onGetInfoCurrentBot({ bot_id: idBot });
+      // onGetInfoCurrentBot({ bot_id: idBot });
     }
   }, [idBot]);
 
