@@ -75,7 +75,7 @@ const Prompt: React.FC<PromptProps> = ({
       </h2>
       {dropdownOpen && (
         <>
-          <div className="text-[15px] mt-[16px]">
+          {/* <div className="text-[15px] mt-[16px]">
             <p className="flex gap-x-[10px] font-bold items-center">
               {t('Model', { ns: 'config_bot' })}
               <Tooltip
@@ -96,7 +96,7 @@ const Prompt: React.FC<PromptProps> = ({
                 buttonStyle="solid"
               />
             </div>
-          </div>
+          </div> */}
           <div className="flex items-center justify-between">
             <p className="mt-[12px] text-[15px] text-[#A7A7B0]">
               {t('Guiding', { ns: 'config_bot' })}

@@ -14,12 +14,12 @@
   "AdvancedSetting": "Tiện ích trò chuyện",
   "TestChatbot": "Kiểm tra Chatbot",
   "Integrations": "Tích hợp",
-  "ContactSupport": "1. Contact Support",
-  "ContactSupportDes": "You can contact Chatfly through the following channels",
-  "Phone": "Phone: 0337 788 044",
-  "Email": "Email: namtp.it@gmail.com",
+  "ContactSupport": "1. Liên hệ Hỗ trợ",
+  "ContactSupportDes": "Bạn có thể liên hệ với Chatfly qua các kênh sau đây:",
+  "Phone": "Điện thoại:",
+  "Email": "Email:",
   "Fanpage": "Fanpage ChatFly:",
-  "FrequentlyAskedQuestions": "2. Frequently Asked Questions",
-  "RelatedQuestion": "ChatFly-related Question",
-  "ClickToView": "Click to view"
+  "FrequentlyAskedQuestions": "2. Câu hỏi Thường gặp",
+  "RelatedQuestion": "Câu hỏi liên quan đến ChatFly",
+  "ClickToView": "Nhấn để xem."
 }

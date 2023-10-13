@@ -13,5 +13,13 @@
   "Scoring": "ポイント計算",
   "AdvancedSetting": "チャットウィジェット",
   "TestChatbot": "チャットボットテスト",
-  "Integrations": "インテグレーション"
+  "Integrations": "インテグレーション",
+  "ContactSupport": "1. サポートにお問い合わせ",
+  "ContactSupportDes": "以下のチャンネルを通じて Chatfly にお問い合わせいただけます:",
+  "Phone": "電話:",
+  "Email": "メール:",
+  "Fanpage": "ChatFly ファンページ:",
+  "FrequentlyAskedQuestions": "2. よくある質問",
+  "RelatedQuestion": "ChatFly 関連の質問",
+  "ClickToView": "クリックして表示."
 }

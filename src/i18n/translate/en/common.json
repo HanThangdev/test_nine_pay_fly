@@ -15,11 +15,11 @@
   "TestChatbot": "Test Chatbot",
   "Integrations": "Integrations",
   "ContactSupport": "1. Contact Support",
-  "ContactSupportDes": "You can contact Chatfly through the following channels",
-  "Phone": "Phone: 0337 788 044",
-  "Email": "Email: namtp.it@gmail.com",
+  "ContactSupportDes": "You can contact Chatfly through the following channels:",
+  "Phone": "Phone:",
+  "Email": "Email:",
   "Fanpage": "Fanpage ChatFly:",
   "FrequentlyAskedQuestions": "2. Frequently Asked Questions",
   "RelatedQuestion": "ChatFly-related Question",
-  "ClickToView": "Click to view"
+  "ClickToView": "Click to view."
 }
