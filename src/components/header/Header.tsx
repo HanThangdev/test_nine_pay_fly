@@ -13,6 +13,7 @@ import enFlag from '@/images/lang/en.png';
 import jpFlag from '@/images/lang/ja.png';
 import vnFlag from '@/images/lang/vn.png';
 import { logoImg } from '@/images/logo';
+import { STORAGE, getLocalStorage, setLocalStorage } from '@/utils/storage';
 
 const urlParams = new URLSearchParams(window.location.search);
 const getLanguageFromURL = urlParams.get('language');
@@ -22,6 +23,30 @@ const Header = (props: {
   setSidebarOpen: (arg0: boolean) => void;
   onLogout: () => void;
 }) => {
+  const getCurrentCountry = async () => {
+    let currentLang = getLocalStorage(STORAGE.LANGUAGE);
+  
+    if (!currentLang) {
+      try {
+        const response = await fetch('http://ip-api.com/json');
+        const data = await response.json();
+  
+        // Assuming you want to set 'JP' if the country is Japan and 'en' for other countries
+        currentLang = data.country === 'JP' ? 'jp' : 'en';
+  
+        // Optionally, you can save 'currentLang' to local storage here
+        setLocalStorage(STORAGE.LANGUAGE, currentLang);
+        setActive(currentLang);
+        i18n.changeLanguage(currentLang);
+      } catch (error) {
+        // Handle any errors, and set a default value ('en' in this case)
+        setActive('en');
+        i18n.changeLanguage('en');
+        currentLang = 'en';
+      }
+    }
+    return currentLang;
+  };
   const { t, i18n } = useTranslation();
   const lang = getLanguageFromURL || localStorage.getItem('LANGUAGE') || 'en';
   const navigate = useNavigate()
@@ -55,11 +80,7 @@ const Header = (props: {
   ];
 
   useEffect(() => {
-    if (getLanguageFromURL) {
-      localStorage.setItem('LANGUAGE', getLanguageFromURL);
-      setActive(getLanguageFromURL);
-      i18n.changeLanguage(getLanguageFromURL);
-    }
+    getCurrentCountry();
   }, []);
 
   return (
