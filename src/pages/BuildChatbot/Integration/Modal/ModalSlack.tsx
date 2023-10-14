@@ -27,7 +27,7 @@ export default function ModalSlack({ open, onClose }: Props) {
   const cookies = new Cookies();
 
   const accessToken = cookies.get('access_token')
-  const commandCodeIntegrationSlack = `chatfly add ${accessToken}:${data.id}`
+  const commandCodeIntegrationSlack = `/chatfly add ${accessToken}:${data.id}`
   return (
     <Modal
       closable={false}
