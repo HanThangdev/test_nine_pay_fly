@@ -62,7 +62,7 @@ export default function ModalMsTeam({ open, onClose }: Props) {
         <p className="text-[15px] ml-4 text-[#878787]">
           {t('step2AddMsTeam', { ns: 'config_bot' })}
         </p>
-        <img src={ms_team_step2} className="my-4" />
+        <img src={ms_team_step2} className="my-4 border-2 border-solid border-[#dfdfdf]" />
         <p className="text-[15px] ml-4 text-[#878787]">
           {t('step3', { ns: 'config_bot' })}
         </p>
@@ -72,11 +72,11 @@ export default function ModalMsTeam({ open, onClose }: Props) {
         <p className="text-[15px] ml-4 text-[#878787] mt-2">
           {t('step3_2_1AddMsTeam', { ns: 'config_bot' })} <strong>"{t('send', { ns: 'config_bot' })}"</strong> {t('step3_2_2AddMsTeam', { ns: 'config_bot' })}&nbsp;
         </p>
-        <img src={ms_team_step3} className="my-4" />
+        <img src={ms_team_step3} className="my-4 border-2 border-solid border-[#dfdfdf]" />
         <p className="text-[15px] ml-4 text-[#878787] mt-2">
           {t('step4AddMsTeam', { ns: 'config_bot' })}&nbsp;
         </p>
-        <img src={ms_team_step4} className="my-4" />
+        <img src={ms_team_step4} className="my-4 border-2 border-solid border-[#dfdfdf]" />
       </div>
     </Modal>
   );
