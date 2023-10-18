@@ -49,6 +49,9 @@ const initialState: BuildChatBotState = {
     filename: '',
     knowledge_base_id: '',
   },
+  nameBot: '',
+  caseStudy: '',
+  promptExample: '',
 };
 
 export const buildChatbotSlice = createSlice({
@@ -57,6 +60,15 @@ export const buildChatbotSlice = createSlice({
   reducers: {
     setActiveTab: (state, action) => {
       state.activeTab = action.payload;
+    },
+    setNameBot: (state, action) => {
+      state.nameBot = action.payload;
+    },
+    setcaseStudy: (state, action) => {
+      state.caseStudy = action.payload;
+    },
+    setPromptExamples: (state, action) => {
+      state.promptExample = action.payload;
     },
 
     resetStateBuild: () => initialState,
@@ -153,7 +165,9 @@ export const buildChatbotSlice = createSlice({
     builder.addCase(getChatStreamingTransaction.fulfilled, (state) => {
       state.history = Array.from(state.history);
       state.loadingChat = false;
-      state.num_message_left = state.num_message_left ? state.num_message_left-1 : state.num_message_left;
+      state.num_message_left = state.num_message_left
+        ? state.num_message_left - 1
+        : state.num_message_left;
     });
     builder.addCase(getChatStreamingTransaction.rejected, (state) => {
       let listUpdateHistory = Array.from(state.history);
@@ -222,9 +236,9 @@ export const buildChatbotSlice = createSlice({
     // start getBotInfoTransaction
 
     builder.addCase(getBotInfoTransaction.pending, (state) => {
-      state.data=null
+      state.data = null;
       state.loading = true;
-      state.num_message_left = null
+      state.num_message_left = null;
     });
     builder.addCase(getBotInfoTransaction.fulfilled, (state, action) => {
       state.num_message_left = action.payload.data.num_message_left;
@@ -235,7 +249,7 @@ export const buildChatbotSlice = createSlice({
     builder.addCase(getBotInfoTransaction.rejected, (state) => {
       state.loading = false;
       state.data = null;
-      state.num_message_left = null
+      state.num_message_left = null;
     });
 
     // end getBotInfoTransaction
@@ -272,7 +286,7 @@ export const buildChatbotSlice = createSlice({
     // start getAdvanceSettingTransaction
 
     builder.addCase(getAdvanceSettingTransaction.pending, (state) => {
-      state.advanceSetting = null
+      state.advanceSetting = null;
     });
     builder.addCase(
       getAdvanceSettingTransaction.fulfilled,
@@ -287,14 +301,11 @@ export const buildChatbotSlice = createSlice({
     // start getIncludesResources
 
     builder.addCase(getIncludesResources.pending, (state) => {
-      state.includesResource = null
+      state.includesResource = null;
     });
-    builder.addCase(
-      getIncludesResources.fulfilled,
-      (state, action: any) => {
-        state.includesResource = action.payload.data;
-      },
-    );
+    builder.addCase(getIncludesResources.fulfilled, (state, action: any) => {
+      state.includesResource = action.payload.data;
+    });
     builder.addCase(getIncludesResources.rejected, (state) => state);
 
     // end getIncludesResources
@@ -332,10 +343,13 @@ export const buildChatbotSlice = createSlice({
     builder.addCase(getAllQuestionAndAnswerTransaction.pending, (state) => {
       // state.loadingQuestionAndAnswer = true;
     });
-    builder.addCase(getAllQuestionAndAnswerTransaction.fulfilled, (state, action: any) => {
-      // state.loadingQuestionAndAnswer = false;
-      state.listIncludesQandA = action.payload.data;
-    });
+    builder.addCase(
+      getAllQuestionAndAnswerTransaction.fulfilled,
+      (state, action: any) => {
+        // state.loadingQuestionAndAnswer = false;
+        state.listIncludesQandA = action.payload.data;
+      },
+    );
     builder.addCase(getAllQuestionAndAnswerTransaction.rejected, (state) => {
       // state.loadingQuestionAndAnswer = false;
     });
@@ -344,34 +358,37 @@ export const buildChatbotSlice = createSlice({
 
     // start getTokenTelegramTransaction
 
-    builder.addCase(getTokenTelegramTransaction.pending, (state) => {
-    });
-    builder.addCase(getTokenTelegramTransaction.fulfilled, (state, action: any) => {
-    });
-    builder.addCase(getTokenTelegramTransaction.rejected, (state) => {
-    });
+    builder.addCase(getTokenTelegramTransaction.pending, (state) => {});
+    builder.addCase(
+      getTokenTelegramTransaction.fulfilled,
+      (state, action: any) => {},
+    );
+    builder.addCase(getTokenTelegramTransaction.rejected, (state) => {});
 
     // end getTokenTelegramTransaction
 
     // start getLinkIntegrationMSTeamTransaction
 
-    builder.addCase(getLinkIntegrationMSTeamTransaction.pending, (state) => {
-    });
-    builder.addCase(getLinkIntegrationMSTeamTransaction.fulfilled, (state, action: any) => {
-    });
-    builder.addCase(getLinkIntegrationMSTeamTransaction.rejected, (state) => {
-    });
+    builder.addCase(getLinkIntegrationMSTeamTransaction.pending, (state) => {});
+    builder.addCase(
+      getLinkIntegrationMSTeamTransaction.fulfilled,
+      (state, action: any) => {},
+    );
+    builder.addCase(
+      getLinkIntegrationMSTeamTransaction.rejected,
+      (state) => {},
+    );
 
     // end getLinkIntegrationMSTeamTransaction
 
     // start updateListDomainTransaction
 
-    builder.addCase(updateListDomainTransaction.pending, (state) => {
-    });
-    builder.addCase(updateListDomainTransaction.fulfilled, (state, action: any) => {
-    });
-    builder.addCase(updateListDomainTransaction.rejected, (state) => {
-    });
+    builder.addCase(updateListDomainTransaction.pending, (state) => {});
+    builder.addCase(
+      updateListDomainTransaction.fulfilled,
+      (state, action: any) => {},
+    );
+    builder.addCase(updateListDomainTransaction.rejected, (state) => {});
 
     // end updateListDomainTransaction
   },
@@ -379,6 +396,9 @@ export const buildChatbotSlice = createSlice({
 
 export const {
   setActiveTab,
+  setNameBot,
+  setcaseStudy,
+  setPromptExamples,
   resetStateBuild,
   loadFetchLink,
   loadFetchFile,

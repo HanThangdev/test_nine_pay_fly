@@ -25,8 +25,8 @@
     "item5": "Upload multiple files",
     "item6": "View conversation history",
     "item7": "Slack integration",
-    "item8": "Messenger integration (coming soon)",
-    "item9": "WhatsApp integration (coming soon)"
+    "item8": "Messenger integration",
+    "item9": "WhatsApp integration"
   },
   "Starter": {
     "title": "Starter",
@@ -37,10 +37,10 @@
     "item5": "Upload multiple files",
     "item6": "View conversation history",
     "item7": "API access",
-    "item8": "Slack integration (coming soon)",
-    "item9": "Microsoft Team integration (coming soon)",
-    "item10": "Messenger integration (coming soon)",
-    "item11": "WhatsApp integration (coming soon)"
+    "item8": "Slack integration",
+    "item9": "Microsoft Team integration",
+    "item10": "Messenger integration",
+    "item11": "WhatsApp integration"
   },
   "Standard": {
     "title": "Standard",
@@ -52,11 +52,11 @@
     "item6": "View conversation history",
     "item7": "API access",
     "item8": "Zapier integration",
-    "item9": "Slack integration (coming soon)",
+    "item9": "Slack integration",
     "item10": "Wordpress integration",
-    "item11": "Messenger integration (coming soon)",
-    "item12": "Microsoft Team integration (coming soon)",
-    "item13": "WhatsApp integration (coming soon)"
+    "item11": "Messenger integration",
+    "item12": "Microsoft Team integration",
+    "item13": "WhatsApp integration"
   },
   "Business": {
     "title": "Business",
@@ -70,9 +70,9 @@
     "item8": "Zapier integration",
     "item9": "Slack integration",
     "item10": "Wordpress integration",
-    "item11": "Messenger integration (coming soon)",
-    "item12": "Microsoft Team integration (coming soon)",
-    "item13": "WhatsApp integration (coming soon)",
+    "item11": "Messenger integration",
+    "item12": "Microsoft Team integration",
+    "item13": "WhatsApp integration",
     "item14": "Option to Choose GPT-4",
     "item15": "Remove 'Powered by ChatFly"
   },
@@ -97,5 +97,6 @@
     "answer7": "Yes, if you have a paid plan you can upload multiple files to one chatbot. Just click ctrl (windows) or cmd (mac) and select as many files as you want.",
     "answer8": "Free plan: 400K Tokens (~5MB) | Hobby/Standard/Unlimited: 11M Tokens (~140MB)",
     "answer9": "You get 40.000 message credits included in the plan when you subscribe. Every message after that will use your OpenAI API key that you can add in your account page. So you get the cheapest possible price per message after you hit the limit."
-  }
+  },
+  "coming": "coming soon"
 }

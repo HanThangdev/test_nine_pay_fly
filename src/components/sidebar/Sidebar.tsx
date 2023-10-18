@@ -1,16 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import classNames from 'classnames';
-import { BiMessageAltDetail } from 'react-icons/bi';
-import { PiListLight } from 'react-icons/pi';
-import { AiOutlineAppstore, AiFillDollarCircle } from 'react-icons/ai';
-import { FiPieChart } from 'react-icons/fi';
-import { Image } from 'antd';
+import { IconManage, IconManage_fillWhite } from '../IconManage/IconManage';
+import { IconConv, IconConv_fillWhite } from '../IconConv/IconConv';
+import { IconCreate, IconFree } from '../IconCreate/IconCreate';
+import userThree from '@/images/user/user-07.png';
+import { Image, Slider } from 'antd';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/states/store';
 import { resetStateBuild } from '@/states/buildChatBot/buildChatBot.slice';
 import { useTranslation } from 'react-i18next';
 import { logoHaveTextImg } from '@/images/logo';
+import { CreateBotModalWrapper } from '@/pages/CreateBot/CreateBotModal';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -23,7 +24,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const { pathname } = location;
   const dispatch = useDispatch<AppDispatch>();
 
-  const trigger = useRef<any>(null);
+  const urlParams = new URLSearchParams(window.location.search);
+  const getLanguageFromURL = urlParams.get('language');
+  const lang = getLanguageFromURL || localStorage.getItem('LANGUAGE') || 'en';
   const sidebar = useRef<any>(null);
 
   const storedSidebarExpanded = localStorage.getItem('sidebar-expanded');
@@ -61,14 +64,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     <aside
       ref={sidebar}
       className={classNames(
-        ' flex h-screen w-[230px] flex-col left-0 top-0 z-9999 absolute xl:relative overflow-y-hidden bg-[#00024C] duration-300',
-        {
-          '!w-0': sidebarOpen,
-        },
+        ' flex h-screen w-[220px] flex-col left-0 top-0 z-9 relative overflow-y-hidden bg-[#111827] duration-300',
       )}
     >
       {/* <!-- SIDEBAR HEADER --> */}
-      <div className="flex items-center justify-between gap-2 px-[20px] py-[20px] !border-b-[1px] border-[#ffffff82] border-solid">
+      <div className="flex items-center justify-between gap-2 pt-[34px] pl-[38px] border-solid">
         <div className="flex items-center">
           <NavLink to="/">
             <Image
@@ -79,7 +79,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             />
           </NavLink>
         </div>
-        <button
+        {/* <button
           ref={trigger}
           onClick={() => {
             setSidebarOpen(!sidebarOpen);
@@ -90,16 +90,16 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           className="mt-[-2px]"
         >
           <PiListLight size={32} color="#A7A9C0" />
-        </button>
+        </button> */}
       </div>
       {/* <!-- SIDEBAR HEADER --> */}
 
-      <div className="no-scrollbar w-[220px] flex flex-col duration-300 ease-linear">
+      <div className="no-scrollbar px-[15px] flex flex-col duration-300 ease-linear">
         {/* <!-- Sidebar Menu --> */}
-        <nav className="py-8 ">
+        <nav className="py-[34px] ">
           {/* <!-- Menu Group --> */}
           <div>
-            <ul className="mb-6 flex flex-col">
+            <ul className="mb-6 flex flex-col gap-2">
               {/* <!-- Menu Item Build Chatbot --> */}
               <li>
                 <NavLink
@@ -107,87 +107,94 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     dispatch(resetStateBuild());
                   }}
                   to="/"
-                  className={`h-[44px] group relative flex items-center gap-[18px] rounded-r-[5px] py-2 px-4 font-medium text-[#A7A9C0] duration-300 ease-in-out hover:bg-[#1AA8E9] hover:text-white ${
-                    pathname === '/' && 'bg-[#1AA8E9] !text-white !font-bold'
+                  className={`h-[44px] text-[15px] group relative flex items-center gap-[9px] rounded-[8px] py-2 px-[10px] font-medium text-white duration-300 ease-in-out hover:bg-[#374151] ${
+                    (pathname === '/' || pathname.includes('edit-chatbot')) &&
+                    'bg-white !font-bold !text-black'
                   }`}
                 >
-                  <FiPieChart size={24} />
+                  {pathname === '/' || pathname.includes('edit-chatbot') ? (
+                    <IconManage />
+                  ) : (
+                    <IconManage_fillWhite />
+                  )}
+
                   {t('Manage')}
                 </NavLink>
               </li>
               <li>
                 <NavLink
-                  onClick={() => {
-                    dispatch(resetStateBuild());
-                  }}
-                  to="/build-chatbots"
-                  className={`h-[44px] group relative flex items-center gap-[18px] rounded-r-[5px] py-2 px-4 font-medium text-[#A7A9C0] duration-300 ease-in-out hover:bg-[#1AA8E9] hover:text-white ${
-                    pathname.includes('build-chatbots') &&
-                    'bg-[#1AA8E9] !text-white !font-bold'
-                  }`}
-                >
-                  <AiOutlineAppstore size={26} />
-                  {t('Build')}
-                </NavLink>
-              </li>
-              {/* <!-- Menu Item Build Chatbot --> */}
-
-              {/* <!-- Menu Item Manage Chatbots --> */}
-
-              {/* <!-- Menu Item Manage Chatbots --> */}
-
-              {/* <!-- Menu Item Conversations --> */}
-              <li>
-                <NavLink
                   to="/conversations"
-                  className={`h-[44px] group relative flex items-center gap-[18px] rounded-r-[5px] py-2 px-4 font-medium text-[#A7A9C0] duration-300 ease-in-out hover:bg-[#1AA8E9] hover:text-white ${
+                  className={`h-[44px] text-[15px] group relative flex items-center gap-[9px] rounded-[8px] py-2 px-[10px] font-medium text-white duration-300 ease-in-out hover:bg-[#374151] ${
                     pathname.includes('conversations') &&
-                    'bg-[#1AA8E9] !text-white !font-bold'
+                    'bg-white !font-bold !text-black'
                   }`}
                 >
-                  <BiMessageAltDetail size={26} />
+                  {pathname.includes('conversations') ? (
+                    <IconConv />
+                  ) : (
+                    <IconConv_fillWhite />
+                  )}
                   {t('Conversations')}
                 </NavLink>
               </li>
-              {/* <!-- Menu Item Conversations --> */}
-              {/* <!-- Menu Item price --> */}
-              <li>
-                <NavLink
-                  to="/price"
-                  className={`h-[44px] group relative flex items-center gap-[18px] rounded-r-[5px] py-2 px-4 font-medium text-[#A7A9C0] duration-300 ease-in-out hover:bg-[#1AA8E9] hover:text-white ${
-                    pathname.includes('price') &&
-                    'bg-[#1AA8E9] !text-white !font-bold'
-                  }`}
-                >
-                  <AiFillDollarCircle size={26} />
-                  {t('Pricing')}
-                </NavLink>
-              </li>
-
-              {/* <!-- Menu Item price --> */}
             </ul>
           </div>
         </nav>
 
         {/* <!-- Sidebar Menu --> */}
       </div>
-      <div className="h-full flex flex-col justify-end w-[220px]">
-        <NavLink
-          to="/terms"
-          className={`h-[44px] group relative flex items-center gap-[18px] rounded-r-[5px] py-2 px-4 font-medium text-[#A7A9C0] duration-300 ease-in-out hover:bg-[#1AA8E9] hover:text-white ${
-            pathname.includes('terms') && 'bg-[#1AA8E9] !text-white !font-bold'
-          }`}
+      <div className="h-full flex flex-col justify-end w-full mb-[26px] px-[15px] sidebar-bottom">
+        <CreateBotModalWrapper>
+          {({ onOpen }) => (
+            <div
+              onClick={() => {
+                onOpen();
+              }}
+              className="bg-[#FCFCFC] cursor-pointer rounded-xl py-3 grid gap-2 justify-center text-[#2D3FE7]"
+            >
+              <p className="bg-[#F1F2FE] p-2 rounded-full m-auto w-fit ">
+                <IconCreate />
+              </p>
+              {t('New', { ns: 'manage_bot' })}
+            </div>
+          )}
+        </CreateBotModalWrapper>
+        <div
+          className={classNames(
+            'bg-[#FCFCFC] mt-[27px] rounded-lg py-[12px] px-[16px] gap-y-[16px] grid',
+          )}
         >
-          {t('titleSidebar', { ns: 'term_of_service' })}
-        </NavLink>
-        <NavLink
-          to="/policy"
-          className={`h-[44px] group relative flex items-center gap-[18px] rounded-r-[5px] py-2 px-4 font-medium text-[#A7A9C0] duration-300 ease-in-out hover:bg-[#1AA8E9] hover:text-white ${
-            pathname.includes('policy') && 'bg-[#1AA8E9] !text-white !font-bold'
-          }`}
-        >
-          {t('titleSidebar', { ns: 'privacy_policy' })}
-        </NavLink>
+          <div className="flex gap-x-2 items-center">
+            <div className="h-[34px] w-[34px] rounded-full">
+              <img src={userThree} alt="User" />
+            </div>
+            <div>
+              <span className="mb-0 text-[14px]">Dinh Cong Huan</span>
+              <br />
+              <p className="text-[11px] items-center mb-0 mt-[-6px] flex gap-x-1 py-[2px] px-1 rounded bg-[#F9FAFB]">
+                <IconFree />
+                {t('Freeaccount')}
+              </p>
+            </div>
+          </div>
+          <div>
+            <div className="flex justify-between text-[13px]">
+              <p className="mb-0">{t('usage')}</p>
+              <p className="mb-0">20/2000 {t('requests')}</p>
+            </div>
+            <Slider defaultValue={30} disabled />
+          </div>
+          <div
+            className={classNames(
+              'bg-button-upgrade text-white w-full rounded py-2 flex justify-center text-[14px]',
+              {
+                'text-[11px]': lang === 'jp',
+              },
+            )}
+          >
+            <NavLink to="/price">{t('UpgradePro')}</NavLink>
+          </div>
+        </div>
       </div>
     </aside>
   );

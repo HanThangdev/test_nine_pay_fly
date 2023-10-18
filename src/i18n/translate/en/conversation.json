@@ -5,5 +5,9 @@
   "Customer": "Customer",
   "ExportPDF": "Export PDF",
   "NewBot": "New Chatbot",
-  "NoConversationFound": "No conversation found"
+  "NoConversationFound": "No conversation found",
+  "Converstation": "Converstation",
+  "Editbot": "Edit bot",
+  "Downloadall": "Download all conversation",
+  "Latestmessage": "Latest message"
 }

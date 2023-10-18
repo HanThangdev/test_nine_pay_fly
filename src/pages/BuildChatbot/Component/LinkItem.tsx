@@ -1,8 +1,6 @@
 import ModalComponent from '@/components/Modal';
 import { API_STATUS } from '@/constants';
-import {
-  deleteURLTransaction,
-} from '@/repository/buildChatBot';
+import { deleteURLTransaction } from '@/repository/buildChatBot';
 import { useBuildChatbot } from '@/states/buildChatBot/buildChatBot.selector';
 import { deletedListIncludes } from '@/states/buildChatBot/buildChatBot.slice';
 import { DataFetchLink } from '@/states/buildChatBot/type';
@@ -11,17 +9,22 @@ import { formatNumber } from '@/utils/format';
 import { notification } from 'antd';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { RiDeleteBinLine } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
+import { IconDelete, IconToken } from '@/components/IconGroup/IconGroup';
 
 interface LinkItemProps {
   item: DataFetchLink;
   index: number;
-  setUrlSelected: Dispatch<SetStateAction<string[]>>
-  urlSelected: string[]
+  setUrlSelected: Dispatch<SetStateAction<string[]>>;
+  urlSelected: string[];
 }
 
-const LinkItem = ({ item, index, setUrlSelected, urlSelected }: LinkItemProps) => {
+const LinkItem = ({
+  item,
+  index,
+  setUrlSelected,
+  urlSelected,
+}: LinkItemProps) => {
   const { t } = useTranslation();
   const [visibleDeleteModal, setVisibleDeleteModal] = useState<boolean>(false);
   const { data } = useSelector((state: RootState) => state.buildChatBot);
@@ -65,26 +68,38 @@ const LinkItem = ({ item, index, setUrlSelected, urlSelected }: LinkItemProps) =
   //   } else{
   //     setUrlSelected([...urlSelected, e.target.value])
   //   }
-  // } 
+  // }
 
   return (
-    <div className="flex justify-between gap-x-[21px] mb-[20px]">
+    <div className="flex justify-between gap-x-[21px] mb-[20px] px-2 bg-[#F9FAFB] border-[1px] border-[#dfe1e5] rounded-lg">
       <input
         disabled
         type="text"
         value={item.url}
-        className="h-[41px] w-full  bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
+        className="h-[41px] w-full bg-transparent outline-none focus:border-primary focus-visible:shadow-none"
       />
-      <div className="flex justify-between w-[150px] items-center">
-        <p className="mb-0 font-bold">{formatNumber(item?.num_token || 0)} {t('tokens', { ns: 'config_bot' })}</p>
-        <RiDeleteBinLine
+      <div className="flex justify-between w-[200px] items-center">
+        <p className="mb-0 font-medium flex items-center gap-x-1">
+          <IconToken />
+          {formatNumber(item?.num_token || 0)}{' '}
+          {t('tokens', { ns: 'config_bot' })}
+        </p>
+        <div
+          className="p-1 rounded border-[1px] border-[#FDA29B] ml-1 bg-[#FFF]"
+          onClick={() => {
+            setVisibleDeleteModal(true);
+          }}
+        >
+          <IconDelete />
+        </div>
+        {/* <RiDeleteBinLine
           size={18}
           className="cursor-pointer"
           color="#F44336"
           onClick={() => {
             setVisibleDeleteModal(true);
           }}
-        />
+        /> */}
         {/* <div className="text-success-color font-bold">Done</div>
         <div className="">
           <Checkbox onChange={onChangeSelectedUrl} value={item.url} checked={urlSelected.includes(item.url)}/>

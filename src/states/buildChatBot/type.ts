@@ -1,7 +1,11 @@
-import { AdvancePayload, DataQuestionAndAnswerItem, GetIncludesResourcesItem } from "@/repository/buildChatBot/type";
+import {
+  AdvancePayload,
+  DataQuestionAndAnswerItem,
+  GetIncludesResourcesItem,
+} from '@/repository/buildChatBot/type';
 
 export interface BuildChatBotState {
-  data:  any | null;
+  data: any | null;
   history: HistoryChat[];
   loading: boolean;
   session_id: string;
@@ -11,13 +15,16 @@ export interface BuildChatBotState {
   loadingFetchLink: boolean;
   loadingChat: boolean;
   loadingFetchFile: boolean;
-  listIncludesFile: DataFetchFile[],
+  listIncludesFile: DataFetchFile[];
   fetchFile: DataFetchFile;
   advanceSetting: AdvancePayload | null;
-  includesResource: GetIncludesResourcesData | null
+  includesResource: GetIncludesResourcesData | null;
   loadingQuestionAndAnswer: boolean;
-  listIncludesQandA: DataQuestionAndAnswerItem[],
-  num_message_left: number | null
+  listIncludesQandA: DataQuestionAndAnswerItem[];
+  num_message_left: number | null;
+  nameBot: string;
+  caseStudy: string;
+  promptExample: string;
 }
 
 export interface DataFetchLink {
@@ -27,23 +34,23 @@ export interface DataFetchLink {
 }
 
 export interface DataFetchFile {
-  filename: string ;
+  filename: string;
   num_token: number;
   knowledge_base_id: string;
 }
 
 export interface HistoryChat {
-  sender_type: "assistant" | "user";
+  sender_type: 'assistant' | 'user';
   content: string;
 }
 
 export interface GetAdvanceSettingPayload {
-  bot_id: string
+  bot_id: string;
 }
 
-export interface GetIncludesResourcesData{
-  resource: GetIncludesResourcesItem[],
-  total_token: number,
+export interface GetIncludesResourcesData {
+  resource: GetIncludesResourcesItem[];
+  total_token: number;
 }
 
 export interface DataQuestionAndAnswer {
@@ -51,5 +58,5 @@ export interface DataQuestionAndAnswer {
   id: string;
   question: string;
   answer: string;
-  created_at: string
+  created_at: string;
 }

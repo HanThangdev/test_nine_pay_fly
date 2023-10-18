@@ -2,8 +2,8 @@ export default function IconBot() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="175"
-      height="175"
+      width="157"
+      height="111"
       viewBox="0 0 175 175"
       fill="none"
     >

@@ -90,36 +90,33 @@ const SignIn = () => {
   return (
     <>
       <div className="h-full auth-background bg-cover min-h-screen shadow-default">
-        <div className="h-full flex flex-wrap items-center px-[80px]">
-          <div className="w-full border-stroke dark:border-strokedark lg:w-1/2">
-            <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
+        <div className="h-full flex flex-wrap items-center w-full xl:w-[80%] m-auto">
+          <div className="w-[full] flex justify-center border-stroke dark:border-strokedark lg:w-1/2">
+            <div className="w-fit bg-[#37415194] p-[24px] rounded-[24px]">
               <div className="flex justify-center items-center">
                 <Image
                   src={logoHaveTextImg}
                   alt="Chatfly"
-                  className="!h-[60px]"
+                  className="!h-[33px]"
                   preview={false}
                 />
               </div>
-              <h2 className="text-center sm:text-[36px] text-2xl mt-[33px] text-white font-bold">
-                Welcome back!
+              <h2 className="text-center text-[30px] mt-[24px] text-white font-bold">
+                Log in to your account
               </h2>
-              <p className="text-center mt-4 text-white">
-                Do you have an account yet?{' '}
-                <span className="text-[19px] text-[#4AC1FF]">
-                  <Link to="/auth/signup">Create account</Link>
-                </span>
+              <p className="text-center text-[#667085]">
+                Welcome back! Please enter your details.
               </p>
-              <form onSubmit={onSubmit} className="w-[396px] m-auto">
+              <form onSubmit={onSubmit} className="w-[442px] m-auto">
                 <div className="mt-[31px]">
-                  <label className="mb-2.5 h-[21px] block font-medium text-white">
-                    Email Address
+                  <label className="mb-2.5 h-[21px] text-[14px] text-[#F9FAFB] block font-medium ">
+                    Email
                   </label>
                   <div className="relative">
                     <input
                       type="email"
                       placeholder="Enter your email"
-                      className="h-[48px] w-full rounded-lg border border-stroke bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
+                      className="h-[44px] w-full rounded-lg border border-stroke bg-white px-4 outline-none focus:border-primary focus-visible:shadow-none"
                       {...register('email')}
                     />
                     <div className="text-[#ff0505] mt-1 min-h-[17px] text-[14px]">
@@ -129,18 +126,14 @@ const SignIn = () => {
                 </div>
 
                 <div>
-                  <label className="mb-1 h-[21px] block font-medium text-white">
+                  <label className="mb-2.5 h-[21px] text-[14px] text-[#F9FAFB] block font-medium ">
                     Password
                   </label>
-                  <p className="text-white text-[14px] mb-2">
-                    Must include at least eight letter, number and special
-                    character
-                  </p>
                   <div className="relative">
                     <input
                       type={showPass ? 'text' : 'password'}
                       placeholder="Enter your password"
-                      className="h-[48px] w-full rounded-lg border border-stroke bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
+                      className="h-[44px] w-full rounded-lg border border-stroke bg-white px-4 outline-none focus:border-primary focus-visible:shadow-none"
                       {...register('password')}
                     />
                     <div className="text-[#ff0505] mt-1 min-h-[17px] text-[14px]">
@@ -165,11 +158,11 @@ const SignIn = () => {
                   </div>
                 </div>
                 <div className="mb-[32px] flex justify-between">
-                  <p className="mb-0 text-white">
+                  <p className="mb-0 text-white text-[14px]">
                     <Checkbox className="w-[24px] h-[24px] bg-[#D9D9D9"></Checkbox>
-                    Remember me
+                    Remember for 30 days
                   </p>
-                  <p className="text-[#4AC1FF] mb-0">
+                  <p className="text-white text-[14px] mb-0">
                     <Link to="/auth/forgot-password">Forgot password?</Link>
                   </p>
                 </div>
@@ -178,16 +171,22 @@ const SignIn = () => {
                     htmlType="submit"
                     disabled={loading}
                     loading={loading}
-                    className="w-full h-[48px] cursor-pointer rounded-[8px] bg-button-login text-white transition hover:bg-opacity-90 button-antd"
+                    className="w-full h-[44px] cursor-pointer rounded-[8px] bg-[#2D3FE7] font-semibold text-white transition hover:bg-opacity-90 button-antd"
                   >
                     Sign in
                   </Button>
                 </div>
                 <div className="w-full">
                   <GoogleOAuthProvider clientId="664422196919-e2dkku6sj5ums77phncm4ascinss55fe.apps.googleusercontent.com">
-                    <LoginGoogleBtn/>
+                    <LoginGoogleBtn />
                   </GoogleOAuthProvider>
                 </div>
+                <p className="text-center text-[14px] mt-4 text-white">
+                  Don’t have an account?
+                  <span className="text-[16px] ">
+                    <Link to="/auth/signup"> Sign up</Link>
+                  </span>
+                </p>
               </form>
             </div>
           </div>

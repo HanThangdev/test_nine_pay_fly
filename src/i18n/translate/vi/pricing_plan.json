@@ -25,8 +25,8 @@
     "item5": "Tải lên nhiều tập tin",
     "item6": "Xem lịch sử cuộc trò chuyện",
     "item7": "Tích hợp với Slack",
-    "item8": "Tích hợp với Messenger (sắp ra mắt)",
-    "item9": "Tích hợp WhatsApp (sắp ra mắt)"
+    "item8": "Tích hợp với Messenger",
+    "item9": "Tích hợp WhatsApp"
   },
   "Starter": {
     "title": "Bắt đầu",
@@ -37,10 +37,10 @@
     "item5": "Tải lên nhiều tập tin",
     "item6": "Xem lịch sử cuộc trò chuyện",
     "item7": "Truy cập API",
-    "item8": "Tích hợp với Slack (sắp ra mắt)",
-    "item9": "Tích hợp Microsoft Team (sắp ra mắt)",
-    "item10": "Tích hợp với Messenger (sắp ra mắt)",
-    "item11": "Tích hợp WhatsApp (sắp ra mắt)"
+    "item8": "Tích hợp với Slack",
+    "item9": "Tích hợp Microsoft Team",
+    "item10": "Tích hợp với Messenger",
+    "item11": "Tích hợp WhatsApp"
   },
   "Standard": {
     "title": "Tiêu chuẩn",
@@ -52,11 +52,11 @@
     "item6": "Xem lịch sử cuộc trò chuyện",
     "item7": "Truy cập API",
     "item8": "Tích hợp Zapier",
-    "item9": "Tích hợp với Slack (sắp ra mắt)",
+    "item9": "Tích hợp với Slack",
     "item10": "Tích hợp WordPress",
-    "item11": "Tích hợp với Messenger (sắp ra mắt)",
-    "item12": "Tích hợp Microsoft Team (sắp ra mắt)",
-    "item13": "Tích hợp WhatsApp (sắp ra mắt)"
+    "item11": "Tích hợp với Messenger",
+    "item12": "Tích hợp Microsoft Team",
+    "item13": "Tích hợp WhatsApp"
   },
   "Business": {
     "title": "Kinh doanh",
@@ -70,9 +70,9 @@
     "item8": "Tích hợp Zapier",
     "item9": "Tích hợp với Slack",
     "item10": "Tích hợp WordPress",
-    "item11": "Tích hợp với Messenger (sắp ra mắt)",
-    "item12": "Tích hợp Microsoft Team (sắp ra mắt)",
-    "item13": "Tích hợp WhatsApp (sắp ra mắt)",
+    "item11": "Tích hợp với Messenger",
+    "item12": "Tích hợp Microsoft Team",
+    "item13": "Tích hợp WhatsApp",
     "item14": "Tùy chọn để chọn GPT-4",
     "item15": "Xóa 'Được cung cấp bởi ChatFly'"
   },
@@ -97,5 +97,6 @@
     "answer7": "Có, nếu bạn có gói trả phí, bạn có thể tải nhiều tệp lên một chatbot. Chỉ cần nhấp vào ctrl (windows) hoặc cmd (mac) và chọn bao nhiêu tệp bạn muốn.",
     "answer8": "Gói miễn phí: 400K ký tự (~5MB) | Sở thích/Tiêu chuẩn/Không giới hạn: 11M ký tự (~140MB)",
     "answer9": "Bạn nhận được 40.000 tín dụng tin nhắn được bao gồm trong gói khi đăng ký. Mọi tin nhắn sau đó sẽ sử dụng khóa API OpenAI mà bạn có thể thêm vào trang tài khoản của mình. Vì vậy, bạn sẽ nhận được mức giá rẻ nhất có thể cho mỗi tin nhắn sau khi đạt đến giới hạn."
-  }
+  },
+  "coming": "sắp ra mắt"
 }

@@ -1,9 +1,7 @@
 import { FC, PropsWithChildren, useState } from 'react';
-import Header from '@/components/header';
 import Sidebar from '@/components/sidebar';
-import { Outlet } from 'react-router-dom';
 
-const DefaultLayout: FC<PropsWithChildren>  = ({children}) => {
+const DefaultLayout: FC<PropsWithChildren> = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
@@ -15,16 +13,10 @@ const DefaultLayout: FC<PropsWithChildren>  = ({children}) => {
         {/* <!-- ===== Sidebar End ===== --> */}
 
         {/* <!-- ===== Content Area Start ===== --> */}
-        <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
-          {/* <!-- ===== Header Start ===== --> */}
-          <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-          {/* <!-- ===== Header End ===== --> */}
-
+        <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden bg-[#f3f4f6]">
           {/* <!-- ===== Main Content Start ===== --> */}
           <main>
-            <div className="mx-auto py-4 px-10">
-              {children}
-            </div>
+            <div className="mx-auto">{children}</div>
           </main>
           {/* <!-- ===== Main Content End ===== --> */}
         </div>

@@ -1,5 +1,5 @@
-import { Modal } from "antd";
-import { Children, ReactNode } from "react";
+import { Modal } from 'antd';
+import { Children, ReactNode } from 'react';
 
 interface ModalProps {
   open: boolean;
@@ -7,14 +7,26 @@ interface ModalProps {
   footer?: ReactNode;
   onCancel?: () => void;
   onOk?: () => void;
-  okText?: string
+  okText?: string;
   cancelText?: string;
   title?: ReactNode;
-  centered?: boolean 
-  children?: ReactNode 
+  centered?: boolean;
+  children?: ReactNode;
+  width?: number;
 }
 
-export default function ModalComponent({open, onCancel, onOk, footer, cancelText, okText, title, centered, children} : ModalProps) {
+export default function ModalComponent({
+  open,
+  onCancel,
+  onOk,
+  footer,
+  cancelText,
+  okText,
+  title,
+  centered,
+  children,
+  width,
+}: ModalProps) {
   return (
     <Modal
       open={open}
@@ -25,6 +37,7 @@ export default function ModalComponent({open, onCancel, onOk, footer, cancelText
       cancelText={cancelText}
       title={title}
       centered={centered}
+      width={width}
     >
       {children}
     </Modal>

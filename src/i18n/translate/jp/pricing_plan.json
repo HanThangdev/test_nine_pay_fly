@@ -25,8 +25,8 @@
     "item5": "複数ファイルをアップロード可能",
     "item6": "会話の履歴を表示する",
     "item7": "Slackでインテグレーション",
-    "item8": "Messageでインテグレーション（近日公開予定）",
-    "item9": "WhatsAppでインテグレーション（近日公開予定）"
+    "item8": "Messageでインテグレーション",
+    "item9": "WhatsAppでインテグレーション"
   },
   "Starter": {
     "title": "スターター",
@@ -37,10 +37,10 @@
     "item5": "複数ファイルをアップロード可能",
     "item6": "会話の履歴を表示する",
     "item7": "APIアクセス",
-    "item8": "Slackでインテグレーション（近日公開予定）",
-    "item9": "Microsoft Teamでインテグレーション（近日公開予定）",
-    "item10": "Messageでインテグレーション（近日公開予定）",
-    "item11": "WhatsAppでインテグレーション（近日公開予定）"
+    "item8": "Slackでインテグレーション",
+    "item9": "Microsoft Teamでインテグレーション",
+    "item10": "Messageでインテグレーション",
+    "item11": "WhatsAppでインテグレーション"
   },
   "Standard": {
     "title": "標準",
@@ -52,11 +52,11 @@
     "item6": "会話の履歴を表示する",
     "item7": "APIアクセス",
     "item8": "Zapierでインテグレーション",
-    "item9": "Slackでインテグレーション（近日公開予定）",
+    "item9": "Slackでインテグレーション",
     "item10": "Wordpressでインテグレーション",
-    "item11": "Messageでインテグレーション（近日公開予定）",
-    "item12": "Microsoft Teamでインテグレーション（近日公開予定）",
-    "item13": "WhatsAppでインテグレーション（近日公開予定）"
+    "item11": "Messageでインテグレーション",
+    "item12": "Microsoft Teamでインテグレーション",
+    "item13": "WhatsAppでインテグレーション"
   },
   "Business": {
     "title": "ビジネス",
@@ -70,9 +70,9 @@
     "item8": "Zapierでインテグレーション",
     "item9": "Slackでインテグレーション",
     "item10": "Wordpressでインテグレーション",
-    "item11": "Messageでインテグレーション（近日公開予定）",
-    "item12": "Microsoft Teamでインテグレーション（近日公開予定）",
-    "item13": "WhatsAppでインテグレーション（近日公開予定）",
+    "item11": "Messageでインテグレーション",
+    "item12": "Microsoft Teamでインテグレーション",
+    "item13": "WhatsAppでインテグレーション",
     "item14": "GPT-4を選択するオプション",
     "item15": " 'Powered by ChatFly削除"
   },
@@ -97,5 +97,6 @@
     "answer7": "はい、有料プランを利用すると1つのチャットボットに複数のファイルをアップロードできます。 Ctrl (Windows) または cmd (Mac) を押下して、複数のファイルを選択します。",
     "answer8": "無料プラン: 400K 文字 (~5MB) | ホビー/スタンダード/無制限: 1100 万文字 (~140MB)",
     "answer9": "購入するとプランに含まれる40,000メッセージ クレジットが付与されます。それ以降のすべてのメッセージにはアカウントページに追加できるOpenAI API キーが使用されます。 したがって、制限に達した後はメッセージあたりの料金が可能な限り安くなります。"
-  }
+  },
+  "coming": "近日公開予定"
 }

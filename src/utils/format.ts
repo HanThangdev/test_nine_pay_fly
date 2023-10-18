@@ -63,7 +63,7 @@ export function formatTimeAgo(utcTime: Date): string {
       formattedTimeAgo = `${minutes} ${
         lang === 'en' ? 'minute' : lang === 'jp' ? '分' : 'phút'
       }${minutes > 1 ? (lang === 'en' ? 's' : lang === 'jp' ? '間' : '') : ''}${
-        lang === 'en' ? 'ago' : lang === 'jp' ? '前' : 'trước'
+        lang === 'en' ? ' ago' : lang === 'jp' ? '前' : 'trước'
       }`;
       break;
     case minutes >= 1:

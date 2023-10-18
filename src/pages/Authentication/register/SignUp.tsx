@@ -38,9 +38,9 @@ const SignUp = () => {
     };
 
     try {
-      const {meta} = await dispatch(registerTransaction(body));
-      if(meta.requestStatus == API_STATUS.REJECTED){
-        throw(meta);
+      const { meta } = await dispatch(registerTransaction(body));
+      if (meta.requestStatus == API_STATUS.REJECTED) {
+        throw meta;
       }
       notification.success({
         message: 'You have successfully registered.',
@@ -61,33 +61,33 @@ const SignUp = () => {
   return (
     <>
       <div className="h-auto auth-background bg-cover min-h-screen shadow-default">
-        <div className="h-full flex flex-wrap items-center px-[80px]">
-          <div className="w-full border-stroke dark:border-strokedark lg:w-1/2 m-auto">
-            <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
+        <div className="h-full flex flex-wrap items-center w-full xl:w-[80%] m-auto">
+          <div className="w-full flex justify-center border-stroke dark:border-strokedark lg:w-1/2 m-auto">
+            <div className="w-fit bg-[#37415194] p-[24px] rounded-[24px]">
               <div className="flex justify-center items-center">
                 <Image
                   src={logoHaveTextImg}
                   alt="Chatfly"
-                  className="!h-[60px]"
+                  className="!h-[33px]"
                   preview={false}
                 />
               </div>
-              <p className="text-center mt-2 text-white">
+              <p className="text-center mt-2 text-[#667085]">
                 You'll be up & running in 2 minutes
               </p>
-              <h2 className="text-center sm:text-[36px] text-2xl mt-[33px] text-white font-bold">
+              <h2 className="text-center text-[30px] mt-[24px] text-white font-bold">
                 Create your account
               </h2>
-              <form onSubmit={onSubmit} className="w-[396px] m-auto">
+              <form onSubmit={onSubmit} className="w-[442px] m-auto">
                 <div className="mt-6">
-                  <label className="mb-2.5 h-[21px] block font-medium text-white">
+                  <label className="mb-2.5 h-[21px] text-[14px] text-[#F9FAFB] block font-medium ">
                     First Name
                   </label>
                   <div className="relative">
                     <input
                       type="text"
                       placeholder="Enter your First Name"
-                      className="h-[48px] w-full rounded-lg border border-stroke bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
+                      className="h-[44px] w-full rounded-lg border border-stroke bg-white px-4 outline-none focus:border-primary focus-visible:shadow-none"
                       {...register('first_name')}
                     />
                     <div className="text-[#ff0505] mt-1 min-h-[17px] text-[14px]">
@@ -96,14 +96,14 @@ const SignUp = () => {
                   </div>
                 </div>
                 <div>
-                  <label className="mb-2.5 h-[21px] block font-medium text-white">
+                  <label className="mb-2.5 h-[21px] text-[14px] text-[#F9FAFB] block font-medium ">
                     Last Name
                   </label>
                   <div className="relative">
                     <input
                       type="text"
                       placeholder="Enter your Last Name"
-                      className="h-[48px] w-full rounded-lg border border-stroke bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
+                      className="h-[44px] w-full rounded-lg border border-stroke bg-white px-4 outline-none focus:border-primary focus-visible:shadow-none"
                       {...register('last_name')}
                     />
                     <div className="text-[#ff0505] mt-1 min-h-[17px] text-[14px]">
@@ -112,14 +112,14 @@ const SignUp = () => {
                   </div>
                 </div>
                 <div>
-                  <label className="mb-2.5 h-[21px] block font-medium text-white">
+                  <label className="mb-2.5 h-[21px] text-[14px] text-[#F9FAFB] block font-medium ">
                     Email
                   </label>
                   <div className="relative">
                     <input
                       type="email"
                       placeholder="Enter your email"
-                      className="h-[48px] w-full rounded-lg border border-stroke bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
+                      className="h-[44px] w-full rounded-lg border border-stroke bg-white px-4 outline-none focus:border-primary focus-visible:shadow-none"
                       {...register('email')}
                     />
                     <div className="text-[#ff0505] mt-1 min-h-[17px] text-[14px]">
@@ -129,7 +129,7 @@ const SignUp = () => {
                 </div>
 
                 <div>
-                  <label className="mb-1 h-[21px] block font-medium text-white">
+                  <label className="mb-2.5 h-[21px] text-[14px] text-[#F9FAFB] block font-medium ">
                     Password
                   </label>
                   <p className="text-white text-[14px] mb-2">
@@ -140,7 +140,7 @@ const SignUp = () => {
                     <input
                       type={showPass ? 'text' : 'password'}
                       placeholder="Enter your password"
-                      className="h-[48px] w-full rounded-lg border border-stroke bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
+                      className="h-[44px] w-full rounded-lg border border-stroke bg-white px-4 outline-none focus:border-primary focus-visible:shadow-none"
                       {...register('password')}
                     />
                     <div className="text-[#ff0505] mt-1 min-h-[17px] text-[14px]">
@@ -165,14 +165,14 @@ const SignUp = () => {
                   </div>
                 </div>
                 <div>
-                  <label className="mb-2.5 h-[21px] block font-medium text-white">
+                  <label className="mb-2.5 h-[21px] text-[14px] text-[#F9FAFB] block font-medium ">
                     Confirm your Password
                   </label>
                   <div className="relative">
                     <input
                       type={showPassConfirm ? 'text' : 'password'}
                       placeholder="Enter your password"
-                      className="h-[48px] w-full rounded-lg border border-stroke bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
+                      className="h-[44px] w-full rounded-lg border border-stroke bg-white px-4 outline-none focus:border-primary focus-visible:shadow-none"
                       {...register('password_confirmation')}
                     />
                     <div className="text-[#ff0505] mt-1 min-h-[17px] text-[14px] mb-3">
@@ -202,17 +202,16 @@ const SignUp = () => {
                     loading={loading}
                     disabled={isSubmitting || loading}
                     value="Create account"
-                    className="w-full h-[48px] cursor-pointer rounded-[8px] bg-button-login text-white transition hover:bg-opacity-90 button-antd"
-                  >Create account</Button>
+                    className="w-full h-[44px] cursor-pointer rounded-[8px] bg-[#2D3FE7] font-semibold text-white transition hover:bg-opacity-90 button-antd"
+                  >
+                    Create account
+                  </Button>
                 </div>
 
                 <div className="mt-6 text-center">
-                  <p className="text-white">
+                  <p className=" text-[14px] text-white">
                     Already have an account?{' '}
-                    <Link
-                      to="/auth/signin"
-                      className="text-[#4AC1FF] text-[19px]"
-                    >
+                    <Link to="/auth/signin" className="text-[16px]">
                       Login
                     </Link>
                   </p>

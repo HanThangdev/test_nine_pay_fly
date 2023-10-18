@@ -5,5 +5,9 @@
   "Customer": "Khách hàng",
   "ExportPDF": "Xuất PDF",
   "NewBot": "Tạo Chatbot",
-  "NoConversationFound": "Không tìm thấy đoạn chat nào"
+  "NoConversationFound": "Không tìm thấy đoạn chat nào",
+  "Converstation": "Hội thoại",
+  "Editbot": "Chỉnh sửa bot",
+  "Downloadall": "Tải xuống tất cả cuộc trò chuyện",
+  "Latestmessage": "Tin nhắn mới nhất"
 }

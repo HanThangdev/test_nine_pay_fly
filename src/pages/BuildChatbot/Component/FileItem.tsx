@@ -1,9 +1,6 @@
 import ModalComponent from '@/components/Modal';
 import { API_STATUS } from '@/constants';
-import {
-  deleteURLTransaction,
-  getAllURLTransaction,
-} from '@/repository/buildChatBot';
+import { IconDelete, IconToken } from '@/components/IconGroup/IconGroup';
 import { useBuildChatbot } from '@/states/buildChatBot/buildChatBot.selector';
 import { deletedListIncludes } from '@/states/buildChatBot/buildChatBot.slice';
 import { DataFetchFile } from '@/states/buildChatBot/type';
@@ -55,21 +52,22 @@ const FileItem = ({ item, index }: FileItemProps) => {
   };
 
   return (
-    <div className="flex justify-between gap-x-[21px] mb-[20px]">
-      <div className="flex justify-between mt-[15px] w-full">
+    <div className="flex justify-between gap-x-[21px] mb-[20px] px-2 bg-[#F9FAFB] rounded-lg border-[1px] border-[#dfe1e5]">
+      <div className="flex justify-between w-full h-[41px] items-center">
         <div className="w-full text-[17px]">{item.filename}</div>
-        <div className="text-[15px] flex items-center justify-end w-full">
-          <span className="text-[#A7A7B0 mr-[48px] font-bold text-[15px]">
-            ({formatNumber(item.num_token)} {t('tokens', { ns: 'config_bot' })})
+        <div className="flex justify-between w-[200px] items-center">
+          <span className="mb-0 font-medium flex items-center gap-x-1">
+            <IconToken />({formatNumber(item.num_token)}{' '}
+            {t('tokens', { ns: 'config_bot' })})
           </span>
-          <RiDeleteBinLine
-            className="cursor-pointer"
-            size={18}
-            color="#F44336"
+          <div
+            className="p-1 rounded border-[1px] border-[#FDA29B] ml-2 bg-[#FFF]"
             onClick={() => {
               setVisibleDeleteModal(true);
             }}
-          />
+          >
+            <IconDelete />
+          </div>
         </div>
         {/* <button className="w-[150px] h-[43px] bg-[#4AC1FF;] text-white rounded-[10px] text-[15px] font-bold justify-cente">
             Done

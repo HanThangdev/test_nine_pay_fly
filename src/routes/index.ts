@@ -4,6 +4,8 @@ const Conversations = lazy(() => import('../pages/Conversations'));
 const Profile = lazy(() => import('../pages/Profile'));
 const Settings = lazy(() => import('../pages/Setting'));
 const BuildChatbot = lazy(() => import('../pages/BuildChatbot'));
+const CreateBot = lazy(() => import('../pages/CreateBot'));
+const EditBot = lazy(() => import('../pages/EditBot'));
 const PricingPlan = lazy(() => import('../pages/PricingPlan'));
 const Notfound = lazy(() => import('../pages/Notfound'));
 const RegisterPricingPlan = lazy(() => import('../pages/RegisterPricingPlan'));
@@ -25,12 +27,8 @@ const ForgotPasswordVerify = lazy(
 const TermsOfService = lazy(
   () => import('../pages/PageSupport/TermsOfService'),
 );
-const PrivacyPolicy = lazy(
-  () => import('../pages/PageSupport/PrivacyPolicy'),
-);
-const Help = lazy(
-  () => import('../pages/PageSupport/Help'),
-);
+const PrivacyPolicy = lazy(() => import('../pages/PageSupport/PrivacyPolicy'));
+const Help = lazy(() => import('../pages/PageSupport/Help'));
 const AnalysisBot = lazy(() => import('../pages/AnalysisBot'));
 
 const coreRoutes = [
@@ -94,6 +92,20 @@ const coreRoutes = [
     path: '/build-chatbots/:id',
     title: 'Build-chatbots',
     component: BuildChatbot,
+    isProtected: true,
+    layout: DefaultLayout,
+  },
+  {
+    path: '/create-bot',
+    title: 'Create-chatbot',
+    component: CreateBot,
+    isProtected: true,
+    layout: DefaultLayout,
+  },
+  {
+    path: '/edit-chatbot/:id',
+    title: 'Edit-chatbot',
+    component: EditBot,
     isProtected: true,
     layout: DefaultLayout,
   },

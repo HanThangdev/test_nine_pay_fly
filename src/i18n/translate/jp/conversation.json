@@ -2,8 +2,12 @@
   "SelectBot": "チャットボット選択",
   "From": "から",
   "To": "まで",
-  "Customer": "お客様：",
+  "Customer": "お客様",
   "ExportPDF": "PDFエクスポート",
   "NewBot": "新しいチャットボット",
-  "NoConversationFound": "会話が見つかりません"
+  "NoConversationFound": "会話が見つかりません",
+  "Converstation": "会話",
+  "Editbot": "編集ボット",
+  "Downloadall": "すべての会話をダウンロード",
+  "Latestmessage": "最新のメッセージ"
 }

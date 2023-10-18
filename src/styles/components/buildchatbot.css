@@ -13,8 +13,7 @@
 .Chatbot-tabs .ant-tabs-tab-btn {
   @apply text-[#807d9b];
 }
-.Chatbot-tabs .ant-tabs-nav::before,
-.ant-tabs-ink-bar {
+.Chatbot-tabs .ant-tabs-nav::before {
   @apply !hidden;
 }
 
@@ -101,17 +100,21 @@
   @apply !bg-[#4AC1FF] !rounded-[100px];
 }
 
+.Conversations .ant-select {
+  @apply w-[calc(100%-330px)];
+}
+
 .Conversations .ant-select-selector {
-  @apply !w-[150px] !h-[43px] !bg-[#E8E9F4] !items-center rounded-[10px] text-[15px] font-bold justify-center;
+  @apply !h-[43px] !items-center rounded-[8px] text-[15px] font-bold justify-center;
 }
 
 .Conversations .ant-select-selector .ant-select-selection-search-input {
-  @apply !h-full !text-[#01058A];
+  @apply !h-full;
 }
 
 .Conversations .ant-select-selection-item,
 .ant-select-selection-placeholder {
-  @apply !text-[#01058A] font-bold;
+  @apply font-bold;
 }
 
 .Setting .ant-checkbox-inner {
@@ -216,4 +219,39 @@
 
 .integration-slack-modal .ant-modal-body {
   @apply h-full;
+}
+
+.Pricing .ant-slider-horizontal .ant-slider-rail {
+  @apply h-[14px] rounded-[20px] bg-[#F2F4F7];
+}
+
+.Pricing .ant-slider-horizontal .ant-slider-handle {
+  @apply top-[6px];
+}
+
+.Pricing .ant-slider-horizontal .ant-slider-track {
+  @apply h-[14px] bg-[#1AA8E9] rounded-[20px];
+}
+
+.Pricing .ant-switch.ant-switch-small {
+  @apply bg-[#F2F4F7] w-[44px] h-[24px];
+}
+
+.Pricing .ant-switch.ant-switch-small.ant-switch-checked .ant-switch-inner {
+  @apply bg-[#4AC1FF];
+}
+.Pricing
+  :where(
+    .css-dev-only-do-not-override-17a39f8
+  ).ant-switch.ant-switch-small.ant-switch-checked
+  .ant-switch-handle {
+  @apply start-[calc(100%-24px)];
+}
+
+.Pricing .ant-switch.ant-switch-small .ant-switch-handle {
+  @apply w-[21px] h-[21px] !top-[1px];
+}
+
+.Pricing .ant-switch .ant-switch-handle::before {
+  @apply !bg-[#FFF] !rounded-[100px];
 }

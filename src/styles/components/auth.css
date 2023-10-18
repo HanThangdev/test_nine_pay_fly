@@ -18,14 +18,27 @@
   background-size: 100% 100%;
   height: 100%;
   background-size: cover;
-  background: linear-gradient(255.96deg, #111055 0%, #1D1E33 100%);
+  background: linear-gradient(255.96deg, #111055 0%, #1d1e33 100%);
 }
 
 .register-pricing-frame {
-  background: linear-gradient(235.28deg, #1F203D 0%, #323353 0.01%, #181930 100%),
-  linear-gradient(235.28deg, rgba(105, 106, 140, 0.5) 0%, rgba(58, 59, 64, 0.5) 100%);
+  background: linear-gradient(
+      235.28deg,
+      #1f203d 0%,
+      #323353 0.01%,
+      #181930 100%
+    ),
+    linear-gradient(
+      235.28deg,
+      rgba(105, 106, 140, 0.5) 0%,
+      rgba(58, 59, 64, 0.5) 100%
+    );
   /* border: 1.5px solid; */
-  border-image-source: linear-gradient(235.28deg, rgba(105, 106, 140, 0.5) 0%, rgba(58, 59, 64, 0.5) 100%);
+  border-image-source: linear-gradient(
+    235.28deg,
+    rgba(105, 106, 140, 0.5) 0%,
+    rgba(58, 59, 64, 0.5) 100%
+  );
 }
 
 .area-color {
@@ -33,22 +46,31 @@
   height: 704px;
 }
 
-.button-pricing{
-  background: linear-gradient(89.79deg, #45E7F3 0.15%, #4B90E4 48.16%, #E019C1 98.45%) !important;
+.button-pricing {
+  background: linear-gradient(
+    89.79deg,
+    #45e7f3 0.15%,
+    #4b90e4 48.16%,
+    #e019c1 98.45%
+  ) !important;
 }
 
-.button-pricing:hover{
+.button-pricing:hover {
   color: white !important;
   border-color: none !important;
 }
 
-.input-email-register:focus-visible{
-  border-color: #45E7F3 !important;
+.input-email-register:focus-visible {
+  border-color: #45e7f3 !important;
 }
 
-.input-email-register{
+.input-email-register {
   color: white;
-  background: linear-gradient(235.28deg, rgba(105, 106, 140, 0.5) 0%, rgba(58, 59, 64, 0.5) 100%);
+  background: linear-gradient(
+    235.28deg,
+    rgba(105, 106, 140, 0.5) 0%,
+    rgba(58, 59, 64, 0.5) 100%
+  );
 }
 
 .button-antd:hover {
@@ -64,4 +86,35 @@
 .google-sign-in-btn:hover {
   border-color: transparent !important;
   color: black !important;
+}
+
+.sidebar-bottom .ant-slider {
+  @apply m-0;
+}
+
+.sidebar-bottom .ant-slider.ant-slider-disabled .ant-slider-track {
+  @apply !bg-[#1F2937];
+}
+
+.sidebar-bottom .ant-slider .ant-slider-rail {
+  @apply bg-[#E5E7EB];
+}
+.sidebar-bottom .ant-slider .ant-slider-handle {
+  @apply hidden;
+}
+
+.bg-button-upgrade {
+  background: linear-gradient(260deg, #2d3fe7 0%, #0717a8 96.03%);
+}
+
+.bg-starter {
+  background: linear-gradient(260deg, #b62de7 0%, #7407a8 96.03%);
+}
+
+.bg-business {
+  background: linear-gradient(260deg, #000 0%, #474747 96.03%);
+}
+
+.bg-standard {
+  background: linear-gradient(260deg, #e72d2d 0%, #a80707 96.03%);
 }

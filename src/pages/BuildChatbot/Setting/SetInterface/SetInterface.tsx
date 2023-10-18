@@ -168,7 +168,7 @@ const SetInterface = ({ dataSetinterface }: Props) => {
 
   const getAdvance = async () => {
     const res: any = await dispatch(
-      getAdvanceSettingTransaction({ bot_id: data?.id || id}),
+      getAdvanceSettingTransaction({ bot_id: data?.id || id }),
     );
 
     if (res.payload.data.theme) {
@@ -334,6 +334,7 @@ const SetInterface = ({ dataSetinterface }: Props) => {
               <div className="h-[41px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] items-center justify-center flex">
                 <Upload
                   accept="image/*"
+                  setTheme
                   maxCount={1}
                   showUploadList={false}
                   customRequest={() => {

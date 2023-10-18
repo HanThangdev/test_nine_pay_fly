@@ -1,0 +1,106 @@
+.manage-bots .ant-slider .ant-slider-rail {
+  @apply bg-[#E5E7EB];
+}
+.manage-bots .ant-slider .ant-slider-handle {
+  @apply hidden;
+}
+
+.manage-bots .ant-slider {
+  @apply m-0;
+}
+
+.manage-bots .ant-slider.ant-slider-disabled .ant-slider-track {
+  @apply !bg-[#2F80ED];
+}
+
+.Switch-bot .ant-switch.ant-switch-small {
+  @apply bg-[#F2F4F7] w-[46px] h-[24px];
+}
+
+.Switch-bot .ant-switch.ant-switch-small.ant-switch-checked .ant-switch-inner {
+  @apply bg-[#219653];
+}
+.Switch-bot
+  :where(
+    .css-dev-only-do-not-override-17a39f8
+  ).ant-switch.ant-switch-small.ant-switch-checked
+  .ant-switch-handle {
+  @apply start-[calc(100%-24px)];
+}
+
+.Switch-bot .ant-switch.ant-switch-small .ant-switch-handle {
+  @apply w-[22px] h-[22px] !top-[1px];
+}
+
+.Switch-bot .ant-switch .ant-switch-handle::before {
+  @apply !bg-white !rounded-[100px];
+}
+
+.Switch-bot .ant-switch.ant-switch-small.ant-switch-checked .ant-switch-handle {
+  inset-inline-start: calc(100% - 24px);
+}
+
+.Tabs-bot .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  @apply font-medium;
+}
+
+.Tabs-bot .ant-tabs-tab-btn {
+  @apply font-medium;
+}
+
+.Tabs-bot .ant-tabs-ink-bar {
+  @apply !h-[3px];
+}
+
+.config-bot .ant-radio-wrapper-checked {
+  @apply !bg-[#DEF5E8] py-3 px-4 rounded-lg border-[1px] border-[#6FCF97];
+}
+.config-bot .ant-radio-wrapper {
+  @apply bg-[#F3F4F6] py-3 px-4 rounded-lg;
+}
+
+.config-bot .ant-checkbox-checked .ant-checkbox-inner {
+  @apply !bg-white;
+}
+.config-bot .ant-checkbox-checked .ant-checkbox-inner:after {
+  @apply !border-[#1677ff];
+}
+
+.prompt-bot .ant-slider-horizontal .ant-slider-rail {
+  @apply h-[14px] rounded-[20px] bg-[#DDE0F1];
+}
+
+.prompt-bot .ant-slider-horizontal .ant-slider-handle {
+  @apply top-[6px];
+}
+
+.prompt-bot .ant-slider-horizontal .ant-slider-track {
+  @apply h-[14px] bg-[#1AA8E9] rounded-[20px];
+}
+
+.prompt-bot .ant-switch.ant-switch-small {
+  @apply bg-[#F2F4F7] w-[46px] h-[24px];
+}
+
+.prompt-bot .ant-switch.ant-switch-small.ant-switch-checked .ant-switch-inner {
+  @apply bg-[#2d3fe7];
+}
+.prompt-bot
+  :where(
+    .css-dev-only-do-not-override-17a39f8
+  ).ant-switch.ant-switch-small.ant-switch-checked
+  .ant-switch-handle {
+  @apply start-[calc(100%-24px)];
+}
+
+.prompt-bot .ant-switch.ant-switch-small .ant-switch-handle {
+  @apply w-[22px] h-[22px] !top-[1px];
+}
+
+.prompt-bot .ant-switch .ant-switch-handle::before {
+  @apply !bg-white !rounded-[100px];
+}
+
+.prompt-bot .ant-switch.ant-switch-small.ant-switch-checked .ant-switch-handle {
+  inset-inline-start: calc(100% - 24px);
+}

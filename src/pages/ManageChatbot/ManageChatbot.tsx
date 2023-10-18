@@ -1,16 +1,20 @@
 import classNames from 'classnames';
-import IconManage from '@/components/IconManage/IconManage';
-import { Modal, notification } from 'antd';
+import IconAllBot from '@/components/IconAllBot/IconAllBot';
+import { Modal, notification, Slider } from 'antd';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/states/store';
 import { isEmptyObjectOrArray } from '@/utils/utils';
 import Loader from '@/components/Loader';
 import ChatbotElement from './ChatbotElement';
-import { useNavigate, useParams } from 'react-router-dom';
+import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { resetStateBuild } from '@/states/buildChatBot/buildChatBot.slice';
 import { useManageChatbot } from '@/states/manageBot/manageBot.selector';
 import { useTranslation } from 'react-i18next';
+import Header from '@/components/header';
+import IconSubcription from '@/components/IconSubcription/IconSubcription';
+import { IconCreate_fillWhite } from '@/components/IconCreate/IconCreate';
+import { CreateBotModalWrapper } from '../CreateBot/CreateBotModal';
 
 const ManageChatbot = () => {
   const { t } = useTranslation();
@@ -49,8 +53,9 @@ const ManageChatbot = () => {
           navigate('/');
         },
         okButtonProps: {
-          className: 'w-[120px] h-[40px] bg-[#E8E9F4] text-[#01058A] rounded-[10px] text-[14px] font-bold '
-        }
+          className:
+            'w-[120px] h-[40px] bg-[#E8E9F4] text-[#01058A] rounded-[10px] text-[14px] font-bold ',
+        },
       });
     }
     if (status == 'fail') {
@@ -61,54 +66,135 @@ const ManageChatbot = () => {
           navigate('/');
         },
         okButtonProps: {
-          className: 'w-[120px] h-[40px] bg-[#E8E9F4] text-[#01058A] rounded-[10px] text-[14px] font-bold '
-        }
+          className:
+            'w-[120px] h-[40px] bg-[#E8E9F4] text-[#01058A] rounded-[10px] text-[14px] font-bold ',
+        },
       });
     }
   };
 
   useEffect(() => {
     if (typeIntegration && status) {
-      renderModalStatusIntegration(
-        typeIntegration,
-        status,
-      );
+      renderModalStatusIntegration(typeIntegration, status);
     }
   }, []);
+
   return (
-    <div
-      className={classNames(
-        'bg-[#FFF] rounded-[10px] p-6 mt-[6px] py-[22px] px-[29px]',
-        'shadow-[0_0px_4px_0px_rgba(32,32,62,0.16)] Bog-config',
-      )}
-    >
-      <div className="flex justify-between items-center">
-        <h2 className="text-[20px] text-[#01058A] font-black flex gap-x-3">
-          <IconManage />
-          {t('All', { ns: 'manage_bot' })}
-          <span className="font-thin">({`${ownerChatbot.length || 0}`})</span>
-        </h2>
-        <button
-          className="w-[150px] h-[43px] bg-[#E8E9F4] text-[#01058A] rounded-[10px] text-[15px] font-bold justify-center"
-          onClick={() => {
-            dispatch(resetStateBuild());
-            navigate('/build-chatbots');
-          }}
+    <>
+      <Header
+        children={
+          <>
+            <h1 className="text-[24px] text-[#1F2937] mb-0">{t('Manage')}</h1>
+          </>
+        }
+      />
+      <div className="px-[20px] py-[16px] manage-bots">
+        <div className="grid grid-cols-3 gap-x-[20px]">
+          <div className="col-span-1 bg-[#FCFCFC] rounded-[12px] p-[16px]">
+            <div className="flex justify-between items-center mb-2">
+              <p className="mb-0 text-[18px] flex gap-x-1 text-black">
+                <IconSubcription />
+                {t('Subscription', { ns: 'manage_bot' })}
+              </p>
+              <p className="mb-0 text-[14px] bg-button-upgrade h-[28px] flex items-center px-2 text-white rounded-lg font-semibold">
+                <NavLink to="/price">{t('Upgrade')}</NavLink>
+              </p>
+            </div>
+            <p className="mb-2">
+              {t('Currentplan', { ns: 'manage_bot' })} -
+              <span className="text-black">
+                {t('Freeplan', { ns: 'manage_bot' })}
+              </span>
+            </p>
+            <div className="h-[1px] bg-[#E5E7EB]"></div>
+            <p className="flex justify-between my-2">
+              {t('Price', { ns: 'manage_bot' })}
+              <span className="text-black">
+                {t('Free', { ns: 'manage_bot' })}
+              </span>
+            </p>
+            <p className="flex justify-between mb-2">
+              {t('Remain', { ns: 'manage_bot' })}
+              <span className="text-black">
+                1900 {t('request', { ns: 'manage_bot' })}
+              </span>
+            </p>
+            <p className="flex justify-between mb-0">
+              {t('Billing', { ns: 'manage_bot' })}
+              <span className="text-black">
+                {' '}
+                {t('Monthly', { ns: 'manage_bot' })}
+              </span>
+            </p>
+          </div>
+          <div className="col-span-2 bg-[#FCFCFC] rounded-[12px] p-[16px]">
+            <p className="mb-0 text-[18px] flex gap-x-1 text-black">
+              <IconSubcription />
+              {t('Chatbotusage', { ns: 'manage_bot' })}
+            </p>
+            <div className="grid grid-cols-2 gap-x-[16px] mt-2">
+              <div>
+                <div className="flex justify-between text-[13px]">
+                  <p className="mb-0">
+                    {' '}
+                    {t('Activebot', { ns: 'manage_bot' })}
+                  </p>
+                  <p className="mb-0">
+                    20/2000 {t('bots', { ns: 'manage_bot' })}
+                  </p>
+                </div>
+                <Slider defaultValue={30} disabled />
+              </div>
+              <div>
+                <div className="flex justify-between text-[13px]">
+                  <p className="mb-0">{t('Operation', { ns: 'manage_bot' })}</p>
+                  <p className="mb-0">20/2000 {t('requests')}</p>
+                </div>
+                <Slider defaultValue={30} disabled />
+              </div>
+            </div>
+            <div className=""></div>
+          </div>
+        </div>
+        <div
+          className={classNames(
+            'bg-[#FCFCFC] rounded-[10px] p-4 mt-[16px] min-h-[calc(100vh-325px)]',
+            'shadow-[0_0px_4px_0px_rgba(32,32,62,0.16)] Bog-config',
+          )}
         >
-          {t('New', { ns: 'manage_bot' })}
-        </button>
+          <div className="flex justify-between items-center">
+            <h2 className="text-[16px] text-black flex gap-x-3">
+              <IconAllBot />
+              {t('Manage')}
+            </h2>
+            <CreateBotModalWrapper>
+              {({ onOpen }) => (
+                <button
+                  className="py-1 px-2 bg-[#2D3FE7] text-white rounded-[8px] text-[14px] font-bold justify-center flex gap-x-1"
+                  onClick={() => {
+                    dispatch(resetStateBuild());
+                    onOpen();
+                  }}
+                >
+                  <IconCreate_fillWhite />
+                  {t('New', { ns: 'manage_bot' })}
+                </button>
+              )}
+            </CreateBotModalWrapper>
+          </div>
+          <div className="grid gap-y-4 mt-[24px]">
+            {loading ? (
+              <Loader className={classNames('col-span-3')} />
+            ) : (
+              !isEmptyObjectOrArray(ownerChatbot) &&
+              ownerChatbot.map((_, index) => (
+                <ChatbotElement info={_} key={index} />
+              ))
+            )}
+          </div>
+        </div>
       </div>
-      <div className="grid grid-cols-3 gap-4 mt-8">
-        {loading ? (
-          <Loader className={classNames('col-span-3')} />
-        ) : (
-          !isEmptyObjectOrArray(ownerChatbot) &&
-          ownerChatbot.map((_, index) => (
-            <ChatbotElement info={_} key={index} />
-          ))
-        )}
-      </div>
-    </div>
+    </>
   );
 };
 
