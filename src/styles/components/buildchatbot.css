@@ -105,7 +105,7 @@
 }
 
 .Conversations .ant-select-selector {
-  @apply !h-[43px] !items-center rounded-[8px] text-[15px] font-bold justify-center;
+  @apply !items-center rounded-[8px] text-[15px] font-bold justify-center;
 }
 
 .Conversations .ant-select-selector .ant-select-selection-search-input {

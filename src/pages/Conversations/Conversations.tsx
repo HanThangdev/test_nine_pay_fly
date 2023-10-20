@@ -124,6 +124,7 @@ const Conversations = () => {
     _: any,
     option: IOptionBotSelect | IOptionBotSelect[],
   ) => {
+    navigate('/conversations')
     setSelectedBot(option as IOptionBotSelect);
   };
 
@@ -204,7 +205,7 @@ const Conversations = () => {
           'shadow-[0_0px_4px_0px_rgba(32,32,62,0.16)] Conversations',
         )}
       >
-        <div className="flex justify-between items-center">
+        <div className="h-[43px] flex justify-between items-center">
           <Select
             value={selectedBot}
             showSearch
@@ -213,6 +214,7 @@ const Conversations = () => {
             onChange={handleSelectBotChange}
             options={botOptions}
             disabled={isEmptyObjectOrArray(ownerChatbot)}
+            className="h-full"
           />
           <div className="flex gap-x-2 ml-2">
             <button
@@ -246,7 +248,7 @@ const Conversations = () => {
           </div>
         </div>
         <div className={classNames('mt-3 grid grid-cols-3 gap-x-4')}>
-          <div className="h-[calc(100vh-190px)] overflow-y-auto col-span-1">
+          <div className="h-[calc(100vh-190px)] ">
             <div className="flex items-center gap-x-3 mb-3">
               <RangePicker
                 disabled={isEmptyObjectOrArray(ownerChatbot)}
@@ -262,7 +264,7 @@ const Conversations = () => {
               />
             </div>
             {selectedConversation ? (
-              <>
+              <div className="h-[calc(100vh-240px)] overflow-y-auto overflow-x-hidden col-span-1">
                 {conversations.map((conversation) => (
                   <div
                     onClick={() => {
@@ -293,7 +295,7 @@ const Conversations = () => {
                     </div>
                     <div className="flex justify-between text-[14px] text-[#6B7280]">
                       <p className="mb-0">
-                        {t('Latestmessage', { ns: 'conversation' })}:
+                          {t('Latestmessage', { ns: 'conversation' })}:
                         <br />
                         <span className="text-[#1F2937]">
                           {conversation.chat_history_response[0].content}
@@ -307,7 +309,7 @@ const Conversations = () => {
                     </div>
                   </div>
                 ))}
-              </>
+              </div>
             ) : (
               renderEmptyConversation()
             )}
