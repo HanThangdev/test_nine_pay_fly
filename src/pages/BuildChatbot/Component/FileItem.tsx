@@ -9,7 +9,6 @@ import { formatNumber } from '@/utils/format';
 import { notification } from 'antd';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { RiDeleteBinLine } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
 
 interface FileItemProps {

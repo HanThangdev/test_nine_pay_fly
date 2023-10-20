@@ -1,17 +1,20 @@
 import { useEffect, useRef, useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 import { IconManage, IconManage_fillWhite } from '../IconManage/IconManage';
 import { IconConv, IconConv_fillWhite } from '../IconConv/IconConv';
 import { IconCreate, IconFree } from '../IconCreate/IconCreate';
 import userThree from '@/images/user/user-07.png';
-import { Image, Slider } from 'antd';
+import { Image, Slider, Popover, notification } from 'antd';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/states/store';
 import { resetStateBuild } from '@/states/buildChatBot/buildChatBot.slice';
 import { useTranslation } from 'react-i18next';
 import { logoHaveTextImg } from '@/images/logo';
 import { CreateBotModalWrapper } from '@/pages/CreateBot/CreateBotModal';
+import { IconLogout, IconPrivacy, IconTerm } from '../IconGroup/IconGroup';
+import authRepository from '@/repository/auth';
+import Cookies from 'universal-cookie';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -23,6 +26,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const location = useLocation();
   const { pathname } = location;
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+  const cookies = new Cookies();
 
   const urlParams = new URLSearchParams(window.location.search);
   const getLanguageFromURL = urlParams.get('language');
@@ -59,6 +64,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+
+  const handleLogout = async () => {
+    try {
+      await authRepository.logout();
+      cookies.remove('access_token', { path: '/' });
+    } catch (error: any) {
+      notification.error({
+        message: error?.response?.data?.message || error?.message,
+      });
+    }
+    navigate('/auth/signin');
+  };
 
   return (
     <aside
@@ -164,19 +181,49 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             'bg-[#FCFCFC] mt-[27px] rounded-lg py-[12px] px-[16px] gap-y-[16px] grid',
           )}
         >
-          <div className="flex gap-x-2 items-center">
-            <div className="h-[34px] w-[34px] rounded-full">
-              <img src={userThree} alt="User" />
+          <Popover
+            placement="bottom"
+            content={
+              <div className="w-[160px] grid">
+                <div
+                  onClick={() => navigate(`/terms`)}
+                  className="flex gap-x-2 px-2 py-1 rounded-lg cursor-pointer hover:bg-[#0000000a]"
+                >
+                  <IconTerm />
+                  {t('titleSidebar', { ns: 'term_of_service' })}
+                </div>
+                <div
+                  onClick={() => navigate(`/policy`)}
+                  className="flex gap-x-2 px-2 py-1 rounded-lg cursor-pointer hover:bg-[#0000000a]"
+                >
+                  <IconPrivacy />
+                  {t('titleSidebar', { ns: 'privacy_policy' })}
+                </div>
+                <div
+                  onClick={() => handleLogout()}
+                  className="flex gap-x-2 px-2 py-1 rounded-lg cursor-pointer hover:bg-[#0000000a]"
+                >
+                  <IconLogout />
+                  {t('Logout')}
+                </div>
+              </div>
+            }
+          >
+            <div className="flex gap-x-2 items-center cursor-pointer">
+              <div className="h-[34px] w-[34px] rounded-full">
+                <img src={userThree} alt="User" />
+              </div>
+              <div>
+                <span className="mb-0 text-[14px]">Dinh Cong Huan</span>
+                <br />
+                <p className="text-[11px] items-center mb-0 mt-[-6px] flex gap-x-1 py-[2px] px-1 rounded bg-[#F9FAFB]">
+                  <IconFree />
+                  {t('Freeaccount')}
+                </p>
+              </div>
             </div>
-            <div>
-              <span className="mb-0 text-[14px]">Dinh Cong Huan</span>
-              <br />
-              <p className="text-[11px] items-center mb-0 mt-[-6px] flex gap-x-1 py-[2px] px-1 rounded bg-[#F9FAFB]">
-                <IconFree />
-                {t('Freeaccount')}
-              </p>
-            </div>
-          </div>
+          </Popover>
+
           <div>
             <div className="flex justify-between text-[13px]">
               <p className="mb-0">{t('usage')}</p>

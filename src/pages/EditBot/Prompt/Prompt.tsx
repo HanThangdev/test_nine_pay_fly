@@ -1,14 +1,68 @@
-import { Slider, Tooltip, Switch } from 'antd';
+import { Slider, Tooltip, Switch, notification } from 'antd';
 import { useTranslation } from 'react-i18next';
 import IconTip from '@/components/IconTip/IconTip';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '@/states/store';
+import { isEmptyObjectOrArray } from '@/utils/utils';
+import { updateBotTransaction } from '@/repository/buildChatBot';
+import { API_STATUS } from '@/constants';
 
-const Prompt = () => {
+interface Props {
+  save: boolean;
+  step: string;
+  saveSuccess: () => void;
+}
+
+const Prompt = ({ save, step, saveSuccess }: Props) => {
   const { t } = useTranslation();
-  const [promptExample, setPromptExample] = useState(
-    `${t('PromptExample', { ns: 'config_bot' })}`,
-  );
+  const dispatch = useDispatch<AppDispatch>();
+  const { data } = useSelector((state: RootState) => state.buildChatBot);
+  const [promptExample, setPromptExample] = useState('');
   const [creativity, setCreativity] = useState(0);
+
+  useEffect(() => {
+    if (!isEmptyObjectOrArray(data)) {
+      setPromptExample(data.custom_prompt);
+      setCreativity(data.temperature);
+    }
+  }, [data]);
+
+  const onSubmit = async () => {
+    try {
+      const updateBotPayload = {
+        bot_name: data.bot_name,
+        case_study: data.case_study,
+        collect_customer_info: data?.collect_customer_info,
+        rules: data.rules,
+        gpt_model_name: data.model,
+        temperature: creativity,
+        custom_prompt: promptExample,
+        user_id: data.user_id,
+        id: data.id,
+      };
+      let response = await dispatch(updateBotTransaction(updateBotPayload));
+      const { meta } = response;
+      saveSuccess();
+      notification.success({
+        message: `${t('upadetSuccess', { ns: 'config_bot' })}`,
+      });
+
+      if (meta.requestStatus === API_STATUS.REJECTED) {
+        return;
+      }
+    } catch (error: any) {
+      notification.error({
+        message: error?.response?.data.errors ?? error?.message,
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (save && step === 'Prompt') {
+      onSubmit();
+    }
+  }, [save, step]);
   return (
     <div className="prompt-bot">
       <p className="text-[14px] text-[#9CA3AF] font-medium">

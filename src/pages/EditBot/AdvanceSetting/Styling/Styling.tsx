@@ -1,5 +1,5 @@
 import { RootState } from '@/states/store';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import Interface from '../Interface';
@@ -9,23 +9,83 @@ import {
   IconLight,
   IconUpload,
 } from '@/components/IconGroup/IconGroup';
-import { Switch, Upload, ColorPicker } from 'antd';
+import { Switch, Upload, ColorPicker, notification } from 'antd';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '@/states/store';
+import {
+  getAdvanceSettingTransaction,
+  updateAdvanceSettingTransaction,
+} from '@/repository/buildChatBot';
+import { API_STATUS } from '@/constants';
+import { useParams } from 'react-router-dom';
 
-const Styling = () => {
+interface Props {
+  save: boolean;
+  step: string;
+  saveSuccess: () => void;
+}
+
+const Styling = ({ save, step, saveSuccess }: Props) => {
   const { t } = useTranslation();
+  const { id } = useParams();
+  const dispatch = useDispatch<AppDispatch>();
   const { data } = useSelector((state: RootState) => state.buildChatBot);
   const [theme, setTheme] = useState('light');
-  const [dataSet, setDataSet] = useState<any>({
-    bot_id: data.id,
-    initial_message: 'Hello! How can I assist you today?',
-    display_name: '',
-    align_chat_bubble_button: 'right',
-    auto_show_initial_message_after: 0,
-    chat_message_color: '#4AC1FF',
-    chat_bubble_button_color: '#4AC1FF',
-    chat_icon_url:
-      'https://app.gpt-trainer.com/img/widget-images/widget-button-open-state/default-chat.svg',
-  });
+  const [messageColor, setMessageColor] = useState<string>('#4AC1FF');
+  const [buttonColor, setButtonColor] = useState<string>('#4AC1FF');
+  const [dataAdvanced, setDataAdvanced] = useState<any>([]);
+  const getAdvance = async () => {
+    const res: any = await dispatch(
+      getAdvanceSettingTransaction({ bot_id: data?.id || id }),
+    );
+    const reponse = res.payload.data;
+    setDataAdvanced(reponse);
+    setMessageColor(reponse.chat_message_color);
+    setButtonColor(reponse.chat_bubble_button_color);
+    setTheme(reponse.theme);
+  };
+  useEffect(() => {
+    getAdvance();
+  }, []);
+
+  const onSubmit = async () => {
+    try {
+      const payload = {
+        bot_id: data.id,
+        initial_message: dataAdvanced.initial_message,
+        suggest_messages: dataAdvanced.suggest_messages,
+        theme: theme,
+        display_name: dataAdvanced.display_name,
+        bot_avatar_url: dataAdvanced.bot_avatar_url,
+        chat_icon_url: dataAdvanced.chat_icon_url,
+        chat_bubble_button_color: buttonColor,
+        chat_message_color: messageColor,
+        align_chat_bubble_button: dataAdvanced.align_chat_bubble_button,
+        auto_show_initial_message_after:
+          dataAdvanced.auto_show_initial_message_after,
+      };
+
+      const { meta } = await dispatch(updateAdvanceSettingTransaction(payload));
+
+      if (meta.requestStatus === API_STATUS.REJECTED) {
+        return;
+      }
+      saveSuccess();
+      notification.success({
+        message: `${t('AdvancedSuccess', { ns: 'config_bot' })}`,
+      });
+    } catch (error: any) {
+      notification.error({
+        message: error?.response?.data.errors ?? error?.message,
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (save && step === 'styling') {
+      onSubmit();
+    }
+  }, [save, step]);
   return (
     <>
       <div className="flex gap-x-4">
@@ -37,14 +97,20 @@ const Styling = () => {
             <p className="text-[14px] text-[#9CA3AF]">
               {t('selectColor', { ns: 'config_bot' })}
             </p>
-            <ColorPicker />
+            <ColorPicker
+              value={messageColor}
+              onChange={(e) => setMessageColor(e.toHexString())}
+            />
           </div>
           <div className="text-[15px] mt-4">
             <p className="font-medium mb-0 text-[#111827]">Chat bubble color</p>
             <p className="text-[14px] text-[#9CA3AF]">
               {t('selectColor', { ns: 'config_bot' })}
             </p>
-            <ColorPicker />
+            <ColorPicker
+              value={buttonColor}
+              onChange={(e) => setButtonColor(e.toHexString())}
+            />
           </div>
           <div className="text-[15px] mt-4">
             <p className="font-medium mb-0 text-[#111827]">
@@ -141,7 +207,11 @@ const Styling = () => {
           </div>
         </div>
         <div className="w-[40%]">
-          <Interface />
+          <Interface
+            chat_message_color={messageColor}
+            chat_bubble_button_color={buttonColor}
+            theme={theme}
+          />
         </div>
       </div>
     </>

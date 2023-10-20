@@ -1,16 +1,17 @@
 import { useTranslation } from 'react-i18next';
-import { Radio, InputNumber, Tooltip, Checkbox, Button } from 'antd';
+import { InputNumber, Tooltip, Checkbox, Button, notification } from 'antd';
 import { useState, useEffect } from 'react';
 import classNames from 'classnames';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/states/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '@/states/store';
 import { isEmptyObjectOrArray, convertCustomValue } from '@/utils/utils';
 import IconTip from '@/components/IconTip/IconTip';
-import { RiDeleteBinLine } from 'react-icons/ri';
 import { CustomField } from '@/repository/buildChatBot/type';
 const ButtonGroup = Button.Group;
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { IconDelete } from '@/components/IconGroup/IconGroup';
+import { updateBotTransaction } from '@/repository/buildChatBot';
+import { API_STATUS } from '@/constants';
 
 const optionsModal = [
   { label: 'GPT - 3.5', value: 'GPT - 3.5' },
@@ -18,7 +19,13 @@ const optionsModal = [
   { label: 'GPT - 4.0', value: 'GPT - 4.0', disabled: true },
 ];
 
-const Config = () => {
+interface Props {
+  save: boolean;
+  step: string;
+  saveSuccess: () => void;
+}
+
+const Config = ({ save, step, saveSuccess }: Props) => {
   const { t } = useTranslation();
   const { data } = useSelector((state: RootState) => state.buildChatBot);
   const [model, setModel] = useState('GPT - 3.5');
@@ -28,6 +35,7 @@ const Config = () => {
   const [numberShowing, setNumberShowing] = useState(0);
   const [messageCount, setMessageCount] = useState(100);
   const [custom, setCustom] = useState<CustomField[]>([]);
+  const dispatch = useDispatch<AppDispatch>();
 
   const increaseBadge = () => {
     setMessageCount(messageCount + 1);
@@ -36,6 +44,57 @@ const Config = () => {
   const declineBadge = () => {
     setMessageCount((prev) => (prev - 1 < 0 ? 0 : prev - 1));
   };
+
+  const onSubmit = async () => {
+    const resultObject: Record<string, boolean> = custom.reduce(
+      (acc: any, item) => {
+        acc[item.key] = true;
+        return acc;
+      },
+      {},
+    );
+
+    let collectCustomerIfo = { ...resultObject };
+    if (email) collectCustomerIfo.email = email;
+    if (name) collectCustomerIfo.name = name;
+    if (phone) collectCustomerIfo.phone = phone;
+    try {
+      const updateBotPayload = {
+        bot_name: data.bot_name,
+        case_study: data.case_study,
+        collect_customer_info: {
+          numberShowing: numberShowing,
+          ...collectCustomerIfo,
+        },
+        rules: data.rules,
+        gpt_model_name: model,
+        temperature: data.creativity,
+        custom_prompt: data.custom_prompt,
+        user_id: data.user_id,
+        id: data.id,
+      };
+      let response = await dispatch(updateBotTransaction(updateBotPayload));
+      const { meta } = response;
+      saveSuccess();
+      notification.success({
+        message: `${t('upadetSuccess', { ns: 'config_bot' })}`,
+      });
+
+      if (meta.requestStatus === API_STATUS.REJECTED) {
+        return;
+      }
+    } catch (error: any) {
+      notification.error({
+        message: error?.response?.data.errors ?? error?.message,
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (save && step === 'config') {
+      onSubmit();
+    }
+  }, [save, step]);
 
   useEffect(() => {
     if (!isEmptyObjectOrArray(data)) {
@@ -77,25 +136,6 @@ const Config = () => {
       <p className="text-[12px] text-[#9CA3AF] mt-[10px]">
         {t('limit100', { ns: 'config_bot' })}
       </p>
-      <p className="font-medium text-[#344054] flex items-center gap-x-[10px]">
-        {t('Model', { ns: 'config_bot' })}
-        <Tooltip
-          color="#212121"
-          placement="rightTop"
-          overlayStyle={{ whiteSpace: 'pre-line', width: '400px' }}
-          title={t('tooltipModel', { ns: 'config_bot' })}
-        >
-          <span className="w-3 mt-[1px]">
-            <IconTip />
-          </span>
-        </Tooltip>
-      </p>
-      <Radio.Group
-        options={optionsModal}
-        onChange={(e) => setModel(e.target.value)}
-        value={model}
-        buttonStyle="solid"
-      />
       <p className="font-medium mt-4 text-[#344054] flex items-center gap-x-[10px]">
         {t('CollectCustomer', { ns: 'config_bot' })}
         <Tooltip

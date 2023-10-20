@@ -2,7 +2,6 @@ import { RootState } from '@/states/store';
 import { Tooltip } from 'antd';
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
-import { AiFillRightCircle } from 'react-icons/ai';
 import { TfiReload } from 'react-icons/tfi';
 import { useSelector } from 'react-redux';
 import { getAdvanceSettingTransaction } from '@/repository/buildChatBot';
@@ -10,24 +9,23 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/states/store';
 import { useParams } from 'react-router-dom';
 
-interface Data {
-  initial_message: string;
-  suggest_messages: [];
-  theme: string;
-  display_name: string;
-  bot_avatar_url: string;
-  chat_icon_url: string;
-  chat_bubble_button_color: string;
-  chat_message_color: string;
-  align_chat_bubble_button: string;
-  auto_show_initial_message_after: number;
-}
-
 interface Props {
-  dataInterface?: Data;
+  initial_message?: string;
+  suggest_messages?: string[];
+  display_name?: string;
+  theme?: string;
+  chat_bubble_button_color?: string;
+  chat_message_color?: string;
 }
 
-const Interface = ({ dataInterface }: Props) => {
+const Interface = ({
+  initial_message,
+  suggest_messages,
+  display_name,
+  chat_message_color,
+  chat_bubble_button_color,
+  theme,
+}: Props) => {
   const dispatch = useDispatch<AppDispatch>();
   const { id } = useParams();
   const { data } = useSelector((state: RootState) => state.buildChatBot);
@@ -74,7 +72,7 @@ const Interface = ({ dataInterface }: Props) => {
           className={classNames(
             'rounded-[16px] bg-white h-[500px] mt-10 relative',
             {
-              'bg-different': dataSet.theme === 'dark',
+              'bg-different': (theme ? theme : dataSet.theme) === 'dark',
             },
           )}
         >
@@ -87,7 +85,7 @@ const Interface = ({ dataInterface }: Props) => {
               className={classNames(
                 'mb-0 flex items-center gap-x-[10px] text-[16px] text-[#01058A]',
                 {
-                  'text-white': dataSet.theme === 'dark',
+                  'text-white': (theme ? theme : dataSet.theme) === 'dark',
                 },
               )}
             >
@@ -97,7 +95,7 @@ const Interface = ({ dataInterface }: Props) => {
                   src={dataSet.bot_avatar_url}
                 />
               )}
-              {dataSet.display_name}
+              {display_name ? display_name : dataSet.display_name}
             </p>
             <p className="mb-0 cursor-pointer">
               <TfiReload
@@ -108,7 +106,9 @@ const Interface = ({ dataInterface }: Props) => {
           </div>
           <div className="py-5 px-[16px] gap-y-[10px] grid">
             <div className="bg-[#eeeef1] px-3 py-2 rounded-t-lg rounded-br-lg w-fit">
-              {dataSet.initial_message
+              {initial_message
+                ? initial_message
+                : dataSet.initial_message
                 ? dataSet.initial_message
                 : 'Hello! How can I assist you today?'}
             </div>
@@ -116,7 +116,9 @@ const Interface = ({ dataInterface }: Props) => {
               <p
                 className="px-3 py-2 text-white rounded-t-lg rounded-bl-lg w-fit"
                 style={{
-                  background: dataSet.chat_message_color
+                  background: chat_message_color
+                    ? chat_message_color
+                    : dataSet.chat_message_color
                     ? dataSet.chat_message_color
                     : '#D7E4FD',
                 }}
@@ -126,7 +128,10 @@ const Interface = ({ dataInterface }: Props) => {
             </div>
           </div>
           <div className="absolute bottom-[62px] flex gap-x-3 p-2 overflow-x-auto w-full">
-            {dataSet.suggest_messages?.map((item: any, index: any) => (
+            {(suggest_messages
+              ? suggest_messages
+              : dataSet.suggest_messages
+            )?.map((item: any, index: any) => (
               <Tooltip title={item} key={index}>
                 <p className="bg-[#F1F7FF] mb-0 p-2 rounded-lg whitespace-nowrap">
                   {' '}
@@ -143,7 +148,8 @@ const Interface = ({ dataInterface }: Props) => {
                 className={classNames(
                   'h-[36px] w-full bg-[#FCFCFC] outline-none focus:border-primary focus-visible:shadow-none',
                   {
-                    'bg-[#111827] text-white': dataSet.theme === 'dark',
+                    'bg-[#111827] text-white':
+                      (theme ? theme : dataSet.theme) === 'dark',
                   },
                 )}
               />
@@ -171,7 +177,9 @@ const Interface = ({ dataInterface }: Props) => {
           <div
             className="rounded-full bg-black flex items-center justify-center w-[48px] h-[48px]"
             style={{
-              background: dataSet.chat_bubble_button_color
+              background: chat_bubble_button_color
+                ? chat_bubble_button_color
+                : dataSet.chat_bubble_button_color
                 ? dataSet.chat_bubble_button_color
                 : '#4AC1FF',
             }}

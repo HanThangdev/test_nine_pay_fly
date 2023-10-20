@@ -104,3 +104,7 @@
 .prompt-bot .ant-switch.ant-switch-small.ant-switch-checked .ant-switch-handle {
   inset-inline-start: calc(100% - 24px);
 }
+
+.prompt-bot .ant-slider .ant-slider-handle::after {
+  @apply w-[15px] h-[15px] mt-[-2px];
+}

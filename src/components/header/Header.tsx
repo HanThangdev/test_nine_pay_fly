@@ -115,42 +115,43 @@ const Header = (props: {
         <div className="flex justify-between gap-x-3 items-center">
           {props.children}
           <div className="flex gap-x-3">
-            <Dropdown menu={{ items: itemsBase }} trigger={['click']}>
-              <p className="flex mb-0 items-center cursor-pointer py-2 px-3 border-[1px] rounded-lg border-[#D1D5DB] bg-[#fff] shadow-sm">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                >
-                  <path
-                    opacity="0.4"
-                    d="M14.5537 21.5V20.1725C14.5537 19.8254 14.8253 19.5388 15.172 19.5203L17.7769 19.3982C18.3015 19.3701 18.7394 18.9881 18.8384 18.4722L18.958 16.1444C19.1764 15.0069 20.9976 15.6918 20.7971 14.4213C20.5216 13.2939 19.7065 12.177 19.5038 11.1307C19.0544 8.81119 19.3407 5.98843 16.9826 3.99959C15.5415 2.78417 13.7914 2.46236 11.9478 2.50339C8.87253 2.57173 5.99649 3.87741 4.7119 6.83871C3.45797 9.72798 4.71161 12.1275 5.79207 14.7298C6.62054 16.7251 6.11413 21.5 6.11413 21.5"
-                    stroke="black"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                  />
-                  <path
-                    d="M11.8013 14.4551V14.4619"
-                    stroke="black"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M11.8004 12.411C11.7904 11.6645 12.47 11.3477 12.975 11.0591C13.5912 10.7197 14.0084 10.1795 14.0084 9.42929C14.0084 8.31804 13.1098 7.42578 12.0058 7.42578C10.8946 7.42578 10.0032 8.31804 10.0032 9.42929"
-                    stroke="black"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-                <span className="block text-sm ml-[4px] font-medium text-black dark:text-white">
-                  {t('Help')}
-                </span>
-              </p>
-            </Dropdown>
+            <p
+              onClick={() => navigate(`/help`)}
+              className="flex mb-0 items-center cursor-pointer py-2 px-3 border-[1px] rounded-lg border-[#D1D5DB] bg-[#fff] shadow-sm"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <path
+                  opacity="0.4"
+                  d="M14.5537 21.5V20.1725C14.5537 19.8254 14.8253 19.5388 15.172 19.5203L17.7769 19.3982C18.3015 19.3701 18.7394 18.9881 18.8384 18.4722L18.958 16.1444C19.1764 15.0069 20.9976 15.6918 20.7971 14.4213C20.5216 13.2939 19.7065 12.177 19.5038 11.1307C19.0544 8.81119 19.3407 5.98843 16.9826 3.99959C15.5415 2.78417 13.7914 2.46236 11.9478 2.50339C8.87253 2.57173 5.99649 3.87741 4.7119 6.83871C3.45797 9.72798 4.71161 12.1275 5.79207 14.7298C6.62054 16.7251 6.11413 21.5 6.11413 21.5"
+                  stroke="black"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M11.8013 14.4551V14.4619"
+                  stroke="black"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M11.8004 12.411C11.7904 11.6645 12.47 11.3477 12.975 11.0591C13.5912 10.7197 14.0084 10.1795 14.0084 9.42929C14.0084 8.31804 13.1098 7.42578 12.0058 7.42578C10.8946 7.42578 10.0032 8.31804 10.0032 9.42929"
+                  stroke="black"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+              <span className="block text-sm ml-[4px] font-medium text-black dark:text-white">
+                {t('Help')}
+              </span>
+            </p>
             <Dropdown menu={{ items }} trigger={['click']}>
               <p className="flex mb-0 items-center cursor-pointer py-2 px-3 border-[1px] rounded-lg border-[#d0d5dd] bg-[#fff] shadow-sm">
                 <IconLanguage />

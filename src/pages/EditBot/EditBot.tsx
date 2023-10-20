@@ -7,7 +7,6 @@ import { useBuildChatbot } from '@/states/buildChatBot/buildChatBot.selector';
 import { setDataWhenUpdate } from '@/states/buildChatBot/buildChatBot.slice';
 import { AppDispatch } from '@/states/store';
 import { useDispatch } from 'react-redux';
-import IconModal from '@/components/IconModal/IconModal';
 import IconEditing from '@/components/IconEditing/IconEditing';
 import { Tabs, TabsProps, Switch } from 'antd';
 import BasicInfor from './BasicInfor';
@@ -24,21 +23,32 @@ const EditBot = () => {
   const { data, onGetInfoCurrentBot, onGetIncludesSource } = useBuildChatbot();
   const { id } = useParams();
   const [save, setSave] = useState(false);
+  const [step, setStep] = useState('');
   const items: TabsProps['items'] = [
     {
       key: 'basicInfor',
       label: `${t('BasicInfor')}`,
-      children: <BasicInfor save={save} saveSuccess={() => setSave(false)} />,
+      children: (
+        <BasicInfor
+          save={save}
+          saveSuccess={() => setSave(false)}
+          step={step}
+        />
+      ),
     },
     {
       key: 'config',
       label: `${t('ChatbotConfig')}`,
-      children: <Config />,
+      children: (
+        <Config save={save} saveSuccess={() => setSave(false)} step={step} />
+      ),
     },
     {
       key: 'Prompt',
       label: `${t('Prompt')}`,
-      children: <Prompt />,
+      children: (
+        <Prompt save={save} saveSuccess={() => setSave(false)} step={step} />
+      ),
     },
     {
       key: 'importData',
@@ -48,12 +58,20 @@ const EditBot = () => {
     {
       key: 'setting',
       label: `${t('AdvancedSetting')}`,
-      children: <ChatWidget />,
+      children: (
+        <ChatWidget
+          save={save}
+          saveSuccess={() => setSave(false)}
+          step={step}
+        />
+      ),
     },
     {
       key: 'styling',
       label: `${t('Styling')}`,
-      children: <Styling />,
+      children: (
+        <Styling save={save} saveSuccess={() => setSave(false)} step={step} />
+      ),
     },
     {
       key: 'integration',
@@ -105,10 +123,6 @@ const EditBot = () => {
             <p className="text-[#6B7280] mb-2">
               {t('Limit', { ns: 'config_bot' })}
             </p>
-            <p className="rounded-lg p-[10px] bg-[#DEF5E8] items-center text-[14px] w-fit border-[1px] border-[#6FCF97] text-[#27AE60] flex gap-x-2">
-              <IconModal />
-              {data?.gpt_model_name}
-            </p>
           </div>
           <div className="Switch-bot min-w-[225px] h-full gap-x-4 rounded-[8px] py-2 px-3 flex">
             <Switch size="small" className="mt-[4px]" />
@@ -126,8 +140,7 @@ const EditBot = () => {
             id="Chatbot-Tabs"
             defaultActiveKey="overview"
             items={items}
-            // activeKey={activeKey}
-            // onChange={onChange}
+            onChange={(e) => setStep(e)}
             className={classNames('Tabs-bot flex-auto flex', 'box-border')}
           />
         </div>

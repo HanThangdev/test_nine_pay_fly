@@ -1,24 +1,93 @@
 import { RootState } from '@/states/store';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import Interface from '../Interface';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '@/states/store';
+import {
+  getAdvanceSettingTransaction,
+  updateAdvanceSettingTransaction,
+} from '@/repository/buildChatBot';
+import { useParams } from 'react-router-dom';
+import { notification } from 'antd';
+import { API_STATUS } from '@/constants';
 
-const ChatWidget = () => {
+interface Props {
+  save: boolean;
+  step: string;
+  saveSuccess: () => void;
+}
+
+const ChatWidget = ({ save, step, saveSuccess }: Props) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch<AppDispatch>();
   const { data } = useSelector((state: RootState) => state.buildChatBot);
+  const { id } = useParams();
+  const [displayName, setDisplayName] = useState('');
+  const [initialMessages, setinitialMessages] = useState('');
   const [suggestMessages, setSuggestMessages] = useState('');
-  const [dataSet, setDataSet] = useState<any>({
-    bot_id: data.id,
-    initial_message: 'Hello! How can I assist you today?',
-    display_name: '',
-    align_chat_bubble_button: 'right',
-    auto_show_initial_message_after: 0,
-    chat_message_color: '#4AC1FF',
-    chat_bubble_button_color: '#4AC1FF',
-    chat_icon_url:
-      'https://app.gpt-trainer.com/img/widget-images/widget-button-open-state/default-chat.svg',
-  });
+  const [suggestArray, setSuggestArray] = useState<any>([]);
+  const [dataAdvanced, setDataAdvanced] = useState<any>([]);
+
+  const getAdvance = async () => {
+    const res: any = await dispatch(
+      getAdvanceSettingTransaction({ bot_id: data?.id || id }),
+    );
+    const reponse = res.payload.data;
+    setDataAdvanced(reponse);
+    setDisplayName(reponse.display_name);
+    setinitialMessages(reponse.initial_message);
+    setSuggestMessages(reponse.suggest_messages.join('\n'));
+  };
+  useEffect(() => {
+    getAdvance();
+  }, []);
+
+  useEffect(() => {
+    const newArray = suggestMessages?.split('\n').filter((item) => item !== '');
+    setSuggestArray(newArray);
+  }, [suggestMessages]);
+
+  const onSubmit = async () => {
+    try {
+      const payload = {
+        bot_id: data.id,
+        initial_message: initialMessages,
+        suggest_messages: suggestArray,
+        theme: dataAdvanced.theme,
+        display_name: displayName,
+        bot_avatar_url: dataAdvanced.bot_avatar_url,
+        chat_icon_url: dataAdvanced.chat_icon_url,
+        chat_bubble_button_color: dataAdvanced.chat_bubble_button_color,
+        chat_message_color: dataAdvanced.chat_message_color,
+        align_chat_bubble_button: dataAdvanced.align_chat_bubble_button,
+        auto_show_initial_message_after:
+          dataAdvanced.auto_show_initial_message_after,
+      };
+
+      const { meta } = await dispatch(updateAdvanceSettingTransaction(payload));
+
+      if (meta.requestStatus === API_STATUS.REJECTED) {
+        return;
+      }
+      saveSuccess();
+      notification.success({
+        message: `${t('AdvancedSuccess', { ns: 'config_bot' })}`,
+      });
+    } catch (error: any) {
+      notification.error({
+        message: error?.response?.data.errors ?? error?.message,
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (save && step === 'setting') {
+      onSubmit();
+    }
+  }, [save, step]);
+
   return (
     <>
       <div className="flex gap-x-4">
@@ -30,13 +99,8 @@ const ChatWidget = () => {
             <input
               type="text"
               placeholder=""
-              value={dataSet.display_name}
-              onChange={(e) =>
-                setDataSet({
-                  ...dataSet,
-                  display_name: e.target.value,
-                })
-              }
+              value={displayName}
+              onChange={(e) => setDisplayName(e.target.value)}
               className="h-[41px] w-full rounded-[8px] border border-[#D0D5DD] bg-[#FFF] px-4 outline-none focus:border-primary focus-visible:shadow-none"
             />
           </div>
@@ -47,14 +111,9 @@ const ChatWidget = () => {
             <input
               type="text"
               placeholder=""
-              value={dataSet.initial_message}
+              value={initialMessages}
               className="h-[41px] w-full rounded-[8px] border border-[#D0D5DD] bg-[#FFF] px-4 outline-none focus:border-primary focus-visible:shadow-none"
-              onChange={(e) =>
-                setDataSet({
-                  ...dataSet,
-                  initial_message: e.target.value,
-                })
-              }
+              onChange={(e) => setinitialMessages(e.target.value)}
             />
             <p className="mt-[12px] text-[#A7A7B0]">
               {t('EnterEach', { ns: 'config_bot' })}
@@ -77,7 +136,11 @@ const ChatWidget = () => {
           </div>
         </div>
         <div className="w-[40%]">
-          <Interface />
+          <Interface
+            display_name={displayName}
+            initial_message={initialMessages}
+            suggest_messages={suggestArray}
+          />
         </div>
       </div>
     </>

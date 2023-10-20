@@ -10,10 +10,11 @@ import { OPTION_TONE } from '@/constants/configs_bot';
 
 interface Props {
   save: boolean;
+  step: string;
   saveSuccess: () => void;
 }
 
-const BasicInfor = ({ save, saveSuccess }: Props) => {
+const BasicInfor = ({ save, step, saveSuccess }: Props) => {
   const { t } = useTranslation();
   const options = [
     {
@@ -66,7 +67,7 @@ const BasicInfor = ({ save, saveSuccess }: Props) => {
     try {
       const updateBotPayload = {
         bot_name: data.bot_name,
-        case_study: caseStudy,
+        case_study: caseStudy ? caseStudy : data.case_study,
         collect_customer_info: data?.collect_customer_info,
         rules: data.rules,
         gpt_model_name: data.model,
@@ -93,10 +94,10 @@ const BasicInfor = ({ save, saveSuccess }: Props) => {
   };
 
   useEffect(() => {
-    if (save) {
+    if (save && step === 'basicInfor') {
       onSubmit();
     }
-  }, [save]);
+  }, [save, step]);
 
   return (
     <div>
