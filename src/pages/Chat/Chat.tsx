@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Tooltip, notification } from 'antd';
+import { Avatar, Tooltip, notification } from 'antd';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { AiFillRightCircle } from 'react-icons/ai';
 import { convertStringToParagraphs } from '@/utils/format';
@@ -29,17 +29,13 @@ const Chat = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [loading, setLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
-  const messagesEndRef = useRef<HTMLInputElement | null>(null);
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const { id } = useParams();
   const idBot = useMemo(() => {
     return id;
   }, [id]);
-  const {
-    onStreamingConversation,
-    chatConversations,
-    session_id,
-    theme
-  } = useConversationsChatbot();
+  const { onStreamingConversation, chatConversations, session_id, theme } =
+    useConversationsChatbot();
   const { onGetInfoCurrentBot, data, onGetAdvanceSetting, advanceSetting } =
     useBuildChatbot();
   const onSendMessage = async (msg: string | undefined = '') => {
@@ -93,23 +89,31 @@ const Chat = () => {
   }, [idBot]);
 
   useEffect(() => {
-    if (!isEmptyObjectOrArray(advanceSetting) && advanceSetting?.initial_message) {
+    if (
+      !isEmptyObjectOrArray(advanceSetting) &&
+      advanceSetting?.initial_message
+    ) {
       dispatch(
         setNewMessageIntoListConversation({
           sender_type: 'assistant',
           content: advanceSetting?.initial_message,
         }),
       );
-      dispatch(toogleTheme(advanceSetting.theme === "dark" ? false : true));
+      dispatch(toogleTheme(advanceSetting.theme === 'dark' ? false : true));
     }
-    
   }, [advanceSetting]);
 
   useEffect(() => {
     if (messagesEndRef.current) {
-      messagesEndRef.current.scrollTop = messagesEndRef.current.scrollHeight;
+      messagesEndRef.current.addEventListener(
+        'DOMNodeInserted',
+        (event: any) => {
+          const { currentTarget: target } = event;
+          target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
+        },
+      );
     }
-  }, [advanceSetting]);
+  }, []);
 
   const getDivForResponse = (index: number, message: HistoryChat) => {
     if (message.sender_type === 'user') {
@@ -124,11 +128,6 @@ const Chat = () => {
               </div>
             </div>
             {/* <IconRobot /> */}
-            <img
-              src="https://images.unsplash.com/photo-1590031905470-a1a1feacbb0b?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
-              alt="My profile"
-              className="w-6 h-6 rounded-full order-2"
-            />
           </div>
         </div>
       );
@@ -157,11 +156,7 @@ const Chat = () => {
               className="w-6 h-6 rounded-full order-1"
             /> */}
             {advanceSetting?.bot_avatar_url ? (
-              <img
-                src={advanceSetting?.bot_avatar_url}
-                alt="avatar"
-                className="w-[20px] h-[20px] rounded-full"
-              />
+              <Avatar size="small" src={advanceSetting?.bot_avatar_url} />
             ) : (
               <IconRobot />
             )}
@@ -174,9 +169,7 @@ const Chat = () => {
   return (
     <div
       className={`px-3 pb-3 flex-1 p:2 sm:p-6 justify-between flex flex-col h-screen ${
-         !theme
-          ? 'bg-different text-white'
-          : 'bg-[#fafafd]'
+        !theme ? 'bg-different text-white' : 'bg-[#fafafd]'
       }`}
     >
       <div className="flex sm:items-center justify-between py-3 border-b-2 border-gray-200 ">
@@ -188,18 +181,19 @@ const Chat = () => {
               </svg>
             </span> */}
             {advanceSetting?.bot_avatar_url ? (
-              <img
-                src={advanceSetting?.bot_avatar_url}
-                alt="avatar"
-                className="w-10 sm:w-16 h-10 sm:h-16 rounded-full"
-              />
+              <Avatar src={advanceSetting?.bot_avatar_url} />
             ) : (
+              // <img
+              //   src={advanceSetting?.bot_avatar_url}
+              //   alt="avatar"
+              //   className="w-10 sm:w-16 h-10 sm:h-16 rounded-full"
+              // />
               <IconRobot />
             )}
           </div>
           <div className="flex flex-col leading-tight">
             <div className="text-2xl mt-1 flex items-center">
-              <span className="mr-3">
+              <span className="mr-3 font-bold">
                 {advanceSetting?.display_name ||
                   (!isEmptyObjectOrArray(data) && data.bot_name)}
               </span>
@@ -241,13 +235,13 @@ const Chat = () => {
           !!advanceSetting?.auto_show_initial_message_after &&
           isCollectedCustomer && <FormCollectCustomer field={data.collect_customer_info}/>} */}
       </div>
-      <div className="flex gap-x-3 pb-2 pt-2 text-black overflow-x-auto">
+      <div className="flex gap-x-3 pb-2 pt-2 text-black overflow-x-auto overflow-y-hidden">
         {!isEmptyObjectOrArray(advanceSetting?.suggest_messages) &&
           advanceSetting?.suggest_messages.map((it, index) => (
             <Tooltip title={it}>
               <div
                 key={index}
-                className="bg-[#F1F7FF] p-2 rounded-lg truncate h-[40px] px-2 align-middle mb-[10px]"
+                className="bg-[#F1F7FF] p-2 rounded-lg text-ellipsis whitespace-nowrap h-[40px] px-2 align-middle mb-[10px] cursor-pointer"
                 onClick={() => onSendMessage(it)}
               >
                 <span>{it}</span>

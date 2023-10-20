@@ -68,7 +68,7 @@ const ChatbotConfig = () => {
   const [conversationTone, setConversationTone] = useState(
     OPTION_TONE[0].value,
   );
-  const [model, setModel] = useState('GPT - 3.5');
+  const [model, setModel] = useState('GPT - 3.5 - 16k');
   const [visibility, setVisibility] = useState('Public');
 
   // Prompt variables
