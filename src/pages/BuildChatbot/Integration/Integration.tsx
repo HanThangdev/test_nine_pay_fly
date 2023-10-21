@@ -20,7 +20,7 @@ import { API_STATUS } from '@/constants';
 import ModalMsTeam from './Modal/ModalMsTeam';
 const Integration = () => {
   const { t } = useTranslation();
-  const { data } = useBuildChatbot();
+  const { botInfos } = useBuildChatbot();
   const [openModalEmbed, setOpenModalEmbed] = useState(false);
   const [openModalTelegram, setOpenModalTelegram] = useState(false);
   const [openModalMsTeam, setOpenModalMsTeam] = useState(false);
@@ -31,7 +31,7 @@ const Integration = () => {
   const onIntegrationTelegram = async () => {
     try {
       const { meta, payload }: any = await dispatch(
-        getTokenTelegramTransaction({ bot_id: data.id }),
+        getTokenTelegramTransaction({ bot_id: botInfos.id }),
       );
       if (meta.requestStatus == API_STATUS.REJECTED) {
         throw meta;

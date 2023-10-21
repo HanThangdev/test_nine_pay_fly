@@ -5,7 +5,7 @@ import {
 } from '@/repository/buildChatBot/type';
 
 export interface BuildChatBotState {
-  data: any | null;
+  botInfos: any | null;
   history: HistoryChat[];
   loading: boolean;
   session_id: string;

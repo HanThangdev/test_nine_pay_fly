@@ -13,6 +13,7 @@ import { validURL } from '@/utils/validate';
 import { API_STATUS } from '@/constants';
 import { formatNumber } from '@/utils/format';
 import { IconImport } from '@/components/IconGroup/IconGroup';
+import { DataFetchLink } from '@/states/buildChatBot/type';
 
 const Website = () => {
   const { t } = useTranslation();
@@ -20,7 +21,7 @@ const Website = () => {
   const [visibleDeleteModal, setVisibleDeleteModal] = useState<boolean>(false);
 
   const { onStreamingUploadUrl, fetchLink, onGetAllUrl } = useBuildChatbot();
-  const { data, listIncludesLink, loadingFetchLink, includesResource } =
+  const { botInfos, listIncludesLink, loadingFetchLink, includesResource } =
     useSelector((state: RootState) => state.buildChatBot);
   const [fullPageUrl, setFullPageUrl] = useState<string>('');
   const [directPageUrl, setDirectPageUrl] = useState<string>('');
@@ -33,7 +34,7 @@ const Website = () => {
     DIRECT_PAGE: 2,
   };
   const onFetchLink = async (scrapeType: number) => {
-    if (loadingFetchLink || !data) {
+    if (loadingFetchLink || !botInfos) {
       return;
     }
 
@@ -63,7 +64,7 @@ const Website = () => {
         }),
       );
 
-      const { id, user_id } = data;
+      const { id, user_id } = botInfos;
 
       const importUrlPayload: ImportURLPayload = {
         bot_id: id,
@@ -98,7 +99,7 @@ const Website = () => {
   const totalTokens = useMemo(
     () =>
       listIncludesLink.reduce(
-        (accumulator, item) => accumulator + (item.num_token || 0),
+        (accumulator: number, item: DataFetchLink) => accumulator + (item.num_token || 0),
         0,
       ),
     [listIncludesLink],
@@ -114,7 +115,7 @@ const Website = () => {
   };
 
   useEffect(() => {
-    onGetAllUrl({ bot_id: data?.id });
+    onGetAllUrl({ bot_id: botInfos?.id });
   }, []);
 
   return (

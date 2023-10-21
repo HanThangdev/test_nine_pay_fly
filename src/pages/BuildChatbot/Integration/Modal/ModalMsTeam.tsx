@@ -12,13 +12,13 @@ interface Props {
 
 export default function ModalMsTeam({ open, onClose }: Props) {
   const { t } = useTranslation();
-  const { data } = useSelector((state: RootState) => state.buildChatBot);
+  const { botInfos } = useSelector((state: RootState) => state.buildChatBot);
   const dispatch = useDispatch<AppDispatch>();
 
   const onIntegrationMSTeam = async () => {
     try {
       const { meta, payload }: any = await dispatch(
-        getLinkIntegrationMSTeamTransaction({ bot_id: data.id }),
+        getLinkIntegrationMSTeamTransaction({ bot_id: botInfos.id }),
       );
       if (meta.requestStatus == API_STATUS.REJECTED) {
         throw meta;

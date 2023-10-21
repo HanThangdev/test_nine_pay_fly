@@ -20,7 +20,7 @@ interface Props {
 const ChatWidget = ({ save, step, saveSuccess }: Props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
-  const { data } = useSelector((state: RootState) => state.buildChatBot);
+  const { botInfos } = useSelector((state: RootState) => state.buildChatBot);
   const { id } = useParams();
   const [displayName, setDisplayName] = useState('');
   const [initialMessages, setinitialMessages] = useState('');
@@ -31,7 +31,7 @@ const ChatWidget = ({ save, step, saveSuccess }: Props) => {
 
   const getAdvance = async () => {
     const res: any = await dispatch(
-      getAdvanceSettingTransaction({ bot_id: data?.id || id }),
+      getAdvanceSettingTransaction({ bot_id: botInfos?.id || id }),
     );
     const reponse = res.payload.data;
     setDataAdvanced(reponse);
@@ -51,7 +51,7 @@ const ChatWidget = ({ save, step, saveSuccess }: Props) => {
   const onSubmit = async () => {
     try {
       const payload = {
-        bot_id: data.id,
+        bot_id: botInfos.id,
         initial_message: initialMessages,
         suggest_messages: suggestArray,
         theme: dataAdvanced.theme,

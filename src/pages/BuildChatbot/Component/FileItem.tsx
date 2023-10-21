@@ -19,15 +19,15 @@ interface FileItemProps {
 const FileItem = ({ item, index }: FileItemProps) => {
   const { t } = useTranslation();
   const [visibleDeleteModal, setVisibleDeleteModal] = useState<boolean>(false);
-  const { data } = useSelector((state: RootState) => state.buildChatBot);
+  const { botInfos } = useSelector((state: RootState) => state.buildChatBot);
   const dispatch = useDispatch<AppDispatch>();
   const { onDeleteFileImported, onGetAllFile } = useBuildChatbot();
   const deleteUrl = async () => {
-    if (!data) {
+    if (!botInfos) {
       return;
     }
     try {
-      const { id } = data;
+      const { id } = botInfos;
       const { knowledge_base_id } = item;
 
       onDeleteFileImported({ knowledge_base_id, bot_id: id }).then(

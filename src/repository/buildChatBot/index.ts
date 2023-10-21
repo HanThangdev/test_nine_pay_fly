@@ -11,7 +11,7 @@ import {
   DeleteURLPayload,
   GetAllURLPayload,
   GetAllURLResponse,
-  GetBotInfoPayload,
+  GetbotInfosPayload,
   UpdateBotPayload,
   UpdateBotDataResponse,
   UploadFilePayload,
@@ -251,9 +251,9 @@ export const getAllURLTransaction = createAsyncThunk(
   },
 );
 
-export const getBotInfoTransaction = createAsyncThunk(
-  'transaction/getBotInfoTransaction',
-  async (payload: GetBotInfoPayload, { rejectWithValue }) => {
+export const getbotInfosTransaction = createAsyncThunk(
+  'transaction/getbotInfosTransaction',
+  async (payload: GetbotInfosPayload, { rejectWithValue }) => {
     try {
       const queryString = objectToQueryString(payload);
       const response = await http.get<BotDataResponse>(

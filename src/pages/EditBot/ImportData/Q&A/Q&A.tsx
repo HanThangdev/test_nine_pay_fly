@@ -41,7 +41,7 @@ const schema = yup.object().shape({
 
 const QuestionAnswer = () => {
   const { t } = useTranslation();
-  const { onAddQuestionAndAnswer, data, onGetAllQuestionAndAnswer } =
+  const { onAddQuestionAndAnswer, botInfos, onGetAllQuestionAndAnswer } =
     useBuildChatbot();
   const { includesResource, loadingQuestionAndAnswer, listIncludesQandA } =
     useSelector((state: RootState) => state.buildChatBot);
@@ -68,7 +68,7 @@ const QuestionAnswer = () => {
   const onUpload: SubmitHandler<any> = (values: {
     question_answers: AddQuestionAndAnswerItem[];
   }) => {
-    if (loadingQuestionAndAnswer || !data) {
+    if (loadingQuestionAndAnswer || !botInfos) {
       return;
     }
     try {
@@ -76,13 +76,13 @@ const QuestionAnswer = () => {
         values.question_answers,
       );
       const payload = {
-        bot_id: data.id,
-        user_id: data.user_id,
+        bot_id: botInfos.id,
+        user_id: botInfos.user_id,
         question_answers: listQuestionAndAnswer,
       };
       onAddQuestionAndAnswer(payload).then((response) => {
         if (response.meta.requestStatus === API_STATUS.FULFILLED) {
-          onGetAllQuestionAndAnswer({ bot_id: data.id });
+          onGetAllQuestionAndAnswer({ bot_id: botInfos.id });
           resetForm();
           notification.success({
             message: 'Import Q&A success',
@@ -111,7 +111,7 @@ const QuestionAnswer = () => {
   }, [listIncludesQandA]);
 
   useEffect(() => {
-    onGetAllQuestionAndAnswer({ bot_id: data?.id });
+    onGetAllQuestionAndAnswer({ bot_id: botInfos?.id });
   }, []);
 
   const addQuestion = () => {

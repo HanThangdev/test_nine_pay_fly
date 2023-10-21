@@ -1,5 +1,5 @@
 import { RootState, AppDispatch } from '@/states/store';
-import { Tooltip } from 'antd';
+import { Avatar, Tooltip } from 'antd';
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import { IconSticker, IconAttach } from '@/components/IconGroup/IconGroup';
@@ -34,9 +34,9 @@ const Interface = ({
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const { id } = useParams();
-  const { data } = useSelector((state: RootState) => state.buildChatBot);
+  const { botInfos } = useSelector((state: RootState) => state.buildChatBot);
   const [dataSet, setDataSet] = useState<any>({
-    bot_id: data.id,
+    bot_id: botInfos.id,
     initial_message: 'Hello! How can I assist you today?',
     display_name: '',
     align_chat_bubble_button: 'right',
@@ -48,7 +48,7 @@ const Interface = ({
   });
   const getAdvance = async () => {
     const res: any = await dispatch(
-      getAdvanceSettingTransaction({ bot_id: data?.id || id }),
+      getAdvanceSettingTransaction({ bot_id: botInfos?.id || id }),
     );
 
     setDataSet({
@@ -117,10 +117,7 @@ const Interface = ({
           <div className="py-5 px-[16px] gap-y-[10px] grid">
             <div className="flex gap-x-2">
               {(dataSet.bot_avatar_url || bot_avatar_url) && (
-                <img
-                  className="w-[20px] h-[20px]"
-                  src={bot_avatar_url ? bot_avatar_url : dataSet.bot_avatar_url}
-                />
+                <Avatar src={bot_avatar_url ? bot_avatar_url : dataSet.bot_avatar_url} size="small"/>
               )}
               <div className="bg-[#eeeef1] px-3 py-2 rounded-t-lg rounded-br-lg w-fit">
                 {initial_message

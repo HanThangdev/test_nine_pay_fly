@@ -20,7 +20,7 @@ const optionsModal = [
 
 const Config = () => {
   const { t } = useTranslation();
-  const { data } = useSelector((state: RootState) => state.buildChatBot);
+  const { botInfos } = useSelector((state: RootState) => state.buildChatBot);
   const [model, setModel] = useState('GPT - 3.5');
   const [email, setEmail] = useState(false);
   const [name, setName] = useState(false);

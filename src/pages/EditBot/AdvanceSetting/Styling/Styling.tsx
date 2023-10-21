@@ -32,7 +32,7 @@ const Styling = ({ save, step, saveSuccess }: Props) => {
   const { t } = useTranslation();
   const { id } = useParams();
   const dispatch = useDispatch<AppDispatch>();
-  const { data } = useSelector((state: RootState) => state.buildChatBot);
+  const { botInfos } = useSelector((state: RootState) => state.buildChatBot);
   const [theme, setTheme] = useState('light');
   const [messageColor, setMessageColor] = useState<string>('#4AC1FF');
   const [buttonColor, setButtonColor] = useState<string>('#4AC1FF');
@@ -86,7 +86,7 @@ const Styling = ({ save, step, saveSuccess }: Props) => {
 
   const getAdvance = async () => {
     const res: any = await dispatch(
-      getAdvanceSettingTransaction({ bot_id: data?.id || id }),
+      getAdvanceSettingTransaction({ bot_id: botInfos?.id || id }),
     );
     const reponse = res.payload.data;
     setDataAdvanced(reponse);
@@ -104,7 +104,7 @@ const Styling = ({ save, step, saveSuccess }: Props) => {
     const res: any = botAvatarFile
       ? await dispatch(
           uploadBotProfilePictureTransaction({
-            bot_id: data.id,
+            bot_id: botInfos.id,
             file: botAvatarFile,
           }),
         )
@@ -113,14 +113,14 @@ const Styling = ({ save, step, saveSuccess }: Props) => {
     const resIcon: any = chatIconFile
       ? await dispatch(
           uploadBotProfilePictureTransaction({
-            bot_id: data.id,
+            bot_id: botInfos.id,
             file: chatIconFile,
           }),
         )
       : '';
     try {
       const payload = {
-        bot_id: data.id,
+        bot_id: botInfos.id,
         initial_message: dataAdvanced.initial_message,
         suggest_messages: dataAdvanced.suggest_messages,
         theme: theme,

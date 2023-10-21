@@ -25,7 +25,7 @@ import { OPTION_TONE } from '@/constants/configs_bot';
 const ChatbotConfig = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
-  const { data } = useSelector((state: RootState) => state.buildChatBot);
+  const { botInfos } = useSelector((state: RootState) => state.buildChatBot);
   const navigate = useNavigate();
   const options = [
     {
@@ -131,8 +131,8 @@ const ChatbotConfig = () => {
       } else {
         const updateBotPayload = {
           ...createBotPayload,
-          user_id: data.user_id,
-          id: data.id,
+          user_id: botInfos.user_id,
+          id: botInfos.id,
         };
         response = await dispatch(updateBotTransaction(updateBotPayload));
       }
@@ -160,7 +160,7 @@ const ChatbotConfig = () => {
   };
 
   useEffect(() => {
-    if (!isEmptyObjectOrArray(data)) {
+    if (!isEmptyObjectOrArray(botInfos)) {
       const {
         id,
         bot_name,
@@ -170,7 +170,7 @@ const ChatbotConfig = () => {
         temperature,
         custom_prompt,
         collect_customer_info,
-      } = data;
+      } = botInfos;
       navigate(`/build-chatbots/${id}`);
 
       bot_name && setBotName(bot_name);
@@ -186,10 +186,10 @@ const ChatbotConfig = () => {
       setCustom(convertCustomValue(collect_customer_info));
       setNumberShowing(collect_customer_info.numberShowing);
     }
-  }, [data]);
+  }, [botInfos]);
 
   //Check have bot if not have status is update else status is create
-  const isUpdate = useMemo(() => !isEmptyObjectOrArray(data), [data]);
+  const isUpdate = useMemo(() => !isEmptyObjectOrArray(botInfos), [botInfos]);
 
   return (
     <>

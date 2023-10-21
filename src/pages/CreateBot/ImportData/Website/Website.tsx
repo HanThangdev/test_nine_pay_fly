@@ -20,7 +20,7 @@ const Website = () => {
   const [visibleDeleteModal, setVisibleDeleteModal] = useState<boolean>(false);
 
   const { onStreamingUploadUrl, fetchLink, onGetAllUrl } = useBuildChatbot();
-  const { data, listIncludesLink, loadingFetchLink, includesResource } =
+  const { botInfos, listIncludesLink, loadingFetchLink, includesResource } =
     useSelector((state: RootState) => state.buildChatBot);
   const [fullPageUrl, setFullPageUrl] = useState<string>('');
   const [directPageUrl, setDirectPageUrl] = useState<string>('');
@@ -33,7 +33,7 @@ const Website = () => {
     DIRECT_PAGE: 2,
   };
   const onFetchLink = async (scrapeType: number) => {
-    if (loadingFetchLink || !data) {
+    if (loadingFetchLink || !botInfos) {
       return;
     }
 
@@ -63,7 +63,7 @@ const Website = () => {
         }),
       );
 
-      const { id, user_id } = data;
+      const { id, user_id } = botInfos;
 
       const importUrlPayload: ImportURLPayload = {
         bot_id: id,

@@ -49,7 +49,7 @@ const BasicInfor = ({ save, step, saveSuccess }: Props) => {
     },
   ];
   const dispatch = useDispatch<AppDispatch>();
-  const { data } = useSelector((state: RootState) => state.buildChatBot);
+  const { botInfos } = useSelector((state: RootState) => state.buildChatBot);
   const [caseStudy, setCaseStudy] = useState(options[0].value);
   const [conversationTone, setConversationTone] = useState(
     OPTION_TONE[0].value,
@@ -58,23 +58,23 @@ const BasicInfor = ({ save, step, saveSuccess }: Props) => {
     `${t('PromptExample', { ns: 'config_bot' })}`,
   );
   useEffect(() => {
-    if (!isEmptyObjectOrArray(data)) {
-      setCaseStudy(data.case_study);
+    if (!isEmptyObjectOrArray(botInfos)) {
+      setCaseStudy(botInfos.case_study);
     }
-  }, [data]);
+  }, [botInfos]);
 
   const onSubmit = async () => {
     try {
       const updateBotPayload = {
-        bot_name: data.bot_name,
-        case_study: caseStudy ? caseStudy : data.case_study,
-        collect_customer_info: data?.collect_customer_info,
-        rules: data.rules,
-        gpt_model_name: data.model,
-        temperature: data.creativity,
+        bot_name: botInfos.bot_name,
+        case_study: caseStudy ? caseStudy : botInfos.case_study,
+        collect_customer_info: botInfos?.collect_customer_info,
+        rules: botInfos.rules,
+        gpt_model_name: botInfos.model,
+        temperature: botInfos.creativity,
         custom_prompt: promptExample,
-        user_id: data.user_id,
-        id: data.id,
+        user_id: botInfos.user_id,
+        id: botInfos.id,
       };
       let response = await dispatch(updateBotTransaction(updateBotPayload));
       const { meta } = response;
@@ -106,7 +106,7 @@ const BasicInfor = ({ save, step, saveSuccess }: Props) => {
       </p>
       <Input
         disabled
-        value={data?.bot_name}
+        value={botInfos?.bot_name}
         type="text"
         placeholder=""
         className="h-[44px] text-[16px] w-full rounded-[8px] border border-[#D0D5DD] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"

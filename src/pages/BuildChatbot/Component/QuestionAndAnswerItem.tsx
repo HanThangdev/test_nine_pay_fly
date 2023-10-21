@@ -23,15 +23,15 @@ interface QuestionAndAnswerItemProps {
 const QuestionAndAnswerItem = ({ item, index }: QuestionAndAnswerItemProps) => {
   const { t } = useTranslation();
   const [visibleDeleteModal, setVisibleDeleteModal] = useState<boolean>(false);
-  const { data } = useSelector((state: RootState) => state.buildChatBot);
+  const { botInfos } = useSelector((state: RootState) => state.buildChatBot);
   const dispatch = useDispatch<AppDispatch>();
   const { onDeleteQuestionAndAnswer, onGetAllQuestionAndAnswer } = useBuildChatbot();
   const deleteUrl = async () => {
-    if (!data) {
+    if (!botInfos) {
       return;
     }
     try {
-      const { id } = data;
+      const { id } = botInfos;
 
       onDeleteQuestionAndAnswer({
         question_answer_id: item.id,

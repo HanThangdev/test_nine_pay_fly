@@ -24,7 +24,7 @@ const Files = () => {
   );
   const {
     onUploadFile,
-    data,
+    botInfos,
     listIncludesFile,
     loadingFetchFile,
     onGetAllFile,
@@ -49,14 +49,14 @@ const Files = () => {
       });
       return;
     }
-    onUploadFile({ file, bot_id: data?.id })
+    onUploadFile({ file, bot_id: botInfos?.id })
       .then((response) => {
         if (response.meta.requestStatus === API_STATUS.FULFILLED) {
           const newList = Array.from(listFileWaitingImport).filter((_) => {
             return _.name !== file.name;
           });
           setListFileWaitingImport(newList);
-          onGetAllFile({ bot_id: data?.id });
+          onGetAllFile({ bot_id: botInfos?.id });
         }
       })
       .catch((e) => {

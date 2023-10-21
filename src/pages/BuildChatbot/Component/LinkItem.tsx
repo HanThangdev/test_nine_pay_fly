@@ -27,15 +27,15 @@ const LinkItem = ({
 }: LinkItemProps) => {
   const { t } = useTranslation();
   const [visibleDeleteModal, setVisibleDeleteModal] = useState<boolean>(false);
-  const { data } = useSelector((state: RootState) => state.buildChatBot);
+  const { botInfos } = useSelector((state: RootState) => state.buildChatBot);
   const dispatch = useDispatch<AppDispatch>();
   const { onGetAllUrl } = useBuildChatbot();
   const deleteUrl = async () => {
-    if (!data) {
+    if (!botInfos) {
       return;
     }
     try {
-      const { id } = data;
+      const { id } = botInfos;
       const { meta } = await dispatch(
         deleteURLTransaction({ bot_id: id, url: item.url }),
       );

@@ -15,17 +15,8 @@ export const useManageChatbot = () => {
 
   const onGetBot = useCallback(
     async (isLoginIn?: boolean) => {
-      const { payload }: any = await dispatch(getBotTransaction());
-      if (!payload?.data?.length && isLoginIn) {
-        navigate('/build-chatbots');
-      } else if (!payload?.data?.length) {
-        notification.warning({
-          message: "You don't have any bot, Please config your bot",
-        });
-        navigate('/build-chatbots');
-      } else {
+      await dispatch(getBotTransaction());
         navigate('/');
-      }
     },
     [dispatch],
   );

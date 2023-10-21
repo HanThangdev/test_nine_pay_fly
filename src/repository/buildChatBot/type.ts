@@ -112,7 +112,7 @@ export interface GetAllURLResponse {
   url: DataFetchLink[];
 }
 
-export interface GetBotInfoPayload {
+export interface GetbotInfosPayload {
   bot_id: string;
 }
 

@@ -10,7 +10,7 @@ import {
   getAllFileTransaction,
   getAllQuestionAndAnswerTransaction,
   getAllURLTransaction,
-  getBotInfoTransaction,
+  getbotInfosTransaction,
   getChatStreamingTransaction,
   getIncludesResources,
   getLinkIntegrationMSTeamTransaction,
@@ -24,7 +24,7 @@ import { LOADING_TEXT } from '@/constants';
 import uuid from 'react-uuid';
 
 const initialState: BuildChatBotState = {
-  data: null,
+  botInfos: null,
   loading: false,
   activeTab: '',
   session_id: uuid(),
@@ -78,7 +78,7 @@ export const buildChatbotSlice = createSlice({
     },
 
     setDataWhenUpdate: (state, action) => {
-      state.data = action.payload;
+      state.botInfos = action.payload;
     },
 
     loadFetchLink: (state, action) => {
@@ -116,7 +116,7 @@ export const buildChatbotSlice = createSlice({
     });
     builder.addCase(createBotTransaction.fulfilled, (state, action) => {
       state.loading = false;
-      state.data = action.payload.data;
+      state.botInfos = action.payload.data;
     });
     builder.addCase(createBotTransaction.rejected, (state) => {
       state.loading = false;
@@ -129,7 +129,7 @@ export const buildChatbotSlice = createSlice({
     });
     builder.addCase(updateBotTransaction.fulfilled, (state, action) => {
       state.loading = false;
-      state.data = action.payload.data;
+      state.botInfos = action.payload.data;
     });
     builder.addCase(updateBotTransaction.rejected, (state) => {
       state.loading = false;
@@ -233,26 +233,26 @@ export const buildChatbotSlice = createSlice({
 
     // end getAllURLTransaction
 
-    // start getBotInfoTransaction
+    // start getbotInfosTransaction
 
-    builder.addCase(getBotInfoTransaction.pending, (state) => {
-      state.data = null;
+    builder.addCase(getbotInfosTransaction.pending, (state) => {
+      state.botInfos = null;
       state.loading = true;
       state.num_message_left = null;
     });
-    builder.addCase(getBotInfoTransaction.fulfilled, (state, action) => {
+    builder.addCase(getbotInfosTransaction.fulfilled, (state, action) => {
       state.num_message_left = action.payload.data.num_message_left;
-      state.data = action.payload.data;
+      state.botInfos = action.payload.data;
       state.session_id = uuid();
       state.loading = false;
     });
-    builder.addCase(getBotInfoTransaction.rejected, (state) => {
+    builder.addCase(getbotInfosTransaction.rejected, (state) => {
       state.loading = false;
-      state.data = null;
+      state.botInfos = null;
       state.num_message_left = null;
     });
 
-    // end getBotInfoTransaction
+    // end getbotInfosTransaction
 
     // start uploadFile
 

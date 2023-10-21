@@ -56,9 +56,9 @@ const SetInterface = ({ dataSetinterface }: Props) => {
   const [bot_avatar_url, setBot_avatar_url] = useState<string>('');
   const [removeImage, setRemoveImage] = useState(false);
   const [openButtonIcon, setOpenButtonIcon] = useState(false);
-  const { data } = useSelector((state: RootState) => state.buildChatBot);
+  const { botInfos } = useSelector((state: RootState) => state.buildChatBot);
   const [dataSet, setDataSet] = useState<any>({
-    bot_id: data.id,
+    bot_id: botInfos.id,
     initial_message: 'Hello! How can I assist you today?',
     display_name: '',
     align_chat_bubble_button: 'right',
@@ -127,14 +127,14 @@ const SetInterface = ({ dataSetinterface }: Props) => {
       const res: any = botAvatarFile
         ? await dispatch(
             uploadBotProfilePictureTransaction({
-              bot_id: data.id,
+              bot_id: botInfos.id,
               file: botAvatarFile,
             }),
           )
         : '';
 
       const payload = {
-        bot_id: data.id,
+        bot_id: botInfos.id,
         initial_message: dataSet.initial_message,
         suggest_messages: dataSet.suggest_messages,
         theme: dataSet.theme,
@@ -166,7 +166,7 @@ const SetInterface = ({ dataSetinterface }: Props) => {
 
   const getAdvance = async () => {
     const res: any = await dispatch(
-      getAdvanceSettingTransaction({ bot_id: data?.id || id }),
+      getAdvanceSettingTransaction({ bot_id: botInfos?.id || id }),
     );
 
     if (res.payload.data.theme) {

@@ -12,7 +12,7 @@ const ChatBot = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const { id } = useParams();
-  const { data } = useSelector((state: RootState) => state.buildChatBot);
+  const { botInfos } = useSelector((state: RootState) => state.buildChatBot);
   const [dataSet, setDataSet] = useState<any>({
     bot_id: '',
     initial_message: 'Hello! How can I assist you today?',
@@ -26,7 +26,7 @@ const ChatBot = () => {
   });
   const getAdvance = async () => {
     const res: any = await dispatch(
-      getAdvanceSettingTransaction({ bot_id: data?.id || id }),
+      getAdvanceSettingTransaction({ bot_id: botInfos?.id || id }),
     );
 
     setDataSet({

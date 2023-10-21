@@ -1,5 +1,5 @@
 import { RootState } from '@/states/store';
-import { Tooltip } from 'antd';
+import { Avatar, Tooltip } from 'antd';
 import classNames from 'classnames';
 import { useState } from 'react';
 import { IconSticker, IconAttach } from '@/components/IconGroup/IconGroup';
@@ -30,7 +30,7 @@ const Interface = ({
   chat_icon_url,
 }: Props) => {
   const { t } = useTranslation();
-  const { data } = useSelector((state: RootState) => state.buildChatBot);
+  const { botInfos } = useSelector((state: RootState) => state.buildChatBot);
   const [dataSet, setDataSet] = useState<any>({
     bot_id: '',
     initial_message: 'Hello! How can I assist you today?',
@@ -89,10 +89,7 @@ const Interface = ({
           <div className="py-5 px-[16px] gap-y-[10px] grid">
             <div className="flex gap-x-2">
               {(dataSet.bot_avatar_url || bot_avatar_url) && (
-                <img
-                  className="w-[20px] h-[20px]"
-                  src={bot_avatar_url ? bot_avatar_url : dataSet.bot_avatar_url}
-                />
+                <Avatar src={bot_avatar_url ? bot_avatar_url : dataSet.bot_avatar_url} size="small"/>
               )}
               <div className="bg-[#eeeef1] px-3 py-2 rounded-t-lg rounded-br-lg w-fit">
                 {initial_message

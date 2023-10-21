@@ -21,7 +21,7 @@ const EditBot = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { data, onGetInfoCurrentBot, onGetIncludesSource } = useBuildChatbot();
+  const { botInfos, onGetInfoCurrentBot, onGetIncludesSource } = useBuildChatbot();
   const { id } = useParams();
   const [save, setSave] = useState(false);
   const [step, setStep] = useState('');
@@ -107,7 +107,7 @@ const EditBot = () => {
           <>
             <div className="flex items-center gap-x-3">
               <p className="mb-0 text-[#1F2937] font-medium">
-                {data?.bot_name} <br />
+                {botInfos?.bot_name} <br />
                 <span className="flex items-center gap-x-1 text-[#D70] text-[12px]">
                   <IconEditing />
                   {t('editting')}
@@ -120,7 +120,7 @@ const EditBot = () => {
       <div className="p-[20px] edit-bot">
         <div className="w-full flex justify-between bg-[#FCFCFC] rounded-[12px] py-[12px] px-[16px]">
           <div>
-            <p className="mb-2 text-[20px] text-[#111827]">{data?.bot_name}</p>
+            <p className="mb-2 text-[20px] text-[#111827]">{botInfos?.bot_name}</p>
             <p className="text-[#6B7280] mb-2">
               {t('Limit', { ns: 'config_bot' })}
             </p>

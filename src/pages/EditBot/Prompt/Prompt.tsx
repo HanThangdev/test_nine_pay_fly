@@ -17,29 +17,29 @@ interface Props {
 const Prompt = ({ save, step, saveSuccess }: Props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
-  const { data } = useSelector((state: RootState) => state.buildChatBot);
+  const { botInfos } = useSelector((state: RootState) => state.buildChatBot);
   const [promptExample, setPromptExample] = useState('');
   const [creativity, setCreativity] = useState(0);
 
   useEffect(() => {
-    if (!isEmptyObjectOrArray(data)) {
-      setPromptExample(data.custom_prompt);
-      setCreativity(data.temperature);
+    if (!isEmptyObjectOrArray(botInfos)) {
+      setPromptExample(botInfos.custom_prompt);
+      setCreativity(botInfos.temperature);
     }
-  }, [data]);
+  }, [botInfos]);
 
   const onSubmit = async () => {
     try {
       const updateBotPayload = {
-        bot_name: data.bot_name,
-        case_study: data.case_study,
-        collect_customer_info: data?.collect_customer_info,
-        rules: data.rules,
-        gpt_model_name: data.model,
+        bot_name: botInfos.bot_name,
+        case_study: botInfos.case_study,
+        collect_customer_info: botInfos?.collect_customer_info,
+        rules: botInfos.rules,
+        gpt_model_name: botInfos.model,
         temperature: creativity,
         custom_prompt: promptExample,
-        user_id: data.user_id,
-        id: data.id,
+        user_id: botInfos.user_id,
+        id: botInfos.id,
       };
       let response = await dispatch(updateBotTransaction(updateBotPayload));
       const { meta } = response;

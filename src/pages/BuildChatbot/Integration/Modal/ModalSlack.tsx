@@ -24,12 +24,12 @@ interface Props {
 
 export default function ModalSlack({ open, onClose }: Props) {
   const { t } = useTranslation();
-  const { data } = useSelector((state: RootState) => state.buildChatBot);
+  const { botInfos } = useSelector((state: RootState) => state.buildChatBot);
 
   const cookies = new Cookies();
 
   const accessToken = cookies.get('access_token');
-  const commandCodeIntegrationSlack = `/chatfly add ${accessToken}:${data.id}`;
+  const commandCodeIntegrationSlack = `/chatfly add ${accessToken}:${botInfos.id}`;
 
   const onCopy = (text: any) => {
     navigator.clipboard.writeText(text);

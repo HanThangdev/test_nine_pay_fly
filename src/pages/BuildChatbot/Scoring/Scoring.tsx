@@ -11,12 +11,12 @@ import { GetBotEvaluationStrongResponse } from '@/repository/buildChatBot/type';
 const Scoring = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
-  const { data } = useBuildChatbot();
+  const { botInfos } = useBuildChatbot();
   const [valueScoring, setValueScoring] = useState<GetBotEvaluationStrongResponse | null>(null)
   const getEvaluationStrong = async () => {
     try {
       const { meta, payload }: any = await dispatch(
-        getBotEvaluationStrong({ bot_id: data.id }),
+        getBotEvaluationStrong({ bot_id: botInfos.id }),
       );
       if (meta.requestStatus == API_STATUS.REJECTED) {
         throw meta;

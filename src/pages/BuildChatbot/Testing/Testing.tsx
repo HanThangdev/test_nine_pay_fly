@@ -18,7 +18,7 @@ import FormCollectCustomer from '@/components/formCollectCustomer';
 import { isEmptyObjectOrArray } from '@/utils/utils';
 
 const Testing = () => {
-  const { data, history, session_id, num_message_left } = useSelector(
+  const { botInfos, history, session_id, num_message_left } = useSelector(
     (state: RootState) => state.buildChatBot,
   );
   const { t } = useTranslation();
@@ -30,12 +30,12 @@ const Testing = () => {
   const { onStreamingDataTesting } = useBuildChatbot();
 
   const onSendMessage = async (msg: string | undefined = '') => {
-    if (loading || (!message && !msg) || !data) {
+    if (loading || (!message && !msg) || !botInfos) {
       return;
     }
     setLoading(true);
     setMessage('');
-    const { id, user_id } = data;
+    const { id, user_id } = botInfos;
     const streamingPayload: GetChatStreamingRequest = {
       bot_id: id,
       message: msg || message,
@@ -118,19 +118,19 @@ const Testing = () => {
   };
 
   useEffect(() => {
-    if (!isEmptyObjectOrArray(data)) {
+    if (!isEmptyObjectOrArray(botInfos)) {
       const isSubmitOrCloseForm = localStorage.getItem('isSubmitOrCloseForm')
       const checkLengthMsg =
         history?.filter((message) => message.sender_type === 'user')?.length >=
-        data?.collect_customer_info?.numberShowing;
-      const { numberShowing, ...collectInfo } = data?.collect_customer_info;
+        botInfos?.collect_customer_info?.numberShowing;
+      const { numberShowing, ...collectInfo } = botInfos?.collect_customer_info;
       if (checkLengthMsg && !isEmptyObjectOrArray(collectInfo) && !isSubmitOrCloseForm) {
         setShowFormCollect(true);
       } else {
         setShowFormCollect(false);
       }
     }
-  }, [history, data]);
+  }, [history, botInfos]);
   return (
     <>
       <div
@@ -142,7 +142,7 @@ const Testing = () => {
         <div className="flex justify-between h-[45px] items-center px-[18px] border-b-[1px] border-[#E7E8F2]">
           <p className="mb-0 flex items-center gap-x-[10px] font-bold text-[#01058A]">
             <IconInterface />
-            {data?.bot_name}
+            {botInfos?.bot_name}
           </p>
           <div className="cursor-pointer" onClick={reloadHistoryMessage}>
             <IconReload />
@@ -157,7 +157,7 @@ const Testing = () => {
             history.map((message, index) => getDivForResponse(index, message))}
           {showFormCollect && (
             <FormCollectCustomer
-              field={data?.collect_customer_info}
+              field={botInfos?.collect_customer_info}
               toggleForm={toggleForm}
             />
           )}

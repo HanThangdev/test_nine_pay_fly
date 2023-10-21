@@ -27,7 +27,7 @@ interface Props {
 
 const Config = ({ save, step, saveSuccess }: Props) => {
   const { t } = useTranslation();
-  const { data } = useSelector((state: RootState) => state.buildChatBot);
+  const { botInfos } = useSelector((state: RootState) => state.buildChatBot);
   const [model, setModel] = useState('GPT - 3.5');
   const [email, setEmail] = useState(false);
   const [name, setName] = useState(false);
@@ -60,18 +60,18 @@ const Config = ({ save, step, saveSuccess }: Props) => {
     if (phone) collectCustomerIfo.phone = phone;
     try {
       const updateBotPayload = {
-        bot_name: data.bot_name,
-        case_study: data.case_study,
+        bot_name: botInfos.bot_name,
+        case_study: botInfos.case_study,
         collect_customer_info: {
           numberShowing: numberShowing,
           ...collectCustomerIfo,
         },
-        rules: data.rules,
+        rules: botInfos.rules,
         gpt_model_name: model,
-        temperature: data.creativity,
-        custom_prompt: data.custom_prompt,
-        user_id: data.user_id,
-        id: data.id,
+        temperature: botInfos.creativity,
+        custom_prompt: botInfos.custom_prompt,
+        user_id: botInfos.user_id,
+        id: botInfos.id,
       };
       let response = await dispatch(updateBotTransaction(updateBotPayload));
       const { meta } = response;
@@ -97,15 +97,15 @@ const Config = ({ save, step, saveSuccess }: Props) => {
   }, [save, step]);
 
   useEffect(() => {
-    if (!isEmptyObjectOrArray(data)) {
-      setModel(data.gpt_model_name);
-      setEmail(data.collect_customer_info?.email);
-      setName(data.collect_customer_info?.name);
-      setPhone(data.collect_customer_info?.phone);
-      setCustom(convertCustomValue(data.collect_customer_info));
-      setNumberShowing(data.collect_customer_info.numberShowing);
+    if (!isEmptyObjectOrArray(botInfos)) {
+      setModel(botInfos.gpt_model_name);
+      setEmail(botInfos.collect_customer_info?.email);
+      setName(botInfos.collect_customer_info?.name);
+      setPhone(botInfos.collect_customer_info?.phone);
+      setCustom(convertCustomValue(botInfos.collect_customer_info));
+      setNumberShowing(botInfos.collect_customer_info.numberShowing);
     }
-  }, [data]);
+  }, [botInfos]);
 
   return (
     <div className="config-bot">

@@ -36,7 +36,7 @@ const Chat = () => {
   }, [id]);
   const { onStreamingConversation, chatConversations, session_id, theme } =
     useConversationsChatbot();
-  const { onGetInfoCurrentBot, data, onGetAdvanceSetting, advanceSetting } =
+  const { onGetInfoCurrentBot, botInfos, onGetAdvanceSetting, advanceSetting } =
     useBuildChatbot();
   const onSendMessage = async (msg: string | undefined = '') => {
     if (loading || (!message && !msg) || !id || !session_id) {
@@ -195,7 +195,7 @@ const Chat = () => {
             <div className="text-2xl mt-1 flex items-center">
               <span className="mr-3 font-bold">
                 {advanceSetting?.display_name ||
-                  (!isEmptyObjectOrArray(data) && data.bot_name)}
+                  (!isEmptyObjectOrArray(botInfos) && botInfos.bot_name)}
               </span>
             </div>
             {/* <span className="text-lg text-gray-600">Junior Developer</span> */}

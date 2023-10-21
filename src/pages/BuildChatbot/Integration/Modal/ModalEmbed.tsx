@@ -14,15 +14,15 @@ interface Props {
 const { TextArea } = Input;
 export default function ModalEmbed({ open, onClose }: Props) {
   const { t } = useTranslation();
-  const { data, onUpdateListDomain } = useBuildChatbot();
+  const { botInfos, onUpdateListDomain } = useBuildChatbot();
   const [listDomain, setListDomain] = useState(
-    data?.domain ? data?.domain.join('\n') : '',
+    botInfos?.domain ? botInfos?.domain.join('\n') : '',
   );
   const [statusActionDomain, setStatusActionDomain] = useState('View');
   const codeStringEmbedBubble = `
     <script>
       window.chatbotConfig = {
-        bot_id:"${data?.id}",
+        bot_id:"${botInfos?.id}",
       };
     </script>
     <script src="${window.location.origin}/Chat.js"></script>
@@ -30,7 +30,7 @@ export default function ModalEmbed({ open, onClose }: Props) {
 
   const codeStringEmbedIframe = `
     <iframe
-      src="${window.location.origin}/chat/${data?.id}"
+      src="${window.location.origin}/chat/${botInfos?.id}"
       width="100%"
       height="300"
       style="border:1px solid black;"
@@ -56,7 +56,7 @@ export default function ModalEmbed({ open, onClose }: Props) {
   };
 
   const handleUpdateListDomain = () => {
-    onUpdateListDomain({ bot_id: data.id, domain: listDomainPayload })
+    onUpdateListDomain({ bot_id: botInfos.id, domain: listDomainPayload })
       .then((response) => {
         if (response.meta.requestStatus === API_STATUS.FULFILLED) {
           notification.success({

@@ -26,7 +26,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const getLanguageFromURL = urlParams.get('language');
 const BuildChatbot = () => {
   const {
-    data,
+    botInfos,
     activeTab,
     onGetInfoCurrentBot,
     onGetIncludesSource,
@@ -101,7 +101,7 @@ const BuildChatbot = () => {
   }, []);
 
   const listTab = useMemo(() => {
-    return !!isEmptyObjectOrArray(data)
+    return !!isEmptyObjectOrArray(botInfos)
       ? items.map((item, index) =>
           index != 0 ? { ...item, disabled: true } : item,
         )
@@ -110,7 +110,7 @@ const BuildChatbot = () => {
       : items.map((item, index) =>
           ![0, 1].includes(index) ? { ...item, disabled: true } : item,
         );
-  }, [data, lang, includesResource]);
+  }, [botInfos, lang, includesResource]);
 
   const onChange = (key: string) => {
     setActiveKey(key);

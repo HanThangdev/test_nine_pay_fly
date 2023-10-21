@@ -17,7 +17,7 @@ import {
   getAllFileTransaction,
   getAllQuestionAndAnswerTransaction,
   getAllURLTransaction,
-  getBotInfoTransaction,
+  getbotInfosTransaction,
   getChatStreamingTransaction,
   getIncludesResources,
   importURLTransaction,
@@ -32,7 +32,7 @@ import {
   GetAllFilePayload,
   GetAllQuestionAndAnswerPayload,
   GetAllURLPayload,
-  GetBotInfoPayload,
+  GetbotInfosPayload,
   GetChatStreamingRequest,
   ImportURLPayload,
   UpdateListDomainPayload,
@@ -49,7 +49,7 @@ export const useBuildChatbot = () => {
   const dispatch = useDispatch<AppDispatch>();
   const {
     fetchLink,
-    data,
+    botInfos,
     activeTab,
     session_id,
     listIncludesFile,
@@ -137,8 +137,8 @@ export const useBuildChatbot = () => {
   );
 
   const onGetInfoCurrentBot = useCallback(
-    async (payload: GetBotInfoPayload) => {
-      const res = await dispatch(getBotInfoTransaction(payload));
+    async (payload: GetbotInfosPayload) => {
+      const res = await dispatch(getbotInfosTransaction(payload));
       return res;
     },
     [dispatch],
@@ -188,7 +188,7 @@ export const useBuildChatbot = () => {
   );
   return {
     fetchLink,
-    data,
+    botInfos,
     onStreamingDataTesting,
     onStreamingUploadUrl,
     onCreateSession,
