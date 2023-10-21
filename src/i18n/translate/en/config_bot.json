@@ -158,6 +158,7 @@
   "success7AddSlack": "Step 7: Mention and chat with ",
   "@ChatFly": "@ChatFly ",
   "Bot": "Bot",
+  "install": "Install",
   "getLink": "Get link",
   "addMsTeam": "Add to Microsoft Team Workspace",
   "integrationStepMsTeam": "To integration the chatbot into Microsoft Team, please follow the instructions below:",
@@ -182,5 +183,9 @@
   "selectColor": "Select the color of the user chat. Choosing the right color will enhance your brand awareness",
   "userPicture": "Use chatbot profile picture",
   "symbol": "Use custom chat widget symbol",
-  "typesfile": "supported file types: .jpg, .png, .tiff, .svg"
+  "typesfile": "supported file types: .jpg, .png, .tiff, .svg",
+  "textBubble": "Text display on bubble",
+  "Displaytext": "Display text with bot",
+  "Enter": "Enter",
+  "copy": "Copy to clipboard."
 }

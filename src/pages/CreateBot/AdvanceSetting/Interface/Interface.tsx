@@ -1,11 +1,9 @@
-import { RootState, AppDispatch } from '@/states/store';
+import { RootState } from '@/states/store';
 import { Tooltip } from 'antd';
 import classNames from 'classnames';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { IconSticker, IconAttach } from '@/components/IconGroup/IconGroup';
-import { useSelector, useDispatch } from 'react-redux';
-import { getAdvanceSettingTransaction } from '@/repository/buildChatBot';
-import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 interface Props {
@@ -32,11 +30,9 @@ const Interface = ({
   chat_icon_url,
 }: Props) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch<AppDispatch>();
-  const { id } = useParams();
   const { data } = useSelector((state: RootState) => state.buildChatBot);
   const [dataSet, setDataSet] = useState<any>({
-    bot_id: data.id,
+    bot_id: '',
     initial_message: 'Hello! How can I assist you today?',
     display_name: '',
     align_chat_bubble_button: 'right',
@@ -46,30 +42,6 @@ const Interface = ({
     chat_icon_url:
       'https://app.gpt-trainer.com/img/widget-images/widget-button-open-state/default-chat.svg',
   });
-  const getAdvance = async () => {
-    const res: any = await dispatch(
-      getAdvanceSettingTransaction({ bot_id: data?.id || id }),
-    );
-
-    setDataSet({
-      ...dataSet,
-      display_name: res.payload.data.display_name,
-      initial_message: res.payload.data.initial_message,
-      theme: res.payload.data.theme,
-      suggest_messages: res.payload.data.suggest_messages,
-      bot_avatar_url: res.payload.data.bot_avatar_url,
-      chat_message_color: res.payload.data.chat_message_color,
-      chat_icon_url: res.payload.data.chat_icon_url,
-      chat_bubble_button_color: res.payload.data.chat_bubble_button_color,
-      align_chat_bubble_button: res.payload.data.align_chat_bubble_button,
-      auto_show_initial_message_after:
-        res.payload.data.auto_show_initial_message_after,
-    });
-  };
-
-  useEffect(() => {
-    getAdvance();
-  }, []);
 
   return (
     <>

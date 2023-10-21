@@ -180,5 +180,9 @@
   "selectColor": "Chọn màu cho cuộc trò chuyện của người dùng. Chọn màu phù hợp sẽ nâng cao nhận thức về thương hiệu của bạn",
   "userPicture": "Sử dụng ảnh hồ sơ chatbot",
   "symbol": "Sử dụng biểu tượng tiện ích trò chuyện tùy chỉnh",
-  "typesfile": "các loại tập tin được hỗ trợ: .jpg, .png, .tiff, .svg"
+  "typesfile": "các loại tập tin được hỗ trợ: .jpg, .png, .tiff, .svg",
+  "textBubble": "Hiển thị văn bản trên bong bóng",
+  "Displaytext": "Hiển thị văn bản với bot",
+  "Enter": "Nhập",
+  "copy": "Sao chép vào clipboard."
 }

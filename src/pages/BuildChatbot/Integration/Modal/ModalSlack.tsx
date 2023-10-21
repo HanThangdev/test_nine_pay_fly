@@ -1,4 +1,4 @@
-import { Modal } from 'antd';
+import { Modal, notification } from 'antd';
 import { useTranslation } from 'react-i18next';
 import {
   step2Slack,
@@ -15,6 +15,8 @@ import Code from '@/components/code';
 import Cookies from 'universal-cookie';
 import { RootState } from '@/states/store';
 import { useSelector } from 'react-redux';
+import classNames from 'classnames';
+import { IconCopy } from '@/components/IconGroup/IconGroup';
 interface Props {
   open?: boolean;
   onClose: () => void;
@@ -26,8 +28,15 @@ export default function ModalSlack({ open, onClose }: Props) {
 
   const cookies = new Cookies();
 
-  const accessToken = cookies.get('access_token')
-  const commandCodeIntegrationSlack = `/chatfly add ${accessToken}:${data.id}`
+  const accessToken = cookies.get('access_token');
+  const commandCodeIntegrationSlack = `/chatfly add ${accessToken}:${data.id}`;
+
+  const onCopy = (text: any) => {
+    navigator.clipboard.writeText(text);
+    notification.success({
+      message: `${t('copy', { ns: 'config_bot' })}`,
+    });
+  };
   return (
     <Modal
       closable={false}
@@ -38,7 +47,7 @@ export default function ModalSlack({ open, onClose }: Props) {
       centered
       className="integration-slack-modal"
     >
-      <p className="flex text-[20px] text-[#01058A] font-black">
+      <p className="flex text-[18px] mb-0 text-[#101828] font-bold">
         {t('addSlack', { ns: 'config_bot' })}
       </p>
       <div className="h-[calc(100%-50px)] overflow-auto">
@@ -49,7 +58,7 @@ export default function ModalSlack({ open, onClose }: Props) {
           {t('step1AddSlack', { ns: 'config_bot' })}
         </p>
         <a
-          className="font-bold cursor-pointer mb-0 ml-4 bg-[#E8E9F4] text-[#01058A] py-2 px-[22px] rounded-[10px]"
+          className="font-bold cursor-pointer mb-0 ml-4  border-[1px] border-[#D0D5DD] py-2 px-[22px] rounded-[10px]"
           href="https://slack.com/oauth/v2/authorize?client_id=5697154391091.5942177894499&scope=app_mentions:read,channels:history,chat:write,commands,im:history&user_scope=chat:write,im:history,channels:history,groups:history"
           target="_blank"
         >
@@ -94,10 +103,24 @@ export default function ModalSlack({ open, onClose }: Props) {
         <img src={step2_4} className="my-4" />
         <p className="text-[15px] ml-4 text-[#878787] mt-2">
           {t('success5AddSlack', { ns: 'config_bot' })}&nbsp;
-          <br/>
-          <br/>
-          <div className='bg-[#f1f5f9] rounded-[5px] px-4 py-2'>
-            <Code language="html">{commandCodeIntegrationSlack}</Code>
+          <br />
+          <br />
+          <div className="flex gap-x-2 items-center">
+            <div
+              className={classNames(
+                'w-[95%] rounded-[5px] p-2 overflow-auto border-[1px] border-[#D0D5DD]',
+              )}
+            >
+              <span className="mb-0 whitespace-nowrap">
+                {commandCodeIntegrationSlack}
+              </span>
+            </div>
+            <div
+              className="cursor-pointer"
+              onClick={() => onCopy(commandCodeIntegrationSlack)}
+            >
+              <IconCopy />
+            </div>
           </div>
         </p>
         <img src={step2_5} className="my-4" />

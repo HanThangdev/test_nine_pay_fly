@@ -75,7 +75,7 @@ const ChatbotElement = ({ info }: ChatbotElementProps) => {
   const onClick = () => {
     navigator.clipboard.writeText(`${window.location.origin}/chat/${info.id}`);
     notification.success({
-      message: 'Copy to clipboard.',
+      message: `${t('copy', { ns: 'config_bot' })}`,
     });
   };
 

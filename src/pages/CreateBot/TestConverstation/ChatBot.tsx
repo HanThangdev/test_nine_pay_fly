@@ -8,35 +8,13 @@ import { getAdvanceSettingTransaction } from '@/repository/buildChatBot';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-interface Props {
-  initial_message?: string;
-  suggest_messages?: string[];
-  display_name?: string;
-  theme?: string;
-  chat_bubble_button_color?: string;
-  chat_message_color?: string;
-  textbubble?: string;
-  bot_avatar_url?: string;
-  chat_icon_url?: string;
-}
-
-const Interface = ({
-  initial_message,
-  suggest_messages,
-  display_name,
-  chat_message_color,
-  chat_bubble_button_color,
-  theme,
-  textbubble,
-  bot_avatar_url,
-  chat_icon_url,
-}: Props) => {
+const ChatBot = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const { id } = useParams();
   const { data } = useSelector((state: RootState) => state.buildChatBot);
   const [dataSet, setDataSet] = useState<any>({
-    bot_id: data.id,
+    bot_id: '',
     initial_message: 'Hello! How can I assist you today?',
     display_name: '',
     align_chat_bubble_button: 'right',
@@ -78,7 +56,7 @@ const Interface = ({
           className={classNames(
             'rounded-[16px] bg-[#F9FAFB] h-[500px] relative',
             {
-              'bg-different': (theme ? theme : dataSet.theme) === 'dark',
+              'bg-different': dataSet.theme === 'dark',
             },
           )}
         >
@@ -91,11 +69,11 @@ const Interface = ({
               className={classNames(
                 'mb-0 flex items-center gap-x-[10px] text-[16px] text-[#01058A]',
                 {
-                  'text-white': (theme ? theme : dataSet.theme) === 'dark',
+                  'text-white': dataSet.theme === 'dark',
                 },
               )}
             >
-              {display_name ? display_name : dataSet.display_name}
+              {dataSet.display_name}
             </p>
             <p className="mb-0 cursor-pointer bg-[#F3F4F6] rounded-lg p-1">
               <svg
@@ -116,16 +94,14 @@ const Interface = ({
           </div>
           <div className="py-5 px-[16px] gap-y-[10px] grid">
             <div className="flex gap-x-2">
-              {(dataSet.bot_avatar_url || bot_avatar_url) && (
+              {dataSet.bot_avatar_url && (
                 <img
                   className="w-[20px] h-[20px]"
-                  src={bot_avatar_url ? bot_avatar_url : dataSet.bot_avatar_url}
+                  src={dataSet.bot_avatar_url}
                 />
               )}
               <div className="bg-[#eeeef1] px-3 py-2 rounded-t-lg rounded-br-lg w-fit">
-                {initial_message
-                  ? initial_message
-                  : dataSet.initial_message
+                {dataSet.initial_message
                   ? dataSet.initial_message
                   : 'Hello! How can I assist you today?'}
               </div>
@@ -134,9 +110,7 @@ const Interface = ({
               <p
                 className="px-3 py-2 text-white rounded-t-lg rounded-bl-lg w-fit"
                 style={{
-                  background: chat_message_color
-                    ? chat_message_color
-                    : dataSet.chat_message_color
+                  background: dataSet.chat_message_color
                     ? dataSet.chat_message_color
                     : '#D7E4FD',
                 }}
@@ -146,10 +120,7 @@ const Interface = ({
             </div>
           </div>
           <div className="absolute bottom-[62px] flex gap-x-3 py-2 px-4 overflow-x-auto w-full">
-            {(suggest_messages
-              ? suggest_messages
-              : dataSet.suggest_messages
-            )?.map((item: any, index: any) => (
+            {dataSet.suggest_messages?.map((item: any, index: any) => (
               <Tooltip title={item} key={index}>
                 <p className="border-[1px] border-[#2D3FE7] text-[#2D3FE7] mb-0 px-2 py-1 rounded-lg whitespace-nowrap">
                   {' '}
@@ -168,8 +139,7 @@ const Interface = ({
                 className={classNames(
                   'h-[36px] w-full bg-[#FCFCFC] outline-none focus:border-primary focus-visible:shadow-none',
                   {
-                    'bg-[#111827] text-white':
-                      (theme ? theme : dataSet.theme) === 'dark',
+                    'bg-[#111827] text-white': dataSet.theme === 'dark',
                   },
                 )}
               />
@@ -188,25 +158,17 @@ const Interface = ({
           <div
             className={classNames(
               'rounded-full bg-black flex items-center justify-center p-2 gap-x-2',
-              {
-                '!rounded-[20px]': textbubble,
-              },
             )}
             style={{
-              background: chat_bubble_button_color
-                ? chat_bubble_button_color
-                : dataSet.chat_bubble_button_color
+              background: dataSet.chat_bubble_button_color
                 ? dataSet.chat_bubble_button_color
                 : '#4AC1FF',
             }}
           >
-            {textbubble}
             <img
               className="w-[30px] h-[30px] invert"
               src={
-                chat_icon_url
-                  ? chat_icon_url
-                  : dataSet.chat_icon_url
+                dataSet.chat_icon_url
                   ? dataSet.chat_icon_url
                   : 'https://app.gpt-trainer.com/img/widget-images/widget-button-open-state/default-chat.svg'
               }
@@ -218,4 +180,4 @@ const Interface = ({
   );
 };
 
-export default Interface;
+export default ChatBot;

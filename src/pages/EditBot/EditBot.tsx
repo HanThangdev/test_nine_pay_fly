@@ -15,6 +15,7 @@ import Prompt from './Prompt';
 import ImportData from './ImportData';
 import ChatWidget from './AdvanceSetting/ChatWidget';
 import Styling from './AdvanceSetting/Styling';
+import IntegrationClient from '../BuildChatbot/Integration';
 
 const EditBot = () => {
   const { t } = useTranslation();
@@ -76,7 +77,7 @@ const EditBot = () => {
     {
       key: 'integration',
       label: `${t('Integrations')}`,
-      children: <p>sss</p>,
+      children: <IntegrationClient />,
     },
   ];
   useEffect(() => {

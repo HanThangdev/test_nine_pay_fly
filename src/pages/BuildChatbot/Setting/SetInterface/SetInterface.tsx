@@ -10,16 +10,14 @@ import { MdOutlineDarkMode } from 'react-icons/md';
 import { Checkbox, Upload, Popover, notification } from 'antd';
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
 import type { RcFile } from 'antd/es/upload';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/states/store';
 import {
   getAdvanceSettingTransaction,
   updateAdvanceSettingTransaction,
   uploadBotProfilePictureTransaction,
 } from '@/repository/buildChatBot';
 import { API_STATUS } from '@/constants';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '@/states/store';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, AppDispatch } from '@/states/store';
 import { convertFile2Base64 } from '@/utils/utils';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
@@ -332,7 +330,6 @@ const SetInterface = ({ dataSetinterface }: Props) => {
               <div className="h-[41px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] items-center justify-center flex">
                 <Upload
                   accept="image/*"
-                  setTheme
                   maxCount={1}
                   showUploadList={false}
                   customRequest={() => {

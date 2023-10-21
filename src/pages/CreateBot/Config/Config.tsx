@@ -64,25 +64,6 @@ const Config = () => {
       <p className="text-[12px] text-[#9CA3AF] mt-[10px]">
         Limit to 100 messages every 1 day
       </p>
-      <p className="font-medium text-[#344054] flex items-center gap-x-[10px]">
-        {t('Model', { ns: 'config_bot' })}
-        <Tooltip
-          color="#212121"
-          placement="rightTop"
-          overlayStyle={{ whiteSpace: 'pre-line', width: '400px' }}
-          title={t('tooltipModel', { ns: 'config_bot' })}
-        >
-          <span className="w-3 mt-[1px]">
-            <IconTip />
-          </span>
-        </Tooltip>
-      </p>
-      <Radio.Group
-        options={optionsModal}
-        onChange={(e) => setModel(e.target.value)}
-        value={model}
-        buttonStyle="solid"
-      />
       <p className="font-medium mt-4 text-[#344054] flex items-center gap-x-[10px]">
         {t('CollectCustomer', { ns: 'config_bot' })}
         <Tooltip

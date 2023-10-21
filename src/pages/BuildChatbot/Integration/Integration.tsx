@@ -14,9 +14,7 @@ import ModalTelegram from './Modal/ModalTelegram';
 import ModalSlack from './Modal/ModalSlack';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/states/store';
-import {
-  getTokenTelegramTransaction,
-} from '@/repository/buildChatBot';
+import { getTokenTelegramTransaction } from '@/repository/buildChatBot';
 import { useBuildChatbot } from '@/states/buildChatBot/buildChatBot.selector';
 import { API_STATUS } from '@/constants';
 import ModalMsTeam from './Modal/ModalMsTeam';
@@ -45,25 +43,21 @@ const Integration = () => {
     }
   };
 
-  
   return (
     <>
       <div
         className={classNames(
-          'bg-[#FFF] rounded-[10px] p-6 mt-[6px] py-[22px] px-[29px]',
-          'shadow-[0_0px_4px_0px_rgba(32,32,62,0.16)] h-[100vh] flex justify-center',
+          'p-6 mt-[6px] py-[22px] px-[29px]',
+          'flex justify-center',
         )}
       >
-        <div className="my-[58px] ">
-          <h2 className="text-[20px] flex justify-center text-[#33343d] font-black gap-x-3 items-center">
-            {t('INTEGRATIONS', { ns: 'config_bot' })}
-          </h2>
-          <div className="grid gap-y-[25px] mt-[38px] w-[590px]">
+        <div className="">
+          <div className="grid gap-y-[8px] w-[400px]">
             <p
               onClick={() => setOpenModalEmbed(true)}
               className={classNames(
-                'mb-0 w-full h-[55px] gap-x-4 bg-[#E8E9F4] flex items-center justify-center',
-                'text-[20px] text-[#01058A] rounded-[5px] hover:cursor-pointer hover:scale-105 duration-500 transition-all',
+                'mb-0 w-full py-3 gap-x-4 bg-[#FFF] border-[1px] border-[#D0D5DD] flex items-center px-4',
+                'text-[16px] text-black rounded-[8px] hover:cursor-pointer hover:scale-105 duration-500 transition-all',
               )}
             >
               <IconSite />
@@ -74,8 +68,8 @@ const Integration = () => {
               // href="https://slack.com/oauth/v2/authorize?client_id=5697154391091.5942177894499&scope=app_mentions:read,channels:history,chat:write,commands,im:history&user_scope=chat:write,im:history,channels:history,groups:history"
               onClick={() => setOpenModalSlack(true)}
               className={classNames(
-                'mb-0 w-full h-[55px] gap-x-4 bg-[#E8E9F4] flex items-center justify-center',
-                'text-[20px] text-[#01058A] rounded-[5px] hover:cursor-pointer hover:scale-105 duration-500 transition-all',
+                'mb-0 w-full py-3 gap-x-4 bg-[#FFF] border-[1px] border-[#D0D5DD] flex items-center px-4',
+                'text-[16px] text-black rounded-[8px] hover:cursor-pointer hover:scale-105 duration-500 transition-all',
               )}
             >
               <IconSlack />
@@ -84,8 +78,8 @@ const Integration = () => {
             <div
               onClick={onIntegrationTelegram}
               className={classNames(
-                'mb-0 w-full h-[55px] gap-x-4 bg-[#E8E9F4] flex items-center justify-center',
-                'text-[20px] text-[#01058A] rounded-[5px] hover:cursor-pointer hover:scale-105 duration-500 transition-all',
+                'mb-0 w-full py-3 gap-x-4 bg-[#FFF] border-[1px] border-[#D0D5DD] flex items-center px-4',
+                'text-[16px] text-black rounded-[8px] hover:cursor-pointer hover:scale-105 duration-500 transition-all',
               )}
             >
               <IconTelegram />
@@ -93,8 +87,8 @@ const Integration = () => {
             </div>
             <div
               className={classNames(
-                'mb-0 w-full h-[55px] gap-x-4 bg-[#E8E9F4] flex items-center justify-center',
-                'text-[20px] text-[#01058A] rounded-[5px] hover:cursor-pointer hover:scale-105 duration-500 transition-all',
+                'mb-0 w-full py-3 gap-x-4 bg-[#FFF] border-[1px] border-[#D0D5DD] flex items-center px-4',
+                'text-[16px] text-black rounded-[8px] hover:cursor-pointer hover:scale-105 duration-500 transition-all',
               )}
               onClick={() => setOpenModalMsTeam(true)}
             >
@@ -104,39 +98,46 @@ const Integration = () => {
 
             <p
               className={classNames(
-                'mb-0 w-full h-[55px] gap-x-4 bg-[#E8E9F4] flex items-center justify-center',
-                'text-[20px] text-[#01058A] rounded-[5px] hover:cursor-pointer hover:scale-105 duration-500 transition-all',
+                'mb-0 w-full justify-between py-3 gap-x-4 bg-[#FFF] border-[1px] border-[#D0D5DD] flex items-center px-4',
+                'text-[16px] text-black rounded-[8px] hover:cursor-pointer hover:scale-105 duration-500 transition-all',
               )}
             >
-              <IconMess />
-              {t('addMess', { ns: 'config_bot' })}{' '}
-              <span className="font-bold">
-                {t('coming', { ns: 'config_bot' })}
-              </span>
+              <div className="flex items-center gap-x-4">
+                <IconMess />
+                {t('addMess', { ns: 'config_bot' })}{' '}
+              </div>
+              <p className="flex items-center mb-0 uppercase text-[#D70] h-[24px] text-[10px] py-[2px] px-1 rounded-lg bg-[#F6F1E2]">
+                {t('coming', { ns: 'pricing_plan' })}
+              </p>
             </p>
             <p
               className={classNames(
-                'mb-0 w-full h-[55px] gap-x-4 bg-[#E8E9F4] flex items-center justify-center',
-                'text-[20px] text-[#01058A] rounded-[5px] hover:cursor-pointer hover:scale-105 duration-500 transition-all',
+                'mb-0 w-full justify-between py-3 gap-x-4 bg-[#FFF] border-[1px] border-[#D0D5DD] flex items-center px-4',
+                'text-[16px] text-black rounded-[8px] hover:cursor-pointer hover:scale-105 duration-500 transition-all',
               )}
             >
-              <img src={iconWordpress} width={25} />
-              {t('addWordpress', { ns: 'config_bot' })}{' '}
-              <span className="font-bold">
-                {t('coming', { ns: 'config_bot' })}
-              </span>
+              <div className="flex items-center gap-x-4">
+                <img src={iconWordpress} width={25} />
+                {t('addWordpress', { ns: 'config_bot' })}{' '}
+              </div>
+              <p className="flex items-center mb-0 uppercase text-[#D70] h-[24px] text-[10px] py-[2px] px-1 rounded-lg bg-[#F6F1E2]">
+                {t('coming', { ns: 'pricing_plan' })}
+              </p>
             </p>
             <p
               className={classNames(
-                'mb-0 w-full h-[55px] gap-x-4 bg-[#E8E9F4] flex items-center justify-center',
-                'text-[20px] text-[#01058A] rounded-[5px] hover:cursor-pointer hover:scale-105 duration-500 transition-all',
+                'mb-0 w-full justify-between py-3 gap-x-4 bg-[#FFF] border-[1px] border-[#D0D5DD] flex items-center px-4',
+                'text-[16px] text-black rounded-[8px] hover:cursor-pointer hover:scale-105 duration-500 transition-all',
               )}
             >
-              <img src={iconZalo} width={25} />
-              {t('addZalo', { ns: 'config_bot' })}{' '}
-              <span className="font-bold">
-                {t('coming', { ns: 'config_bot' })}
-              </span>
+              <div className="flex items-center gap-x-4">
+                <img src={iconZalo} width={25} />
+                {t('addZalo', { ns: 'config_bot' })}{' '}
+              </div>
+
+              <p className="flex items-center mb-0 uppercase text-[#D70] h-[24px] text-[10px] py-[2px] px-1 rounded-lg bg-[#F6F1E2]">
+                {t('coming', { ns: 'pricing_plan' })}
+              </p>
             </p>
           </div>
         </div>

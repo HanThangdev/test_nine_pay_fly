@@ -9,14 +9,19 @@ import {
   IconImportData,
   IconAdvance,
   IconTest,
+  IconStyle,
 } from '@/components/IconGroup/IconGroup';
 import Config from './Config';
 import ImportData from './ImportData';
+import ChatWidget from './AdvanceSetting/ChatWidget';
+import Styling from './AdvanceSetting/Styling';
+import TestConverstation from './TestConverstation';
 
 type Steps =
   | 'config'
   | 'import_data'
   | 'advance'
+  | 'styling'
   | 'test_converstation'
   | undefined;
 
@@ -35,7 +40,7 @@ const CreateBot = () => {
       <Header
         children={
           <>
-            <div className="flex justify-between items-center gap-x-3 w-[calc(100%-400px)]">
+            <div className="flex justify-between items-center gap-x-3 w-[calc(100%-360px)]">
               <p className="mb-0 text-[#1F2937] font-medium">{nameBot}</p>
               <div className="flex text-[12px] items-center">
                 <div
@@ -52,11 +57,24 @@ const CreateBot = () => {
                   <IconImportData /> Import Data
                 </div>
                 <div className="bg-[#2D3FE7] w-[16px] h-[2px]"></div>
-                <div className="bg-[#F3F4F6] cursor-pointer flex gap-x-1 rounded-2xl py-1 px-3 border-[1px] border-[#D1D5DB]">
+                <div
+                  onClick={() => setSteps('advance')}
+                  className="bg-[#F3F4F6] cursor-pointer flex gap-x-1 rounded-2xl py-1 px-3 border-[1px] border-[#D1D5DB]"
+                >
                   <IconAdvance /> Advance
                 </div>
                 <div className="bg-[#2D3FE7] w-[16px] h-[2px]"></div>
-                <div className="bg-[#F3F4F6] cursor-pointer flex gap-x-1 rounded-2xl py-1 px-3 border-[1px] border-[#D1D5DB]">
+                <div
+                  onClick={() => setSteps('styling')}
+                  className="bg-[#F3F4F6] cursor-pointer flex gap-x-1 rounded-2xl py-1 px-3 border-[1px] border-[#D1D5DB]"
+                >
+                  <IconStyle /> Styling
+                </div>
+                <div className="bg-[#2D3FE7] w-[16px] h-[2px]"></div>
+                <div
+                  onClick={() => setSteps('test_converstation')}
+                  className="bg-[#F3F4F6] cursor-pointer flex gap-x-1 rounded-2xl py-1 px-3 border-[1px] border-[#D1D5DB]"
+                >
                   <IconTest />
                   Test converstation
                 </div>
@@ -66,9 +84,22 @@ const CreateBot = () => {
         }
       />
       <div className="p-[20px] create-bot ">
-        <div className="w-full h-full bg-[#FCFCFC] rounded-[12px] py-[12px] px-[16px] min-h-[calc(100vh-180px)] mb-[65px]">
+        <div
+          className={classNames(
+            'w-full h-full bg-[#FCFCFC] rounded-[12px] py-[12px] px-[16px] min-h-[calc(100vh-180px)] mb-[65px]',
+            {
+              '!bg-transparent !p-0':
+                steps === 'advance' ||
+                steps === 'styling' ||
+                steps === 'test_converstation',
+            },
+          )}
+        >
           {steps === 'config' && <Config />}
           {steps === 'import_data' && <ImportData />}
+          {steps === 'advance' && <ChatWidget />}
+          {steps === 'styling' && <Styling />}
+          {steps === 'test_converstation' && <TestConverstation />}
         </div>
       </div>
       <div className="fixed bottom-0 w-[calc(100%-240px)] z-999 py-[9px] px-[20px] bg-[#FCFCFC] border-t-[1px] border-[#D1D5DB] flex justify-between">

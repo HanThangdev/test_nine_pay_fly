@@ -1,7 +1,5 @@
-import { RootState } from '@/states/store';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import Interface from '../Interface';
 import classNames from 'classnames';
 import {
@@ -9,34 +7,15 @@ import {
   IconLight,
   IconUpload,
 } from '@/components/IconGroup/IconGroup';
-import { Switch, Upload, ColorPicker, notification } from 'antd';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '@/states/store';
-import {
-  getAdvanceSettingTransaction,
-  updateAdvanceSettingTransaction,
-  uploadBotProfilePictureTransaction,
-} from '@/repository/buildChatBot';
-import { API_STATUS } from '@/constants';
-import { useParams } from 'react-router-dom';
+import { Switch, Upload, ColorPicker } from 'antd';
 import { RcFile } from 'antd/es/upload';
 import { convertFile2Base64 } from '@/utils/utils';
 
-interface Props {
-  save: boolean;
-  step: string;
-  saveSuccess: () => void;
-}
-
-const Styling = ({ save, step, saveSuccess }: Props) => {
+const Styling = () => {
   const { t } = useTranslation();
-  const { id } = useParams();
-  const dispatch = useDispatch<AppDispatch>();
-  const { data } = useSelector((state: RootState) => state.buildChatBot);
   const [theme, setTheme] = useState('light');
   const [messageColor, setMessageColor] = useState<string>('#4AC1FF');
   const [buttonColor, setButtonColor] = useState<string>('#4AC1FF');
-  const [dataAdvanced, setDataAdvanced] = useState<any>([]);
   const [botAvatarFile, setBotAvatarFile] = useState<File | undefined>();
   const [botAvatarUrl, setBotAvatarUrl] = useState<string>();
   const [botAvatar, setBotAvatar] = useState<string>();
@@ -84,85 +63,10 @@ const Styling = ({ save, step, saveSuccess }: Props) => {
     setChatIcon(chatIconUrl);
   }, [chatIconUrl]);
 
-  const getAdvance = async () => {
-    const res: any = await dispatch(
-      getAdvanceSettingTransaction({ bot_id: data?.id || id }),
-    );
-    const reponse = res.payload.data;
-    setDataAdvanced(reponse);
-    setMessageColor(reponse.chat_message_color);
-    setButtonColor(reponse.chat_bubble_button_color);
-    setBot_avatar_url(reponse.bot_avatar_url);
-    setChat_icon_url(reponse.chat_icon_url);
-    setTheme(reponse.theme);
-  };
-  useEffect(() => {
-    getAdvance();
-  }, []);
-
-  const onSubmit = async () => {
-    const res: any = botAvatarFile
-      ? await dispatch(
-          uploadBotProfilePictureTransaction({
-            bot_id: data.id,
-            file: botAvatarFile,
-          }),
-        )
-      : '';
-
-    const resIcon: any = chatIconFile
-      ? await dispatch(
-          uploadBotProfilePictureTransaction({
-            bot_id: data.id,
-            file: chatIconFile,
-          }),
-        )
-      : '';
-    try {
-      const payload = {
-        bot_id: data.id,
-        initial_message: dataAdvanced.initial_message,
-        suggest_messages: dataAdvanced.suggest_messages,
-        theme: theme,
-        display_name: dataAdvanced.display_name,
-        bot_avatar_url: res
-          ? res.payload.data.data.url
-          : dataAdvanced.bot_avatar_url,
-        chat_icon_url: resIcon
-          ? resIcon.payload.data.data.url
-          : dataAdvanced.chat_icon_url,
-        chat_bubble_button_color: buttonColor,
-        chat_message_color: messageColor,
-        align_chat_bubble_button: dataAdvanced.align_chat_bubble_button,
-        auto_show_initial_message_after:
-          dataAdvanced.auto_show_initial_message_after,
-      };
-
-      const { meta } = await dispatch(updateAdvanceSettingTransaction(payload));
-
-      if (meta.requestStatus === API_STATUS.REJECTED) {
-        return;
-      }
-      saveSuccess();
-      notification.success({
-        message: `${t('AdvancedSuccess', { ns: 'config_bot' })}`,
-      });
-    } catch (error: any) {
-      notification.error({
-        message: error?.response?.data.errors ?? error?.message,
-      });
-    }
-  };
-
-  useEffect(() => {
-    if (save && step === 'styling') {
-      onSubmit();
-    }
-  }, [save, step]);
   return (
     <>
       <div className="flex gap-x-4">
-        <div className="p-4 w-[60%]">
+        <div className="p-4 w-[60%] bg-[#FCFCFC] rounded-xl">
           <div className="text-[15px]">
             <p className="font-medium mb-0 text-[#111827]">
               {t('userColor', { ns: 'config_bot' })}
