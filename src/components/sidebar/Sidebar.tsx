@@ -4,10 +4,10 @@ import classNames from 'classnames';
 import { IconManage, IconManage_fillWhite } from '../IconManage/IconManage';
 import { IconConv, IconConv_fillWhite } from '../IconConv/IconConv';
 import { IconCreate, IconFree } from '../IconCreate/IconCreate';
-import userThree from '@/images/user/user-07.png';
-import { Image, Slider, Popover, notification } from 'antd';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '@/states/store';
+import { Image, Slider, Popover, notification, Avatar } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '@/states/store';
 import { resetStateBuild } from '@/states/buildChatBot/buildChatBot.slice';
 import { useTranslation } from 'react-i18next';
 import { logoHaveTextImg } from '@/images/logo';
@@ -15,6 +15,10 @@ import { CreateBotModalWrapper } from '@/pages/CreateBot/CreateBotModal';
 import { IconLogout, IconPrivacy, IconTerm } from '../IconGroup/IconGroup';
 import authRepository from '@/repository/auth';
 import Cookies from 'universal-cookie';
+import { useAuth } from '@/states/auth/auth.selector';
+import { resetStateAuth } from '@/states/auth/auth.slice';
+import { usePricingPlan } from '@/states/pricingPlan/pricingPlan.selector';
+import { STORAGE, getLocalStorage, removeLocalStorage } from '@/utils/storage';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -38,6 +42,17 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const [sidebarExpanded, setSidebarExpanded] = useState(
     storedSidebarExpanded === null ? false : storedSidebarExpanded === 'true',
   );
+  const { onGetUser } = useAuth();
+  const { onGetCurrentPricingPlan } = usePricingPlan();
+  const { email } = useSelector((state: RootState) => state.auth);
+  const { currentPricingPlan } = useSelector(
+    (state: RootState) => state.pricing,
+  );
+
+  useEffect(() => {
+    onGetUser();
+    onGetCurrentPricingPlan();
+  }, []);
 
   const handleResize = () => {
     if (window.innerWidth < 1024) {
@@ -69,6 +84,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     try {
       await authRepository.logout();
       cookies.remove('access_token', { path: '/' });
+      dispatch(resetStateAuth());
+      removeLocalStorage(STORAGE.USER_ID);
     } catch (error: any) {
       notification.error({
         message: error?.response?.data?.message || error?.message,
@@ -81,7 +98,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     <aside
       ref={sidebar}
       className={classNames(
-        ' flex h-screen w-[220px] flex-col left-0 top-0 z-9 relative overflow-y-hidden bg-[#111827] duration-300',
+        ' flex h-screen w-[240px] flex-col left-0 top-0 z-9 relative overflow-y-hidden bg-[#111827] duration-300',
       )}
     >
       {/* <!-- SIDEBAR HEADER --> */}
@@ -178,7 +195,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         </CreateBotModalWrapper>
         <div
           className={classNames(
-            'bg-[#FCFCFC] mt-[27px] rounded-lg py-[12px] px-[16px] gap-y-[16px] grid',
+            'bg-[#FCFCFC] mt-[27px] rounded-lg p-3 gap-y-[16px] grid',
           )}
         >
           <Popover
@@ -209,17 +226,26 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </div>
             }
           >
-            <div className="flex gap-x-2 items-center cursor-pointer">
-              <div className="h-[34px] w-[34px] rounded-full">
-                <img src={userThree} alt="User" />
-              </div>
-              <div>
-                <span className="mb-0 text-[14px]">Dinh Cong Huan</span>
-                <br />
-                <p className="text-[11px] items-center mb-0 mt-[-6px] flex gap-x-1 py-[2px] px-1 rounded bg-[#F9FAFB]">
-                  <IconFree />
-                  {t('Freeaccount')}
-                </p>
+            <div className="flex gap-x-1 items-center cursor-pointer">
+              <Avatar
+                icon={<UserOutlined />}
+                className="flex items-center justify-center"
+              />
+              <div className="w-[148px]">
+                <p className="mb-0 text-[13px] break-all leading-4">{email}</p>
+                {currentPricingPlan && (
+                  <p className="text-[11px] items-center mb-0 mt-[-6px] flex gap-x-1 py-[2px] px-1 rounded bg-[#F9FAFB]">
+                    <IconFree />
+                    {currentPricingPlan === 'Free' && `${t('Freeaccount')}`}
+                    {currentPricingPlan === 'Basic' && `${t('Basicaccount')}`}
+                    {currentPricingPlan === 'Starter' &&
+                      `${t('Starteraccount')}`}
+                    {currentPricingPlan === 'Standard' &&
+                      `${t('Standardaccount')}`}
+                    {currentPricingPlan === 'Business' &&
+                      `${t('Businessaccount')}`}
+                  </p>
+                )}
               </div>
             </div>
           </Popover>

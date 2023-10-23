@@ -1,10 +1,15 @@
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import http from '..';
+import { GetUserResponse } from './type';
 
-import { SuccessResponse } from '../type';
-import { MeProfile } from './type';
-
-const meRepository = {
-  fetchProfile: async () => http.get<SuccessResponse<MeProfile>>('/user/me'),
-};
-
-export default meRepository;
+export const getUser = createAsyncThunk(
+  'transaction/getUser',
+  async (payload, { rejectWithValue }) => {
+    try {
+      const response = await http.get<GetUserResponse[]>('/user/me');
+      return response;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data.error);
+    }
+  },
+);

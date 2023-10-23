@@ -1,4 +1,4 @@
-export interface MeProfile {
+export interface GetUserResponse {
   id: number;
   email: string;
   is_active: string;

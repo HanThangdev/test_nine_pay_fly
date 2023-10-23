@@ -16,6 +16,9 @@ import IconSubcription from '@/components/IconSubcription/IconSubcription';
 import { IconCreate_fillWhite } from '@/components/IconCreate/IconCreate';
 import { CreateBotModalWrapper } from '../CreateBot/CreateBotModal';
 
+const urlParams = new URLSearchParams(window.location.search);
+const getLanguageFromURL = urlParams.get('language');
+
 const ManageChatbot = () => {
   const { t } = useTranslation();
   const { typeIntegration, status } = useParams();
@@ -25,6 +28,10 @@ const ManageChatbot = () => {
   const { ownerChatbot, loading } = useSelector(
     (state: RootState) => state.manageBot,
   );
+  const { currentPricingPlan } = useSelector(
+    (state: RootState) => state.pricing,
+  );
+  const lang = getLanguageFromURL || localStorage.getItem('LANGUAGE') || 'en';
 
   useEffect(() => {
     const fetchDataBot = async () => {
@@ -100,17 +107,46 @@ const ManageChatbot = () => {
                 <NavLink to="/price">{t('Upgrade')}</NavLink>
               </p>
             </div>
-            <p className="mb-2">
+            <p className="mb-2 flex">
               {t('Currentplan', { ns: 'manage_bot' })} -
-              <span className="text-black">
-                {t('Freeplan', { ns: 'manage_bot' })}
+              <span
+                className={classNames('text-black ml-1', {
+                  'flex flex-row-reverse': lang === 'vi',
+                })}
+              >
+                <span
+                  className={classNames({
+                    'lowercase ml-1': lang === 'vi',
+                  })}
+                >
+                  {currentPricingPlan === 'Free' &&
+                    `${t('Free', { ns: 'manage_bot' })}`}
+                  {currentPricingPlan === 'Basic' &&
+                    `${t('Basic', { ns: 'manage_bot' })}`}
+                  {currentPricingPlan === 'Starter' &&
+                    `${t('Starter', { ns: 'manage_bot' })}`}
+                  {currentPricingPlan === 'Standard' &&
+                    `${t('Standard', { ns: 'manage_bot' })}`}
+                  {currentPricingPlan === 'Business' &&
+                    `${t('Business', { ns: 'manage_bot' })}`}
+                </span>
+                {t('plan', { ns: 'manage_bot' })}
               </span>
             </p>
             <div className="h-[1px] bg-[#E5E7EB]"></div>
             <p className="flex justify-between my-2">
               {t('Price', { ns: 'manage_bot' })}
               <span className="text-black">
-                {t('Free', { ns: 'manage_bot' })}
+                {currentPricingPlan === 'Free' &&
+                  `${t('Free', { ns: 'manage_bot' })}`}
+                {currentPricingPlan === 'Basic' &&
+                  `${t('Basic', { ns: 'manage_bot' })}`}
+                {currentPricingPlan === 'Starter' &&
+                  `${t('Starter', { ns: 'manage_bot' })}`}
+                {currentPricingPlan === 'Standard' &&
+                  `${t('Standard', { ns: 'manage_bot' })}`}
+                {currentPricingPlan === 'Business' &&
+                  `${t('Business', { ns: 'manage_bot' })}`}
               </span>
             </p>
             <p className="flex justify-between mb-2">

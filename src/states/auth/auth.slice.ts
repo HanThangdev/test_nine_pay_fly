@@ -1,7 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { AuthState } from './type';
-import { loginTransaction, loginViaGoogleTransaction } from '@/repository/auth/login';
+import {
+  loginTransaction,
+  loginViaGoogleTransaction,
+} from '@/repository/auth/login';
 import { registerTransaction } from '@/repository/auth/register';
+import { getUser } from '@/repository/me';
+import { STORAGE, setLocalStorage } from '@/utils/storage';
 
 const initialState: AuthState = {
   data: {
@@ -11,6 +16,8 @@ const initialState: AuthState = {
   loading: false,
   emailVerify: '',
   isForgotPass: false,
+  email: '',
+  is_active: false,
 };
 
 export const authSlice = createSlice({
@@ -23,6 +30,7 @@ export const authSlice = createSlice({
     setIsForgotPass: (state, action) => {
       state.isForgotPass = action.payload;
     },
+    resetStateAuth: () => initialState,
   },
   extraReducers: (builder) => {
     builder.addCase(loginTransaction.pending, (state) => {
@@ -58,9 +66,26 @@ export const authSlice = createSlice({
     builder.addCase(loginViaGoogleTransaction.rejected, (state) => {
       state.loading = false;
     });
+
+    // start getUser
+
+    builder.addCase(getUser.pending, (state) => {
+      state.is_active = false;
+    });
+    builder.addCase(getUser.fulfilled, (state, action: any) => {
+      state.email = action.payload.data.email;
+      state.is_active = action.payload.data.is_active;
+      setLocalStorage(STORAGE.USER_ID, action.payload.data.id);
+    });
+    builder.addCase(getUser.rejected, (state) => {
+      state.is_active = false;
+    });
+
+    // end getUser
   },
 });
 
-export const { setEmailVerify, setIsForgotPass } = authSlice.actions;
+export const { setEmailVerify, setIsForgotPass, resetStateAuth } =
+  authSlice.actions;
 
 export default authSlice.reducer;

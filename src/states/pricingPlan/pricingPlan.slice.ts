@@ -1,6 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { PricingPlanState } from './type';
-import { getCurrentPricingPlanTransaction, getVnpayRedirectTransaction, getVnpayReturnTransaction, registerUpgradeBillingTransaction, upgradeBillingTransaction } from '@/repository/pricingPlan';
+import {
+  getCurrentPricingPlanTransaction,
+  getVnpayRedirectTransaction,
+  getVnpayReturnTransaction,
+  registerUpgradeBillingTransaction,
+  upgradeBillingTransaction,
+} from '@/repository/pricingPlan';
 
 const initialState: PricingPlanState = {
   billingType: 1,
@@ -17,9 +23,13 @@ export const pricingPlaningSlice = createSlice({
     builder.addCase(getCurrentPricingPlanTransaction.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(getCurrentPricingPlanTransaction.fulfilled, (state,) => {
-      state.loading = false;
-    });
+    builder.addCase(
+      getCurrentPricingPlanTransaction.fulfilled,
+      (state, action: any) => {
+        state.currentPricingPlan = action.payload.data.pricing_plan_name;
+        state.loading = false;
+      },
+    );
     builder.addCase(getCurrentPricingPlanTransaction.rejected, (state) => {
       state.loading = false;
     });

@@ -5,6 +5,8 @@ export interface AuthState {
   loading: boolean;
   emailVerify: string;
   isForgotPass: boolean;
+  email: string;
+  is_active: boolean
 }
 
 export interface DataFetchLink {

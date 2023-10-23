@@ -1,21 +1,22 @@
 export const STORAGE = {
-	LANGUAGE: 'LANGUAGE',
-	USER_TOKEN: 'USER_TOKEN',
-	USER_DATA: 'USER_DATA',
+  LANGUAGE: 'LANGUAGE',
+  USER_TOKEN: 'USER_TOKEN',
+  USER_DATA: 'USER_DATA',
+  USER_ID: 'USER_ID',
 };
 
 export function getLocalStorage(key: any) {
-	return localStorage.getItem(key);
+  return localStorage.getItem(key);
 }
 
 export function setLocalStorage(key: any, value: any) {
-	return localStorage.setItem(key, value);
+  return localStorage.setItem(key, value);
 }
 
 export function removeLocalStorage(key: any) {
-	return localStorage.removeItem(key);
+  return localStorage.removeItem(key);
 }
 
 export function clearLocalStorage() {
-	return localStorage.clear();
+  return localStorage.clear();
 }
