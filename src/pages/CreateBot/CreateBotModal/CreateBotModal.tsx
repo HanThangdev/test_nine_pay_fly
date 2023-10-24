@@ -6,9 +6,9 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/states/store';
 import {
-  setNameBot,
-  setcaseStudy,
-  setPromptExamples,
+  setNameBotStore,
+  setCaseStudyStore,
+  setPromptExamplesStore,
 } from '@/states/buildChatBot/buildChatBot.slice';
 import { useNavigate } from 'react-router-dom';
 
@@ -26,6 +26,7 @@ export default function CreateBotModal({ open, onClose }: Props) {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+  const [form] = Form.useForm();
   const options = [
     {
       value: '2',
@@ -66,12 +67,14 @@ export default function CreateBotModal({ open, onClose }: Props) {
 
   const onFinish = async (values: any) => {
     console.log(values);
-    dispatch(setNameBot(botName));
-    dispatch(setcaseStudy(caseStudy));
-    dispatch(setPromptExamples(promptExample));
-    onClose();
+    dispatch(setNameBotStore(botName));
+    dispatch(setCaseStudyStore(caseStudy));
+    dispatch(setPromptExamplesStore(promptExample));
     setBotName('');
+    setCaseStudy(options[0].value)
     navigate(`/create-bot`);
+    form.resetFields(['botName']);
+    onClose();
   };
 
   return (

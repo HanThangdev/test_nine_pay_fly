@@ -89,6 +89,13 @@ const coreRoutes = [
     layout: DefaultLayout,
   },
   {
+    path: '/create-bot/:id',
+    title: 'Create-chatbot',
+    component: CreateBot,
+    isProtected: true,
+    layout: DefaultLayout,
+  },
+  {
     path: '/edit-chatbot/:id',
     title: 'Edit-chatbot',
     component: EditBot,

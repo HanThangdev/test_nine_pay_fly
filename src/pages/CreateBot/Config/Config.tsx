@@ -7,10 +7,12 @@ import { RootState } from '@/states/store';
 import { isEmptyObjectOrArray, convertCustomValue } from '@/utils/utils';
 import IconTip from '@/components/IconTip/IconTip';
 import { RiDeleteBinLine } from 'react-icons/ri';
-import { CustomField } from '@/repository/buildChatBot/type';
+import { BotPayload, CustomField } from '@/repository/buildChatBot/type';
 const ButtonGroup = Button.Group;
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { IconDelete } from '@/components/IconGroup/IconGroup';
+import { CheckboxChangeEvent } from 'antd/es/checkbox';
+import { Dispatch } from '@reduxjs/toolkit';
 
 const optionsModal = [
   { label: 'GPT - 3.5', value: 'GPT - 3.5' },
@@ -18,16 +20,18 @@ const optionsModal = [
   { label: 'GPT - 4.0', value: 'GPT - 4.0', disabled: true },
 ];
 
-const Config = () => {
+interface ICOnfig {
+  payloadCreateBot: BotPayload;
+  setPayloadCreateBot: (data: BotPayload) => void;
+  custom: CustomField[];
+  setCustom: (data: CustomField[]) => void
+}
+
+const Config = ({ payloadCreateBot, setPayloadCreateBot, custom, setCustom }: ICOnfig) => {
   const { t } = useTranslation();
   const { botInfos } = useSelector((state: RootState) => state.buildChatBot);
-  const [model, setModel] = useState('GPT - 3.5');
-  const [email, setEmail] = useState(false);
-  const [name, setName] = useState(false);
-  const [phone, setPhone] = useState(false);
-  const [numberShowing, setNumberShowing] = useState(0);
+  const [titleForm, setTitleForm] = useState('Let us know how to contact you');
   const [messageCount, setMessageCount] = useState(100);
-  const [custom, setCustom] = useState<CustomField[]>([]);
 
   const increaseBadge = () => {
     setMessageCount(messageCount + 1);
@@ -78,13 +82,46 @@ const Config = () => {
         </Tooltip>
       </p>
       <div className="flex gap-x-[30px]">
-        <Checkbox onClick={() => setEmail(!email)} checked={!!email}>
+        <Checkbox
+          onChange={(e: CheckboxChangeEvent) =>
+            setPayloadCreateBot({
+              ...payloadCreateBot,
+              collect_customer_info: {
+                ...payloadCreateBot.collect_customer_info,
+                email: e.target.checked,
+              },
+            })
+          }
+          checked={!!payloadCreateBot.collect_customer_info.email}
+        >
           {t('Email', { ns: 'config_bot' })}
         </Checkbox>
-        <Checkbox onClick={() => setName(!name)} checked={!!name}>
+        <Checkbox
+          onChange={(e: CheckboxChangeEvent) =>
+            setPayloadCreateBot({
+              ...payloadCreateBot,
+              collect_customer_info: {
+                ...payloadCreateBot.collect_customer_info,
+                name: e.target.checked,
+              },
+            })
+          }
+          checked={!!payloadCreateBot.collect_customer_info.name}
+        >
           {t('Name', { ns: 'config_bot' })}
         </Checkbox>
-        <Checkbox onClick={() => setPhone(!phone)} checked={!!phone}>
+        <Checkbox
+          onChange={(e: CheckboxChangeEvent) =>
+            setPayloadCreateBot({
+              ...payloadCreateBot,
+              collect_customer_info: {
+                ...payloadCreateBot.collect_customer_info,
+                phone: e.target.checked,
+              },
+            })
+          }
+          checked={!!payloadCreateBot.collect_customer_info.phone}
+        >
           {t('Phone', { ns: 'config_bot' })}
         </Checkbox>
       </div>
@@ -153,12 +190,15 @@ const Config = () => {
         </div>
         <div className="text-[15px] mt-[16px]">
           <input
-            disabled
+            onChange={(e) => {
+              setTitleForm(e.target.value);
+            }}
+            value={titleForm}
             type="text"
             placeholder={`${t('Letus', { ns: 'config_bot' })}`}
             className="h-[41px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
           />
-          {email && (
+          {payloadCreateBot?.collect_customer_info?.email && (
             <input
               disabled
               type="text"
@@ -166,7 +206,7 @@ const Config = () => {
               className="h-[41px] mt-[12px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
             />
           )}
-          {name && (
+          {payloadCreateBot?.collect_customer_info?.name && (
             <input
               disabled
               type="text"
@@ -174,7 +214,7 @@ const Config = () => {
               className="h-[41px] mt-[12px] w-full rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
             />
           )}
-          {phone && (
+          {payloadCreateBot?.collect_customer_info?.phone && (
             <input
               disabled
               type="text"
@@ -206,8 +246,6 @@ const Config = () => {
                         setCustom(newCustomValue);
                       }}
                       style={{
-                        position: 'absolute',
-                        right: '15px',
                         cursor: 'pointer',
                       }}
                     >
@@ -222,11 +260,17 @@ const Config = () => {
           <div className="flex gap-x-4 mt-[12px] items-center">
             <InputNumber
               placeholder=""
-              value={numberShowing}
+              value={payloadCreateBot?.collect_customer_info?.numberShowing}
               min={0}
               max={100}
               onChange={(value: number | null) => {
-                setNumberShowing(value || 0);
+                setPayloadCreateBot({
+                  ...payloadCreateBot,
+                  collect_customer_info: {
+                    ...payloadCreateBot.collect_customer_info,
+                    numberShowing: value || 0,
+                  },
+                })
               }}
               className={`${classNames(
                 'rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none input-showing-number',

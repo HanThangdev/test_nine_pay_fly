@@ -61,13 +61,13 @@ export const buildChatbotSlice = createSlice({
     setActiveTab: (state, action) => {
       state.activeTab = action.payload;
     },
-    setNameBot: (state, action) => {
+    setNameBotStore: (state, action) => {
       state.nameBot = action.payload;
     },
-    setcaseStudy: (state, action) => {
+    setCaseStudyStore: (state, action) => {
       state.caseStudy = action.payload;
     },
-    setPromptExamples: (state, action) => {
+    setPromptExamplesStore: (state, action) => {
       state.promptExample = action.payload;
     },
 
@@ -396,9 +396,9 @@ export const buildChatbotSlice = createSlice({
 
 export const {
   setActiveTab,
-  setNameBot,
-  setcaseStudy,
-  setPromptExamples,
+  setNameBotStore,
+  setCaseStudyStore,
+  setPromptExamplesStore,
   resetStateBuild,
   loadFetchLink,
   loadFetchFile,

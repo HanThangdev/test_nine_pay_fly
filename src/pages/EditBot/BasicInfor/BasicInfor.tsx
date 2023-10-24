@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Input, notification } from 'antd';
+import { Input, Select, notification } from 'antd';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/states/store';
@@ -114,39 +114,36 @@ const BasicInfor = ({ save, step, saveSuccess }: Props) => {
       <p className="font-medium text-[#344054] mt-4">
         {t('SelectCase', { ns: 'config_bot' })}
       </p>
-      <select
+      <Select
         value={caseStudy}
-        onChange={(e) => {
-          setCaseStudy(e.target.value);
+        onChange={(value) => {
+          setCaseStudy(value);
           const itemPromptFromCaseStudy = options.find(
-            (option) => option.value === e.target.value,
+            (option) => option.value === value,
           );
           setPromptExample(`${t(itemPromptFromCaseStudy?.prompt || '')}`);
         }}
-        className="h-[41px] w-full rounded-[8px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
+        className="h-[44px] w-full rounded-[8px] border-[#DCDEED] bg-[#ffffffeb] outline-none focus:border-primary focus-visible:shadow-none"
+        options={options}
       >
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
           </option>
         ))}
-      </select>
+      </Select>
       <p className="font-medium text-[#344054] mt-4">
         {t('ConversationalTone', { ns: 'config_bot' })}
       </p>
-      <select
+      <Select
         value={conversationTone}
         onChange={(e) => {
-          setConversationTone(e.target.value);
+          setConversationTone(e);
         }}
-        className="h-[41px] w-full rounded-[8px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
+        className="h-[44px] w-full rounded-[8px] border-[#DCDEED] bg-[#ffffffeb] outline-none focus:border-primary focus-visible:shadow-none"
+        options={OPTION_TONE}
       >
-        {OPTION_TONE.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
+      </Select>
     </div>
   );
 };
