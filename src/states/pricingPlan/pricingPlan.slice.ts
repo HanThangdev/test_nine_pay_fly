@@ -12,6 +12,8 @@ const initialState: PricingPlanState = {
   billingType: 1,
   currentPricingPlan: '',
   loading: false,
+  number_of_chatbots: 0,
+  monthly_message_credits: 0,
 };
 
 export const pricingPlaningSlice = createSlice({
@@ -27,6 +29,9 @@ export const pricingPlaningSlice = createSlice({
       getCurrentPricingPlanTransaction.fulfilled,
       (state, action: any) => {
         state.currentPricingPlan = action.payload.data.pricing_plan_name;
+        state.number_of_chatbots = action.payload.data.number_of_chatbots;
+        state.monthly_message_credits =
+          action.payload.data.monthly_message_credits;
         state.loading = false;
       },
     );

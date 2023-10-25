@@ -6,10 +6,18 @@ import { useEffect, useState } from 'react';
 import { useBuildChatbot } from '@/states/buildChatBot/buildChatBot.selector';
 import {
   IconConfig,
+  IconConfigDone,
   IconImportData,
+  IconImportDataDo,
+  IconImportDataDone,
   IconAdvance,
   IconTest,
   IconStyle,
+  IconAdvanceDo,
+  IconAdvanceDone,
+  IconStyleDo,
+  IconStyleDone,
+  IconTestDo,
 } from '@/components/IconGroup/IconGroup';
 import Config from './Config';
 import ImportData from './ImportData';
@@ -40,6 +48,7 @@ const CreateBot = () => {
   const [custom, setCustom] = useState<CustomField[]>([]);
   const { nameBot, caseStudy, promptExample } = useBuildChatbot();
   const [steps, setSteps] = useState<STEP>(STEP.config);
+  const [indexStep, setIndexStep] = useState(0);
   const [payloadCreateBot, setPayloadCreateBot] = useState<BotPayload>({
     bot_name: nameBot,
     case_study: caseStudy,
@@ -55,6 +64,24 @@ const CreateBot = () => {
       navigate('/');
     }
   }, [nameBot]);
+
+  useEffect(() => {
+    if (steps === STEP.config) {
+      setIndexStep(1);
+    }
+    if (steps === STEP.import_data) {
+      setIndexStep(2);
+    }
+    if (steps === STEP.advance) {
+      setIndexStep(3);
+    }
+    if (steps === STEP.styling) {
+      setIndexStep(4);
+    }
+    if (steps === STEP.test_converstation) {
+      setIndexStep(5);
+    }
+  }, [steps]);
 
   const onCreateBot = async () => {
     try {
@@ -73,7 +100,7 @@ const CreateBot = () => {
         },
       };
       const response = await dispatch(createBotTransaction(payloadFinal));
-      const { meta, payload}: any  = response;
+      const { meta, payload }: any = response;
       if (meta.requestStatus === API_STATUS.REJECTED) {
         return;
       }
@@ -105,38 +132,93 @@ const CreateBot = () => {
               <p className="mb-0 text-[#1F2937] font-medium">{nameBot}</p>
               <div className="flex text-[12px] items-center">
                 <div
-                  onClick={() => setSteps(STEP.config)}
-                  className="bg-[#F3F4F6] cursor-pointer flex gap-x-1 rounded-2xl py-1 px-3 border-[1px] border-[#D1D5DB]"
+                  className={classNames(
+                    'bg-[#F3F4F6] flex items-center gap-x-1 rounded-2xl py-1 px-3 border-[1px] border-[#D1D5DB]',
+                    {
+                      'bg-[#DFEAFB] border-[1px] border-[#A4C7FB] text-[#2D3FE7]':
+                        steps === STEP.config,
+                      'bg-[#DEF5E8] border-[1px] border-[#6FCF97] text-[#219653]':
+                        indexStep > 1,
+                    },
+                  )}
                 >
-                  <IconConfig /> Config
+                  {indexStep === 1 ? <IconConfig /> : <IconConfigDone />}
+                  Config
                 </div>
                 <div className="bg-[#2D3FE7] w-[16px] h-[2px]"></div>
                 <div
-                  onClick={() => setSteps(STEP.import_data)}
-                  className="bg-[#F3F4F6] cursor-pointer flex gap-x-1 rounded-2xl py-1 px-3 border-[1px] border-[#D1D5DB]"
+                  className={classNames(
+                    'bg-[#F3F4F6] flex items-center gap-x-1 rounded-2xl py-1 px-3 border-[1px] border-[#D1D5DB]',
+                    {
+                      'bg-[#DFEAFB] border-[1px] border-[#A4C7FB] text-[#2D3FE7]':
+                        steps === STEP.import_data,
+                      'bg-[#DEF5E8] border-[1px] border-[#6FCF97] text-[#219653]':
+                        indexStep > 2,
+                    },
+                  )}
                 >
-                  <IconImportData /> Import Data
+                  {indexStep === 2 ? (
+                    <IconImportDataDo />
+                  ) : indexStep > 2 ? (
+                    <IconImportDataDone />
+                  ) : (
+                    <IconImportData />
+                  )}
+                  Import Data
                 </div>
                 <div className="bg-[#2D3FE7] w-[16px] h-[2px]"></div>
                 <div
-                  onClick={() => setSteps(STEP.advance)}
-                  className="bg-[#F3F4F6] cursor-pointer flex gap-x-1 rounded-2xl py-1 px-3 border-[1px] border-[#D1D5DB]"
+                  className={classNames(
+                    'bg-[#F3F4F6] flex items-center gap-x-1 rounded-2xl py-1 px-3 border-[1px] border-[#D1D5DB]',
+                    {
+                      'bg-[#DFEAFB] border-[1px] border-[#A4C7FB] text-[#2D3FE7]':
+                        steps === STEP.advance,
+                      'bg-[#DEF5E8] border-[1px] border-[#6FCF97] text-[#219653]':
+                        indexStep > 3,
+                    },
+                  )}
                 >
-                  <IconAdvance /> Advance
+                  {indexStep === 3 ? (
+                    <IconAdvanceDo />
+                  ) : indexStep > 3 ? (
+                    <IconAdvanceDone />
+                  ) : (
+                    <IconAdvance />
+                  )}
+                  Advance
                 </div>
                 <div className="bg-[#2D3FE7] w-[16px] h-[2px]"></div>
                 <div
-                  onClick={() => setSteps(STEP.styling)}
-                  className="bg-[#F3F4F6] cursor-pointer flex gap-x-1 rounded-2xl py-1 px-3 border-[1px] border-[#D1D5DB]"
+                  className={classNames(
+                    'bg-[#F3F4F6] flex items-center gap-x-1 rounded-2xl py-1 px-3 border-[1px] border-[#D1D5DB]',
+                    {
+                      'bg-[#DFEAFB] border-[1px] border-[#A4C7FB] text-[#2D3FE7]':
+                        steps === STEP.styling,
+                      'bg-[#DEF5E8] border-[1px] border-[#6FCF97] text-[#219653]':
+                        indexStep > 4,
+                    },
+                  )}
                 >
-                  <IconStyle /> Styling
+                  {indexStep === 4 ? (
+                    <IconStyleDo />
+                  ) : indexStep > 4 ? (
+                    <IconStyleDone />
+                  ) : (
+                    <IconStyle />
+                  )}
+                  Styling
                 </div>
                 <div className="bg-[#2D3FE7] w-[16px] h-[2px]"></div>
                 <div
-                  onClick={() => setSteps(STEP.test_converstation)}
-                  className="bg-[#F3F4F6] cursor-pointer flex gap-x-1 rounded-2xl py-1 px-3 border-[1px] border-[#D1D5DB]"
+                  className={classNames(
+                    'bg-[#F3F4F6] flex items-center gap-x-1 rounded-2xl py-1 px-3 border-[1px] border-[#D1D5DB]',
+                    {
+                      'bg-[#DFEAFB] border-[1px] border-[#A4C7FB] text-[#2D3FE7]':
+                        steps === STEP.test_converstation,
+                    },
+                  )}
                 >
-                  <IconTest />
+                  {indexStep === 5 ? <IconTestDo /> : <IconTest />}
                   Test converstation
                 </div>
               </div>
@@ -190,7 +272,7 @@ const CreateBot = () => {
             onClick={onSubmit}
             className="bg-[#2D3FE7] py-[10px] px-4 rounded-lg text-white"
           >
-            {(steps === STEP.config && !id) ? 'Create bot' : 'Next step'}
+            {steps === STEP.config && !id ? 'Create bot' : 'Next step'}
           </button>
         </div>
       </div>

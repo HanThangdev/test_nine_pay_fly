@@ -130,7 +130,7 @@ const ChatbotElement = ({ info }: ChatbotElementProps) => {
       </div>
       <div className="Switch-bot min-w-[160px] h-full bg-[#F9FAFB] border-[1px] border-[#E5E7EB] gap-x-4 rounded-[8px] py-2 px-3">
         <p className="text-[14px] flex items-center">
-          <Switch size="small" className="mr-2" />
+          <Switch size="small" className="mr-2" checked={info.is_activate} />
           {t('Active', { ns: 'manage_bot' })}
         </p>
         <p className="mb-0 text-[14px]">

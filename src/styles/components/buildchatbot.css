@@ -255,3 +255,7 @@
 .Pricing .ant-switch .ant-switch-handle::before {
   @apply !bg-[#FFF] !rounded-[100px];
 }
+
+.ant-select-selector {
+  @apply !h-[44px] items-center;
+}

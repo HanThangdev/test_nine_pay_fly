@@ -124,7 +124,7 @@ const Conversations = () => {
     _: any,
     option: IOptionBotSelect | IOptionBotSelect[],
   ) => {
-    navigate('/conversations')
+    navigate('/conversations');
     setSelectedBot(option as IOptionBotSelect);
   };
 
@@ -214,7 +214,6 @@ const Conversations = () => {
             onChange={handleSelectBotChange}
             options={botOptions}
             disabled={isEmptyObjectOrArray(ownerChatbot)}
-            className="h-full"
           />
           <div className="flex gap-x-2 ml-2">
             <button
@@ -295,7 +294,7 @@ const Conversations = () => {
                     </div>
                     <div className="flex justify-between text-[14px] text-[#6B7280]">
                       <p className="mb-0">
-                          {t('Latestmessage', { ns: 'conversation' })}:
+                        {t('Latestmessage', { ns: 'conversation' })}:
                         <br />
                         <span className="text-[#1F2937]">
                           {conversation.chat_history_response[0].content}

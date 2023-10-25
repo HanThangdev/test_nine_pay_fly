@@ -28,9 +28,8 @@ const ManageChatbot = () => {
   const { ownerChatbot, loading } = useSelector(
     (state: RootState) => state.manageBot,
   );
-  const { currentPricingPlan } = useSelector(
-    (state: RootState) => state.pricing,
-  );
+  const { currentPricingPlan, number_of_chatbots, monthly_message_credits } =
+    useSelector((state: RootState) => state.pricing);
   const lang = getLanguageFromURL || localStorage.getItem('LANGUAGE') || 'en';
 
   useEffect(() => {
@@ -152,7 +151,7 @@ const ManageChatbot = () => {
             <p className="flex justify-between mb-2">
               {t('Remain', { ns: 'manage_bot' })}
               <span className="text-black">
-                1900 {t('request', { ns: 'manage_bot' })}
+                {monthly_message_credits} {t('request', { ns: 'manage_bot' })}
               </span>
             </p>
             <p className="flex justify-between mb-0">
@@ -176,10 +175,15 @@ const ManageChatbot = () => {
                     {t('Activebot', { ns: 'manage_bot' })}
                   </p>
                   <p className="mb-0">
-                    20/2000 {t('bots', { ns: 'manage_bot' })}
+                    {ownerChatbot.length}/{number_of_chatbots}{' '}
+                    {t('bots', { ns: 'manage_bot' })}
                   </p>
                 </div>
-                <Slider defaultValue={30} disabled />
+                <Slider
+                  value={ownerChatbot.length}
+                  disabled
+                  max={number_of_chatbots}
+                />
               </div>
               <div>
                 <div className="flex justify-between text-[13px]">
