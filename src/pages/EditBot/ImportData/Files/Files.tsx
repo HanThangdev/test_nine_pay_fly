@@ -141,7 +141,7 @@ const Files = () => {
                       newListFile.filter((it) => it.name !== item.name),
                     );
                   }}
-                  className="cursor-pointer"
+                  className="cursor-pointer p-1 rounded border-[1px] border-[#FDA29B] ml-1 bg-[#FFF]"
                 >
                   <IconDelete />
                 </div>

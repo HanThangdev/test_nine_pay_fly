@@ -35,5 +35,10 @@
   "Basicaccount": "ベーシックアカウント",
   "Starteraccount": "スターターアカウント",
   "Standardaccount": "標準アカウント",
-  "Businessaccount": "ビジネスアカウント"
+  "Businessaccount": "ビジネスアカウント",
+  "NextStep": "次のステップ",
+  "PreStep": "前のステップ",
+  "import": "データをインポート",
+  "Advance": "前進",
+  "test": "会話をテストする"
 }

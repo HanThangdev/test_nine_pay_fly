@@ -37,6 +37,7 @@ const Conversations = () => {
   const { onGetBot } = useManageChatbot();
   const { id } = useParams();
   const navigate = useNavigate();
+  const [isActive, setIsActive] = useState(false);
 
   const DEFAULT_FROM_DATE = dayjs().subtract(1, 'month');
   const DEFAULT_TO_DATE = dayjs();
@@ -45,7 +46,6 @@ const Conversations = () => {
   const [selectedBot, setSelectedBot] = useState<IOptionBotSelect>();
   const [selectedConversationId, setSelectedConversationId] =
     useState<string>();
-
   const { containerRef: chatContentRef } =
     useScrollToLastElementChild<HTMLDivElement>([
       selectedConversationId,
@@ -186,6 +186,19 @@ const Conversations = () => {
     );
   };
 
+  useEffect(() => {
+    if (selectedBot) {
+      if (
+        ownerChatbot.find((item) => item.bot_name === selectedBot.label)
+          ?.is_activate
+      ) {
+        setIsActive(true);
+      } else {
+        setIsActive(false);
+      }
+    }
+  }, [selectedBot]);
+
   return (
     <>
       <Header
@@ -217,7 +230,7 @@ const Conversations = () => {
           />
           <div className="flex gap-x-2 ml-2">
             <button
-              disabled={!selectedConversation}
+              disabled={!selectedConversation || !isActive}
               className="flex items-center gap-x-2 rounded-[4px] py-1 px-2 border-[1px] border-[#D0D5DD] text-[14px] text-[#344054] font-semibold justify-center whitespace-nowrap"
               onClick={() => navigate(`/edit-chatbot/${selectedBot?.bot_id}`)}
             >

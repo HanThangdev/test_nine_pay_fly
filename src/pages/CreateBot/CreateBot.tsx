@@ -128,7 +128,7 @@ const CreateBot = () => {
       <Header
         children={
           <>
-            <div className="flex justify-between items-center gap-x-3 w-[calc(100%-360px)]">
+            <div className="flex justify-between items-center gap-x-3 w-[calc(100%-380px)]">
               <p className="mb-0 text-[#1F2937] font-medium">{nameBot}</p>
               <div className="flex text-[12px] items-center">
                 <div
@@ -143,7 +143,7 @@ const CreateBot = () => {
                   )}
                 >
                   {indexStep === 1 ? <IconConfig /> : <IconConfigDone />}
-                  Config
+                  {t('ChatbotConfig')}
                 </div>
                 <div className="bg-[#2D3FE7] w-[16px] h-[2px]"></div>
                 <div
@@ -164,7 +164,7 @@ const CreateBot = () => {
                   ) : (
                     <IconImportData />
                   )}
-                  Import Data
+                  {t('import')}
                 </div>
                 <div className="bg-[#2D3FE7] w-[16px] h-[2px]"></div>
                 <div
@@ -185,7 +185,7 @@ const CreateBot = () => {
                   ) : (
                     <IconAdvance />
                   )}
-                  Advance
+                  {t('Advance')}
                 </div>
                 <div className="bg-[#2D3FE7] w-[16px] h-[2px]"></div>
                 <div
@@ -206,7 +206,7 @@ const CreateBot = () => {
                   ) : (
                     <IconStyle />
                   )}
-                  Styling
+                  {t('Styling')}
                 </div>
                 <div className="bg-[#2D3FE7] w-[16px] h-[2px]"></div>
                 <div
@@ -219,7 +219,7 @@ const CreateBot = () => {
                   )}
                 >
                   {indexStep === 5 ? <IconTestDo /> : <IconTest />}
-                  Test converstation
+                  {t('test')}
                 </div>
               </div>
             </div>
@@ -257,7 +257,7 @@ const CreateBot = () => {
           className="mb-0 border-[1px] text-[#344054] py-[10px] px-4 rounded-lg font-semibold cursor-pointer"
           onClick={() => navigate('/')}
         >
-          Exit
+          {t('Exit')}
         </p>
         <div className="flex gap-x-2">
           {steps !== STEP.config && (
@@ -265,14 +265,16 @@ const CreateBot = () => {
               onClick={() => setSteps(steps - 1)}
               className="bg-[#F5F8FF] py-[10px] px-4 rounded-lg text-[#415EC6]"
             >
-              Previous step
+              {t('PreStep')}
             </button>
           )}
           <button
             onClick={onSubmit}
             className="bg-[#2D3FE7] py-[10px] px-4 rounded-lg text-white"
           >
-            {steps === STEP.config && !id ? 'Create bot' : 'Next step'}
+            {steps === STEP.config && !id
+              ? `${t('creatbot', { ns: 'config_bot' })}`
+              : `${t('NextStep')}`}
           </button>
         </div>
       </div>

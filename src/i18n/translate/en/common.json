@@ -35,5 +35,10 @@
   "Basicaccount": "Basic account",
   "Starteraccount": "Starter account",
   "Standardaccount": "Standard account",
-  "Businessaccount": "Business account"
+  "Businessaccount": "Business account",
+  "NextStep": "Next step",
+  "PreStep": "Previous step",
+  "import": "Import Data",
+  "Advance": "Advance",
+  "test": "Test converstation"
 }

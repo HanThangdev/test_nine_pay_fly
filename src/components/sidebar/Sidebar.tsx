@@ -182,6 +182,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           {({ onOpen }) => (
             <div
               onClick={() => {
+                dispatch(resetStateBuild());
                 onOpen();
               }}
               className="bg-[#FCFCFC] cursor-pointer rounded-xl py-3 grid gap-2 justify-center text-[#2D3FE7]"
@@ -261,7 +262,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             className={classNames(
               'bg-button-upgrade text-white w-full rounded py-2 flex justify-center text-[14px]',
               {
-                'text-[11px]': lang === 'jp',
+                '!text-[11px]': lang === 'jp',
               },
             )}
           >

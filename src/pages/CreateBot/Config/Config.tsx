@@ -4,34 +4,30 @@ import { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/states/store';
-import { isEmptyObjectOrArray, convertCustomValue } from '@/utils/utils';
 import IconTip from '@/components/IconTip/IconTip';
-import { RiDeleteBinLine } from 'react-icons/ri';
 import { BotPayload, CustomField } from '@/repository/buildChatBot/type';
 const ButtonGroup = Button.Group;
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { IconDelete } from '@/components/IconGroup/IconGroup';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
-import { Dispatch } from '@reduxjs/toolkit';
-
-const optionsModal = [
-  { label: 'GPT - 3.5', value: 'GPT - 3.5' },
-  { label: 'GPT - 3.5 - 16k', value: 'GPT - 3.5 - 16k' },
-  { label: 'GPT - 4.0', value: 'GPT - 4.0', disabled: true },
-];
 
 interface ICOnfig {
   payloadCreateBot: BotPayload;
   setPayloadCreateBot: (data: BotPayload) => void;
   custom: CustomField[];
-  setCustom: (data: CustomField[]) => void
+  setCustom: (data: CustomField[]) => void;
 }
 
-const Config = ({ payloadCreateBot, setPayloadCreateBot, custom, setCustom }: ICOnfig) => {
+const Config = ({
+  payloadCreateBot,
+  setPayloadCreateBot,
+  custom,
+  setCustom,
+}: ICOnfig) => {
   const { t } = useTranslation();
   const { botInfos } = useSelector((state: RootState) => state.buildChatBot);
   const [titleForm, setTitleForm] = useState('Let us know how to contact you');
-  const [messageCount, setMessageCount] = useState(100);
+  const [messageCount, setMessageCount] = useState(0);
 
   const increaseBadge = () => {
     setMessageCount(messageCount + 1);
@@ -44,7 +40,7 @@ const Config = ({ payloadCreateBot, setPayloadCreateBot, custom, setCustom }: IC
   return (
     <div className="config-bot">
       <p className="font-medium text-[#344054] flex items-center gap-x-[10px]">
-        Rate limit (per day)
+        {t('Ratelimit', { ns: 'config_bot' })}
         <Tooltip
           color="#212121"
           placement="rightTop"
@@ -60,13 +56,15 @@ const Config = ({ payloadCreateBot, setPayloadCreateBot, custom, setCustom }: IC
         <Button className="flex items-center" onClick={declineBadge}>
           <MinusOutlined />
         </Button>
-        <Button>{messageCount} messages</Button>
+        <Button>
+          {messageCount} {t('messages', { ns: 'config_bot' })}
+        </Button>
         <Button className="flex items-center" onClick={increaseBadge}>
           <PlusOutlined />
         </Button>
       </ButtonGroup>
       <p className="text-[12px] text-[#9CA3AF] mt-[10px]">
-        Limit to 100 messages every 1 day
+        {t('limit100', { ns: 'config_bot' })}
       </p>
       <p className="font-medium mt-4 text-[#344054] flex items-center gap-x-[10px]">
         {t('CollectCustomer', { ns: 'config_bot' })}
@@ -127,7 +125,9 @@ const Config = ({ payloadCreateBot, setPayloadCreateBot, custom, setCustom }: IC
       </div>
       <div className="bg-[#F3F4F6] p-[10px] rounded-lg mt-2">
         <div className="flex justify-between items-center">
-          <p className="text-[#6B7280] mb-0">Preview of form collector</p>
+          <p className="text-[#6B7280] mb-0">
+            {t('Preview', { ns: 'config_bot' })}
+          </p>
           <button
             onClick={() =>
               custom.length < 2 &&
@@ -270,7 +270,7 @@ const Config = ({ payloadCreateBot, setPayloadCreateBot, custom, setCustom }: IC
                     ...payloadCreateBot.collect_customer_info,
                     numberShowing: value || 0,
                   },
-                })
+                });
               }}
               className={`${classNames(
                 'rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none input-showing-number',

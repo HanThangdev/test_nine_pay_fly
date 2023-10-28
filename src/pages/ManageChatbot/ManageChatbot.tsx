@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import IconAllBot from '@/components/IconAllBot/IconAllBot';
 import { Modal, notification, Slider } from 'antd';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/states/store';
 import { isEmptyObjectOrArray } from '@/utils/utils';
@@ -31,6 +31,7 @@ const ManageChatbot = () => {
   const { currentPricingPlan, number_of_chatbots, monthly_message_credits } =
     useSelector((state: RootState) => state.pricing);
   const lang = getLanguageFromURL || localStorage.getItem('LANGUAGE') || 'en';
+  const [botsActive, setBotsActive] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchDataBot = async () => {
@@ -84,6 +85,12 @@ const ManageChatbot = () => {
       renderModalStatusIntegration(typeIntegration, status);
     }
   }, []);
+
+  useEffect(() => {
+    setBotsActive(
+      ownerChatbot.filter((item: any) => item.is_activate === true),
+    );
+  }, [ownerChatbot]);
 
   return (
     <>
@@ -175,14 +182,14 @@ const ManageChatbot = () => {
                     {t('Activebot', { ns: 'manage_bot' })}
                   </p>
                   <p className="mb-0">
-                    {ownerChatbot.length}/{number_of_chatbots}{' '}
+                    {botsActive.length}/{ownerChatbot.length}{' '}
                     {t('bots', { ns: 'manage_bot' })}
                   </p>
                 </div>
                 <Slider
-                  value={ownerChatbot.length}
+                  value={botsActive.length}
                   disabled
-                  max={number_of_chatbots}
+                  max={ownerChatbot.length}
                 />
               </div>
               <div>

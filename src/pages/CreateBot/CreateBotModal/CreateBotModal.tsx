@@ -1,10 +1,10 @@
 'use client';
-import { Modal, Input, Select, Form } from 'antd';
+import { Modal, Input, Select, Form, notification } from 'antd';
 import { IconCreateBot } from '@/components/IconGroup/IconGroup';
 import { useTranslation } from 'react-i18next';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '@/states/store';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '@/states/store';
 import {
   setNameBotStore,
   setCaseStudyStore,
@@ -64,17 +64,38 @@ export default function CreateBotModal({ open, onClose }: Props) {
   const [promptExample, setPromptExample] = useState(
     `${t('PromptExample', { ns: 'config_bot' })}`,
   );
+  const initValues = {
+    botName: '',
+    caseStudy: options[0].value,
+  };
+  const { ownerChatbot } = useSelector((state: RootState) => state.manageBot);
+  const { currentPricingPlan } = useSelector(
+    (state: RootState) => state.pricing,
+  );
+  const [botsActive, setBotsActive] = useState<any[]>([]);
 
-  const onFinish = async (values: any) => {
-    console.log(values);
-    dispatch(setNameBotStore(botName));
-    dispatch(setCaseStudyStore(caseStudy));
-    dispatch(setPromptExamplesStore(promptExample));
-    setBotName('');
-    setCaseStudy(options[0].value)
-    navigate(`/create-bot`);
-    form.resetFields(['botName']);
-    onClose();
+  useEffect(() => {
+    setBotsActive(
+      ownerChatbot.filter((item: any) => item.is_activate === true),
+    );
+  }, [ownerChatbot]);
+
+  const onFinish = async () => {
+    if (currentPricingPlan === 'Free' && botsActive.length > 0) {
+      notification.error({
+        message: `${t('limitBot', { ns: 'manage_bot' })}`,
+      });
+      onClose();
+    } else {
+      dispatch(setNameBotStore(botName));
+      dispatch(setCaseStudyStore(caseStudy));
+      dispatch(setPromptExamplesStore(promptExample));
+      setBotName('');
+      setCaseStudy(options[0].value);
+      navigate(`/create-bot`);
+      form.resetFields(['botName']);
+      onClose();
+    }
   };
 
   return (
@@ -88,15 +109,20 @@ export default function CreateBotModal({ open, onClose }: Props) {
       className="rounded-xl"
     >
       <div>
-        <Form autoComplete="off" name="create-bot" onFinish={onFinish}>
+        <Form
+          autoComplete="off"
+          name="create-bot"
+          onFinish={onFinish}
+          initialValues={initValues}
+        >
           <p className="bg-[#E2EAFF] rounded-full p-1 w-fit">
             <IconCreateBot />
           </p>
           <p className="text-[18px] text-[#101828] font-semibold mb-1">
-            Create chatbot
+            {t('New', { ns: 'manage_bot' })}
           </p>
           <p className="text-[14px] text-[#667085]">
-            Please enter a name for this chatbot
+            {t('enterName', { ns: 'config_bot' })}
           </p>
           <p className="font-medium text-[#344054]">
             {t('NameBot', { ns: 'config_bot' })}
@@ -120,6 +146,7 @@ export default function CreateBotModal({ open, onClose }: Props) {
           <Form.Item<FieldType> label="" name="caseStudy">
             <Select
               value={caseStudy}
+              defaultValue={caseStudy}
               onChange={(value) => {
                 setCaseStudy(value);
                 const itemPromptFromCaseStudy = options.find(
@@ -133,8 +160,11 @@ export default function CreateBotModal({ open, onClose }: Props) {
           </Form.Item>
           <div className="grid grid-cols-2 justify-end gap-4.5 mt-[32px]">
             <button
+              type="button"
               className="flex justify-center rounded-lg border border-stroke py-2 px-6 font-semibold text-black hover:shadow-1 dark:border-strokedark dark:text-white"
-              onClick={() => onClose()}
+              onClick={() => {
+                onClose();
+              }}
             >
               {t('Cancel', { ns: 'manage_bot' })}
             </button>
@@ -142,7 +172,7 @@ export default function CreateBotModal({ open, onClose }: Props) {
               className="flex justify-center rounded-lg bg-[#2D3FE7] py-2 px-6 font-semibold text-white hover:shadow-1"
               type="submit"
             >
-              Create Bot
+              {t('creatbot', { ns: 'config_bot' })}
             </button>
           </div>
         </Form>

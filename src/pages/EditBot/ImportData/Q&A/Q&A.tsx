@@ -1,4 +1,3 @@
-import { RiDeleteBinLine } from 'react-icons/ri';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';

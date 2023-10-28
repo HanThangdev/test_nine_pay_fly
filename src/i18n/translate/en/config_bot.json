@@ -187,5 +187,7 @@
   "textBubble": "Text display on bubble",
   "Displaytext": "Display text with bot",
   "Enter": "Enter",
-  "copy": "Copy to clipboard."
+  "copy": "Copy to clipboard.",
+  "enterName": "Please enter a name for this chatbot",
+  "creatbot": " Create Bot"
 }

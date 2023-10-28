@@ -29,6 +29,8 @@
   "Active": "Active",
   "active": "Bot currently active",
   "inactive": "Bot currently inactive",
+  "isactive": "Bot currently active",
   "Sharechatbot": "Share chatbot",
-  "Closepopup": "Close popup"
+  "Closepopup": "Close popup",
+  "limitBot": "The number of chatbots has exceeded the allowed limit. Please reduce the number of chatbots or upgrade your service plan."
 }

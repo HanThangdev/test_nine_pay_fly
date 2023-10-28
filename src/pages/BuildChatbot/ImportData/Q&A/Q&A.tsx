@@ -34,7 +34,7 @@ const schema = yup.object().shape({
     yup.object().shape({
       question: yup.string().required('Question is required'), // Kiểm tra trường "question" không được trống
       answer: yup.string().required('Answer is required'), // Kiểm tra trường "answer" không được trống
-    })
+    }),
   ),
 });
 
@@ -44,7 +44,13 @@ const QuestionAnswer = () => {
     useBuildChatbot();
   const { includesResource, loadingQuestionAndAnswer, listIncludesQandA } =
     useSelector((state: RootState) => state.buildChatBot);
-  const { control, register, handleSubmit, reset, formState: { errors } } = useForm({
+  const {
+    control,
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
     defaultValues: initialValue,
     resolver: yupResolver(schema),
   });
@@ -58,12 +64,16 @@ const QuestionAnswer = () => {
     [includesResource],
   );
 
-  const onUpload: SubmitHandler<any> = (values: {question_answers: AddQuestionAndAnswerItem[];}) => {
-    if (loadingQuestionAndAnswer || !botInfos ) {
+  const onUpload: SubmitHandler<any> = (values: {
+    question_answers: AddQuestionAndAnswerItem[];
+  }) => {
+    if (loadingQuestionAndAnswer || !botInfos) {
       return;
     }
     try {
-      const listQuestionAndAnswer = trimStringValuesInArray(values.question_answers)
+      const listQuestionAndAnswer = trimStringValuesInArray(
+        values.question_answers,
+      );
       const payload = {
         bot_id: botInfos.id,
         user_id: botInfos.user_id,
@@ -72,14 +82,14 @@ const QuestionAnswer = () => {
       onAddQuestionAndAnswer(payload).then((response) => {
         if (response.meta.requestStatus === API_STATUS.FULFILLED) {
           onGetAllQuestionAndAnswer({ bot_id: botInfos.id });
-          resetForm()
+          resetForm();
           notification.success({
             message: 'Import Q&A success',
           });
         }
       });
     } catch (error: any) {
-      console.log('error', error)
+      console.log('error', error);
     } finally {
     }
   };
@@ -121,7 +131,7 @@ const QuestionAnswer = () => {
           className="w-[150px] h-[43px] bg-[#E8E9F4] text-[#01058A] rounded-[10px] text-[15px] font-bold justify-center"
           onClick={addQuestion}
         >
-          Add more Q&A
+          {t('addmomreQA', { ns: 'config_bot' })}
         </button>
       </div>
       <form onSubmit={handleSubmit(onUpload)}>
@@ -145,7 +155,9 @@ const QuestionAnswer = () => {
                 placeholder={`${t('What', { ns: 'config_bot' })}`}
                 className="h-[40px] w-full py-2 rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
               />
-              <p className='text-[#D96A47]'>{errors.question_answers?.[index]?.question?.message}</p>
+              <p className="text-[#D96A47]">
+                {errors.question_answers?.[index]?.question?.message}
+              </p>
               <div className="mt-[20px]">
                 <p className="text-[15px] font-bold flex gap-x-[10px] items-center">
                   {t('Answer', { ns: 'config_bot' })} {index + 1}
@@ -156,7 +168,9 @@ const QuestionAnswer = () => {
                   placeholder={`${t('ChatFly', { ns: 'config_bot' })}`}
                   className="h-[150px] w-full py-2 rounded-[5px] border border-[#DCDEED] bg-[#ffffffeb] px-4 outline-none focus:border-primary focus-visible:shadow-none"
                 />
-                <p className='text-[#D96A47]'>{errors.question_answers?.[index]?.answer?.message}</p>
+                <p className="text-[#D96A47]">
+                  {errors.question_answers?.[index]?.answer?.message}
+                </p>
               </div>
             </div>
           ))}

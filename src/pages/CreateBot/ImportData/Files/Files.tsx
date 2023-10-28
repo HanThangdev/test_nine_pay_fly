@@ -1,6 +1,4 @@
 import classNames from 'classnames';
-import { AiOutlineCloudUpload } from 'react-icons/ai';
-import { RiDeleteBinLine } from 'react-icons/ri';
 import { Upload, notification } from 'antd';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { hasDuplicateFiles, isEmptyObjectOrArray } from '@/utils/utils';
@@ -13,7 +11,11 @@ import { MAX_SIZE_FILE } from '@/constants/configs_bot';
 import { formatNumber } from '@/utils/format';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/states/store';
-import { IconUpload } from '@/components/IconGroup/IconGroup';
+import {
+  IconDelete,
+  IconImport,
+  IconUpload,
+} from '@/components/IconGroup/IconGroup';
 const Files = () => {
   const { t } = useTranslation();
   const [listFileWaitingImport, setListFileWaitingImport] = useState<File[]>(
@@ -90,7 +92,7 @@ const Files = () => {
   return (
     <>
       <p className="text-[15px] text-[#344054] mb-2 font-medium flex gap-x-[10px] items-center">
-        Import data from files
+        {t('importData', { ns: 'config_bot' })}
       </p>
       <div className={classNames('py-4', 'text-center')}>
         <Upload.Dragger
@@ -115,8 +117,10 @@ const Files = () => {
             <IconUpload />
           </div>
           <p className="text-[20px] text-[#2D3FE7] font-medium mb-0">
-            Click to upload{' '}
-            <span className="text-[#4B5563]">or drag and drop</span>
+            {t('click', { ns: 'config_bot' })}{' '}
+            <span className="text-[#4B5563]">
+              {t('drop', { ns: 'config_bot' })}
+            </span>
           </p>
           <p className="text-[#4B5563] text-[15px] mb-0">
             {t('Drag', { ns: 'config_bot' })}
@@ -136,16 +140,17 @@ const Files = () => {
                       newListFile.filter((it) => it.name !== item.name),
                     );
                   }}
-                  className="cursor-pointer"
+                  className="cursor-pointer p-1 rounded border-[1px] border-[#FDA29B] ml-1 bg-[#FFF]"
                 >
-                  <RiDeleteBinLine size={18} color="#F44336" />
+                  <IconDelete />
                 </div>
               </div>
               <button
-                className="w-[150px] h-[43px] bg-[#E8E9F4] text-[#01058A] rounded-[10px] text-[15px] font-bold justify-center"
+                className="px-3 break-keep flex items-center gap-x-1 h-[41px] bg-[#FFF] text-[#374151] rounded-[8px] border-[1px] border-[#D0D5DD] text-[15px] font-medium justify-center cursor-pointer"
                 onClick={() => onUpload(item)}
                 disabled={loadingFetchFile}
               >
+                <IconImport />
                 {loadingFetchFile ? (
                   <div>
                     <TypeAnimation

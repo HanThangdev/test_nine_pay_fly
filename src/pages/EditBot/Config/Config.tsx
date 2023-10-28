@@ -33,7 +33,7 @@ const Config = ({ save, step, saveSuccess }: Props) => {
   const [name, setName] = useState(false);
   const [phone, setPhone] = useState(false);
   const [numberShowing, setNumberShowing] = useState(0);
-  const [messageCount, setMessageCount] = useState(100);
+  const [messageCount, setMessageCount] = useState(0);
   const [custom, setCustom] = useState<CustomField[]>([]);
   const dispatch = useDispatch<AppDispatch>();
 

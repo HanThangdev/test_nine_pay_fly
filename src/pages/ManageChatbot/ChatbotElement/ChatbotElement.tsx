@@ -10,10 +10,11 @@ import {
 import ModalComponent from '@/components/Modal';
 import { useEffect, useState } from 'react';
 import { ResponseManageChatbot } from '@/states/manageBot/type';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '@/states/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '@/states/store';
 import {
   deleteChatBotTransaction,
+  changeActiveChatBotTransaction,
   getBotTransaction,
 } from '@/repository/manageChatbot';
 import { API_STATUS } from '@/constants';
@@ -43,7 +44,17 @@ const ChatbotElement = ({ info }: ChatbotElementProps) => {
     setCurrentImageIndex(randomNumber);
   };
   useEffect(() => changeImage(), []);
-  // const [visibleShareodal, setVisibleShareModal] = useState<boolean>(false);
+  const { ownerChatbot } = useSelector((state: RootState) => state.manageBot);
+  const { currentPricingPlan } = useSelector(
+    (state: RootState) => state.pricing,
+  );
+  const [botsActive, setBotsActive] = useState<any[]>([]);
+
+  useEffect(() => {
+    setBotsActive(
+      ownerChatbot.filter((item: any) => item.is_activate === true),
+    );
+  }, [ownerChatbot]);
 
   const deletedChatbot = async () => {
     try {
@@ -51,7 +62,6 @@ const ChatbotElement = ({ info }: ChatbotElementProps) => {
       const { meta } = await dispatch(deleteChatBotTransaction({ bot_id: id }));
 
       if (meta.requestStatus == API_STATUS.REJECTED) {
-        setVisibleDeleteModal(false);
         return;
       }
 
@@ -63,6 +73,37 @@ const ChatbotElement = ({ info }: ChatbotElementProps) => {
       notification.error({
         message: error?.response?.data.errors ?? error?.message,
       });
+    }
+  };
+
+  const onActive = async () => {
+    if (
+      currentPricingPlan === 'Free' &&
+      botsActive.length > 0 &&
+      !info.is_activate
+    ) {
+      notification.error({
+        message: `${t('limitBot', { ns: 'manage_bot' })}`,
+      });
+    } else {
+      try {
+        const { id } = info;
+        const status = info.is_activate ? false : true;
+        const { meta } = await dispatch(
+          changeActiveChatBotTransaction({ bot_id: id, is_activate: status }),
+        );
+
+        if (meta.requestStatus == API_STATUS.REJECTED) {
+          setVisibleDeleteModal(false);
+          return;
+        }
+
+        await dispatch(getBotTransaction());
+      } catch (error: any) {
+        notification.error({
+          message: error?.response?.data.errors ?? error?.message,
+        });
+      }
     }
   };
 
@@ -94,12 +135,17 @@ const ChatbotElement = ({ info }: ChatbotElementProps) => {
       </div>
       <div className="w-full">
         <div className="flex justify-between items-start">
-          <button
-            className="text-[20px] text-[#111827]"
-            onClick={redirectToUpdateBot}
-          >
-            {info.bot_name}
-          </button>
+          {info.is_activate ? (
+            <button
+              className="text-[20px] text-[#111827]"
+              onClick={redirectToUpdateBot}
+            >
+              {info.bot_name}
+            </button>
+          ) : (
+            <p className="text-[20px] text-[#111827] mb-0">{info.bot_name}</p>
+          )}
+
           <div className="flex gap-x-2">
             <p
               className="cursor-pointer items-center mb-0 flex gap-x-1 bg-[#FFF] py-2 px-3 border-[1px] border-[#D0D5DD] text-[14px] text-[#374151] rounded-[8px]"
@@ -109,8 +155,13 @@ const ChatbotElement = ({ info }: ChatbotElementProps) => {
               {t('Share', { ns: 'manage_bot' })}
             </p>
             <p
-              className="cursor-pointer items-center mb-0 flex gap-x-1 bg-[#FFF] py-2 px-3 border-[1px] border-[#D0D5DD] text-[14px] text-[#374151] rounded-[8px]"
-              onClick={redirectToUpdateBot}
+              className={classNames(
+                'cursor-pointer items-center mb-0 flex gap-x-1 bg-[#FFF] py-2 px-3 border-[1px] border-[#D0D5DD] text-[14px] text-[#374151] rounded-[8px]',
+                {
+                  'opacity-50': !info.is_activate,
+                },
+              )}
+              onClick={() => info.is_activate && redirectToUpdateBot()}
             >
               <IconEdit />
               {t('Modify', { ns: 'manage_bot' })}
@@ -128,13 +179,20 @@ const ChatbotElement = ({ info }: ChatbotElementProps) => {
           {formatTimeAgo(new Date(info.updated_at))}
         </p>
       </div>
-      <div className="Switch-bot min-w-[160px] h-full bg-[#F9FAFB] border-[1px] border-[#E5E7EB] gap-x-4 rounded-[8px] py-2 px-3">
+      <div className="Switch-bot min-w-[230px] h-full bg-[#F9FAFB] border-[1px] border-[#E5E7EB] gap-x-4 rounded-[8px] py-2 px-3">
         <p className="text-[14px] flex items-center">
-          <Switch size="small" className="mr-2" checked={info.is_activate} />
+          <Switch
+            size="small"
+            className="mr-2"
+            checked={info.is_activate}
+            onClick={onActive}
+          />
           {t('Active', { ns: 'manage_bot' })}
         </p>
         <p className="mb-0 text-[14px]">
-          {t('inactive', { ns: 'manage_bot' })}
+          {info.is_activate
+            ? `${t('active', { ns: 'manage_bot' })}`
+            : `${t('inactive', { ns: 'manage_bot' })}`}
         </p>
       </div>
 

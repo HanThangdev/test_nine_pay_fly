@@ -1,9 +1,8 @@
-import { RiDeleteBinLine } from 'react-icons/ri';
 import { useTranslation } from 'react-i18next';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/states/store';
-import { formatNumber, trimStringValuesInArray } from '@/utils/format';
+import { trimStringValuesInArray } from '@/utils/format';
 import { TypeAnimation } from 'react-type-animation';
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
 import { useBuildChatbot } from '@/states/buildChatBot/buildChatBot.selector';
@@ -132,7 +131,7 @@ const QuestionAnswer = () => {
           className="px-3 flex items-center gap-x-1 h-[41px] bg-[#FFF] text-[#374151] rounded-[8px] border-[1px] border-[#D0D5DD] text-[15px] font-medium justify-center cursor-pointer"
           onClick={addQuestion}
         >
-          Add more Q&A
+          {t('addmomreQA', { ns: 'config_bot' })}
         </button>
       </div>
       <form onSubmit={handleSubmit(onUpload)}>

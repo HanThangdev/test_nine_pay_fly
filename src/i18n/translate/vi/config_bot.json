@@ -184,5 +184,7 @@
   "textBubble": "Hiển thị văn bản trên bong bóng",
   "Displaytext": "Hiển thị văn bản với bot",
   "Enter": "Nhập",
-  "copy": "Sao chép vào clipboard."
+  "copy": "Sao chép vào clipboard.",
+  "enterName": "Vui lòng nhập tên cho chatbot này",
+  "creatbot": "Tạo bot"
 }

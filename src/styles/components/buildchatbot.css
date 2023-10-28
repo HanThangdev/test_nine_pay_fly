@@ -259,3 +259,7 @@
 .ant-select-selector {
   @apply !h-[44px] items-center;
 }
+
+.ant-select-single {
+  @apply h-auto;
+}

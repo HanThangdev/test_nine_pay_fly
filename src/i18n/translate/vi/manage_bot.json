@@ -29,6 +29,8 @@
   "Active": "Hoạt động",
   "active": "Bot hiện đang hoạt động",
   "inactive": "Bot hiện không hoạt động",
+  "isactive": "Bot hiện đang hoạt động",
   "Sharechatbot": "Chia sẻ chatbot",
-  "Closepopup": "Đóng cửa sổ bật lên"
+  "Closepopup": "Đóng cửa sổ bật lên",
+  "limitBot": "Số lượng chatbot đã vượt quá giới hạn cho phép. Vui lòng giảm số lượng chatbot hoặc nâng cấp gói dịch vụ của bạn."
 }

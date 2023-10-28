@@ -22,7 +22,7 @@ const ImportData = () => {
     <div className="import-data ">
       <p className="flex text-[20px] items-center text-black">
         <IconImportData />
-        Import Data
+        {t('import')}
       </p>
       <div
         className={classNames(
