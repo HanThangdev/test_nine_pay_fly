@@ -16,6 +16,7 @@ interface Props {
   chat_bubble_button_color?: string;
   chat_message_color?: string;
   textbubble?: string;
+  chatbubble: boolean;
   bot_avatar_url?: string;
   chat_icon_url?: string;
 }
@@ -28,6 +29,7 @@ const Interface = ({
   chat_bubble_button_color,
   theme,
   textbubble,
+  chatbubble,
   bot_avatar_url,
   chat_icon_url,
 }: Props) => {
@@ -89,7 +91,7 @@ const Interface = ({
           >
             <p
               className={classNames(
-                'mb-0 flex items-center gap-x-[10px] text-[16px] text-[#01058A]',
+                'mb-0 flex items-center gap-x-[10px] text-[16px] font-bold',
                 {
                   'text-white': (theme ? theme : dataSet.theme) === 'dark',
                 },
@@ -184,7 +186,7 @@ const Interface = ({
         >
           <div
             className={classNames(
-              'rounded-full bg-black flex items-center justify-center p-2 gap-x-2',
+              `${chatbubble ? 'rounded-t-[16px] mb-[-1.25rem]':'rounded-full'} bg-black flex items-center justify-center p-2 gap-x-2`,
               {
                 '!rounded-[20px]': textbubble,
               },
@@ -197,9 +199,9 @@ const Interface = ({
                 : '#4AC1FF',
             }}
           >
-            {textbubble}
+            {textbubble ? textbubble : chatbubble && ' Chat with me'}
             <img
-              className="w-[30px] h-[30px] invert"
+              className="w-[30px] h-[20px] invert"
               src={
                 chat_icon_url
                   ? chat_icon_url

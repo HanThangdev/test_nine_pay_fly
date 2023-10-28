@@ -61,7 +61,7 @@ const Interface = ({
           >
             <p
               className={classNames(
-                'mb-0 flex items-center gap-x-[10px] text-[16px] text-[#01058A]',
+                'mb-0 flex items-center gap-x-[10px] text-[16px] font-bold',
                 {
                   'text-white': (theme ? theme : dataSet.theme) === 'dark',
                 },

@@ -45,6 +45,7 @@ const Styling = ({ save, step, saveSuccess }: Props) => {
   const [chatIconUrl, setChatIconUrl] = useState<string>();
   const [chatIcon, setChatIcon] = useState<string>();
   const [chat_icon_url, setChat_icon_url] = useState<string>('');
+  const [chatBubble, setChatBubble] = useState<boolean>(false);
 
   const beforeUpload = async (file: RcFile | File) => {
     setBotAvatarFile(file);
@@ -159,6 +160,63 @@ const Styling = ({ save, step, saveSuccess }: Props) => {
       onSubmit();
     }
   }, [save, step]);
+
+  const btnColor = [
+    {
+      color: 'bg-[#FB6514]',
+      value: '#FB6514'
+    },
+    {
+      color: 'bg-[#F63D68]',
+      value: '#F63D68'
+    },
+    {
+      color: 'bg-[#EE46BC]',
+      value: '#EE46BC'
+    },
+    {
+      color: 'bg-[#7A5AF8]',
+      value: '#7A5AF8'
+    },
+    {
+      color: 'bg-[#444CE7]',
+      value: '#444CE7'
+    },
+    {
+      color: 'bg-[#1570EF]',
+      value: '#1570EF'
+    },
+    {
+      color: 'bg-[#12B76A]',
+      value: '#12B76A'
+    },
+    {
+      color: 'bg-[#F79009]',
+      value: '#F79009'
+    },
+    {
+      color: 'bg-[#F04438]',
+      value: '#F04438'
+    },{
+      color: 'bg-[#9E77ED]',
+      value: '#9E77ED'
+    },{
+      color: 'bg-[#667085]',
+      value: '#667085'
+    },
+    // 'bg-[#FB6514]',
+    // 'bg-[#F63D68]',
+    // 'bg-[#EE46BC]',
+    // 'bg-[#7A5AF8]',
+    // 'bg-[#444CE7]',
+    // 'bg-[#1570EF]',
+    // 'bg-[#12B76A]',
+    // 'bg-[#F79009]',
+    // 'bg-[#F04438]',
+    // 'bg-[#9E77ED]',
+    // 'bg-[#667085]',
+  ];
+
   return (
     <>
       <div className="flex gap-x-4">
@@ -170,20 +228,50 @@ const Styling = ({ save, step, saveSuccess }: Props) => {
             <p className="text-[14px] text-[#9CA3AF]">
               {t('selectColor', { ns: 'config_bot' })}
             </p>
-            <ColorPicker
-              value={messageColor}
-              onChange={(e) => setMessageColor(e.toHexString())}
-            />
+            <div className="flex gap-x-2 justify-items-center">
+              {btnColor.map((it, index) => (
+                <button
+                  key={index}
+                  className={classNames(`rounded-lg w-5 h-5 p-4 d-inline-flex align-items-center justify-content-center`, it.color)}
+                  onClick={() => setMessageColor(it.value)}
+                />
+              ))}
+              <p className="text-[14px] text-[#9CA3AF] mt-1">or</p>
+              <ColorPicker
+                value={messageColor}
+                onChange={(e) => setMessageColor(e.toHexString())}
+                showText={(color) => (
+                  <span className="text-[14px] text-[#D1D5DB]">
+                    {color.toHexString()}
+                  </span>
+                )}
+              />
+            </div>
           </div>
           <div className="text-[15px] mt-4">
             <p className="font-medium mb-0 text-[#111827]">Chat bubble color</p>
             <p className="text-[14px] text-[#9CA3AF]">
               {t('selectColor', { ns: 'config_bot' })}
             </p>
-            <ColorPicker
-              value={buttonColor}
-              onChange={(e) => setButtonColor(e.toHexString())}
-            />
+            <div className="flex gap-x-2 justify-items-center">
+              {btnColor.map((it, index) => (
+                <button
+                  key={index}
+                  className={classNames(`rounded-lg w-5 h-5 p-4 d-inline-flex align-items-center justify-content-center`, it.color)}
+                  onClick={() => setButtonColor(it.value)}
+                />
+              ))}
+              <p className="text-[14px] text-[#9CA3AF] mt-1">or</p>
+              <ColorPicker
+                value={buttonColor}
+                onChange={(e) => setButtonColor(e.toHexString())}
+                showText={(color) => (
+                  <span className="text-[14px] text-[#D1D5DB]">
+                    {color.toHexString()}
+                  </span>
+                )}
+              />
+            </div>
           </div>
           <div className="text-[15px] mt-4">
             <p className="font-medium mb-0 text-[#111827]">
@@ -278,9 +366,14 @@ const Styling = ({ save, step, saveSuccess }: Props) => {
               </p>
             </Upload.Dragger>
           </div>
+          <p className="prompt-bot flex gap-x-[10px] font-medium text-[#111827] items-center mt-4">
+            <Switch size="small"  checked={chatBubble} onChange={() => setChatBubble(!chatBubble)}/>
+            Chat Bubble
+          </p>
         </div>
         <div className="w-[40%]">
           <Interface
+            chatbubble={chatBubble}
             chat_message_color={messageColor}
             chat_bubble_button_color={buttonColor}
             theme={theme}
