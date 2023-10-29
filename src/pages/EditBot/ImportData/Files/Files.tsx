@@ -106,6 +106,8 @@ const Files = () => {
       notification.error({
         message: error?.response?.data.errors ?? error?.message,
       });
+    } finally{
+      setVisibleModalDeleteAll(false)
     }
   }
 

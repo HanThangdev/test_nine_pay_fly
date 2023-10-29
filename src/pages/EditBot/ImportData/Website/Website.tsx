@@ -122,7 +122,9 @@ const Website = () => {
       notification.error({
         message: error?.response?.data.errors ?? error?.message,
       });
-    } 
+    } finally{
+      setVisibleModalDeleteAll(false)
+    }
   }
   const resetUrl = () => {
     setFullPageUrl('');
