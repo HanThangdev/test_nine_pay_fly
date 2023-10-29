@@ -226,9 +226,16 @@ export const deleteURLTransaction = createAsyncThunk(
   'transaction/deleteURLTransaction',
   async (payload: DeleteURLPayload, { rejectWithValue }) => {
     try {
-      const base64Url = btoa(payload.url);
+      const { url, bot_id } = payload
+      // const base64Url = [btoa(url)];
+      const payloadFinal = {
+        bot_id,
+        base64_urls: [...url]
+      }
       const response = await http.delete<SuccessResponse<string>>(
-        `/api/scraping/url?bot_id=${payload.bot_id}&base64_url=${base64Url}`,
+        `/api/scraping/url`,{
+          data: payloadFinal
+        },
       );
       return response;
     } catch (error: any) {
@@ -321,9 +328,16 @@ export const deleteFileImportedTransaction = createAsyncThunk(
   'transaction/deleteFileImportedTransaction',
   async (payload: DeleteFilePayload, { rejectWithValue }) => {
     try {
-      const queryString = objectToQueryString(payload);
+      const { knowledge_base_id, bot_id } = payload
+      const payloadFinal = {
+        bot_id,
+        knowledge_base_ids: [...knowledge_base_id]
+      }
       const response = await http.delete<SuccessResponse<string>>(
-        `/api/scraping/file?${queryString}`,
+        `/api/scraping/file`,
+        {
+          data: payloadFinal
+        }
       );
       return response;
     } catch (error: any) {
@@ -378,8 +392,16 @@ export const deleteQuestionAndAnswerTransaction = createAsyncThunk(
   'transaction/deleteQuestionAndAnswerTransaction',
   async (payload: DeleteQuestionAndAnswerPayload, { rejectWithValue }) => {
     try {
+      const { question_answer_id, bot_id } = payload
+      const payloadFinal = {
+        bot_id,
+        question_answer_ids: [...question_answer_id]
+      }
       const response = await http.delete<SuccessResponse<string>>(
-        `/api/scraping/question-answer/${payload.bot_id}/${payload.question_answer_id}`,
+        `/api/scraping/question-answer`,
+        {
+          data: payloadFinal
+        }
       );
       return response;
     } catch (error: any) {

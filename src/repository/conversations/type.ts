@@ -24,4 +24,5 @@ export interface GetConversationPdfPayload {
   bot_id: string;
   user_id: string;
   order: string;
+  session_id?: string;
 }

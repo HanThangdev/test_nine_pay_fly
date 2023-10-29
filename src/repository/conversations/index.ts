@@ -32,3 +32,16 @@ export const getConversationPdf = createAsyncThunk<
     return rejectWithValue(error.response.data.error);
   }
 });
+
+export const getSessionConversationPdf = createAsyncThunk<
+  string,
+  GetConversationPdfPayload
+>('transaction/getSessionConversationPdf', async (payload, { rejectWithValue }) => {
+  try {
+    const { session_id, ...other } = payload
+    return await http.post(`/api/chat/${session_id}/history.pdf`, other, { responseType: 'blob' });
+  } catch (error: any) {
+    return rejectWithValue(error.response.data.error);
+  }
+});
+

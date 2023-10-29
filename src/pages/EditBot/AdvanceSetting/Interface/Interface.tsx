@@ -16,7 +16,7 @@ interface Props {
   chat_bubble_button_color?: string;
   chat_message_color?: string;
   textbubble?: string;
-  chatbubble: boolean;
+  chatbubble?: boolean;
   bot_avatar_url?: string;
   chat_icon_url?: string;
 }

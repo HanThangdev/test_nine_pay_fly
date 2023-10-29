@@ -12,22 +12,22 @@ import { loadFetchLink } from '@/states/buildChatBot/buildChatBot.slice';
 import { validURL } from '@/utils/validate';
 import { API_STATUS } from '@/constants';
 import { formatNumber } from '@/utils/format';
-import { IconImport } from '@/components/IconGroup/IconGroup';
+import { IconDelete, IconImport } from '@/components/IconGroup/IconGroup';
 import { DataFetchLink } from '@/states/buildChatBot/type';
+import { deleteURLTransaction } from '@/repository/buildChatBot';
+import ModalComponent from '@/components/Modal';
 
 const Website = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
-  const [visibleDeleteModal, setVisibleDeleteModal] = useState<boolean>(false);
-
   const { onStreamingUploadUrl, fetchLink, onGetAllUrl } = useBuildChatbot();
-  const { botInfos, listIncludesLink, loadingFetchLink, includesResource } =
+  const { botInfos, listIncludesLink, loadingFetchLink } =
     useSelector((state: RootState) => state.buildChatBot);
   const [fullPageUrl, setFullPageUrl] = useState<string>('');
   const [directPageUrl, setDirectPageUrl] = useState<string>('');
   const [loadingFullPage, setLoadingFullPage] = useState<boolean>(false);
   const [loadingDirectPage, setLoadingDirectPage] = useState<boolean>(false);
-  const [urlSelected, setUrlSelected] = useState<string[]>([]);
+  const [ visibleModalDeleteAll, setVisibleModalDeleteAll ] = useState(false);
 
   const SCRAPE_TYPE = {
     FULL_PAGE: 1,
@@ -91,10 +91,6 @@ const Website = () => {
   };
 
   const listLink = useMemo(() => listIncludesLink, [listIncludesLink]);
-  const includesResourceData = useMemo(
-    () => includesResource,
-    [includesResource],
-  );
 
   const totalTokens = useMemo(
     () =>
@@ -104,11 +100,30 @@ const Website = () => {
       ),
     [listIncludesLink],
   );
+  const onDeleteAllLink = async() => {
+    if (!botInfos) {
+      return;
+    }
+    try {
+      const { id } = botInfos;
+      const listAllUrlPayload = listLink.map(it => btoa(it.url))
+      const { meta } = await dispatch(
+        deleteURLTransaction({ bot_id: id, url: listAllUrlPayload }),
+      );
 
-  const deleteUrl = () => {
-    setVisibleDeleteModal(false);
-  };
-
+      if (meta.requestStatus == API_STATUS.REJECTED) {
+        return;
+      }
+      onGetAllUrl({ bot_id: id });
+      notification.success({
+        message: "Delete all URL success",
+      });
+    } catch (error: any) {
+      notification.error({
+        message: error?.response?.data.errors ?? error?.message,
+      });
+    } 
+  }
   const resetUrl = () => {
     setFullPageUrl('');
     setDirectPageUrl('');
@@ -205,23 +220,67 @@ const Website = () => {
         )}
       </div>
       <div className="mt-[20px]">
-        <p className="text-[15px] text-[#344054] mb-2 font-medium flex gap-x-[10px] items-center">
-          {t('IncludedLinks', { ns: 'config_bot' })}
-          <span className="text-[#A7A7B0] font-thin">
-            ({formatNumber(totalTokens)} {t('tokens', { ns: 'config_bot' })})
-          </span>
-        </p>
+        <div className="flex justify-between pb-3">
+          <div>
+            <p className="text-[15px] text-[#344054] mb-2 font-medium flex gap-x-[10px] items-center">
+              {t('IncludedLinks', { ns: 'config_bot' })}
+              <span className="text-[#A7A7B0] font-thin">
+                ({formatNumber(totalTokens)} {t('tokens', { ns: 'config_bot' })}
+                )
+              </span>
+            </p>
+          </div>
+          <div>
+            {!!(listLink.length && listLink.length > 1) && (
+              <div
+                className="p-1 font-bold rounded border-[1px] border-[#FDA29B] ml-1 bg-[#FFF] flex cursor-pointer text-[#B42318]"
+                onClick={() => {
+                  setVisibleModalDeleteAll(true);
+                }}
+              >
+                <IconDelete /> <span>Delete all link</span>
+              </div>
+            )}
+          </div>
+        </div>
         {!isEmptyObjectOrArray(listLink) &&
-          listLink.map((item, idx) => (
+          listLink.map((item, idx: number) => (
             <LinkItem
               item={item}
               key={idx}
               index={idx}
-              setUrlSelected={setUrlSelected}
-              urlSelected={urlSelected}
             />
           ))}
       </div>
+      <ModalComponent
+        title={<div>Delete all Url</div>}
+        onCancel={() => {
+          setVisibleModalDeleteAll(false);
+        }}
+        open={visibleModalDeleteAll}
+        centered={true}
+        footer={
+          <div className="flex justify-end gap-4.5">
+            <button
+              className="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
+              onClick={() => setVisibleModalDeleteAll(false)}
+            >
+              Cancel
+            </button>
+            <button
+              className="flex justify-center rounded bg-[#ef7772] py-2 px-6 font-medium text-white hover:shadow-1"
+              onClick={onDeleteAllLink}
+            >
+              Delete
+            </button>
+          </div>
+        }
+      >
+        <div>
+          Are you sure you want to delete all Q&A? This action cannot be
+          undone.
+        </div>
+      </ModalComponent>
     </>
   );
 };

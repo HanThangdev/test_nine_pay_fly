@@ -101,7 +101,7 @@ export interface GetNormalResponseRequest {
 
 export interface DeleteURLPayload {
   bot_id: string;
-  url: string;
+  url: string[];
 }
 
 export interface GetAllURLPayload {
@@ -123,7 +123,7 @@ export interface UploadFilePayload {
 
 export interface DeleteFileImportedPayload {
   bot_id: string;
-  knowledge_base_id: string;
+  knowledge_base_id: string[];
 }
 
 export interface DeleteFileImportedResponse {
@@ -140,7 +140,7 @@ export interface GetAllFileResponse {
 }
 
 export interface DeleteFilePayload {
-  knowledge_base_id: string;
+  knowledge_base_id: string[];
   bot_id: string;
 }
 
@@ -194,7 +194,7 @@ export interface DataQuestionAndAnswerItem {
 }
 
 export interface DeleteQuestionAndAnswerPayload {
-  question_answer_id: string;
+  question_answer_id: string[];
   bot_id: string;
 }
 

@@ -14,6 +14,7 @@ import dayjs from 'dayjs';
 import {
   getAllConversations,
   getConversationPdf,
+  getSessionConversationPdf,
 } from '@/repository/conversations';
 import classNames from 'classnames';
 import { GetAllConversationsPayload } from '@/repository/conversations/type';
@@ -132,23 +133,46 @@ const Conversations = () => {
     onGetBot(true);
   };
 
-  const handleDownloadPdf = async (conversationId: string) => {
+  const handleDownloadPdfBaseOnSession = async (conversationId: string) => {
     const conversation = conversations.find(
       (conversation) => conversation.session_id === conversationId,
     );
     if (conversation) {
       const response: any = await dispatch(
-        getConversationPdf({
+        getSessionConversationPdf({
           // conversation_history_response: [conversation],
           date_from: fromDate.toISOString(),
           date_to: toDate.toISOString(),
           bot_id: conversation.bot_id,
           user_id: conversation.user_id,
+          session_id: conversation.session_id,
           order: 'created_at.desc',
         }),
       );
       const fileName = `${
         conversation.session_id
+      }--conversations_${fromDate.format('DD-MM-YYYY')}~${toDate.format(
+        'DD-MM-YYYY',
+      )}`;
+
+      downloadPDFFromString(response.payload.data, fileName);
+    }
+  };
+
+  const handleDownloadAllConversationPdf = async () => {
+    if (!isEmptyObjectOrArray(conversations)) {
+      const response: any = await dispatch(
+        getConversationPdf({
+          // conversation_history_response: [conversation],
+          date_from: fromDate.toISOString(),
+          date_to: toDate.toISOString(),
+          bot_id: conversations[0].bot_id,
+          user_id: conversations[0].user_id,
+          order: 'created_at.desc',
+        }),
+      );
+      const fileName = `${
+        conversations[0].bot_id
       }--conversations_${fromDate.format('DD-MM-YYYY')}~${toDate.format(
         'DD-MM-YYYY',
       )}`;
@@ -238,6 +262,7 @@ const Conversations = () => {
               {t('Editbot', { ns: 'conversation' })}
             </button>
             <button
+              onClick={handleDownloadAllConversationPdf}
               disabled={!selectedConversation}
               className="flex items-center gap-x-2 rounded-[4px] py-1 px-2 border-[1px] border-[#D0D5DD] text-[14px] text-[#344054] font-semibold justify-center whitespace-nowrap"
             >
@@ -298,7 +323,7 @@ const Conversations = () => {
                       <p className="flex items-end border-[1px] border-[#D0D5DD] p-1 rounded-lg">
                         <button
                           onClick={() =>
-                            handleDownloadPdf(conversation.session_id)
+                            handleDownloadPdfBaseOnSession(conversation.session_id)
                           }
                         >
                           <IconDown />

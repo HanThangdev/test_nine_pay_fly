@@ -15,15 +15,11 @@ import { IconDelete, IconToken } from '@/components/IconGroup/IconGroup';
 interface LinkItemProps {
   item: DataFetchLink;
   index: number;
-  setUrlSelected: Dispatch<SetStateAction<string[]>>;
-  urlSelected: string[];
 }
 
 const LinkItem = ({
   item,
   index,
-  setUrlSelected,
-  urlSelected,
 }: LinkItemProps) => {
   const { t } = useTranslation();
   const [visibleDeleteModal, setVisibleDeleteModal] = useState<boolean>(false);
@@ -37,7 +33,7 @@ const LinkItem = ({
     try {
       const { id } = botInfos;
       const { meta } = await dispatch(
-        deleteURLTransaction({ bot_id: id, url: item.url }),
+        deleteURLTransaction({ bot_id: id, url: [btoa(item.url)] }),
       );
 
       if (meta.requestStatus == API_STATUS.REJECTED) {

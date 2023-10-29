@@ -37,7 +37,7 @@ const ChatWidget = ({ save, step, saveSuccess }: Props) => {
     setDataAdvanced(reponse);
     setDisplayName(reponse.display_name);
     setinitialMessages(reponse.initial_message);
-    setSuggestMessages(reponse.suggest_messages.join('\n'));
+    setSuggestMessages(reponse.suggest_messages?.join('\n'));
   };
   useEffect(() => {
     getAdvance();

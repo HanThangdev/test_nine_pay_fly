@@ -1,9 +1,5 @@
 import ModalComponent from '@/components/Modal';
 import { API_STATUS } from '@/constants';
-import {
-  deleteURLTransaction,
-  getAllURLTransaction,
-} from '@/repository/buildChatBot';
 import { DataQuestionAndAnswerItem } from '@/repository/buildChatBot/type';
 import { useBuildChatbot } from '@/states/buildChatBot/buildChatBot.selector';
 import { deletedListIncludes } from '@/states/buildChatBot/buildChatBot.slice';
@@ -26,7 +22,8 @@ const QuestionAndAnswerItem = ({ item, index }: QuestionAndAnswerItemProps) => {
   const { botInfos } = useSelector((state: RootState) => state.buildChatBot);
   const dispatch = useDispatch<AppDispatch>();
   const { onDeleteQuestionAndAnswer, onGetAllQuestionAndAnswer } = useBuildChatbot();
-  const deleteUrl = async () => {
+  
+  const deleteQuestionAndAnswer = async () => {
     if (!botInfos) {
       return;
     }
@@ -34,7 +31,7 @@ const QuestionAndAnswerItem = ({ item, index }: QuestionAndAnswerItemProps) => {
       const { id } = botInfos;
 
       onDeleteQuestionAndAnswer({
-        question_answer_id: item.id,
+        question_answer_id: [item.id],
         bot_id: id,
       }).then((response) => {
         if (response.meta.requestStatus === API_STATUS.FULFILLED) {
@@ -105,7 +102,7 @@ const QuestionAndAnswerItem = ({ item, index }: QuestionAndAnswerItemProps) => {
             </button>
             <button
               className="flex justify-center rounded bg-[#ef7772] py-2 px-6 font-medium text-white hover:shadow-1"
-              onClick={deleteUrl}
+              onClick={deleteQuestionAndAnswer}
             >
               Delete
             </button>

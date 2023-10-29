@@ -30,12 +30,12 @@ const FileItem = ({ item, index }: FileItemProps) => {
       const { id } = botInfos;
       const { knowledge_base_id } = item;
 
-      onDeleteFileImported({ knowledge_base_id, bot_id: id }).then(
+      onDeleteFileImported({ knowledge_base_id: [knowledge_base_id], bot_id: id }).then(
         (response) => {
           if (response.meta.requestStatus === API_STATUS.FULFILLED) {
             dispatch(deletedListIncludes(index));
             notification.success({
-              message: 'Delete URL success',
+              message: 'Delete File success',
             });
             onGetAllFile({ bot_id: id });
           }

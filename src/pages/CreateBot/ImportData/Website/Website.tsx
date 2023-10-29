@@ -2,7 +2,7 @@ import { ImportURLPayload } from '@/repository/buildChatBot/type';
 import { AppDispatch, RootState } from '@/states/store';
 import { isEmptyObjectOrArray } from '@/utils/utils';
 import { Progress, notification } from 'antd';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { TypeAnimation } from 'react-type-animation';
 import { useBuildChatbot } from '@/states/buildChatBot/buildChatBot.selector';
@@ -216,8 +216,6 @@ const Website = () => {
               item={item}
               key={idx}
               index={idx}
-              setUrlSelected={setUrlSelected}
-              urlSelected={urlSelected}
             />
           ))}
       </div>

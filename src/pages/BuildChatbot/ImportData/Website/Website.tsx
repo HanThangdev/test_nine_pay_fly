@@ -5,20 +5,16 @@ import { Progress, notification } from 'antd';
 import { useEffect, useMemo, useState } from 'react';
 import { AiOutlineQuestionCircle } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
-import { SelectedItem, TextLoadingWebsite } from './type';
 import { TypeAnimation } from 'react-type-animation';
 import { useBuildChatbot } from '@/states/buildChatBot/buildChatBot.selector';
 import LinkItem from '../../Component/LinkItem';
 import { useTranslation } from 'react-i18next';
 import {
-  deletedListIncludes,
   loadFetchLink,
 } from '@/states/buildChatBot/buildChatBot.slice';
 import { validURL } from '@/utils/validate';
 import { API_STATUS } from '@/constants';
 import { formatNumber } from '@/utils/format';
-import ModalComponent from '@/components/Modal';
-import { deleteURLTransaction } from '@/repository/buildChatBot';
 
 const Website = () => {
   const { t } = useTranslation();
@@ -222,8 +218,6 @@ const Website = () => {
               item={item}
               key={idx}
               index={idx}
-              setUrlSelected={setUrlSelected}
-              urlSelected={urlSelected}
             />
           ))}
         {/* <div className='flex justify-end'>

@@ -16,11 +16,13 @@ import {
   IconImport,
   IconUpload,
 } from '@/components/IconGroup/IconGroup';
+import ModalComponent from '@/components/Modal';
 const Files = () => {
   const { t } = useTranslation();
   const [listFileWaitingImport, setListFileWaitingImport] = useState<File[]>(
     [],
   );
+  const [ visibleModalDeleteAll, setVisibleModalDeleteAll ] = useState(false);
   const { includesResource } = useSelector(
     (state: RootState) => state.buildChatBot,
   );
@@ -30,6 +32,7 @@ const Files = () => {
     listIncludesFile,
     loadingFetchFile,
     onGetAllFile,
+    onDeleteFileImported,
   } = useBuildChatbot();
   const UploadToWaitList = useCallback(
     (file: File) => {
@@ -79,12 +82,32 @@ const Files = () => {
     return total;
   }, [listIncludesFile]);
 
-  const listLink = useMemo(() => listIncludesFile, [listIncludesFile]);
+  const listFile = useMemo(() => listIncludesFile, [listIncludesFile]);
 
-  // const includesResourceData = useMemo(
-  //   () => includesResource,
-  //   [includesResource],
-  // );
+  const onDeleteAllFile = () => {
+    if (!botInfos) {
+      return;
+    }
+    try {
+      const { id } = botInfos;
+      const listAllFilePayload = listFile.map(it => it.knowledge_base_id)
+      onDeleteFileImported({
+        knowledge_base_id: listAllFilePayload,
+        bot_id: id,
+      }).then((response) => {
+        if (response.meta.requestStatus === API_STATUS.FULFILLED) {
+          notification.success({
+            message: 'Delete All File success',
+          });
+          onGetAllFile({ bot_id: id });
+        }
+      });
+    } catch (error: any) {
+      notification.error({
+        message: error?.response?.data.errors ?? error?.message,
+      });
+    }
+  }
 
   useEffect(() => {
     onGetAllFile({ bot_id: botInfos?.id });
@@ -168,18 +191,60 @@ const Files = () => {
           );
         })}
       <div>
-        <p className="text-[15px] text-[#344054] mb-2 font-medium flex gap-x-[10px] items-center">
-          {t('Attached', { ns: 'config_bot' })}
-          <span className="text-[#A7A7B0] font-thin">
-            ({formatNumber(totalTokens)} {t('tokens', { ns: 'config_bot' })})
-          </span>
-        </p>
-        {listLink &&
-          !isEmptyObjectOrArray(listLink) &&
-          listLink.map((item, idx) => {
+        <div className="flex justify-between pb-3">
+          <p className="text-[15px] text-[#344054] mb-2 font-medium flex gap-x-[10px] items-center">
+            {t('Attached', { ns: 'config_bot' })}
+            <span className="text-[#A7A7B0] font-thin">
+              ({formatNumber(totalTokens)} {t('tokens', { ns: 'config_bot' })})
+            </span>
+          </p>
+          <div>
+            {!!(listFile.length && listFile.length > 1) && (
+              <div
+                className="p-1 font-bold rounded border-[1px] border-[#FDA29B] ml-1 bg-[#FFF] flex cursor-pointer text-[#B42318]"
+                onClick={() => {
+                  setVisibleModalDeleteAll(true);
+                }}
+              >
+                <IconDelete /> <span>Delete all File</span>
+              </div>
+            )}
+          </div>
+        </div>
+        {listFile &&
+          !isEmptyObjectOrArray(listFile) &&
+          listFile.map((item, idx) => {
             return <FileItem item={item} key={idx} index={idx} />;
           })}
       </div>
+      <ModalComponent
+        title={<div>Delete all Q&A</div>}
+        onCancel={() => {
+          setVisibleModalDeleteAll(false);
+        }}
+        open={visibleModalDeleteAll}
+        centered={true}
+        footer={
+          <div className="flex justify-end gap-4.5">
+            <button
+              className="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
+              onClick={() => setVisibleModalDeleteAll(false)}
+            >
+              Cancel
+            </button>
+            <button
+              className="flex justify-center rounded bg-[#ef7772] py-2 px-6 font-medium text-white hover:shadow-1"
+              onClick={onDeleteAllFile}
+            >
+              Delete
+            </button>
+          </div>
+        }
+      >
+        <div>
+          Are you sure you want to delete all Q&A? This action cannot be undone.
+        </div>
+      </ModalComponent>
     </>
   );
 };
