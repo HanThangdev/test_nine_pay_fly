@@ -67,15 +67,19 @@ const TestConverstation = () => {
               </li>
               <li className="flex items-center gap-x-2">
                 <p className="mb-0 bg-[#667085] w-[5px] h-[5px] rounded-full"></p>
-                {botInfos.gpt_model_name}
+                {botInfos?.gpt_model_name}
               </li>
-              <li className="flex items-center gap-x-2">
-                <p className="mb-0 bg-[#667085] w-[5px] h-[5px] rounded-full"></p>
-                Collect{' '}
-                {Object.keys(botInfos.collect_customer_info).map((key, i) => {
-                  return <span key={key}>{key}, </span>;
-                })}
-              </li>
+              {botInfos?.collect_customer_info && (
+                <li className="flex items-center gap-x-2">
+                  <p className="mb-0 bg-[#667085] w-[5px] h-[5px] rounded-full"></p>
+                  Collect{' '}
+                  {Object.keys(botInfos?.collect_customer_info).map(
+                    (key, i) => {
+                      return <span key={key}>{key}, </span>;
+                    },
+                  )}
+                </li>
+              )}
             </div>
           </div>
           <div className="text-[15px] mt-3">

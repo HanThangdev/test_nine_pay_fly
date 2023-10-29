@@ -1,5 +1,12 @@
 import { useTranslation } from 'react-i18next';
-import { InputNumber, Tooltip, Checkbox, Button, notification } from 'antd';
+import {
+  InputNumber,
+  Tooltip,
+  Checkbox,
+  Button,
+  notification,
+  Input,
+} from 'antd';
 import { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
@@ -127,7 +134,15 @@ const Config = ({ save, step, saveSuccess }: Props) => {
           <MinusOutlined />
         </Button>
         <Button>
-          {messageCount} {t('messages', { ns: 'config_bot' })}
+          <Input
+            type="number"
+            value={messageCount}
+            onChange={(e) => setMessageCount(Number(e.target.value))}
+            className={classNames(
+              'border-none hover:border-none focus:!shadow-none focus:border-[#fcfcfc] h-full bg-[#fcfcfc] w-[35px] text-center !pl-0 !pr-[5px]',
+            )}
+          />
+          {t('messages', { ns: 'config_bot' })}
         </Button>
         <Button className="flex items-center" onClick={increaseBadge}>
           <PlusOutlined />

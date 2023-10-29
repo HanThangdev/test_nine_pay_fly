@@ -40,5 +40,11 @@
   "PreStep": "前のステップ",
   "import": "データをインポート",
   "Advance": "前進",
-  "test": "会話をテストする"
+  "test": "会話をテストする",
+  "listConfig": "構成リスト",
+  "Datanes": "ダテネス",
+  "behavior": "追加された動作",
+  "suggested": "提案された質問を追加しました",
+  "userColor": "カスタム ユーザー チャットの色",
+  "bubbleColor": "カスタムバブルカラー"
 }

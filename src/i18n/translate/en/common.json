@@ -40,5 +40,11 @@
   "PreStep": "Previous step",
   "import": "Import Data",
   "Advance": "Advance",
-  "test": "Test converstation"
+  "test": "Test converstation",
+  "listConfig": "Config list",
+  "Datanes": "Datanes",
+  "behavior": "Added behavior",
+  "suggested": "Added suggested questions",
+  "userColor": "Custom user chat color",
+  "bubbleColor": "Custom bubble color"
 }

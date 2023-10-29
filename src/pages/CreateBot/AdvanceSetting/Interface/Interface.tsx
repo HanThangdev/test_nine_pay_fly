@@ -1,9 +1,11 @@
-import { RootState } from '@/states/store';
+import { RootState, AppDispatch } from '@/states/store';
 import { Avatar, Tooltip } from 'antd';
 import classNames from 'classnames';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IconSticker, IconAttach } from '@/components/IconGroup/IconGroup';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { getAdvanceSettingTransaction } from '@/repository/buildChatBot';
+import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 interface Props {
@@ -14,6 +16,7 @@ interface Props {
   chat_bubble_button_color?: string;
   chat_message_color?: string;
   textbubble?: string;
+  chatbubble?: boolean;
   bot_avatar_url?: string;
   chat_icon_url?: string;
 }
@@ -26,13 +29,16 @@ const Interface = ({
   chat_bubble_button_color,
   theme,
   textbubble,
+  chatbubble,
   bot_avatar_url,
   chat_icon_url,
 }: Props) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch<AppDispatch>();
+  const { id } = useParams();
   const { botInfos } = useSelector((state: RootState) => state.buildChatBot);
   const [dataSet, setDataSet] = useState<any>({
-    bot_id: '',
+    bot_id: botInfos.id,
     initial_message: 'Hello! How can I assist you today?',
     display_name: '',
     align_chat_bubble_button: 'right',
@@ -42,6 +48,30 @@ const Interface = ({
     chat_icon_url:
       'https://app.gpt-trainer.com/img/widget-images/widget-button-open-state/default-chat.svg',
   });
+  const getAdvance = async () => {
+    const res: any = await dispatch(
+      getAdvanceSettingTransaction({ bot_id: botInfos?.id || id }),
+    );
+
+    setDataSet({
+      ...dataSet,
+      display_name: res.payload.data.display_name,
+      initial_message: res.payload.data.initial_message,
+      theme: res.payload.data.theme,
+      suggest_messages: res.payload.data.suggest_messages,
+      bot_avatar_url: res.payload.data.bot_avatar_url,
+      chat_message_color: res.payload.data.chat_message_color,
+      chat_icon_url: res.payload.data.chat_icon_url,
+      chat_bubble_button_color: res.payload.data.chat_bubble_button_color,
+      align_chat_bubble_button: res.payload.data.align_chat_bubble_button,
+      auto_show_initial_message_after:
+        res.payload.data.auto_show_initial_message_after,
+    });
+  };
+
+  useEffect(() => {
+    getAdvance();
+  }, []);
 
   return (
     <>
@@ -89,7 +119,10 @@ const Interface = ({
           <div className="py-5 px-[16px] gap-y-[10px] grid">
             <div className="flex gap-x-2">
               {(dataSet.bot_avatar_url || bot_avatar_url) && (
-                <Avatar src={bot_avatar_url ? bot_avatar_url : dataSet.bot_avatar_url} size="small"/>
+                <Avatar
+                  src={bot_avatar_url ? bot_avatar_url : dataSet.bot_avatar_url}
+                  size="small"
+                />
               )}
               <div className="bg-[#eeeef1] px-3 py-2 rounded-t-lg rounded-br-lg w-fit">
                 {initial_message
@@ -156,7 +189,9 @@ const Interface = ({
         >
           <div
             className={classNames(
-              'rounded-full bg-black flex items-center justify-center p-2 gap-x-2',
+              `${
+                chatbubble ? 'rounded-t-[16px] mb-[-1.25rem]' : 'rounded-full'
+              } bg-black flex items-center justify-center p-2 gap-x-2`,
               {
                 '!rounded-[20px]': textbubble,
               },
@@ -169,9 +204,9 @@ const Interface = ({
                 : '#4AC1FF',
             }}
           >
-            {textbubble}
+            {textbubble ? textbubble : chatbubble && ' Chat with me'}
             <img
-              className="w-[30px] h-[30px] invert"
+              className="w-[30px] h-[20px] invert"
               src={
                 chat_icon_url
                   ? chat_icon_url

@@ -1,5 +1,7 @@
+import { RootState } from '@/states/store';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import Interface from '../Interface';
 import classNames from 'classnames';
 import {
@@ -7,15 +9,34 @@ import {
   IconLight,
   IconUpload,
 } from '@/components/IconGroup/IconGroup';
-import { Switch, Upload, ColorPicker } from 'antd';
+import { Switch, Upload, ColorPicker, notification } from 'antd';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '@/states/store';
+import {
+  getAdvanceSettingTransaction,
+  updateAdvanceSettingTransaction,
+  uploadBotProfilePictureTransaction,
+} from '@/repository/buildChatBot';
+import { API_STATUS } from '@/constants';
+import { useParams } from 'react-router-dom';
 import { RcFile } from 'antd/es/upload';
 import { convertFile2Base64 } from '@/utils/utils';
 
-const Styling = () => {
+interface Props {
+  save?: boolean;
+  step?: string;
+  saveSuccess?: () => void;
+}
+
+const Styling = ({ save, step, saveSuccess }: Props) => {
   const { t } = useTranslation();
+  const { id } = useParams();
+  const dispatch = useDispatch<AppDispatch>();
+  const { botInfos } = useSelector((state: RootState) => state.buildChatBot);
   const [theme, setTheme] = useState('light');
   const [messageColor, setMessageColor] = useState<string>('#4AC1FF');
   const [buttonColor, setButtonColor] = useState<string>('#4AC1FF');
+  const [dataAdvanced, setDataAdvanced] = useState<any>([]);
   const [botAvatarFile, setBotAvatarFile] = useState<File | undefined>();
   const [botAvatarUrl, setBotAvatarUrl] = useState<string>();
   const [botAvatar, setBotAvatar] = useState<string>();
@@ -24,6 +45,7 @@ const Styling = () => {
   const [chatIconUrl, setChatIconUrl] = useState<string>();
   const [chatIcon, setChatIcon] = useState<string>();
   const [chat_icon_url, setChat_icon_url] = useState<string>('');
+  const [chatBubble, setChatBubble] = useState<boolean>(false);
 
   const beforeUpload = async (file: RcFile | File) => {
     setBotAvatarFile(file);
@@ -63,10 +85,146 @@ const Styling = () => {
     setChatIcon(chatIconUrl);
   }, [chatIconUrl]);
 
+  const getAdvance = async () => {
+    const res: any = await dispatch(
+      getAdvanceSettingTransaction({ bot_id: botInfos?.id || id }),
+    );
+    const reponse = res.payload.data;
+    setDataAdvanced(reponse);
+    setMessageColor(reponse.chat_message_color);
+    setButtonColor(reponse.chat_bubble_button_color);
+    setBot_avatar_url(reponse.bot_avatar_url);
+    setChat_icon_url(reponse.chat_icon_url);
+    setTheme(reponse.theme);
+  };
+  useEffect(() => {
+    getAdvance();
+  }, []);
+
+  const onSubmit = async () => {
+    const res: any = botAvatarFile
+      ? await dispatch(
+          uploadBotProfilePictureTransaction({
+            bot_id: botInfos.id,
+            file: botAvatarFile,
+          }),
+        )
+      : '';
+
+    const resIcon: any = chatIconFile
+      ? await dispatch(
+          uploadBotProfilePictureTransaction({
+            bot_id: botInfos.id,
+            file: chatIconFile,
+          }),
+        )
+      : '';
+    try {
+      const payload = {
+        bot_id: botInfos.id,
+        initial_message: dataAdvanced.initial_message,
+        suggest_messages: dataAdvanced.suggest_messages,
+        theme: theme,
+        display_name: dataAdvanced.display_name,
+        bot_avatar_url: res
+          ? res.payload.data.data.url
+          : dataAdvanced.bot_avatar_url,
+        chat_icon_url: resIcon
+          ? resIcon.payload.data.data.url
+          : dataAdvanced.chat_icon_url,
+        chat_bubble_button_color: buttonColor,
+        chat_message_color: messageColor,
+        align_chat_bubble_button: dataAdvanced.align_chat_bubble_button,
+        auto_show_initial_message_after:
+          dataAdvanced.auto_show_initial_message_after,
+      };
+
+      const { meta } = await dispatch(updateAdvanceSettingTransaction(payload));
+
+      if (meta.requestStatus === API_STATUS.REJECTED) {
+        return;
+      }
+      if (saveSuccess) {
+        saveSuccess();
+      }
+      notification.success({
+        message: `${t('AdvancedSuccess', { ns: 'config_bot' })}`,
+      });
+    } catch (error: any) {
+      notification.error({
+        message: error?.response?.data.errors ?? error?.message,
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (save && step === 'styling') {
+      onSubmit();
+    }
+  }, [save, step]);
+
+  const btnColor = [
+    {
+      color: 'bg-[#FB6514]',
+      value: '#FB6514',
+    },
+    {
+      color: 'bg-[#F63D68]',
+      value: '#F63D68',
+    },
+    {
+      color: 'bg-[#EE46BC]',
+      value: '#EE46BC',
+    },
+    {
+      color: 'bg-[#7A5AF8]',
+      value: '#7A5AF8',
+    },
+    {
+      color: 'bg-[#444CE7]',
+      value: '#444CE7',
+    },
+    {
+      color: 'bg-[#1570EF]',
+      value: '#1570EF',
+    },
+    {
+      color: 'bg-[#12B76A]',
+      value: '#12B76A',
+    },
+    {
+      color: 'bg-[#F79009]',
+      value: '#F79009',
+    },
+    {
+      color: 'bg-[#F04438]',
+      value: '#F04438',
+    },
+    {
+      color: 'bg-[#9E77ED]',
+      value: '#9E77ED',
+    },
+    {
+      color: 'bg-[#667085]',
+      value: '#667085',
+    },
+    // 'bg-[#FB6514]',
+    // 'bg-[#F63D68]',
+    // 'bg-[#EE46BC]',
+    // 'bg-[#7A5AF8]',
+    // 'bg-[#444CE7]',
+    // 'bg-[#1570EF]',
+    // 'bg-[#12B76A]',
+    // 'bg-[#F79009]',
+    // 'bg-[#F04438]',
+    // 'bg-[#9E77ED]',
+    // 'bg-[#667085]',
+  ];
+
   return (
     <>
       <div className="flex gap-x-4">
-        <div className="p-4 w-[60%] bg-[#FCFCFC] rounded-xl">
+        <div className="p-4 w-[60%]">
           <div className="text-[15px]">
             <p className="font-medium mb-0 text-[#111827]">
               {t('userColor', { ns: 'config_bot' })}
@@ -74,20 +232,56 @@ const Styling = () => {
             <p className="text-[14px] text-[#9CA3AF]">
               {t('selectColor', { ns: 'config_bot' })}
             </p>
-            <ColorPicker
-              value={messageColor}
-              onChange={(e) => setMessageColor(e.toHexString())}
-            />
+            <div className="flex gap-x-2 justify-items-center">
+              {btnColor.map((it, index) => (
+                <button
+                  key={index}
+                  className={classNames(
+                    `rounded-lg w-5 h-5 p-4 d-inline-flex align-items-center justify-content-center`,
+                    it.color,
+                  )}
+                  onClick={() => setMessageColor(it.value)}
+                />
+              ))}
+              <p className="text-[14px] text-[#9CA3AF] mt-1">or</p>
+              <ColorPicker
+                value={messageColor}
+                onChange={(e) => setMessageColor(e.toHexString())}
+                showText={(color) => (
+                  <span className="text-[14px] text-[#D1D5DB]">
+                    {color.toHexString()}
+                  </span>
+                )}
+              />
+            </div>
           </div>
           <div className="text-[15px] mt-4">
             <p className="font-medium mb-0 text-[#111827]">Chat bubble color</p>
             <p className="text-[14px] text-[#9CA3AF]">
               {t('selectColor', { ns: 'config_bot' })}
             </p>
-            <ColorPicker
-              value={buttonColor}
-              onChange={(e) => setButtonColor(e.toHexString())}
-            />
+            <div className="flex gap-x-2 justify-items-center">
+              {btnColor.map((it, index) => (
+                <button
+                  key={index}
+                  className={classNames(
+                    `rounded-lg w-5 h-5 p-4 d-inline-flex align-items-center justify-content-center`,
+                    it.color,
+                  )}
+                  onClick={() => setButtonColor(it.value)}
+                />
+              ))}
+              <p className="text-[14px] text-[#9CA3AF] mt-1">or</p>
+              <ColorPicker
+                value={buttonColor}
+                onChange={(e) => setButtonColor(e.toHexString())}
+                showText={(color) => (
+                  <span className="text-[14px] text-[#D1D5DB]">
+                    {color.toHexString()}
+                  </span>
+                )}
+              />
+            </div>
           </div>
           <div className="text-[15px] mt-4">
             <p className="font-medium mb-0 text-[#111827]">
@@ -182,9 +376,18 @@ const Styling = () => {
               </p>
             </Upload.Dragger>
           </div>
+          <p className="prompt-bot flex gap-x-[10px] font-medium text-[#111827] items-center mt-4">
+            <Switch
+              size="small"
+              checked={chatBubble}
+              onChange={() => setChatBubble(!chatBubble)}
+            />
+            Chat Bubble
+          </p>
         </div>
         <div className="w-[40%]">
           <Interface
+            chatbubble={chatBubble}
             chat_message_color={messageColor}
             chat_bubble_button_color={buttonColor}
             theme={theme}

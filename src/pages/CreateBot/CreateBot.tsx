@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import Header from '@/components/header';
 import { useTranslation } from 'react-i18next';
 import { Steps, notification } from 'antd';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useBuildChatbot } from '@/states/buildChatBot/buildChatBot.selector';
 import {
   IconConfig,
@@ -26,8 +26,8 @@ import Styling from './AdvanceSetting/Styling';
 import TestConverstation from './TestConverstation';
 import { useNavigate, useParams } from 'react-router-dom';
 import { BotPayload, CustomField } from '@/repository/buildChatBot/type';
-import { AppDispatch } from '@/states/store';
-import { useDispatch } from 'react-redux';
+import { AppDispatch, RootState } from '@/states/store';
+import { useDispatch, useSelector } from 'react-redux';
 import { createBotTransaction } from '@/repository/buildChatBot';
 import { API_STATUS } from '@/constants';
 import { getBotTransaction } from '@/repository/manageChatbot';
@@ -58,6 +58,16 @@ const CreateBot = () => {
     rules: [],
     temperature: 0,
   });
+
+  const { includesResource } = useSelector(
+    (state: RootState) => state.buildChatBot,
+  );
+  const includesResourceData = useMemo(
+    () => includesResource,
+    [includesResource],
+  );
+
+  console.log(includesResourceData);
 
   useEffect(() => {
     if (!nameBot) {
@@ -270,7 +280,13 @@ const CreateBot = () => {
           )}
           <button
             onClick={onSubmit}
-            className="bg-[#2D3FE7] py-[10px] px-4 rounded-lg text-white"
+            disabled={steps === STEP.styling && !includesResourceData}
+            className={classNames(
+              'bg-[#2D3FE7] py-[10px] px-4 rounded-lg text-white',
+              {
+                'opacity-50': steps === STEP.styling && !includesResourceData,
+              },
+            )}
           >
             {steps === STEP.config && !id
               ? `${t('creatbot', { ns: 'config_bot' })}`

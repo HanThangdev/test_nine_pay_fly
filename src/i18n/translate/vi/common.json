@@ -40,5 +40,11 @@
   "PreStep": "Bước phía trước",
   "import": "Nhập dữ liệu",
   "Advance": "Nâng cao",
-  "test": "Thử nghiệm hội thoại"
+  "test": "Thử nghiệm hội thoại",
+  "listConfig": "Danh sách cấu hình",
+  "Datanes": "Dữ liệu",
+  "behavior": "Hành vi được thêm vào",
+  "suggested": "Đã thêm câu hỏi gợi ý",
+  "userColor": "Màu trò chuyện của người dùng tùy chỉnh",
+  "bubbleColor": "Màu bong bóng tùy chỉnh"
 }

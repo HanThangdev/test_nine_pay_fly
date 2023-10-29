@@ -8,7 +8,7 @@ import { setDataWhenUpdate } from '@/states/buildChatBot/buildChatBot.slice';
 import { AppDispatch } from '@/states/store';
 import { useDispatch } from 'react-redux';
 import IconEditing from '@/components/IconEditing/IconEditing';
-import { Tabs, TabsProps, Switch } from 'antd';
+import { Tabs, TabsProps, Switch, notification } from 'antd';
 import BasicInfor from './BasicInfor';
 import Config from './Config';
 import Prompt from './Prompt';
@@ -16,12 +16,19 @@ import ImportData from './ImportData';
 import ChatWidget from './AdvanceSetting/ChatWidget';
 import Styling from './AdvanceSetting/Styling';
 import IntegrationClient from '../BuildChatbot/Integration';
+import TestConverstation from './TestConverstation';
+import {
+  changeActiveChatBotTransaction,
+  getBotTransaction,
+} from '@/repository/manageChatbot';
+import { API_STATUS } from '@/constants';
 
 const EditBot = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { botInfos, onGetInfoCurrentBot, onGetIncludesSource } = useBuildChatbot();
+  const { botInfos, onGetInfoCurrentBot, onGetIncludesSource } =
+    useBuildChatbot();
   const { id } = useParams();
   const [save, setSave] = useState(false);
   const [step, setStep] = useState('');
@@ -75,6 +82,11 @@ const EditBot = () => {
       ),
     },
     {
+      key: 'test',
+      label: `${t('test')}`,
+      children: <TestConverstation />,
+    },
+    {
       key: 'integration',
       label: `${t('Integrations')}`,
       children: <IntegrationClient />,
@@ -100,6 +112,29 @@ const EditBot = () => {
     }
   }, []);
 
+  const onActive = async () => {
+    if (!id) {
+      return;
+    }
+    try {
+      const { meta } = await dispatch(
+        changeActiveChatBotTransaction({ bot_id: id, is_activate: false }),
+      );
+
+      if (meta.requestStatus == API_STATUS.REJECTED) {
+        return;
+      }
+      await dispatch(getBotTransaction());
+      setTimeout(() => {
+        navigate('/');
+      }, 1000);
+    } catch (error: any) {
+      notification.error({
+        message: error?.response?.data.errors ?? error?.message,
+      });
+    }
+  };
+
   return (
     <>
       <Header
@@ -120,19 +155,26 @@ const EditBot = () => {
       <div className="p-[20px] edit-bot">
         <div className="w-full flex justify-between bg-[#FCFCFC] rounded-[12px] py-[12px] px-[16px]">
           <div>
-            <p className="mb-2 text-[20px] text-[#111827]">{botInfos?.bot_name}</p>
+            <p className="mb-2 text-[20px] text-[#111827]">
+              {botInfos?.bot_name}
+            </p>
             <p className="text-[#6B7280] mb-2">
               {t('Limit', { ns: 'config_bot' })}
             </p>
           </div>
           <div className="Switch-bot min-w-[225px] h-full gap-x-4 rounded-[8px] py-2 px-3 flex">
-            <Switch size="small" className="mt-[4px]" />
+            <Switch
+              size="small"
+              className="mt-[4px]"
+              checked={true}
+              onClick={onActive}
+            />
             <p className="mb-0 text-[14px]">
               <span className="text-[#344054] font-medium">
                 {t('Active', { ns: 'manage_bot' })}
               </span>
               <br />
-              {t('inactive', { ns: 'manage_bot' })}
+              {t('active', { ns: 'manage_bot' })}
             </p>
           </div>
         </div>

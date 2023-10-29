@@ -1,3 +1,4 @@
+import { IconDelete } from '@/components/IconGroup/IconGroup';
 import ModalComponent from '@/components/Modal';
 import { API_STATUS } from '@/constants';
 import { DataQuestionAndAnswerItem } from '@/repository/buildChatBot/type';
@@ -8,7 +9,6 @@ import { formatNumber, truncateString } from '@/utils/format';
 import { Tooltip, notification } from 'antd';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { RiDeleteBinLine } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
 
 interface QuestionAndAnswerItemProps {
@@ -21,8 +21,9 @@ const QuestionAndAnswerItem = ({ item, index }: QuestionAndAnswerItemProps) => {
   const [visibleDeleteModal, setVisibleDeleteModal] = useState<boolean>(false);
   const { botInfos } = useSelector((state: RootState) => state.buildChatBot);
   const dispatch = useDispatch<AppDispatch>();
-  const { onDeleteQuestionAndAnswer, onGetAllQuestionAndAnswer } = useBuildChatbot();
-  
+  const { onDeleteQuestionAndAnswer, onGetAllQuestionAndAnswer } =
+    useBuildChatbot();
+
   const deleteQuestionAndAnswer = async () => {
     if (!botInfos) {
       return;
@@ -57,13 +58,13 @@ const QuestionAndAnswerItem = ({ item, index }: QuestionAndAnswerItemProps) => {
         <div className="h-[41px] w-full whitespace-nowrap text-[17px] text-ellipsis">
           <Tooltip title={item.question}>
             <div>
-              <strong>Question:</strong>&ensp; 
+              <strong>Question:</strong>&ensp;
               {truncateString(item.question)}
             </div>
           </Tooltip>
           <Tooltip title={item.answer}>
             <div>
-              <strong>Answer:</strong>&ensp; 
+              <strong>Answer:</strong>&ensp;
               {truncateString(item.answer)}
             </div>
           </Tooltip>
@@ -72,14 +73,14 @@ const QuestionAndAnswerItem = ({ item, index }: QuestionAndAnswerItemProps) => {
           <span className="text-[#A7A7B0 mr-[48px] font-bold text-[15px]">
             ({formatNumber(item.num_token)} {t('tokens', { ns: 'config_bot' })})
           </span>
-          <RiDeleteBinLine
-            className="cursor-pointer"
-            size={18}
-            color="#F44336"
+          <div
+            className="p-1 rounded border-[1px] border-[#FDA29B] ml-1 bg-[#FFF]"
             onClick={() => {
               setVisibleDeleteModal(true);
             }}
-          />
+          >
+            <IconDelete />
+          </div>
         </div>
         {/* <button className="w-[150px] h-[43px] bg-[#4AC1FF;] text-white rounded-[10px] text-[15px] font-bold justify-cente">
             Done
