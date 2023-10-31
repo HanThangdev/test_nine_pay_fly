@@ -28,9 +28,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { BotPayload, CustomField } from '@/repository/buildChatBot/type';
 import { AppDispatch, RootState } from '@/states/store';
 import { useDispatch, useSelector } from 'react-redux';
-import { createBotTransaction } from '@/repository/buildChatBot';
+import {
+  createBotTransaction,
+  updateBotTransaction,
+} from '@/repository/buildChatBot';
 import { API_STATUS } from '@/constants';
 import { getBotTransaction } from '@/repository/manageChatbot';
+import { FinishModalWrapper } from './FinishModal';
 
 enum STEP {
   config,
@@ -43,12 +47,15 @@ enum STEP {
 const CreateBot = () => {
   const { t } = useTranslation();
   const { id } = useParams();
+  const { botInfos } = useSelector((state: RootState) => state.buildChatBot);
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const [custom, setCustom] = useState<CustomField[]>([]);
   const { nameBot, caseStudy, promptExample } = useBuildChatbot();
   const [steps, setSteps] = useState<STEP>(STEP.config);
   const [indexStep, setIndexStep] = useState(0);
+  const [rules, setRules] = useState<Array<string>>(['']);
+  const [save, setSave] = useState(false);
   const [payloadCreateBot, setPayloadCreateBot] = useState<BotPayload>({
     bot_name: nameBot,
     case_study: caseStudy,
@@ -66,8 +73,6 @@ const CreateBot = () => {
     () => includesResource,
     [includesResource],
   );
-
-  console.log(includesResourceData);
 
   useEffect(() => {
     if (!nameBot) {
@@ -108,12 +113,16 @@ const CreateBot = () => {
           ...payloadCreateBot.collect_customer_info,
           ...resultCustom,
         },
+        rules: rules,
+        temperature: payloadCreateBot.temperature,
+        custom_prompt: payloadCreateBot.custom_prompt,
       };
       const response = await dispatch(createBotTransaction(payloadFinal));
       const { meta, payload }: any = response;
       if (meta.requestStatus === API_STATUS.REJECTED) {
         return;
       }
+      setSave(false);
       navigate(`/create-bot/${payload?.data?.id}`);
       notification.success({
         message: `${t('createSuccess', { ns: 'config_bot' })}`,
@@ -126,11 +135,56 @@ const CreateBot = () => {
     }
   };
 
+  const onUpdateBot = async () => {
+    if (!id) {
+      return;
+    }
+
+    try {
+      const resultCustom: Record<string, boolean> = custom.reduce(
+        (acc: any, item) => {
+          acc[item.key] = true;
+          return acc;
+        },
+        {},
+      );
+      const updateBotPayload = {
+        ...payloadCreateBot,
+        collect_customer_info: {
+          ...payloadCreateBot.collect_customer_info,
+          ...resultCustom,
+        },
+        rules: rules,
+        temperature: payloadCreateBot.temperature,
+        custom_prompt: payloadCreateBot.custom_prompt,
+        user_id: botInfos.user_id,
+        id: id,
+      };
+      const response = await dispatch(updateBotTransaction(updateBotPayload));
+      const { meta }: any = response;
+      if (meta.requestStatus === API_STATUS.REJECTED) {
+        return;
+      }
+      setSave(false);
+      dispatch(getBotTransaction());
+    } catch (error: any) {
+      notification.error({
+        message: error?.response?.data.errors ?? error?.message,
+      });
+    }
+  };
+
   const onSubmit = () => {
     if (steps === STEP.config && !id) {
       onCreateBot();
     }
-    setSteps(steps + 1);
+    if (steps === STEP.config && id) {
+      onUpdateBot();
+    }
+    setSave(true);
+    setTimeout(() => {
+      setSteps(steps + 1);
+    }, 1000);
   };
 
   return (
@@ -254,11 +308,25 @@ const CreateBot = () => {
               payloadCreateBot={payloadCreateBot}
               setCustom={setCustom}
               custom={custom}
+              rules={rules}
+              setRules={setRules}
             />
           )}
           {steps === STEP.import_data && <ImportData />}
-          {steps === STEP.advance && <ChatWidget />}
-          {steps === STEP.styling && <Styling />}
+          {steps === STEP.advance && (
+            <ChatWidget
+              save={save}
+              saveSuccess={() => setSave(false)}
+              step={steps}
+            />
+          )}
+          {steps === STEP.styling && (
+            <Styling
+              save={save}
+              saveSuccess={() => setSave(false)}
+              step={steps}
+            />
+          )}
           {steps === STEP.test_converstation && <TestConverstation />}
         </div>
       </div>
@@ -278,20 +346,36 @@ const CreateBot = () => {
               {t('PreStep')}
             </button>
           )}
-          <button
-            onClick={onSubmit}
-            disabled={steps === STEP.styling && !includesResourceData}
-            className={classNames(
-              'bg-[#2D3FE7] py-[10px] px-4 rounded-lg text-white',
-              {
-                'opacity-50': steps === STEP.styling && !includesResourceData,
-              },
-            )}
-          >
-            {steps === STEP.config && !id
-              ? `${t('creatbot', { ns: 'config_bot' })}`
-              : `${t('NextStep')}`}
-          </button>
+          {steps !== STEP.test_converstation && (
+            <button
+              onClick={onSubmit}
+              disabled={steps === STEP.styling && !includesResourceData}
+              className={classNames(
+                'bg-[#2D3FE7] py-[10px] px-4 rounded-lg text-white',
+                {
+                  'opacity-50': steps === STEP.styling && !includesResourceData,
+                },
+              )}
+            >
+              {steps === STEP.config && !id
+                ? `${t('creatbot', { ns: 'config_bot' })}`
+                : `${t('NextStep')}`}
+            </button>
+          )}
+          {steps === STEP.test_converstation && (
+            <FinishModalWrapper>
+              {({ onOpen }) => (
+                <button
+                  className={classNames(
+                    'bg-[#2D3FE7] py-[10px] px-4 rounded-lg text-white',
+                  )}
+                  onClick={onOpen}
+                >
+                  {t('Finish')}
+                </button>
+              )}
+            </FinishModalWrapper>
+          )}
         </div>
       </div>
     </>

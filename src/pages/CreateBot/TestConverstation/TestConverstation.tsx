@@ -142,7 +142,7 @@ const TestConverstation = () => {
               {dataSet?.initial_message && (
                 <li className="flex items-center gap-x-2">
                   <p className="mb-0 bg-[#667085] w-[5px] h-[5px] rounded-full"></p>
-                  {t('chat_bubble_button_color')}
+                  {t('bubbleColor')}
                 </li>
               )}
             </div>

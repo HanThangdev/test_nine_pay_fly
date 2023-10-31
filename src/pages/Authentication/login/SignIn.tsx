@@ -91,7 +91,7 @@ const SignIn = () => {
     <>
       <div className="h-full auth-background bg-cover min-h-screen shadow-default">
         <div className="h-full flex flex-wrap items-center w-full xl:w-[80%] m-auto">
-          <div className="w-[full] flex justify-center border-stroke dark:border-strokedark lg:w-1/2">
+          <div className="w-full flex justify-center border-stroke dark:border-strokedark lg:w-1/2">
             <div className="w-fit bg-[#37415194] p-[24px] rounded-[24px]">
               <div className="flex justify-center items-center">
                 <Image

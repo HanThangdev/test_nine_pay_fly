@@ -22,9 +22,17 @@ import { useParams } from 'react-router-dom';
 import { RcFile } from 'antd/es/upload';
 import { convertFile2Base64 } from '@/utils/utils';
 
+enum STEP {
+  config,
+  import_data,
+  advance,
+  styling,
+  test_converstation,
+}
+
 interface Props {
   save?: boolean;
-  step?: string;
+  step?: STEP;
   saveSuccess?: () => void;
 }
 
@@ -147,9 +155,6 @@ const Styling = ({ save, step, saveSuccess }: Props) => {
       if (saveSuccess) {
         saveSuccess();
       }
-      notification.success({
-        message: `${t('AdvancedSuccess', { ns: 'config_bot' })}`,
-      });
     } catch (error: any) {
       notification.error({
         message: error?.response?.data.errors ?? error?.message,
@@ -158,7 +163,7 @@ const Styling = ({ save, step, saveSuccess }: Props) => {
   };
 
   useEffect(() => {
-    if (save && step === 'styling') {
+    if (save && step === STEP.styling) {
       onSubmit();
     }
   }, [save, step]);

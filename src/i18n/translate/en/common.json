@@ -46,5 +46,8 @@
   "behavior": "Added behavior",
   "suggested": "Added suggested questions",
   "userColor": "Custom user chat color",
-  "bubbleColor": "Custom bubble color"
+  "bubbleColor": "Custom bubble color",
+  "Finish": "Finish",
+  "createFinish": "Your bot have been created",
+  "gotoManager": "Go to bot manager"
 }

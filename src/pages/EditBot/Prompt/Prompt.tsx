@@ -7,6 +7,7 @@ import { AppDispatch, RootState } from '@/states/store';
 import { isEmptyObjectOrArray } from '@/utils/utils';
 import { updateBotTransaction } from '@/repository/buildChatBot';
 import { API_STATUS } from '@/constants';
+import { IconAdd, IconDelete } from '@/components/IconGroup/IconGroup';
 
 interface Props {
   save: boolean;
@@ -20,11 +21,22 @@ const Prompt = ({ save, step, saveSuccess }: Props) => {
   const { botInfos } = useSelector((state: RootState) => state.buildChatBot);
   const [promptExample, setPromptExample] = useState('');
   const [creativity, setCreativity] = useState(0);
+  const [rules, setRules] = useState<Array<string>>(['']);
+
+  const addItem = () => {
+    setRules([...rules, '']);
+  };
+  const removeItem = (index: any) => {
+    const rows = [...rules];
+    rows.splice(index, 1);
+    setRules(rows);
+  };
 
   useEffect(() => {
     if (!isEmptyObjectOrArray(botInfos)) {
       setPromptExample(botInfos.custom_prompt);
       setCreativity(botInfos.temperature);
+      setRules(botInfos.rules);
     }
   }, [botInfos]);
 
@@ -34,7 +46,7 @@ const Prompt = ({ save, step, saveSuccess }: Props) => {
         bot_name: botInfos.bot_name,
         case_study: botInfos.case_study,
         collect_customer_info: botInfos?.collect_customer_info,
-        rules: botInfos.rules,
+        rules: rules,
         gpt_model_name: botInfos.model,
         temperature: creativity,
         custom_prompt: promptExample,
@@ -151,6 +163,68 @@ const Prompt = ({ save, step, saveSuccess }: Props) => {
           </span>
         </Tooltip>
       </p>
+      <div className="flex justify-between mb-3">
+        <p className="w-[240px] mb-0 flex gap-x-[10px] font-bold items-center">
+          {t('Rules', { ns: 'config_bot' })}
+          <Tooltip
+            color="#212121"
+            placement="rightTop"
+            overlayStyle={{ whiteSpace: 'pre-line', width: '400px' }}
+            title={t('tooltipRule', { ns: 'config_bot' })}
+          >
+            <span className="w-3 mt-[1px]">
+              <IconTip />
+            </span>
+          </Tooltip>
+        </p>
+        <button
+          onClick={addItem}
+          className=" bg-white text-[#344054] flex items-center rounded-[8px] border-[1px] border-[#D0D5DD] py-1 px-2 text-[14px] font-bold"
+        >
+          <IconAdd />
+          {t('addRule', { ns: 'config_bot' })}
+        </button>
+      </div>
+
+      {rules.map((_item: string, index: number) => (
+        <div
+          key={index}
+          className="flex items-center justify-between gap-x-2 mt-[12px] pr-2 rounded-lg border border-[#DCDEED] bg-[#ffffffeb]"
+        >
+          <input
+            type="text"
+            value={_item}
+            placeholder={
+              index !== 0
+                ? `${t('Newrule', { ns: 'config_bot' })}`
+                : `${t('notRespond', { ns: 'config_bot' })}`
+            }
+            onChange={(e) => {
+              const newRules = Array.from(rules).map((_, idx) => {
+                if (index === idx) {
+                  return e.target.value; // Thay đổi giá trị "b" thành "d"
+                }
+                return _;
+              });
+              setRules(newRules);
+            }}
+            className={`${
+              index !== 0 || 'mt-[12px'
+            } h-[41px] w-full rounded-[8px] px-4 outline-none focus:border-primary focus-visible:shadow-none`}
+          />
+
+          <div className="cursor-pointer">
+            {index !== 0 && (
+              <div
+                className="cursor-pointer p-1 rounded border-[1px] h-fit border-[#FDA29B] ml-1 bg-[#FFF]"
+                onClick={() => removeItem(index)}
+              >
+                <IconDelete />
+              </div>
+            )}
+          </div>
+        </div>
+      ))}
     </div>
   );
 };

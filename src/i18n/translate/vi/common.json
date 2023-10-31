@@ -46,5 +46,8 @@
   "behavior": "Hành vi được thêm vào",
   "suggested": "Đã thêm câu hỏi gợi ý",
   "userColor": "Màu trò chuyện của người dùng tùy chỉnh",
-  "bubbleColor": "Màu bong bóng tùy chỉnh"
+  "bubbleColor": "Màu bong bóng tùy chỉnh",
+  "Finish": "Kết thúc",
+  "createFinish": "Bot của bạn đã được tạo",
+  "gotoManager": "Vào trình quản lý bot"
 }

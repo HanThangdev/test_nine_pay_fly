@@ -189,5 +189,6 @@
   "Enter": "Enter",
   "copy": "Copy to clipboard.",
   "enterName": "Please enter a name for this chatbot",
-  "creatbot": " Create Bot"
+  "creatbot": " Create Bot",
+  "addRule": "Add rule"
 }

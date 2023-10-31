@@ -186,5 +186,6 @@
   "Enter": "Nhập",
   "copy": "Sao chép vào clipboard.",
   "enterName": "Vui lòng nhập tên cho chatbot này",
-  "creatbot": "Tạo bot"
+  "creatbot": "Tạo bot",
+  "addRule": "Thêm quy tắc"
 }

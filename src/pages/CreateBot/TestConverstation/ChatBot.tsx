@@ -94,7 +94,14 @@ const ChatBot = () => {
     if (message.sender_type === 'user') {
       return (
         <div className="w-full justify-end flex" key={index}>
-          <p className="bg-[#D1EFFF] p-2 rounded-t-lg rounded-bl-lg w-fit">
+          <p
+            className="p-2 rounded-t-lg text-white rounded-bl-lg w-fit"
+            style={{
+              background: dataSet.chat_message_color
+                ? dataSet.chat_message_color
+                : '#D1EFFF',
+            }}
+          >
             {convertStringToParagraphs(message.content)}
           </p>
         </div>

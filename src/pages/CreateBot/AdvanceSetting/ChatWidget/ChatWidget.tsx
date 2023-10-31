@@ -1,25 +1,103 @@
+import { RootState, AppDispatch } from '@/states/store';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector, useDispatch } from 'react-redux';
 import Interface from '../Interface';
-import { Switch } from 'antd';
+import {
+  getAdvanceSettingTransaction,
+  updateAdvanceSettingTransaction,
+} from '@/repository/buildChatBot';
+import { useParams } from 'react-router-dom';
+import { Switch, notification } from 'antd';
+import { API_STATUS } from '@/constants';
 
-const ChatWidget = () => {
+enum STEP {
+  config,
+  import_data,
+  advance,
+  styling,
+  test_converstation,
+}
+
+interface Props {
+  save: boolean;
+  step: STEP;
+  saveSuccess: () => void;
+}
+
+const ChatWidget = ({ save, step, saveSuccess }: Props) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch<AppDispatch>();
+  const { botInfos } = useSelector((state: RootState) => state.buildChatBot);
+  const { id } = useParams();
   const [displayName, setDisplayName] = useState('');
-  const [initialMessages, setinitialMessages] = useState('');
+  const [initialMessages, setinitialMessages] = useState(
+    'Hello! How can I assist you today?',
+  );
   const [suggestMessages, setSuggestMessages] = useState('');
   const [suggestArray, setSuggestArray] = useState<any>([]);
+  const [dataAdvanced, setDataAdvanced] = useState<any>([]);
   const [textbubble, setTextbubble] = useState('');
+
+  const getAdvance = async () => {
+    const res: any = await dispatch(
+      getAdvanceSettingTransaction({ bot_id: botInfos?.id || id }),
+    );
+    const reponse = res.payload.data;
+    setDataAdvanced(reponse);
+    setDisplayName(reponse.display_name);
+    setinitialMessages(reponse.initial_message);
+    setSuggestMessages(reponse.suggest_messages?.join('\n'));
+  };
+  useEffect(() => {
+    getAdvance();
+  }, []);
 
   useEffect(() => {
     const newArray = suggestMessages?.split('\n').filter((item) => item !== '');
     setSuggestArray(newArray);
   }, [suggestMessages]);
 
+  const onSubmit = async () => {
+    try {
+      const payload = {
+        bot_id: botInfos.id,
+        initial_message: initialMessages,
+        suggest_messages: suggestArray,
+        theme: dataAdvanced.theme,
+        display_name: displayName,
+        bot_avatar_url: dataAdvanced.bot_avatar_url,
+        chat_icon_url: dataAdvanced.chat_icon_url,
+        chat_bubble_button_color: dataAdvanced.chat_bubble_button_color,
+        chat_message_color: dataAdvanced.chat_message_color,
+        align_chat_bubble_button: dataAdvanced.align_chat_bubble_button,
+        auto_show_initial_message_after:
+          dataAdvanced.auto_show_initial_message_after,
+      };
+
+      const { meta } = await dispatch(updateAdvanceSettingTransaction(payload));
+
+      if (meta.requestStatus === API_STATUS.REJECTED) {
+        return;
+      }
+      saveSuccess();
+    } catch (error: any) {
+      notification.error({
+        message: error?.response?.data.errors ?? error?.message,
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (save && step === STEP.advance) {
+      onSubmit();
+    }
+  }, [save, step]);
+
   return (
     <>
       <div className="flex gap-x-4">
-        <div className="p-4 w-[60%] bg-[#FCFCFC] rounded-xl">
+        <div className="p-4 w-[60%]">
           <div className="text-[15px]">
             <p className="font-medium mb-[8px] text-[#344054]">
               {t('DisplayName', { ns: 'config_bot' })}

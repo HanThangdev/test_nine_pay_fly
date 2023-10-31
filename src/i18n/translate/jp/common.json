@@ -46,5 +46,8 @@
   "behavior": "追加された動作",
   "suggested": "提案された質問を追加しました",
   "userColor": "カスタム ユーザー チャットの色",
-  "bubbleColor": "カスタムバブルカラー"
+  "bubbleColor": "カスタムバブルカラー",
+  "Finish": "終了",
+  "createFinish": "ボットが作成されました",
+  "gotoManager": "ボット マネージャーに移動"
 }
