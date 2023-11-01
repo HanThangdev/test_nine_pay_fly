@@ -88,7 +88,7 @@ const ManageChatbot = () => {
 
   useEffect(() => {
     setBotsActive(
-      ownerChatbot.filter((item: any) => item.is_activate === true),
+      ownerChatbot.filter((item: any) => item.is_activate === true && !item.is_deleted),
     );
   }, [ownerChatbot]);
 
@@ -182,7 +182,7 @@ const ManageChatbot = () => {
                     {t('Activebot', { ns: 'manage_bot' })}
                   </p>
                   <p className="mb-0">
-                    {botsActive.length}/{ownerChatbot.length}{' '}
+                    {botsActive.length}/{ownerChatbot.filter(it => !it.is_deleted).length}{' '}
                     {t('bots', { ns: 'manage_bot' })}
                   </p>
                 </div>
@@ -234,9 +234,9 @@ const ManageChatbot = () => {
               <Loader className={classNames('col-span-3')} />
             ) : (
               !isEmptyObjectOrArray(ownerChatbot) &&
-              ownerChatbot.map((_, index) => (
-                <ChatbotElement info={_} key={index} />
-              ))
+              ownerChatbot.map((_, index) => {
+                return !_.is_deleted ? <ChatbotElement info={_} key={index} /> : <></>
+              })
             )}
           </div>
         </div>

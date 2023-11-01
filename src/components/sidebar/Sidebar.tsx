@@ -85,6 +85,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       await authRepository.logout();
       cookies.remove('access_token', { path: '/' });
       dispatch(resetStateAuth());
+      dispatch(resetStateBuild());
       removeLocalStorage(STORAGE.USER_ID);
     } catch (error: any) {
       notification.error({

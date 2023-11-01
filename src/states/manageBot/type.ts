@@ -8,6 +8,7 @@ export interface ResponseManageChatbot{
     case_study: number,
     id: string,
     is_activate: boolean,
+    is_deleted: boolean,
     updated_by: string,
     updated_at: string,
     user_id: string,
