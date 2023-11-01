@@ -86,6 +86,8 @@
   "Initial": "初めのメッセージ",
   "InitialConv": "初めのメッセージ",
   "EnterEach": "新しい行に各メッセージを入力します。",
+  "EnterDescription": "説明を入力してください...",
+  "EgHelp": "例: 私は手伝うためにここにいます",
   "AutoShow": "～メッセージ後、初めのメッセージを自動的に表示します。",
   "SuggesttedMess": "おすすめのメッセージ",
   "ListDomainYouCanEmbed": "埋め込みが許可されるドメイン",

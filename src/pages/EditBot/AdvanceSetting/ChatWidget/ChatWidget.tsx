@@ -26,6 +26,7 @@ const ChatWidget = ({ save, step, saveSuccess }: Props) => {
   const [initialMessages, setinitialMessages] = useState('');
   const [suggestMessages, setSuggestMessages] = useState('');
   const [suggestArray, setSuggestArray] = useState<any>([]);
+  const [initialArray, setInitialArray] = useState<any>([]);
   const [dataAdvanced, setDataAdvanced] = useState<any>([]);
   const [textbubble, setTextbubble] = useState('');
 
@@ -44,9 +45,20 @@ const ChatWidget = ({ save, step, saveSuccess }: Props) => {
   }, []);
 
   useEffect(() => {
-    const newArray = suggestMessages?.split('\n').filter((item) => item !== '');
-    setSuggestArray(newArray);
-  }, [suggestMessages]);
+    if (suggestMessages) {
+      const newArray = suggestMessages
+        ?.split('\n')
+        .filter((item) => item !== '');
+      setSuggestArray(newArray);
+    }
+
+    if (initialMessages) {
+      const newArray = initialMessages
+        ?.split('\n')
+        .filter((item) => item !== '');
+      setInitialArray(newArray);
+    }
+  }, [suggestMessages, initialMessages]);
 
   const onSubmit = async () => {
     try {
@@ -152,7 +164,7 @@ const ChatWidget = ({ save, step, saveSuccess }: Props) => {
         <div className="w-[40%]">
           <Interface
             display_name={displayName}
-            initial_message={initialMessages}
+            initial_message={initialArray}
             suggest_messages={suggestArray}
             textbubble={textbubble}
           />

@@ -88,6 +88,8 @@
   "Initial": "Initial Messages",
   "InitialConv": "Initial Message",
   "EnterEach": "Enter each message in a new line",
+  "EnterDescription": "Enter a description...",
+  "EgHelp": "eg: I'm here to help",
   "AutoShow": "Auto show initial messages after",
   "SuggesttedMess": "Suggestted Messages",
   "ListDomainYouCanEmbed": "Domains allowed embed",

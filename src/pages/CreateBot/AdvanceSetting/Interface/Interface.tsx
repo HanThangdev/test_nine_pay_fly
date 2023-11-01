@@ -7,9 +7,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getAdvanceSettingTransaction } from '@/repository/buildChatBot';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import iconBot from '@/images/icon/icon-bot.svg';
 
 interface Props {
-  initial_message?: string;
+  initial_message?: string[];
   suggest_messages?: string[];
   display_name?: string;
   theme?: string;
@@ -39,12 +40,13 @@ const Interface = ({
   const { botInfos } = useSelector((state: RootState) => state.buildChatBot);
   const [dataSet, setDataSet] = useState<any>({
     bot_id: botInfos.id,
-    initial_message: 'Hello! How can I assist you today?',
-    display_name: '',
+    initial_message: ['Hello! How can I assist you today?'],
+    display_name: 'Chat Bot 1',
     align_chat_bubble_button: 'right',
     auto_show_initial_message_after: 0,
     chat_message_color: '#4AC1FF',
     chat_bubble_button_color: '#4AC1FF',
+    bot_avatar_url: iconBot,
     chat_icon_url:
       'https://app.gpt-trainer.com/img/widget-images/widget-button-open-state/default-chat.svg',
   });
@@ -98,6 +100,7 @@ const Interface = ({
               )}
             >
               {display_name ? display_name : dataSet.display_name}
+              <span className="w-2.5 h-2.5 bg-[#219653] rounded-full"></span>
             </p>
             <p className="mb-0 cursor-pointer bg-[#F3F4F6] rounded-lg p-1">
               <svg
@@ -116,37 +119,45 @@ const Interface = ({
               </svg>
             </p>
           </div>
-          <div className="py-5 px-[16px] gap-y-[10px] grid">
-            <div className="flex gap-x-2">
-              {(dataSet.bot_avatar_url || bot_avatar_url) && (
-                <Avatar
-                  src={bot_avatar_url ? bot_avatar_url : dataSet.bot_avatar_url}
-                  size="small"
-                />
-              )}
-              <div className="bg-[#eeeef1] px-3 py-2 rounded-t-lg rounded-br-lg w-fit">
-                {initial_message
-                  ? initial_message
-                  : dataSet.initial_message
-                  ? dataSet.initial_message
-                  : 'Hello! How can I assist you today?'}
+          <div className=" overflow-x-scroll h-[350px]">
+            {(initial_message?.length !== 0
+              ? initial_message
+              : dataSet.initial_message
+            )?.map((item: any, index: any) => (
+              <div key={index} className="py-5 px-[16px] gap-y-[10px] grid">
+                <div className="flex gap-x-2">
+                  {(dataSet.bot_avatar_url || bot_avatar_url) && (
+                    <Avatar
+                      className="mt-2"
+                      src={
+                        bot_avatar_url ? bot_avatar_url : dataSet.bot_avatar_url
+                      }
+                      size="small"
+                    />
+                  )}
+
+                  <div className="bg-[#eeeef1] px-3 py-2 rounded-t-lg rounded-br-lg w-90 break-words">
+                    {item}
+                  </div>
+                </div>
+                <div className="w-full justify-end flex">
+                  <p
+                    className="px-3 py-2 mt-4 text-white rounded-t-lg rounded-bl-lg w-fit"
+                    style={{
+                      background: chat_message_color
+                        ? chat_message_color
+                        : dataSet.chat_message_color
+                        ? dataSet.chat_message_color
+                        : '#D7E4FD',
+                    }}
+                  >
+                    Hi
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="w-full justify-end flex">
-              <p
-                className="px-3 py-2 text-white rounded-t-lg rounded-bl-lg w-fit"
-                style={{
-                  background: chat_message_color
-                    ? chat_message_color
-                    : dataSet.chat_message_color
-                    ? dataSet.chat_message_color
-                    : '#D7E4FD',
-                }}
-              >
-                Hi
-              </p>
-            </div>
+            ))}
           </div>
+
           <div className="absolute bottom-[62px] flex gap-x-3 py-2 px-4 overflow-x-auto w-full">
             {(suggest_messages
               ? suggest_messages
