@@ -398,7 +398,7 @@ export const deleteQuestionAndAnswerTransaction = createAsyncThunk(
         question_answer_ids: [...question_answer_id]
       }
       const response = await http.delete<SuccessResponse<string>>(
-        `/api/scraping/question-answer`,
+        `/api/scraping/question-answer/${bot_id}`,
         {
           data: payloadFinal
         }

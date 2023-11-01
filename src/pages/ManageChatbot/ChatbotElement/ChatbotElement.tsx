@@ -108,7 +108,13 @@ const ChatbotElement = ({ info }: ChatbotElementProps) => {
   };
 
   const redirectToUpdateBot = () => {
-    const { id } = info;
+    const { id, is_activate } = info;
+    if(!is_activate){
+      notification.warning({
+        message: "Bot is not active, please activate the bot"
+      });
+      return;
+    }
     dispatch(resetStateBuild());
     navigate(`/edit-chatbot/${id}`);
   };
@@ -135,30 +141,24 @@ const ChatbotElement = ({ info }: ChatbotElementProps) => {
       </div>
       <div className="w-full">
         <div className="flex justify-between items-start">
-          {info.is_activate ? (
-            <button
-              className="text-[20px] text-[#111827]"
-              onClick={redirectToUpdateBot}
-            >
-              {info.bot_name}
-            </button>
-          ) : (
-            <p className="text-[20px] text-[#111827] mb-0">{info.bot_name}</p>
-          )}
-
+          <p className="text-[20px] text-[#111827] mb-0">{info.bot_name}</p>
           <div className="flex gap-x-2">
             <p
-              className="cursor-pointer items-center mb-0 flex gap-x-1 bg-[#FFF] py-2 px-3 border-[1px] border-[#D0D5DD] text-[14px] text-[#374151] rounded-[8px]"
-              onClick={() => setVisibleShareModal(true)}
+              className={classNames(" items-center mb-0 flex gap-x-1 bg-[#FFF] py-2 px-3 border-[1px] border-[#D0D5DD] text-[14px] text-[#374151] rounded-[8px]", {
+                'opacity-50': !info.is_activate,
+                'cursor-pointer': info.is_activate
+              })}
+              onClick={() => info.is_activate && setVisibleShareModal(true)}
             >
               <IconShare />
               {t('Share', { ns: 'manage_bot' })}
             </p>
             <p
               className={classNames(
-                'cursor-pointer items-center mb-0 flex gap-x-1 bg-[#FFF] py-2 px-3 border-[1px] border-[#D0D5DD] text-[14px] text-[#374151] rounded-[8px]',
+                'items-center mb-0 flex gap-x-1 bg-[#FFF] py-2 px-3 border-[1px] border-[#D0D5DD] text-[14px] text-[#374151] rounded-[8px]',
                 {
                   'opacity-50': !info.is_activate,
+                  'cursor-pointer': info.is_activate
                 },
               )}
               onClick={() => info.is_activate && redirectToUpdateBot()}

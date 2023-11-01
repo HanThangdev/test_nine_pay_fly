@@ -112,22 +112,19 @@ const EditBot = () => {
     }
   }, []);
 
-  const onActive = async () => {
+  const onToogleActive = async () => {
     if (!id) {
       return;
     }
     try {
       const { meta } = await dispatch(
-        changeActiveChatBotTransaction({ bot_id: id, is_activate: false }),
+        changeActiveChatBotTransaction({ bot_id: id, is_activate: !botInfos?.is_activate }),
       );
 
       if (meta.requestStatus == API_STATUS.REJECTED) {
         return;
       }
       await dispatch(getBotTransaction());
-      setTimeout(() => {
-        navigate('/');
-      }, 1000);
     } catch (error: any) {
       notification.error({
         message: error?.response?.data.errors ?? error?.message,
@@ -166,8 +163,8 @@ const EditBot = () => {
             <Switch
               size="small"
               className="mt-[4px]"
-              checked={true}
-              onClick={onActive}
+              checked={botInfos?.is_activate}
+              onClick={onToogleActive}
             />
             <p className="mb-0 text-[14px]">
               <span className="text-[#344054] font-medium">
