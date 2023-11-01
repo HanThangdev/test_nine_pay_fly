@@ -23,7 +23,9 @@ const ChatWidget = ({ save, step, saveSuccess }: Props) => {
   const { botInfos } = useSelector((state: RootState) => state.buildChatBot);
   const { id } = useParams();
   const [displayName, setDisplayName] = useState('');
-  const [initialMessages, setinitialMessages] = useState('');
+  const [initialMessages, setinitialMessages] = useState(
+    'Hello! How can I assist you today?',
+  );
   const [suggestMessages, setSuggestMessages] = useState('');
   const [suggestArray, setSuggestArray] = useState<any>([]);
   const [initialArray, setInitialArray] = useState<any>([]);
@@ -83,9 +85,6 @@ const ChatWidget = ({ save, step, saveSuccess }: Props) => {
         return;
       }
       saveSuccess();
-      notification.success({
-        message: `${t('AdvancedSuccess', { ns: 'config_bot' })}`,
-      });
     } catch (error: any) {
       notification.error({
         message: error?.response?.data.errors ?? error?.message,
@@ -109,7 +108,7 @@ const ChatWidget = ({ save, step, saveSuccess }: Props) => {
             </p>
             <input
               type="text"
-              placeholder=""
+              placeholder={`${t('EgHelp', { ns: 'config_bot' })}`}
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
               className="h-[41px] w-full rounded-[8px] border border-[#D0D5DD] bg-[#FFF] px-4 outline-none focus:border-primary focus-visible:shadow-none"
@@ -119,11 +118,10 @@ const ChatWidget = ({ save, step, saveSuccess }: Props) => {
             <p className="font-medium mb-[8px] text-[#344054]">
               {t('Initial', { ns: 'config_bot' })}
             </p>
-            <input
-              type="text"
-              placeholder=""
+            <textarea
+              placeholder={`${t('EnterDescription', { ns: 'config_bot' })}`}
               value={initialMessages}
-              className="h-[41px] w-full rounded-[8px] border border-[#D0D5DD] bg-[#FFF] px-4 outline-none focus:border-primary focus-visible:shadow-none"
+              className="h-[64px] px-3.5 py-2.5 w-full rounded-[8px] border border-[#D0D5DD] bg-[#FFF] outline-none focus:border-primary focus-visible:shadow-none"
               onChange={(e) => setinitialMessages(e.target.value)}
             />
             <p className="mt-[12px] text-[#A7A7B0]">
@@ -135,10 +133,10 @@ const ChatWidget = ({ save, step, saveSuccess }: Props) => {
               {t('SuggesttedMess', { ns: 'config_bot' })}
             </p>
             <textarea
-              placeholder=""
+              placeholder={`${t('EnterDescription', { ns: 'config_bot' })}`}
               value={suggestMessages}
               // value={suggestArray}
-              className="h-[100px] w-full rounded-[8px] border border-[#D0D5DD] bg-[#FFF] px-4 outline-none focus:border-primary focus-visible:shadow-none"
+              className="h-[64px] px-3.5 py-2.5 w-full rounded-[8px] border border-[#D0D5DD] bg-[#FFF] outline-none focus:border-primary focus-visible:shadow-none"
               onChange={(e) => setSuggestMessages(e.target.value)}
             />
             <p className="mt-[12px] text-[#A7A7B0]">

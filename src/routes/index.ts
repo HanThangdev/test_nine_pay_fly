@@ -30,6 +30,7 @@ const TermsOfService = lazy(
 const PrivacyPolicy = lazy(() => import('../pages/PageSupport/PrivacyPolicy'));
 const Help = lazy(() => import('../pages/PageSupport/Help'));
 const AnalysisBot = lazy(() => import('../pages/AnalysisBot'));
+const Checkout = lazy(() => import('../pages/Checkout'));
 
 const coreRoutes = [
   {
@@ -169,6 +170,12 @@ const coreRoutes = [
     path: '/analysis',
     title: 'Analysis',
     component: AnalysisBot,
+    layout: DefaultLayout,
+  },
+  {
+    path: '/checkout',
+    title: 'Checkout',
+    component: Checkout,
     layout: DefaultLayout,
   },
 ];
