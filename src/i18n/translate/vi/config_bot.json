@@ -189,5 +189,6 @@
   "copy": "Sao chép vào clipboard.",
   "enterName": "Vui lòng nhập tên cho chatbot này",
   "creatbot": "Tạo bot",
-  "addRule": "Thêm quy tắc"
+  "addRule": "Thêm quy tắc",
+  "text": "Văn bảns"
 }

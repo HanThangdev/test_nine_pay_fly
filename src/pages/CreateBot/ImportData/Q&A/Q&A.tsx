@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/states/store';
 import { trimStringValuesInArray } from '@/utils/format';
@@ -58,6 +58,8 @@ const QuestionAnswer = () => {
     control,
     name: 'question_answers', // Tên của trường mảng
   });
+  const [loadingText, setLoadingText] = useState<boolean>(false);
+  const [text, setText] = useState<string>('');
 
   const includesResourceData = useMemo(
     () => includesResource,
@@ -126,6 +128,38 @@ const QuestionAnswer = () => {
   };
   return (
     <>
+      <p className="text-[15px] text-[#344054] mb-2 font-medium flex gap-x-[10px] items-center">
+        {t('text', { ns: 'config_bot' })}
+      </p>
+      <div className="flex justify-between gap-x-2">
+        <textarea
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder={`${t('EnterDescription', { ns: 'config_bot' })}`}
+          className="h-[150px] w-full py-2 rounded-[8px] border border-[#D0D5DD] bg-[#FFF] px-4 outline-none focus:border-primary focus-visible:shadow-none"
+        />
+        <button className="px-3 flex items-center min-w-[65px] gap-x-1 h-[41px] bg-[#FFF] text-[#374151] rounded-[8px] border-[1px] border-[#D0D5DD] text-[15px] font-medium justify-center cursor-pointer whitespace-nowrap">
+          <IconImport />
+          {loadingText ? (
+            <div>
+              <TypeAnimation
+                sequence={['.', 800, '..', 800, '...', 800]}
+                repeat={Infinity}
+                cursor={false}
+              />
+            </div>
+          ) : (
+            `${t('Import', { ns: 'config_bot' })}`
+          )}
+        </button>
+      </div>
+      <div className="flex justify-between gap-x-3 mt-6 mb-4 items-center">
+        <div className="bg-[#E7E8F2] h-[1px] w-full"></div>
+        <span className="font-bold min-w-fit">
+          {t('OR', { ns: 'config_bot' })}
+        </span>
+        <div className="bg-[#E7E8F2] h-[1px] w-full"></div>
+      </div>
       <div className="flex justify-end">
         <button
           className="px-3 flex items-center gap-x-1 h-[41px] bg-[#FFF] text-[#374151] rounded-[8px] border-[1px] border-[#D0D5DD] text-[15px] font-medium justify-center cursor-pointer"

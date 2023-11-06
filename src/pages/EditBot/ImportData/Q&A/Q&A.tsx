@@ -33,7 +33,7 @@ const initialValue = {
 const schema = yup.object().shape({
   question_answers: yup.array().of(
     yup.object().shape({
-      question: yup.string().required('Question is required'), 
+      question: yup.string().required('Question is required'),
       answer: yup.string().required('Answer is required'),
     }),
   ),
@@ -41,10 +41,15 @@ const schema = yup.object().shape({
 
 const QuestionAnswer = () => {
   const { t } = useTranslation();
-  const { onAddQuestionAndAnswer, botInfos, onGetAllQuestionAndAnswer, onDeleteQuestionAndAnswer } =
-    useBuildChatbot();
-  const {  loadingQuestionAndAnswer, listIncludesQandA } =
-    useSelector((state: RootState) => state.buildChatBot);
+  const {
+    onAddQuestionAndAnswer,
+    botInfos,
+    onGetAllQuestionAndAnswer,
+    onDeleteQuestionAndAnswer,
+  } = useBuildChatbot();
+  const { loadingQuestionAndAnswer, listIncludesQandA } = useSelector(
+    (state: RootState) => state.buildChatBot,
+  );
   const {
     control,
     register,
@@ -55,11 +60,13 @@ const QuestionAnswer = () => {
     defaultValues: initialValue,
     resolver: yupResolver(schema),
   });
-  const [ visibleModalDeleteAll, setVisibleModalDeleteAll ] = useState(false);
+  const [visibleModalDeleteAll, setVisibleModalDeleteAll] = useState(false);
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'question_answers',
   });
+  const [loadingText, setLoadingText] = useState<boolean>(false);
+  const [text, setText] = useState<string>('');
 
   const onUpload: SubmitHandler<any> = (values: {
     question_answers: AddQuestionAndAnswerItem[];
@@ -118,7 +125,7 @@ const QuestionAnswer = () => {
   };
 
   const resetForm = () => {
-    reset(initialValue); 
+    reset(initialValue);
   };
 
   const onDeleteAllQA = () => {
@@ -127,7 +134,7 @@ const QuestionAnswer = () => {
     }
     try {
       const { id } = botInfos;
-      const listAllQAPayload = listIncludesQandA.map(it => it.id)
+      const listAllQAPayload = listIncludesQandA.map((it) => it.id);
       onDeleteQuestionAndAnswer({
         question_answer_id: listAllQAPayload,
         bot_id: id,
@@ -143,12 +150,44 @@ const QuestionAnswer = () => {
       notification.error({
         message: error?.response?.data.errors ?? error?.message,
       });
-    } finally{
-      setVisibleModalDeleteAll(false)
+    } finally {
+      setVisibleModalDeleteAll(false);
     }
-  }
+  };
   return (
     <div>
+      <p className="text-[15px] text-[#344054] mb-2 font-medium flex gap-x-[10px] items-center">
+        {t('text', { ns: 'config_bot' })}
+      </p>
+      <div className="flex justify-between gap-x-2">
+        <textarea
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder={`${t('EnterDescription', { ns: 'config_bot' })}`}
+          className="h-[150px] w-full py-2 rounded-[8px] border border-[#D0D5DD] bg-[#FFF] px-4 outline-none focus:border-primary focus-visible:shadow-none"
+        />
+        <button className="px-3 flex items-center min-w-[65px] gap-x-1 h-[41px] bg-[#FFF] text-[#374151] rounded-[8px] border-[1px] border-[#D0D5DD] text-[15px] font-medium justify-center cursor-pointer whitespace-nowrap">
+          <IconImport />
+          {loadingText ? (
+            <div>
+              <TypeAnimation
+                sequence={['.', 800, '..', 800, '...', 800]}
+                repeat={Infinity}
+                cursor={false}
+              />
+            </div>
+          ) : (
+            `${t('Import', { ns: 'config_bot' })}`
+          )}
+        </button>
+      </div>
+      <div className="flex justify-between gap-x-3 mt-6 mb-4 items-center">
+        <div className="bg-[#E7E8F2] h-[1px] w-full"></div>
+        <span className="font-bold min-w-fit">
+          {t('OR', { ns: 'config_bot' })}
+        </span>
+        <div className="bg-[#E7E8F2] h-[1px] w-full"></div>
+      </div>
       <div className="flex justify-end">
         <button
           className="px-3 flex items-center gap-x-1 h-[41px] bg-[#FFF] text-[#374151] rounded-[8px] border-[1px] border-[#D0D5DD] text-[15px] font-medium justify-center cursor-pointer"
@@ -276,8 +315,7 @@ const QuestionAnswer = () => {
         }
       >
         <div>
-          Are you sure you want to delete all Q&A? This action cannot be
-          undone.
+          Are you sure you want to delete all Q&A? This action cannot be undone.
         </div>
       </ModalComponent>
     </div>
