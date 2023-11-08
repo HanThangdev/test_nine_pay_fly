@@ -32,6 +32,7 @@ import {
   GetLinkIntegrationMSTeamPayload,
   GetLinkIntegrationMSTeamResponse,
   UpdateListDomainPayload,
+  UpdateRateLimitPayload,
 } from './type';
 import Cookies from 'universal-cookie';
 import { SuccessResponse } from '../type';
@@ -226,15 +227,16 @@ export const deleteURLTransaction = createAsyncThunk(
   'transaction/deleteURLTransaction',
   async (payload: DeleteURLPayload, { rejectWithValue }) => {
     try {
-      const { url, bot_id } = payload
+      const { url, bot_id } = payload;
       // const base64Url = [btoa(url)];
       const payloadFinal = {
         bot_id,
-        base64_urls: [...url]
-      }
+        base64_urls: [...url],
+      };
       const response = await http.delete<SuccessResponse<string>>(
-        `/api/scraping/url`,{
-          data: payloadFinal
+        `/api/scraping/url`,
+        {
+          data: payloadFinal,
         },
       );
       return response;
@@ -328,16 +330,16 @@ export const deleteFileImportedTransaction = createAsyncThunk(
   'transaction/deleteFileImportedTransaction',
   async (payload: DeleteFilePayload, { rejectWithValue }) => {
     try {
-      const { knowledge_base_id, bot_id } = payload
+      const { knowledge_base_id, bot_id } = payload;
       const payloadFinal = {
         bot_id,
-        knowledge_base_ids: [...knowledge_base_id]
-      }
+        knowledge_base_ids: [...knowledge_base_id],
+      };
       const response = await http.delete<SuccessResponse<string>>(
         `/api/scraping/file`,
         {
-          data: payloadFinal
-        }
+          data: payloadFinal,
+        },
       );
       return response;
     } catch (error: any) {
@@ -392,16 +394,16 @@ export const deleteQuestionAndAnswerTransaction = createAsyncThunk(
   'transaction/deleteQuestionAndAnswerTransaction',
   async (payload: DeleteQuestionAndAnswerPayload, { rejectWithValue }) => {
     try {
-      const { question_answer_id, bot_id } = payload
+      const { question_answer_id, bot_id } = payload;
       const payloadFinal = {
         bot_id,
-        question_answer_ids: [...question_answer_id]
-      }
+        question_answer_ids: [...question_answer_id],
+      };
       const response = await http.delete<SuccessResponse<string>>(
         `/api/scraping/question-answer/${bot_id}`,
         {
-          data: payloadFinal
-        }
+          data: payloadFinal,
+        },
       );
       return response;
     } catch (error: any) {
@@ -471,7 +473,39 @@ export const updateListDomainTransaction = createAsyncThunk(
   'transaction/updateListDomainTransaction',
   async (payload: UpdateListDomainPayload, { rejectWithValue }) => {
     try {
-      const response = await http.post<SuccessResponse<any>>(`/api/bot/domain-access`, payload);
+      const response = await http.post<SuccessResponse<any>>(
+        `/api/bot/domain-access`,
+        payload,
+      );
+      return response;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data.error);
+    }
+  },
+);
+
+export const updateRateLimitTransaction = createAsyncThunk(
+  'transaction/updateRateLimitTransaction',
+  async (payload: UpdateRateLimitPayload, { rejectWithValue }) => {
+    try {
+      const { bot_id, rate_limit_per_day } = payload;
+      const response = await http.post<SuccessResponse<string>>(
+        `/api/bot/rate-limit-per-day?bot_id=${bot_id}&rate_limit_per_day=${rate_limit_per_day}`,
+      );
+      return response;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data.error);
+    }
+  },
+);
+
+export const getRateLimitTransaction = createAsyncThunk(
+  'transaction/getRateLimitTransaction',
+  async (bot_id: string, { rejectWithValue }) => {
+    try {
+      const response = await http.get<SuccessResponse<{}>>(
+        `/api/bot/rate-limit-per-day?bot_id=${bot_id}`,
+      );
       return response;
     } catch (error: any) {
       return rejectWithValue(error.response.data.error);

@@ -31,6 +31,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   createBotTransaction,
   updateBotTransaction,
+  updateRateLimitTransaction,
+  getRateLimitTransaction,
 } from '@/repository/buildChatBot';
 import { API_STATUS } from '@/constants';
 import { getBotTransaction } from '@/repository/manageChatbot';
@@ -65,6 +67,8 @@ const CreateBot = () => {
     rules: [],
     temperature: 0,
   });
+  const [messageCount, setMessageCount] = useState(0);
+  const [count, setCount] = useState(0);
 
   const { includesResource } = useSelector(
     (state: RootState) => state.buildChatBot,
@@ -118,9 +122,18 @@ const CreateBot = () => {
         custom_prompt: payloadCreateBot.custom_prompt,
       };
       const response = await dispatch(createBotTransaction(payloadFinal));
+
       const { meta, payload }: any = response;
       if (meta.requestStatus === API_STATUS.REJECTED) {
         return;
+      }
+      if (payload) {
+        await dispatch(
+          updateRateLimitTransaction({
+            bot_id: payload.data.id,
+            rate_limit_per_day: messageCount,
+          }),
+        );
       }
       setSave(false);
       navigate(`/create-bot/${payload?.data?.id}`);
@@ -128,6 +141,7 @@ const CreateBot = () => {
         message: `${t('createSuccess', { ns: 'config_bot' })}`,
       });
       dispatch(getBotTransaction());
+      getRateLimit(payload.data.id);
     } catch (error: any) {
       notification.error({
         message: error?.response?.data.errors ?? error?.message,
@@ -161,6 +175,15 @@ const CreateBot = () => {
         id: id,
       };
       const response = await dispatch(updateBotTransaction(updateBotPayload));
+
+      if (messageCount !== count) {
+        await dispatch(
+          updateRateLimitTransaction({
+            bot_id: botInfos.id,
+            rate_limit_per_day: messageCount,
+          }),
+        );
+      }
       const { meta }: any = response;
       if (meta.requestStatus === API_STATUS.REJECTED) {
         return;
@@ -187,6 +210,17 @@ const CreateBot = () => {
     }, 1000);
   };
 
+  const getRateLimit = async (id: string) => {
+    const res: any = await dispatch(getRateLimitTransaction(id));
+    setMessageCount(res.payload.data.data);
+    setCount(res.payload.data.data);
+  };
+
+  useEffect(() => {
+    if (botInfos) {
+      getRateLimit(botInfos.id);
+    }
+  }, [botInfos]);
   return (
     <>
       <Header
@@ -310,6 +344,8 @@ const CreateBot = () => {
               custom={custom}
               rules={rules}
               setRules={setRules}
+              messageCount={messageCount}
+              setMessageCount={setMessageCount}
             />
           )}
           {steps === STEP.import_data && <ImportData />}

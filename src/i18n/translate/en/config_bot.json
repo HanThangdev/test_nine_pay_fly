@@ -19,7 +19,8 @@
   "Public": "Public",
   "Private": "Private",
   "Rate": "Rate Limit",
-  "Limit": "Limit to 100 messages every 1 day.",
+  "Limitto": "Limit to ",
+  "messagesEvery": " messages every 1 day.",
   "Message": "Message to show when limit is reached",
   "ManyMessage": "Too many messages in a row.",
   "Prompt": "Prompt",
@@ -197,5 +198,6 @@
   "creatbot": " Create Bot",
   "addRule": "Add rule",
   "text": "Text",
-  "examplePrompt": "View example prompt"
+  "examplePrompt": "View example prompt",
+  "messagesDay": " messages / day"
 }

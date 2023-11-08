@@ -118,7 +118,10 @@ const EditBot = () => {
     }
     try {
       const { meta } = await dispatch(
-        changeActiveChatBotTransaction({ bot_id: id, is_activate: !botInfos?.is_activate }),
+        changeActiveChatBotTransaction({
+          bot_id: id,
+          is_activate: !botInfos?.is_activate,
+        }),
       );
 
       if (meta.requestStatus == API_STATUS.REJECTED) {
@@ -156,7 +159,7 @@ const EditBot = () => {
               {botInfos?.bot_name}
             </p>
             <p className="text-[#6B7280] mb-2">
-              {t('Limit', { ns: 'config_bot' })}
+              {t('limit100', { ns: 'config_bot' })}
             </p>
           </div>
           <div className="Switch-bot min-w-[225px] h-full gap-x-4 rounded-[8px] py-2 px-3 flex">

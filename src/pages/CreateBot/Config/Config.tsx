@@ -27,6 +27,8 @@ interface ICOnfig {
   setCustom: (data: CustomField[]) => void;
   rules: any;
   setRules: (newValue: any) => void;
+  messageCount: number;
+  setMessageCount: (_val: any) => void;
 }
 
 const Config = ({
@@ -36,18 +38,19 @@ const Config = ({
   setCustom,
   rules,
   setRules,
+  messageCount,
+  setMessageCount,
 }: ICOnfig) => {
   const { t } = useTranslation();
   const { botInfos } = useSelector((state: RootState) => state.buildChatBot);
   const [titleForm, setTitleForm] = useState('Let us know how to contact you');
-  const [messageCount, setMessageCount] = useState(0);
 
   const increaseBadge = () => {
     setMessageCount(messageCount + 1);
   };
 
   const declineBadge = () => {
-    setMessageCount((prev) => (prev - 1 < 0 ? 0 : prev - 1));
+    setMessageCount((prev: any) => (prev - 1 < 0 ? 0 : prev - 1));
   };
 
   const addItem = () => {

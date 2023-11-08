@@ -17,7 +17,8 @@
   "Public": "公開",
   "Private": "プライベート",
   "Rate": "レート制限",
-  "Limit": "1日あたりに100メッセージまで制限されます。",
+  "Limitto": "リミット",
+  "messagesEvery": " 1 日ごとのメッセージ。",
   "Message": "制限に超える際に表示されるメッセージ",
   "ManyMessage": "連続したメッセージが多すぎます。",
   "Prompt": "プロンプト",
@@ -193,5 +194,6 @@
   "creatbot": " ボットの作成",
   "addRule": "ルールを追加",
   "text": "テキスト",
-  "examplePrompt": "プロンプトの例を表示"
+  "examplePrompt": "プロンプトの例を表示",
+  "messagesDay": "メッセージ/日"
 }

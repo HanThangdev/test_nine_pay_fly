@@ -9,7 +9,10 @@ import { AppDispatch, RootState } from '@/states/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useMemo, useState } from 'react';
-import { getAdvanceSettingTransaction } from '@/repository/buildChatBot';
+import {
+  getAdvanceSettingTransaction,
+  getRateLimitTransaction,
+} from '@/repository/buildChatBot';
 import { useParams } from 'react-router-dom';
 
 const TestConverstation = () => {
@@ -24,7 +27,15 @@ const TestConverstation = () => {
   );
   const dispatch = useDispatch<AppDispatch>();
   const { id } = useParams();
+  const [messageCount, setMessageCount] = useState(0);
+  const getRateLimit = async () => {
+    const res: any = await dispatch(getRateLimitTransaction(botInfos?.id));
+    setMessageCount(res.payload.data.data);
+  };
 
+  useEffect(() => {
+    getRateLimit();
+  }, []);
   const [dataSet, setDataSet] = useState<any>();
   const getAdvance = async () => {
     const res: any = await dispatch(
@@ -63,7 +74,7 @@ const TestConverstation = () => {
             <div className="ml-2">
               <li className="flex items-center gap-x-2">
                 <p className="mb-0 bg-[#667085] w-[5px] h-[5px] rounded-full"></p>
-                100 message / day
+                {messageCount} {t('messagesDay', { ns: 'config_bot' })}
               </li>
               <li className="flex items-center gap-x-2">
                 <p className="mb-0 bg-[#667085] w-[5px] h-[5px] rounded-full"></p>

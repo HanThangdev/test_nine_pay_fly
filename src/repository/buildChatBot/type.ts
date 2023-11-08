@@ -232,3 +232,8 @@ export interface UpdateListDomainPayload {
   bot_id: string;
   domain: string[];
 }
+
+export interface UpdateRateLimitPayload {
+  bot_id: string;
+  rate_limit_per_day: number;
+}

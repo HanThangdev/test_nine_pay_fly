@@ -17,14 +17,12 @@ import { CustomField } from '@/repository/buildChatBot/type';
 const ButtonGroup = Button.Group;
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { IconDelete, IconAdd } from '@/components/IconGroup/IconGroup';
-import { updateBotTransaction } from '@/repository/buildChatBot';
+import {
+  updateBotTransaction,
+  updateRateLimitTransaction,
+  getRateLimitTransaction,
+} from '@/repository/buildChatBot';
 import { API_STATUS } from '@/constants';
-
-const optionsModal = [
-  { label: 'GPT - 3.5', value: 'GPT - 3.5' },
-  { label: 'GPT - 3.5 - 16k', value: 'GPT - 3.5 - 16k' },
-  { label: 'GPT - 4.0', value: 'GPT - 4.0', disabled: true },
-];
 
 interface Props {
   save: boolean;
@@ -82,6 +80,12 @@ const Config = ({ save, step, saveSuccess }: Props) => {
       };
       let response = await dispatch(updateBotTransaction(updateBotPayload));
       const { meta } = response;
+      await dispatch(
+        updateRateLimitTransaction({
+          bot_id: botInfos.id,
+          rate_limit_per_day: messageCount,
+        }),
+      );
       saveSuccess();
       notification.success({
         message: `${t('upadetSuccess', { ns: 'config_bot' })}`,
@@ -102,6 +106,15 @@ const Config = ({ save, step, saveSuccess }: Props) => {
       onSubmit();
     }
   }, [save, step]);
+
+  const getRateLimit = async () => {
+    const res: any = await dispatch(getRateLimitTransaction(botInfos?.id));
+    setMessageCount(res.payload.data.data);
+  };
+
+  useEffect(() => {
+    getRateLimit();
+  }, []);
 
   useEffect(() => {
     if (!isEmptyObjectOrArray(botInfos)) {

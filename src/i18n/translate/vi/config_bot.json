@@ -17,7 +17,8 @@
   "Public": "Công khai",
   "Private": "Riêng tư",
   "Rate": "Giới hạn tốc độ",
-  "Limit": "Giới hạn tới 100 tin nhắn mỗi ngày.",
+  "Limitto": "Giới hạn ở ",
+  "messagesEvery": " nhắn tin 1 ngày một lần.",
   "Message": "Thông báo hiển thị khi đạt giới hạn",
   "ManyMessage": "Quá nhiều tin nhắn liên tiếp.",
   "Prompt": "Lời nhắc",
@@ -194,5 +195,6 @@
   "creatbot": "Tạo bot",
   "addRule": "Thêm quy tắc",
   "text": "Văn bản",
-  "examplePrompt": "Xem lời nhắc ví dụ"
+  "examplePrompt": "Xem lời nhắc ví dụ",
+  "messagesDay": " tin nhắn / ngày"
 }
