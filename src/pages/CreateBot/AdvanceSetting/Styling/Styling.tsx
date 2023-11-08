@@ -103,7 +103,7 @@ const Styling = ({ save, step, saveSuccess }: Props) => {
     setButtonColor(reponse.chat_bubble_button_color);
     setBot_avatar_url(reponse.bot_avatar_url);
     setChat_icon_url(reponse.chat_icon_url);
-    setTheme(reponse.theme);
+    setTheme(reponse.theme ? reponse.theme : 'light');
   };
   useEffect(() => {
     getAdvance();
@@ -234,7 +234,7 @@ const Styling = ({ save, step, saveSuccess }: Props) => {
             <p className="font-medium mb-0 text-[#111827]">
               {t('userColor', { ns: 'config_bot' })}
             </p>
-            <p className="text-[14px] text-[#9CA3AF]">
+            <p className="text-[12px] text-[#9CA3AF]">
               {t('selectColor', { ns: 'config_bot' })}
             </p>
             <div className="flex gap-x-2 justify-items-center">
@@ -262,7 +262,7 @@ const Styling = ({ save, step, saveSuccess }: Props) => {
           </div>
           <div className="text-[15px] mt-4">
             <p className="font-medium mb-0 text-[#111827]">Chat bubble color</p>
-            <p className="text-[14px] text-[#9CA3AF]">
+            <p className="text-[12px] text-[#9CA3AF]">
               {t('selectColor', { ns: 'config_bot' })}
             </p>
             <div className="flex gap-x-2 justify-items-center">

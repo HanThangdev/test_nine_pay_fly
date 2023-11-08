@@ -83,7 +83,7 @@ const Interface = ({
       <div className="bg-[#E5E7EB] rounded-xl p-5">
         <div
           className={classNames(
-            'rounded-[16px] bg-[#F9FAFB] h-[500px] relative',
+            'rounded-[16px] bg-[#F9FAFB] h-[600px] relative',
             {
               'bg-different': (theme ? theme : dataSet.theme) === 'dark',
             },
@@ -194,7 +194,7 @@ const Interface = ({
               <IconAttach />
               <input
                 type="text"
-                placeholder="Type your message..."
+                placeholder="Type a message..."
                 className={classNames(
                   'h-[36px] w-full bg-[#FCFCFC] outline-none focus:border-primary focus-visible:shadow-none',
                   {
@@ -234,7 +234,7 @@ const Interface = ({
           >
             {textbubble ? textbubble : chatbubble && ' Chat with me'}
             <img
-              className="w-[30px] h-[20px] invert"
+              className="h-[20px] invert"
               src={
                 chat_icon_url
                   ? chat_icon_url

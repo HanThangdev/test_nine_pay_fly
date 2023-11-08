@@ -1,265 +1,109 @@
 import classNames from 'classnames';
 import Header from '@/components/header';
+import { logoHaveTextImg } from '@/images/logo';
+import { Divider, Image, Switch, Tag } from 'antd';
+import { useEffect } from 'react';
 const Checkout = () => {
+  useEffect(() => {
+    const paymentNinePayObj = {
+      env: 'SANDBOX',
+      baseEncode:
+        'eyJtZXJjaGFudEtleSI6InRwNk5mdiIsInRpbWUiOjE2OTkzNjY1NjAsImludm9pY2Vfbm8iOiIzT21hNHpydiIsImFtb3VudCI6MTAwMDAsImRlc2NyaXB0aW9uIjoiVGhpcyBpcyBkZXNjcmlwdGlvbiIsInJldHVybl91cmwiOiJodHRwOi8vZmNkY2M0NzY3YWNiLm5ncm9rLmlvLyIsImJhY2tfdXJsIjoiaHR0cDovL2ZjZGNjNDc2N2FjYi5uZ3Jvay5pby8ifQ==',
+      signature: 'NqU21T4S24mmsXrPsanjKXdicu9wf6yPwNmOUe5u7eY=',
+    };
+    const script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.async = true;
+    script.src = 'https://sand-payment.9pay.vn/assets/sdk/js/9pay-sdk-1.0.0.min.js';
+
+    script.addEventListener('load', () => {
+      (window as any).NinePaySDK.init(paymentNinePayObj);
+    });
+
+    const firstScript = document.getElementsByTagName('script')[0];
+    firstScript.parentNode?.insertBefore(script, firstScript);
+  }, []);
   return (
     <>
-      <Header
-        children={
-          <>
-            <h1 className="text-[24px] text-[#1F2937] mb-0">Checkout</h1>
-          </>
-        }
-      />
-      <div
-        className={classNames(
-          'mx-[20px] my-[16px] bg-[#FCFCFC] rounded-[12px] p-[16px]',
-        )}
-      >
-        <div className="grid lg:grid-cols-2 text-black">
-          <div className="px-4 pt-4">
-            <p className="text-xl font-medium">Order Summary</p>
-            <p className="text-gray-400">
-              Check your items. And select a suitable shipping method.
-            </p>
-            <div className="mt-8 space-y-3 rounded-lg border bg-[#f9f9fc] border-[#e5e7eb]  px-2 py-4 sm:px-6">
-              <div className="flex flex-col rounded-lg bg-white sm:flex-row">
-                <img
-                  className="m-2 h-24 w-28 rounded-md border object-cover object-center"
-                  src="https://images.unsplash.com/flagged/photo-1556637640-2c80d3201be8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c25lYWtlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-                  alt=""
-                />
-                <div className="flex w-full flex-col px-4 py-4">
-                  <span className="font-semibold">
-                    Nike Air Max Pro 8888 - Super Light
+      <div className="grid lg:grid-cols-2 text-black min-h-screen">
+        <div className="px-4 py-4 bg-[#111827] text-white">
+          <p className="text-xl font-medium">
+            {' '}
+            <Image
+              src={logoHaveTextImg}
+              alt="Chatfly"
+              className="!h-[35px]"
+              preview={false}
+            />
+          </p>
+          <div className="h-full flex justify-center flex-col px-0 sm:px-[4vw]">
+            <div>
+              <span>Subscribe to Chatfly Starter plan</span>
+              <div className="flex py-4">
+                <span className="flex items-center text-5xl font-semibold pr-2">
+                  $39
+                </span>
+                <div className="text-[24px]">
+                  <span>
+                    per <br /> month
                   </span>
-                  <span className="float-right text-gray-400">
-                    42EU - 8.5US
-                  </span>
-                  <p className="text-lg font-bold">$138.99</p>
-                </div>
-              </div>
-              <div className="flex flex-col rounded-lg bg-white sm:flex-row">
-                <img
-                  className="m-2 h-24 w-28 rounded-md border object-cover object-center"
-                  src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8c25lYWtlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-                  alt=""
-                />
-                <div className="flex w-full flex-col px-4 py-4">
-                  <span className="font-semibold">
-                    Nike Air Max Pro 8888 - Super Light
-                  </span>
-                  <span className="float-right text-gray-400">
-                    42EU - 8.5US
-                  </span>
-                  <p className="mt-auto text-lg font-bold">$238.99</p>
                 </div>
               </div>
             </div>
-
-            <p className="mt-8 text-lg font-medium">Shipping Methods</p>
-            <form className="mt-5 grid gap-6">
-              <div className="relative">
-                <input
-                  className="peer hidden "
-                  id="radio_1"
-                  type="radio"
-                  name="radio"
-                  checked
-                />
-                <span className="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
-                <label className="peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-[#e5e7eb] p-4">
-                  <img
-                    className="w-14 object-contain"
-                    src="https://componentland.com/images/naorrAeygcJzX0SyNI4Y0.png"
-                    alt=""
-                  />
-                  <div className="ml-5">
-                    <span className="mt-2 font-semibold">Fedex Delivery</span>
-                    <p className="text-slate-500 text-sm leading-6">
-                      Delivery: 2-4 Days
-                    </p>
-                  </div>
-                </label>
-              </div>
-              <div className="relative">
-                <input
-                  className="peer hidden"
-                  id="radio_2"
-                  type="radio"
-                  name="radio"
-                  checked
-                />
-                <span className="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
-                <label className="peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-[#e5e7eb] p-4">
-                  <img
-                    className="w-14 object-contain"
-                    src="https://componentland.com/images/oG8xsl3xsOkwkMsrLGKM4.png"
-                    alt=""
-                  />
-                  <div className="ml-5">
-                    <span className="mt-2 font-semibold">Fedex Delivery</span>
-                    <p className="text-slate-500 text-sm leading-6">
-                      Delivery: 2-4 Days
-                    </p>
-                  </div>
-                </label>
-              </div>
-            </form>
-          </div>
-          <div className="mt-10 bg-gray-50 px-4 pt-4 lg:mt-0">
-            <p className="text-xl font-medium">Payment Details</p>
-            <p className="text-gray-400">
-              Complete your order by providing your payment details.
-            </p>
-            <div className="">
-              <label className="mt-4 mb-2 block text-sm font-medium">
-                Email
-              </label>
-              <div className="relative">
-                <input
-                  type="text"
-                  id="email"
-                  name="email"
-                  className="w-full rounded-md border border-[#e5e7eb] px-4 py-3 pl-11 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
-                  placeholder="your.email@gmail.com"
-                />
-                <div className="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4 text-gray-400"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
-                    />
-                  </svg>
+            <div className="mt-8 space-y-3 rounded-lg border bg-[#f9f9fc] border-[#e5e7eb] text-black px-1 py-4 sm:px-4">
+              <div className="flex flex-col rounded-lg sm:flex-row">
+                <div className="w-full flex-col py-4">
+                  <span className="font-bold text-xl bg-gradient-to-r from-[#B62DE7] to-[#7407A8] bg-clip-text text-transparent">
+                    Chatfly Starter
+                  </span>
+                  <span className="float-right text-gray-400 font-medium text-lg">
+                    $39
+                  </span>
+                  <p className="text-lg pt-3">
+                    Starter plan let you use most of our premium features and
+                    help user better
+                  </p>
                 </div>
               </div>
-              <label className="mt-4 mb-2 block text-sm font-medium">
-                Card Holder
-              </label>
-              <div className="relative">
-                <input
-                  type="text"
-                  id="card-holder"
-                  name="card-holder"
-                  className="w-full rounded-md border border-[#e5e7eb] px-4 py-3 pl-11 text-sm uppercase shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
-                  placeholder="Your full name here"
-                />
-                <div className="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4 text-gray-400"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zm6-10.125a1.875 1.875 0 11-3.75 0 1.875 1.875 0 013.75 0zm1.294 6.336a6.721 6.721 0 01-3.17.789 6.721 6.721 0 01-3.168-.789 3.376 3.376 0 016.338 0z"
-                    />
-                  </svg>
-                </div>
-              </div>
-              <label className="mt-4 mb-2 block text-sm font-medium">
-                Card Details
-              </label>
-              <div className="flex gap-x-3">
-                <div className="relative w-7/12 flex-shrink-0">
-                  <input
-                    type="text"
-                    id="card-no"
-                    name="card-no"
-                    className="w-full rounded-md border border-[#e5e7eb] px-2 py-3 pl-11 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
-                    placeholder="xxxx-xxxx-xxxx-xxxx"
-                  />
-                  <div className="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
-                    <svg
-                      className="h-4 w-4 text-gray-400"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      fill="currentColor"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M11 5.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1z" />
-                      <path d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2zm13 2v5H1V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1zm-1 9H2a1 1 0 0 1-1-1v-1h14v1a1 1 0 0 1-1 1z" />
-                    </svg>
-                  </div>
-                </div>
-                <input
-                  type="text"
-                  name="credit-expiry"
-                  className="w-full rounded-md border border-[#e5e7eb] px-2 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
-                  placeholder="MM/YY"
-                />
-                <input
-                  type="text"
-                  name="credit-cvc"
-                  className="w-1/6 flex-shrink-0 rounded-md border border-[#e5e7eb] px-2 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
-                  placeholder="CVC"
-                />
-              </div>
-              <label className="mt-4 mb-2 block text-sm font-medium">
-                Billing Address
-              </label>
-              <div className="flex flex-col gap-x-3 sm:flex-row">
-                <div className="relative flex-shrink-0 sm:w-7/12">
-                  <input
-                    type="text"
-                    id="billing-address"
-                    name="billing-address"
-                    className="w-full rounded-md border border-[#e5e7eb] px-4 py-3 pl-11 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
-                    placeholder="Street Address"
-                  />
-                  <div className="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
-                    <img
-                      className="h-4 w-4 object-contain"
-                      src="https://flagpack.xyz/_nuxt/4c829b6c0131de7162790d2f897a90fd.svg"
-                      alt=""
-                    />
-                  </div>
-                </div>
-                <select
-                  name="billing-state"
-                  className="w-full rounded-md border border-[#e5e7eb] px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
-                >
-                  <option value="State">State</option>
-                </select>
-                <input
-                  type="text"
-                  name="billing-zip"
-                  className="flex-shrink-0 rounded-md border border-[#e5e7eb] px-4 py-3 text-sm shadow-sm outline-none sm:w-1/6 focus:z-10 focus:border-blue-500 focus:ring-blue-500"
-                  placeholder="ZIP"
-                />
-              </div>
-
-              <div className="mt-6 border-t border-b border-[#e5e7eb] py-2">
-                <div className="flex items-center justify-between">
-                  <p className="text-sm font-medium text-gray-900">Subtotal</p>
-                  <p className="font-semibold text-gray-900">$399.00</p>
-                </div>
-                <div className="flex items-center justify-between">
-                  <p className="text-sm font-medium text-gray-900">Shipping</p>
-                  <p className="font-semibold text-gray-900">$8.00</p>
-                </div>
-              </div>
-              <div className="mt-6 flex items-center justify-between">
-                <p className="text-sm font-medium text-gray-900">Total</p>
-                <p className="text-2xl font-semibold text-gray-900">$408.00</p>
+              <Divider />
+              <div className="mt-8 text-lg font-medium">
+                <Switch />{' '}
+                <Tag color="#C3EDD5">
+                  <span className="text-[#219653]">Save 26$</span>
+                </Tag>{' '}
+                <span>with annual billing</span>
+                <span className="float-right text-[#9CA3AF] font-medium text-lg">
+                  $390/year
+                </span>
               </div>
             </div>
-            <button className="mt-4 mb-8 w-full rounded-md bg-[#111827] px-6 py-3 font-medium text-white">
-              Place Order
-            </button>
+            <Divider className="bg-[#9CA3AF] px-2" />
+            <div className="flex items-center justify-between">
+              <p className="text-sm font-normal text-gray-900">Subtotal</p>
+              <p className="font-normal text-gray-900">$39</p>
+            </div>
+            <div className="flex items-center justify-between">
+              <p className="text-sm font-light text-gray-900">VAT tax (10%)</p>
+              <p className="font-normal text-gray-900">$3.9</p>
+            </div>
+            <Divider className="bg-[#9CA3AF] px-2" />
+            <div className="flex items-center justify-between">
+              <p className="text-sm font-normal text-gray-900">Due today</p>
+              <p className="font-normal text-gray-900">$41.9</p>
+            </div>
           </div>
+        </div>
+        <div className="mt-10 bg-gray-50 px-4 pt-4 lg:mt-0">
+          <p className="text-xl font-medium">Payment Method</p>
+          <p className="text-gray-400">
+            Complete your order by providing your payment details.
+          </p>
+          <p>
+            <div id="NinePayCheckout"></div>
+          </p>
+          <button className="mt-4 mb-8 w-full rounded-md bg-[#111827] px-6 py-3 font-medium text-white">
+            Place Order
+          </button>
         </div>
       </div>
     </>

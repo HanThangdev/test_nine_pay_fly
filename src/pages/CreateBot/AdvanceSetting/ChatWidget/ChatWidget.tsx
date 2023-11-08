@@ -181,7 +181,7 @@ const ChatWidget = ({ save, step, saveSuccess }: Props) => {
             />
           </div>
         </div>
-        <div className="w-[40%]">
+        <div className="w-[30%]">
           <Interface
             display_name={displayName}
             display_role={displayRole}

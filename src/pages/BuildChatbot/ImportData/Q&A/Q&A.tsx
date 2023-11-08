@@ -135,7 +135,7 @@ const QuestionAnswer = () => {
         </button>
       </div>
       <form onSubmit={handleSubmit(onUpload)}>
-        <div className="max-h-[700px] overflow-y-auto">
+        <div className="max-h-[600px] overflow-y-auto">
           {fields.map((field, index) => (
             <div key={index} className="mt-[10px] ">
               <div className="flex justify-between ">
@@ -202,7 +202,7 @@ const QuestionAnswer = () => {
           ({totalTokens} {t('tokens', { ns: 'config_bot' })})
         </div>
       </p>
-      <div className="max-h-[500px] overflow-y-auto">
+      <div className="max-h-[600px] overflow-y-auto">
         {!isEmptyObjectOrArray(listQuestionAndAnswer) &&
           listQuestionAndAnswer.map((item, idx) => (
             <QuestionAndAnswerItem

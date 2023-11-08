@@ -186,7 +186,7 @@ const ChatBot = () => {
       <div className="bg-[#E5E7EB] rounded-xl p-5">
         <div
           className={classNames(
-            'rounded-[16px] bg-[#F9FAFB] h-[500px] relative',
+            'rounded-[16px] bg-[#F9FAFB] h-[600px] relative',
             {
               'bg-different': dataSet.theme === 'dark',
             },
@@ -286,7 +286,7 @@ const ChatBot = () => {
               <IconAttach />
               <input
                 type="text"
-                placeholder="Type your message..."
+                placeholder="Type a message..."
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 onKeyUp={(e) => handleKeyUp(e)}

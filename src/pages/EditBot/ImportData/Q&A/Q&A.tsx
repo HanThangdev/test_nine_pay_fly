@@ -190,7 +190,7 @@ const QuestionAnswer = () => {
       </div>
 
       <form onSubmit={handleSubmit(onUpload)}>
-        <div className="max-h-[700px] overflow-y-auto">
+        <div className="max-h-[600px] overflow-y-auto">
           {fields?.map((field, index) => (
             <div key={index} className="mt-[10px] ">
               <div className="flex justify-between ">
@@ -299,7 +299,7 @@ const QuestionAnswer = () => {
         </div>
       </div>
 
-      <div className="max-h-[500px] overflow-y-auto">
+      <div className="max-h-[600px] overflow-y-auto">
         {!isEmptyObjectOrArray(listQuestionAndAnswer) &&
           listQuestionAndAnswer.map((item, idx) => (
             <QuestionAndAnswerItem item={item} key={idx} index={idx} />
