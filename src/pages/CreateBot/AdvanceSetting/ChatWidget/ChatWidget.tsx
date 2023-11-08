@@ -31,6 +31,7 @@ const ChatWidget = ({ save, step, saveSuccess }: Props) => {
   const { botInfos } = useSelector((state: RootState) => state.buildChatBot);
   const { id } = useParams();
   const [displayName, setDisplayName] = useState('');
+  const [displayRole, setDisplayRole] = useState('');
   const [initialMessages, setinitialMessages] = useState(
     'Hello! How can I assist you today?',
   );
@@ -78,6 +79,7 @@ const ChatWidget = ({ save, step, saveSuccess }: Props) => {
         suggest_messages: suggestArray,
         theme: dataAdvanced.theme,
         display_name: displayName,
+        display_role: displayRole,
         bot_avatar_url: dataAdvanced.bot_avatar_url,
         chat_icon_url: dataAdvanced.chat_icon_url,
         chat_bubble_button_color: dataAdvanced.chat_bubble_button_color,
@@ -119,6 +121,18 @@ const ChatWidget = ({ save, step, saveSuccess }: Props) => {
               placeholder={`${t('EgHelp', { ns: 'config_bot' })}`}
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
+              className="h-[41px] w-full rounded-[8px] border border-[#D0D5DD] bg-[#FFF] px-4 outline-none focus:border-primary focus-visible:shadow-none"
+            />
+          </div>
+          <div className="text-[15px]  mt-4">
+            <p className="font-medium mb-[8px] text-[#344054]">
+              {t('DisplayRole', { ns: 'config_bot' })}
+            </p>
+            <input
+              type="text"
+              placeholder={`${t('EgRole', { ns: 'config_bot' })}`}
+              value={displayRole}
+              onChange={(e) => setDisplayRole(e.target.value)}
               className="h-[41px] w-full rounded-[8px] border border-[#D0D5DD] bg-[#FFF] px-4 outline-none focus:border-primary focus-visible:shadow-none"
             />
           </div>
@@ -170,7 +184,8 @@ const ChatWidget = ({ save, step, saveSuccess }: Props) => {
         <div className="w-[40%]">
           <Interface
             display_name={displayName}
-            initial_message={initialArray}
+            display_role={displayRole}
+            initial_messages={initialArray}
             suggest_messages={suggestArray}
             textbubble={textbubble}
           />
