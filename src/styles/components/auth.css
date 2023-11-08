@@ -2,6 +2,10 @@
   background-image: url('/background.png');
 }
 
+.signup-background {
+  background-image: url('/bg_signup.png');
+}
+
 .right-login-background {
   background-image: url('/imageLogin.png');
 }

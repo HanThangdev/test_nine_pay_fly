@@ -183,7 +183,7 @@
   "importData": "Import data from files",
   "click": "Click to upload",
   "drop": "or drag and drop",
-  "addmomreQA": "Add more Q&A",
+  "addmomreQA": "Add another Q&A",
   "userColor": "User chat color",
   "selectColor": "Select the color of the user chat. Choosing the right color will enhance your brand awareness",
   "userPicture": "Use chatbot profile picture",
@@ -196,5 +196,6 @@
   "enterName": "Please enter a name for this chatbot",
   "creatbot": " Create Bot",
   "addRule": "Add rule",
-  "text": "Text"
+  "text": "Text",
+  "examplePrompt": "View example prompt"
 }

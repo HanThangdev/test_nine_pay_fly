@@ -30,17 +30,18 @@ const FileItem = ({ item, index }: FileItemProps) => {
       const { id } = botInfos;
       const { knowledge_base_id } = item;
 
-      onDeleteFileImported({ knowledge_base_id: [knowledge_base_id], bot_id: id }).then(
-        (response) => {
-          if (response.meta.requestStatus === API_STATUS.FULFILLED) {
-            dispatch(deletedListIncludes(index));
-            notification.success({
-              message: 'Delete File success',
-            });
-            onGetAllFile({ bot_id: id });
-          }
-        },
-      );
+      onDeleteFileImported({
+        knowledge_base_id: [knowledge_base_id],
+        bot_id: id,
+      }).then((response) => {
+        if (response.meta.requestStatus === API_STATUS.FULFILLED) {
+          dispatch(deletedListIncludes(index));
+          notification.success({
+            message: 'Delete File success',
+          });
+          onGetAllFile({ bot_id: id });
+        }
+      });
     } catch (error: any) {
       notification.error({
         message: error?.response?.data.errors ?? error?.message,
@@ -54,7 +55,7 @@ const FileItem = ({ item, index }: FileItemProps) => {
     <div className="flex justify-between gap-x-[21px] mb-[20px] px-2 bg-[#F9FAFB] rounded-lg border-[1px] border-[#dfe1e5]">
       <div className="flex justify-between w-full h-[41px] items-center">
         <div className="w-full text-[17px]">{item.filename}</div>
-        <div className="flex justify-between w-[200px] items-center">
+        <div className="flex justify-between min-w-[160px] items-center">
           <span className="mb-0 font-medium flex items-center gap-x-1">
             <IconToken />({formatNumber(item.num_token)}{' '}
             {t('tokens', { ns: 'config_bot' })})

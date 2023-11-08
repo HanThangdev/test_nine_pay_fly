@@ -17,10 +17,7 @@ interface LinkItemProps {
   index: number;
 }
 
-const LinkItem = ({
-  item,
-  index,
-}: LinkItemProps) => {
+const LinkItem = ({ item, index }: LinkItemProps) => {
   const { t } = useTranslation();
   const [visibleDeleteModal, setVisibleDeleteModal] = useState<boolean>(false);
   const { botInfos } = useSelector((state: RootState) => state.buildChatBot);
@@ -74,7 +71,7 @@ const LinkItem = ({
         value={item.url}
         className="h-[41px] w-full bg-transparent outline-none focus:border-primary focus-visible:shadow-none"
       />
-      <div className="flex justify-between w-[200px] items-center">
+      <div className="flex justify-between min-w-[160px] items-center">
         <p className="mb-0 font-medium flex items-center gap-x-1">
           <IconToken />
           {formatNumber(item?.num_token || 0)}{' '}

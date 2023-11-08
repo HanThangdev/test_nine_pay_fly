@@ -60,8 +60,8 @@ const SignUp = () => {
 
   return (
     <>
-      <div className="h-auto auth-background bg-cover min-h-screen shadow-default">
-        <div className="h-screen flex flex-wrap items-center w-full xl:w-[80%] m-auto">
+      <div className="h-auto signup-background bg-cover min-h-screen shadow-default">
+        <div className="h-auto flex flex-wrap items-center w-full xl:w-[80%] m-auto">
           <div className="w-full flex justify-center border-stroke dark:border-strokedark lg:w-1/2 m-auto">
             <div className="w-fit bg-[#37415194] p-[24px] rounded-[24px]">
               <div className="flex justify-center items-center">
@@ -220,7 +220,7 @@ const SignUp = () => {
             </div>
           </div>
           <div className="w-full hidden lg:block lg:w-1/2 m-auto">
-            <div className="right-register-background bg-contain m-auto w-[474px] h-[516px]"></div>
+            {/* <div className="right-register-background bg-contain m-auto w-[474px] h-[516px]"></div> */}
           </div>
         </div>
       </div>

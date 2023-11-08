@@ -1,3 +1,6 @@
+'use client';
+
+import 'chart.js/auto';
 import classNames from 'classnames';
 import IconAllBot from '@/components/IconAllBot/IconAllBot';
 import { Modal, notification, Slider } from 'antd';
@@ -15,9 +18,23 @@ import Header from '@/components/header';
 import IconSubcription from '@/components/IconSubcription/IconSubcription';
 import { IconCreate_fillWhite } from '@/components/IconCreate/IconCreate';
 import { CreateBotModalWrapper } from '../CreateBot/CreateBotModal';
+import { Line } from 'react-chartjs-2';
 
 const urlParams = new URLSearchParams(window.location.search);
 const getLanguageFromURL = urlParams.get('language');
+
+const data = {
+  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+  datasets: [
+    {
+      label: 'First dataset',
+      data: [33, 53, 85, 41, 44, 65],
+      fill: true,
+      backgroundColor: 'rgba(75,192,192,0.2)',
+      borderColor: 'rgba(75,192,192,1)',
+    },
+  ],
+};
 
 const ManageChatbot = () => {
   const { t } = useTranslation();
@@ -88,7 +105,9 @@ const ManageChatbot = () => {
 
   useEffect(() => {
     setBotsActive(
-      ownerChatbot.filter((item: any) => item.is_activate === true && !item.is_deleted),
+      ownerChatbot.filter(
+        (item: any) => item.is_activate === true && !item.is_deleted,
+      ),
     );
   }, [ownerChatbot]);
 
@@ -182,7 +201,8 @@ const ManageChatbot = () => {
                     {t('Activebot', { ns: 'manage_bot' })}
                   </p>
                   <p className="mb-0">
-                    {botsActive.length}/{ownerChatbot.filter(it => !it.is_deleted).length}{' '}
+                    {botsActive.length}/
+                    {ownerChatbot.filter((it) => !it.is_deleted).length}{' '}
                     {t('bots', { ns: 'manage_bot' })}
                   </p>
                 </div>
@@ -200,7 +220,7 @@ const ManageChatbot = () => {
                 <Slider defaultValue={30} disabled />
               </div>
             </div>
-            <div className=""></div>
+            <div className="">{/* <Line data={data} /> */}</div>
           </div>
         </div>
         <div
@@ -235,7 +255,11 @@ const ManageChatbot = () => {
             ) : (
               !isEmptyObjectOrArray(ownerChatbot) &&
               ownerChatbot.map((_, index) => {
-                return !_.is_deleted ? <ChatbotElement info={_} key={index} /> : <></>
+                return !_.is_deleted ? (
+                  <ChatbotElement info={_} key={index} />
+                ) : (
+                  <></>
+                );
               })
             )}
           </div>

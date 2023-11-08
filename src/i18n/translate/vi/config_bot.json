@@ -180,7 +180,7 @@
   "importData": "Nhập dữ liệu từ tập tin",
   "click": "Nhấp để tải lên",
   "drop": "hoặc kéo và thả",
-  "addmomreQA": "Thêm phần Hỏi đáp khác",
+  "addmomreQA": "Thêm một câu hỏi đáp khác",
   "userColor": "Màu trò chuyện của người dùng",
   "selectColor": "Chọn màu cho cuộc trò chuyện của người dùng. Chọn màu phù hợp sẽ nâng cao nhận thức về thương hiệu của bạn",
   "userPicture": "Sử dụng ảnh hồ sơ chatbot",
@@ -193,5 +193,6 @@
   "enterName": "Vui lòng nhập tên cho chatbot này",
   "creatbot": "Tạo bot",
   "addRule": "Thêm quy tắc",
-  "text": "Văn bảns"
+  "text": "Văn bản",
+  "examplePrompt": "Xem lời nhắc ví dụ"
 }
