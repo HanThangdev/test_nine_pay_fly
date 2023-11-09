@@ -93,6 +93,11 @@ export default function CreateBotModal({ open, onClose }: Props) {
     }
   };
 
+  useEffect(() => {
+    setBotName('');
+    form.resetFields();
+  }, [open]);
+
   return (
     <Modal
       open={open}
@@ -106,6 +111,7 @@ export default function CreateBotModal({ open, onClose }: Props) {
       <div>
         <Form
           autoComplete="off"
+          form={form}
           name="create-bot"
           onFinish={onFinish}
           initialValues={initValues}
