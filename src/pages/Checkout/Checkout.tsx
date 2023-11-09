@@ -3,7 +3,9 @@ import Header from '@/components/header';
 import { logoHaveTextImg } from '@/images/logo';
 import { Divider, Image, Switch, Tag } from 'antd';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 const Checkout = () => {
+  const navigate = useNavigate()
   useEffect(() => {
     const paymentNinePayObj = {
       env: 'SANDBOX',

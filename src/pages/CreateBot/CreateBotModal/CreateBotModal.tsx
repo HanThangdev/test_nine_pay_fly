@@ -9,6 +9,7 @@ import {
   setNameBotStore,
   setCaseStudyStore,
   setPromptExamplesStore,
+  resetStateBuild,
 } from '@/states/buildChatBot/buildChatBot.slice';
 import { useNavigate } from 'react-router-dom';
 
@@ -87,6 +88,7 @@ export default function CreateBotModal({ open, onClose }: Props) {
       });
       onClose();
     } else {
+      dispatch(resetStateBuild());
       dispatch(setNameBotStore(botName));
       dispatch(setCaseStudyStore(caseStudy));
       dispatch(setPromptExamplesStore(promptExample));

@@ -183,7 +183,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           {({ onOpen }) => (
             <div
               onClick={() => {
-                dispatch(resetStateBuild());
                 onOpen();
               }}
               className="bg-[#FCFCFC] cursor-pointer rounded-xl py-3 grid gap-2 justify-center text-[#2D3FE7]"

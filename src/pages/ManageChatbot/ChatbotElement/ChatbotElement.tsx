@@ -141,7 +141,7 @@ const ChatbotElement = ({ info }: ChatbotElementProps) => {
       </div>
       <div className="w-full">
         <div className="flex justify-between items-start">
-          <p className="text-[20px] text-[#111827] mb-0">{info.bot_name}</p>
+          <p className="text-[20px] text-[#111827] mb-0 cursor-pointer" onClick={redirectToUpdateBot}>{info.bot_name}</p>
           <div className="flex gap-x-2">
             <p
               className={classNames(" items-center mb-0 flex gap-x-1 bg-[#FFF] py-2 px-3 border-[1px] border-[#D0D5DD] text-[14px] text-[#374151] rounded-[8px]", {
