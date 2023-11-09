@@ -84,12 +84,8 @@ const TestConverstation = () => {
               {botInfos?.collect_customer_info && (
                 <li className="flex items-center gap-x-2">
                   <p className="mb-0 bg-[#667085] w-[5px] h-[5px] rounded-full"></p>
-                  Collect{' '}
-                  {Object.keys(botInfos?.collect_customer_info).map(
-                    (key, i) => {
-                      return <span key={key}>{key}, </span>;
-                    },
-                  )}
+                    Collect{' '}
+                  <span >{Object.keys(botInfos?.collect_customer_info).join(', ')}</span>
                 </li>
               )}
             </div>
@@ -97,7 +93,7 @@ const TestConverstation = () => {
           <div className="text-[15px] mt-3">
             <p className="font-medium flex gap-x-2 items-center mb-[8px] text-[#219653]">
               <IconImportDataDone />
-              {t('Datanes')}
+              {t('Datas')}
             </p>
             <div className="ml-2">
               <li className="flex items-center gap-x-2">
