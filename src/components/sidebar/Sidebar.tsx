@@ -19,6 +19,7 @@ import { useAuth } from '@/states/auth/auth.selector';
 import { resetStateAuth } from '@/states/auth/auth.slice';
 import { usePricingPlan } from '@/states/pricingPlan/pricingPlan.selector';
 import { STORAGE, getLocalStorage, removeLocalStorage } from '@/utils/storage';
+import { resetStateManageBot } from '@/states/manageBot/manageBot.slice';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -86,6 +87,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       cookies.remove('access_token', { path: '/' });
       dispatch(resetStateAuth());
       dispatch(resetStateBuild());
+      dispatch(resetStateManageBot());
       removeLocalStorage(STORAGE.USER_ID);
     } catch (error: any) {
       notification.error({

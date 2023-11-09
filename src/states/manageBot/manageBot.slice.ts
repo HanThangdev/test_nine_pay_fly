@@ -11,7 +11,11 @@ const initialState: ManageChatBotState = {
 export const manageChatBotSlice = createSlice({
   name: 'manageBot',
   initialState,
-  reducers: {},
+  reducers: {
+    resetStateManageBot: () => {
+      initialState
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getBotTransaction.pending, (state) => {
       state.loading = true
@@ -34,6 +38,6 @@ export const manageChatBotSlice = createSlice({
   },
 });
 
-export const {  } = manageChatBotSlice.actions;
+export const { resetStateManageBot } = manageChatBotSlice.actions;
 
 export default manageChatBotSlice.reducer;
