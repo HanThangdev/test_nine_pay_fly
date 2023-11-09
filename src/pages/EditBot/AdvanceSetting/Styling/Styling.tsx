@@ -164,45 +164,47 @@ const Styling = ({ save, step, saveSuccess }: Props) => {
   const btnColor = [
     {
       color: 'bg-[#FB6514]',
-      value: '#FB6514'
+      value: '#FB6514',
     },
     {
       color: 'bg-[#F63D68]',
-      value: '#F63D68'
+      value: '#F63D68',
     },
     {
       color: 'bg-[#EE46BC]',
-      value: '#EE46BC'
+      value: '#EE46BC',
     },
     {
       color: 'bg-[#7A5AF8]',
-      value: '#7A5AF8'
+      value: '#7A5AF8',
     },
     {
       color: 'bg-[#444CE7]',
-      value: '#444CE7'
+      value: '#444CE7',
     },
     {
       color: 'bg-[#1570EF]',
-      value: '#1570EF'
+      value: '#1570EF',
     },
     {
       color: 'bg-[#12B76A]',
-      value: '#12B76A'
+      value: '#12B76A',
     },
     {
       color: 'bg-[#F79009]',
-      value: '#F79009'
+      value: '#F79009',
     },
     {
       color: 'bg-[#F04438]',
-      value: '#F04438'
-    },{
+      value: '#F04438',
+    },
+    {
       color: 'bg-[#9E77ED]',
-      value: '#9E77ED'
-    },{
+      value: '#9E77ED',
+    },
+    {
       color: 'bg-[#667085]',
-      value: '#667085'
+      value: '#667085',
     },
     // 'bg-[#FB6514]',
     // 'bg-[#F63D68]',
@@ -220,7 +222,7 @@ const Styling = ({ save, step, saveSuccess }: Props) => {
   return (
     <>
       <div className="flex gap-x-4">
-        <div className="p-4 w-[60%]">
+        <div className="p-4 w-full bg-[#FCFCFC] rounded-[12px]">
           <div className="text-[15px]">
             <p className="font-medium mb-0 text-[#111827]">
               {t('userColor', { ns: 'config_bot' })}
@@ -232,7 +234,10 @@ const Styling = ({ save, step, saveSuccess }: Props) => {
               {btnColor.map((it, index) => (
                 <button
                   key={index}
-                  className={classNames(`rounded-lg w-5 h-5 p-4 d-inline-flex align-items-center justify-content-center`, it.color)}
+                  className={classNames(
+                    `rounded-lg w-5 h-5 p-4 d-inline-flex align-items-center justify-content-center`,
+                    it.color,
+                  )}
                   onClick={() => setMessageColor(it.value)}
                 />
               ))}
@@ -257,7 +262,10 @@ const Styling = ({ save, step, saveSuccess }: Props) => {
               {btnColor.map((it, index) => (
                 <button
                   key={index}
-                  className={classNames(`rounded-lg w-5 h-5 p-4 d-inline-flex align-items-center justify-content-center`, it.color)}
+                  className={classNames(
+                    `rounded-lg w-5 h-5 p-4 d-inline-flex align-items-center justify-content-center`,
+                    it.color,
+                  )}
                   onClick={() => setButtonColor(it.value)}
                 />
               ))}
@@ -307,7 +315,11 @@ const Styling = ({ save, step, saveSuccess }: Props) => {
             </div>
           </div>
           <p className="prompt-bot flex gap-x-[10px] font-medium text-[#111827] items-center mt-4">
-            <Switch size="small" checked={!!botAvatarFile} onChange={() => setBotAvatarFile(undefined)}/>
+            <Switch
+              size="small"
+              checked={!!botAvatarFile}
+              onChange={() => setBotAvatarFile(undefined)}
+            />
             {t('userPicture', { ns: 'config_bot' })}
           </p>
           <div>
@@ -337,7 +349,11 @@ const Styling = ({ save, step, saveSuccess }: Props) => {
             </Upload.Dragger>
           </div>
           <p className="prompt-bot flex gap-x-[10px] font-medium text-[#111827] items-center mt-4">
-            <Switch size="small" checked={!!chatIconFile}  onChange={() => setChatIconFile(undefined)}/>
+            <Switch
+              size="small"
+              checked={!!chatIconFile}
+              onChange={() => setChatIconFile(undefined)}
+            />
             {t('symbol', { ns: 'config_bot' })}
           </p>
           <div>
@@ -367,11 +383,15 @@ const Styling = ({ save, step, saveSuccess }: Props) => {
             </Upload.Dragger>
           </div>
           <p className="prompt-bot flex gap-x-[10px] font-medium text-[#111827] items-center mt-4">
-            <Switch size="small"  checked={chatBubble} onChange={() => setChatBubble(!chatBubble)}/>
+            <Switch
+              size="small"
+              checked={chatBubble}
+              onChange={() => setChatBubble(!chatBubble)}
+            />
             Chat Bubble
           </p>
         </div>
-        <div className="w-[40%]">
+        <div className="min-w-[395px]">
           <Interface
             chatbubble={chatBubble}
             chat_message_color={messageColor}

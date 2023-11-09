@@ -15,7 +15,11 @@ import {
 } from '@/repository/buildChatBot';
 import { useParams } from 'react-router-dom';
 
-const TestConverstation = () => {
+interface Props {
+  save: boolean;
+}
+
+const TestConverstation = ({ save }: Props) => {
   const { t } = useTranslation();
   const { botInfos } = useSelector((state: RootState) => state.buildChatBot);
   const { includesResource } = useSelector(
@@ -35,7 +39,7 @@ const TestConverstation = () => {
 
   useEffect(() => {
     getRateLimit();
-  }, []);
+  }, [save]);
 
   const [dataSet, setDataSet] = useState<any>();
   const getAdvance = async () => {
@@ -66,7 +70,7 @@ const TestConverstation = () => {
   return (
     <>
       <div className="flex gap-x-4">
-        <div className="p-4 w-[60%] bg-[#FCFCFC] rounded-xl">
+        <div className="p-4 w-full bg-[#FCFCFC] rounded-xl">
           <div className="text-[15px]">
             <p className="font-medium flex gap-x-2 items-center mb-[8px] text-[#219653]">
               <IconConfigDone />
@@ -84,8 +88,10 @@ const TestConverstation = () => {
               {botInfos?.collect_customer_info && (
                 <li className="flex items-center gap-x-2">
                   <p className="mb-0 bg-[#667085] w-[5px] h-[5px] rounded-full"></p>
-                    Collect{' '}
-                  <span >{Object.keys(botInfos?.collect_customer_info).join(', ')}</span>
+                  Collect{' '}
+                  <span>
+                    {Object.keys(botInfos?.collect_customer_info).join(', ')}
+                  </span>
                 </li>
               )}
             </div>
@@ -160,7 +166,7 @@ const TestConverstation = () => {
             </div>
           </div>
         </div>
-        <div className="w-[40%]">
+        <div className="min-w-[395px]">
           <ChatBot />
         </div>
       </div>

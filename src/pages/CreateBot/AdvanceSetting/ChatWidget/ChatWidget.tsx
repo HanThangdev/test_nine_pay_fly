@@ -111,7 +111,7 @@ const ChatWidget = ({ save, step, saveSuccess }: Props) => {
   return (
     <>
       <div className="flex gap-x-4">
-        <div className="p-4 w-[60%]">
+        <div className="p-4 w-full bg-[#FCFCFC] rounded-[12px]">
           <div className="text-[15px]">
             <p className="font-medium mb-[8px] text-[#344054]">
               {t('DisplayName', { ns: 'config_bot' })}
@@ -181,7 +181,7 @@ const ChatWidget = ({ save, step, saveSuccess }: Props) => {
             />
           </div>
         </div>
-        <div className="w-[30%]">
+        <div className="min-w-[395px]">
           <Interface
             display_name={displayName}
             display_role={displayRole}

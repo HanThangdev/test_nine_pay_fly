@@ -22,6 +22,7 @@ import {
   getBotTransaction,
 } from '@/repository/manageChatbot';
 import { API_STATUS } from '@/constants';
+import { getRateLimitTransaction } from '@/repository/buildChatBot';
 
 const EditBot = () => {
   const { t } = useTranslation();
@@ -32,6 +33,7 @@ const EditBot = () => {
   const { id } = useParams();
   const [save, setSave] = useState(false);
   const [step, setStep] = useState('');
+  const [messageCount, setMessageCount] = useState(0);
   const items: TabsProps['items'] = [
     {
       key: 'basicInfor',
@@ -84,7 +86,7 @@ const EditBot = () => {
     {
       key: 'test',
       label: `${t('test')}`,
-      children: <TestConverstation />,
+      children: <TestConverstation save={save} />,
     },
     {
       key: 'integration',
@@ -135,6 +137,17 @@ const EditBot = () => {
     }
   };
 
+  const getRateLimit = async (id: string) => {
+    const res: any = await dispatch(getRateLimitTransaction(id));
+    setMessageCount(res.payload.data.data);
+  };
+
+  useEffect(() => {
+    if (id) {
+      getRateLimit(id);
+    }
+  }, [id, save]);
+
   return (
     <>
       <Header
@@ -159,7 +172,9 @@ const EditBot = () => {
               {botInfos?.bot_name}
             </p>
             <p className="text-[#6B7280] mb-2">
-              {t('limit100', { ns: 'config_bot' })}
+              {t('Limitto', { ns: 'config_bot' })}
+              {messageCount}
+              {t('messagesEvery', { ns: 'config_bot' })}
             </p>
           </div>
           <div className="Switch-bot min-w-[225px] h-full gap-x-4 rounded-[8px] py-2 px-3 flex">

@@ -55,7 +55,7 @@ const FileItem = ({ item, index }: FileItemProps) => {
     <div className="flex justify-between gap-x-[21px] mb-[20px] px-2 bg-[#F9FAFB] rounded-lg border-[1px] border-[#dfe1e5]">
       <div className="flex justify-between w-full h-[41px] items-center">
         <div className="w-full text-[17px]">{item.filename}</div>
-        <div className="flex justify-between min-w-[160px] items-center">
+        <div className="flex justify-between min-w-[200px] items-center">
           <span className="mb-0 font-medium flex items-center gap-x-1">
             <IconToken />({formatNumber(item.num_token)}{' '}
             {t('tokens', { ns: 'config_bot' })})

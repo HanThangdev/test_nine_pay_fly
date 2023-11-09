@@ -220,7 +220,7 @@ const CreateBot = () => {
     if (botInfos) {
       getRateLimit(botInfos.id);
     }
-  }, [botInfos]);
+  }, [botInfos, save]);
   return (
     <>
       <Header
