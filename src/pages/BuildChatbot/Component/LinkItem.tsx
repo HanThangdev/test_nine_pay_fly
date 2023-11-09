@@ -71,7 +71,7 @@ const LinkItem = ({ item, index }: LinkItemProps) => {
         value={item.url}
         className="h-[41px] w-full bg-transparent outline-none focus:border-primary focus-visible:shadow-none"
       />
-      <div className="flex justify-between min-w-[160px] items-center">
+      <div className="flex justify-between min-w-[200px] items-center">
         <p className="mb-0 font-medium flex items-center gap-x-1">
           <IconToken />
           {formatNumber(item?.num_token || 0)}{' '}

@@ -229,7 +229,7 @@ const Styling = ({ save, step, saveSuccess }: Props) => {
   return (
     <>
       <div className="flex gap-x-4">
-        <div className="p-4 w-[60%]">
+        <div className="p-4 w-full bg-[#FCFCFC] rounded-[12px]">
           <div className="text-[15px]">
             <p className="font-medium mb-0 text-[#111827]">
               {t('userColor', { ns: 'config_bot' })}
@@ -390,7 +390,7 @@ const Styling = ({ save, step, saveSuccess }: Props) => {
             Chat Bubble
           </p>
         </div>
-        <div className="w-[40%]">
+        <div className="min-w-[395px]">
           <Interface
             chatbubble={chatBubble}
             chat_message_color={messageColor}
