@@ -286,7 +286,7 @@ const Conversations = () => {
         </div>
         <div className={classNames('mt-3 grid grid-cols-3 gap-x-4')}>
           <div className="h-[calc(100vh-190px)] ">
-            <div className="flex items-center gap-x-3 mb-3">
+            <div className="flex items-center gap-x-3 mb-3 cursor-pointer">
               <RangePicker
                 disabled={isEmptyObjectOrArray(ownerChatbot)}
                 allowClear={false}
