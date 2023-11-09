@@ -39,6 +39,7 @@ const Config = ({ save, step, saveSuccess }: Props) => {
   const [phone, setPhone] = useState(false);
   const [numberShowing, setNumberShowing] = useState(0);
   const [messageCount, setMessageCount] = useState(0);
+  const [count, setCount] = useState(0);
   const [custom, setCustom] = useState<CustomField[]>([]);
   const dispatch = useDispatch<AppDispatch>();
 
@@ -80,12 +81,14 @@ const Config = ({ save, step, saveSuccess }: Props) => {
       };
       let response = await dispatch(updateBotTransaction(updateBotPayload));
       const { meta } = response;
-      await dispatch(
-        updateRateLimitTransaction({
-          bot_id: botInfos.id,
-          rate_limit_per_day: messageCount,
-        }),
-      );
+      if (messageCount !== count) {
+        await dispatch(
+          updateRateLimitTransaction({
+            bot_id: botInfos.id,
+            rate_limit_per_day: messageCount,
+          }),
+        );
+      }
       saveSuccess();
       notification.success({
         message: `${t('upadetSuccess', { ns: 'config_bot' })}`,
@@ -110,6 +113,7 @@ const Config = ({ save, step, saveSuccess }: Props) => {
   const getRateLimit = async () => {
     const res: any = await dispatch(getRateLimitTransaction(botInfos?.id));
     setMessageCount(res.payload.data.data);
+    setCount(res.payload.data.data);
   };
 
   useEffect(() => {

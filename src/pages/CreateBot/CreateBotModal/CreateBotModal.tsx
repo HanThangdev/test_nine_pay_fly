@@ -73,16 +73,9 @@ export default function CreateBotModal({ open, onClose }: Props) {
   const { currentPricingPlan } = useSelector(
     (state: RootState) => state.pricing,
   );
-  const [botsActive, setBotsActive] = useState<any[]>([]);
-
-  useEffect(() => {
-    setBotsActive(
-      ownerChatbot.filter((item: any) => item.is_activate === true),
-    );
-  }, [ownerChatbot]);
 
   const onFinish = async () => {
-    if (currentPricingPlan === 'Free' && botsActive.length > 0) {
+    if (currentPricingPlan === 'Free' && ownerChatbot.length > 0) {
       notification.error({
         message: `${t('limitBot', { ns: 'manage_bot' })}`,
       });
