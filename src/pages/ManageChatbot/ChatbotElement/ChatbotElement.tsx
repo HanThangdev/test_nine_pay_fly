@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 
-import { notification, Switch } from 'antd';
+import { notification, QRCode, Switch } from 'antd';
 import {
   IconEdit,
   IconShare,
@@ -23,6 +23,7 @@ import { resetStateBuild } from '@/states/buildChatBot/buildChatBot.slice';
 import { useTranslation } from 'react-i18next';
 import { formatTimeAgo } from '@/utils/format';
 import { image_bot1, image_bot2, image_bot3 } from '@/images';
+import { logoImg } from '@/images/logo';
 
 interface ChatbotElementProps {
   info: ResponseManageChatbot;
@@ -109,9 +110,9 @@ const ChatbotElement = ({ info }: ChatbotElementProps) => {
 
   const redirectToUpdateBot = () => {
     const { id, is_activate } = info;
-    if(!is_activate){
+    if (!is_activate) {
       notification.warning({
-        message: "Bot is not active, please activate the bot"
+        message: 'Bot is not active, please activate the bot',
       });
       return;
     }
@@ -141,13 +142,21 @@ const ChatbotElement = ({ info }: ChatbotElementProps) => {
       </div>
       <div className="w-full">
         <div className="flex justify-between items-start">
-          <p className="text-[20px] text-[#111827] mb-0 cursor-pointer" onClick={redirectToUpdateBot}>{info.bot_name}</p>
+          <p
+            className="text-[20px] text-[#111827] mb-0 cursor-pointer"
+            onClick={redirectToUpdateBot}
+          >
+            {info.bot_name}
+          </p>
           <div className="flex gap-x-2">
             <p
-              className={classNames(" items-center mb-0 flex gap-x-1 bg-[#FFF] py-2 px-3 border-[1px] border-[#D0D5DD] text-[14px] text-[#374151] rounded-[8px]", {
-                'opacity-50': !info.is_activate,
-                'cursor-pointer': info.is_activate
-              })}
+              className={classNames(
+                ' items-center mb-0 flex gap-x-1 bg-[#FFF] py-2 px-3 border-[1px] border-[#D0D5DD] text-[14px] text-[#374151] rounded-[8px]',
+                {
+                  'opacity-50': !info.is_activate,
+                  'cursor-pointer': info.is_activate,
+                },
+              )}
               onClick={() => info.is_activate && setVisibleShareModal(true)}
             >
               <IconShare />
@@ -158,7 +167,7 @@ const ChatbotElement = ({ info }: ChatbotElementProps) => {
                 'items-center mb-0 flex gap-x-1 bg-[#FFF] py-2 px-3 border-[1px] border-[#D0D5DD] text-[14px] text-[#374151] rounded-[8px]',
                 {
                   'opacity-50': !info.is_activate,
-                  'cursor-pointer': info.is_activate
+                  'cursor-pointer': info.is_activate,
                 },
               )}
               onClick={() => info.is_activate && redirectToUpdateBot()}
@@ -292,6 +301,7 @@ const ChatbotElement = ({ info }: ChatbotElementProps) => {
             onClick={onClick}
             className="rounded-[8px] w-full py-[10px] px-[14px] border-[1px] border-[#D0D5DD] cursor-pointer"
           >{`${window.location.origin}/chat/${info.id}`}</div>
+
           <div
             onClick={onClick}
             className="rounded-[8px] p-3 border-[1px] border-[#D0D5DD] flex items-center cursor-pointer"
@@ -317,6 +327,14 @@ const ChatbotElement = ({ info }: ChatbotElementProps) => {
             </svg>
           </div>
         </div>
+        <div  className="flex justify-center mt-3 rounded-[8px] p-3 border-[1px] border-[#D0D5DD]">
+          <QRCode
+            errorLevel="H"
+            value={`${window.location.origin}/chat/${info.id}`}
+            icon={logoImg}
+          />
+        </div>
+       
       </ModalComponent>
     </div>
   );

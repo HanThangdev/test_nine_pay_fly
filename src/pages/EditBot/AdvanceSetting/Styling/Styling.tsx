@@ -318,7 +318,15 @@ const Styling = ({ save, step, saveSuccess }: Props) => {
             <Switch
               size="small"
               checked={!!botAvatarFile}
-              onChange={() => setBotAvatarFile(undefined)}
+              onChange={() => {
+                if (botAvatarFile) {
+                  setBotAvatarFile(undefined);
+                }else{
+                  notification.info({
+                    message: t('please_import_avatar', { ns: 'config_bot' }),
+                  });
+                }
+              }}
             />
             {t('userPicture', { ns: 'config_bot' })}
           </p>
@@ -352,7 +360,15 @@ const Styling = ({ save, step, saveSuccess }: Props) => {
             <Switch
               size="small"
               checked={!!chatIconFile}
-              onChange={() => setChatIconFile(undefined)}
+              onChange={() => {
+                if (chatIconFile) {
+                  setChatIconFile(undefined);
+                }else{
+                  notification.info({
+                    message: t('please_import_avatar', { ns: 'config_bot' }),
+                  });
+                }
+              }}
             />
             {t('symbol', { ns: 'config_bot' })}
           </p>

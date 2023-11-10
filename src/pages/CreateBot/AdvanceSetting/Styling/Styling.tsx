@@ -322,7 +322,19 @@ const Styling = ({ save, step, saveSuccess }: Props) => {
             </div>
           </div>
           <p className="prompt-bot flex gap-x-[10px] font-medium text-[#111827] items-center mt-4">
-            <Switch size="small" checked={true} />
+            <Switch
+              size="small"
+              checked={!!botAvatarFile}
+              onChange={() => {
+                if (botAvatarFile) {
+                  setBotAvatarFile(undefined);
+                }else{
+                  notification.info({
+                    message: t('please_import_avatar', { ns: 'config_bot' }),
+                  });
+                }
+              }}
+            />
             {t('userPicture', { ns: 'config_bot' })}
           </p>
           <div>
@@ -352,7 +364,19 @@ const Styling = ({ save, step, saveSuccess }: Props) => {
             </Upload.Dragger>
           </div>
           <p className="prompt-bot flex gap-x-[10px] font-medium text-[#111827] items-center mt-4">
-            <Switch size="small" checked={true} />
+            <Switch
+              size="small"
+              checked={!!chatIconFile}
+              onChange={() => {
+                if (chatIconFile) {
+                  setChatIconFile(undefined);
+                }else{
+                  notification.info({
+                    message: t('please_import_avatar', { ns: 'config_bot' }),
+                  });
+                }
+              }}
+            />
             {t('symbol', { ns: 'config_bot' })}
           </p>
           <div>

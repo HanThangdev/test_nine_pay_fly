@@ -195,5 +195,7 @@
   "addRule": "ルールを追加",
   "text": "テキスト",
   "examplePrompt": "プロンプトの例を表示",
-  "messagesDay": "メッセージ/日"
+  "messagesDay": "メッセージ/日",
+  "please_import_avatar": "画像を最初にインポートしてくださいです。",
+  "share_your_bot": "ボットを共有してください"
 }
