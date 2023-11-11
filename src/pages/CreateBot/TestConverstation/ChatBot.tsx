@@ -1,8 +1,12 @@
 import { RootState, AppDispatch } from '@/states/store';
-import { Tooltip, notification } from 'antd';
+import { Avatar, Tooltip, notification } from 'antd';
 import classNames from 'classnames';
 import { useEffect, useRef, useState } from 'react';
-import { IconSticker, IconAttach } from '@/components/IconGroup/IconGroup';
+import {
+  IconSticker,
+  IconAttach,
+  IconChat,
+} from '@/components/IconGroup/IconGroup';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAdvanceSettingTransaction } from '@/repository/buildChatBot';
 import { useParams } from 'react-router-dom';
@@ -16,6 +20,7 @@ import { useBuildChatbot } from '@/states/buildChatBot/buildChatBot.selector';
 import { TypeAnimation } from 'react-type-animation';
 import { LOADING_TEXT } from '@/constants';
 import FormCollectCustomer from '@/components/formCollectCustomer';
+import iconBot from '@/images/icon/icon-bot.svg';
 
 const ChatBot = () => {
   const { t } = useTranslation();
@@ -29,9 +34,9 @@ const ChatBot = () => {
     align_chat_bubble_button: 'right',
     auto_show_initial_message_after: 0,
     chat_message_color: '#4AC1FF',
-    chat_bubble_button_color: '#4AC1FF',
-    chat_icon_url:
-      'https://app.gpt-trainer.com/img/widget-images/widget-button-open-state/default-chat.svg',
+    chat_bubble_button_color: '#FFFF',
+    bot_avatar_url: iconBot,
+    chat_icon_url: '',
   });
   const getAdvance = async () => {
     const res: any = await dispatch(
@@ -229,6 +234,17 @@ const ChatBot = () => {
             style={{ maxHeight: 'calc(100% - 155px)' }}
             ref={messagesEndRef}
           >
+            <div className="flex gap-x-2 items-center">
+              <Avatar
+                className="mt-2"
+                src={dataSet.bot_avatar_url ? dataSet.bot_avatar_url : iconBot}
+                size="small"
+              />
+
+              <div className="max-w-[280px] bg-[#eeeef1] px-3 py-2 rounded-t-lg rounded-br-lg w-90 break-words">
+                {dataSet.initial_message}
+              </div>
+            </div>
             {!!history?.length &&
               history.map((message, index) =>
                 getDivForResponse(index, message),
@@ -319,17 +335,17 @@ const ChatBot = () => {
             style={{
               background: dataSet.chat_bubble_button_color
                 ? dataSet.chat_bubble_button_color
-                : '#4AC1FF',
+                : '##FFFF',
             }}
           >
-            <img
-              className="w-[30px] h-[30px] invert"
-              src={
-                dataSet.chat_icon_url
-                  ? dataSet.chat_icon_url
-                  : 'https://app.gpt-trainer.com/img/widget-images/widget-button-open-state/default-chat.svg'
-              }
-            />
+            {dataSet.chat_icon_url ? (
+              <img
+                className="w-[30px] h-[30px] invert"
+                src={dataSet.chat_icon_url}
+              />
+            ) : (
+              <IconChat />
+            )}
           </div>
         </div>
       </div>

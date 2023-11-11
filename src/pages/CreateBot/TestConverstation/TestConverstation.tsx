@@ -159,7 +159,7 @@ const TestConverstation = () => {
             </div>
           </div>
         </div>
-        <div className="min-w-[395px]">
+        <div className="min-w-[395px] w-[395px]">
           <ChatBot />
         </div>
       </div>

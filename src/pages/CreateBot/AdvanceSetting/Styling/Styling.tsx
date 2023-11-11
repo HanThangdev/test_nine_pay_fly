@@ -43,7 +43,7 @@ const Styling = ({ save, step, saveSuccess }: Props) => {
   const { botInfos } = useSelector((state: RootState) => state.buildChatBot);
   const [theme, setTheme] = useState('light');
   const [messageColor, setMessageColor] = useState<string>('#4AC1FF');
-  const [buttonColor, setButtonColor] = useState<string>('#4AC1FF');
+  const [buttonColor, setButtonColor] = useState<string>('#FFFF');
   const [dataAdvanced, setDataAdvanced] = useState<any>([]);
   const [botAvatarFile, setBotAvatarFile] = useState<File | undefined>();
   const [botAvatarUrl, setBotAvatarUrl] = useState<string>();
@@ -324,11 +324,13 @@ const Styling = ({ save, step, saveSuccess }: Props) => {
           <p className="prompt-bot flex gap-x-[10px] font-medium text-[#111827] items-center mt-4">
             <Switch
               size="small"
-              checked={!!botAvatarFile}
+              checked={!!botAvatarFile || Boolean(bot_avatar_url)}
               onChange={() => {
-                if (botAvatarFile) {
+                if (botAvatarFile || bot_avatar_url) {
                   setBotAvatarFile(undefined);
-                }else{
+                  setBotAvatar('');
+                  setBot_avatar_url('');
+                } else {
                   notification.info({
                     message: t('please_import_avatar', { ns: 'config_bot' }),
                   });
@@ -366,11 +368,13 @@ const Styling = ({ save, step, saveSuccess }: Props) => {
           <p className="prompt-bot flex gap-x-[10px] font-medium text-[#111827] items-center mt-4">
             <Switch
               size="small"
-              checked={!!chatIconFile}
+              checked={!!chatIconFile || Boolean(chat_icon_url)}
               onChange={() => {
-                if (chatIconFile) {
+                if (chatIconFile || chat_icon_url) {
                   setChatIconFile(undefined);
-                }else{
+                  setChatIconUrl('');
+                  setChat_icon_url('');
+                } else {
                   notification.info({
                     message: t('please_import_avatar', { ns: 'config_bot' }),
                   });
@@ -414,7 +418,7 @@ const Styling = ({ save, step, saveSuccess }: Props) => {
             Chat Bubble
           </p>
         </div>
-        <div className="min-w-[395px]">
+        <div className="min-w-[395px] w-[395px]">
           <Interface
             chatbubble={chatBubble}
             chat_message_color={messageColor}
