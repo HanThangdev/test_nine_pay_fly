@@ -2,6 +2,9 @@ import { createSlice } from '@reduxjs/toolkit';
 import { PricingPlanState } from './type';
 import {
   getCurrentPricingPlanTransaction,
+  getLatestInvoice,
+  getNinePayCallback,
+  getPaymentUrlNinePay,
   getVnpayRedirectTransaction,
   getVnpayReturnTransaction,
   registerUpgradeBillingTransaction,
@@ -87,6 +90,42 @@ export const pricingPlaningSlice = createSlice({
       state.loading = false;
     });
     //end registerUpgradeBillingTransaction
+
+     //start getPaymentUrlNinePay
+     builder.addCase(getPaymentUrlNinePay.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getPaymentUrlNinePay.fulfilled, (state) => {
+      state.loading = false;
+    });
+    builder.addCase(getPaymentUrlNinePay.rejected, (state) => {
+      state.loading = false;
+    });
+    //end getPaymentUrlNinePay
+
+     //start getLatestInvoice
+     builder.addCase(getLatestInvoice.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getLatestInvoice.fulfilled, (state) => {
+      state.loading = false;
+    });
+    builder.addCase(getLatestInvoice.rejected, (state) => {
+      state.loading = false;
+    });
+    //end getLatestInvoice
+
+     //start getNinePayCallback
+     builder.addCase(getNinePayCallback.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getNinePayCallback.fulfilled, (state) => {
+      state.loading = false;
+    });
+    builder.addCase(getNinePayCallback.rejected, (state) => {
+      state.loading = false;
+    });
+    //end getNinePayCallback
   },
 });
 

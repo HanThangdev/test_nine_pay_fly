@@ -176,6 +176,7 @@ const coreRoutes = [
     path: '/checkout',
     title: 'Checkout',
     component: Checkout,
+    isProtected: true,
   },
 ];
 
