@@ -12,11 +12,11 @@ export const PRICINGVALUE= {
       subscription_time_type: 1
     },
     BUSINESS_MONTHLY: {
-      billing_type: 4,
+      billing_type: 5,
       subscription_time_type: 1
     },
     STANDARD_MONTHLY: {
-      billing_type: 5,
+      billing_type: 4,
       subscription_time_type: 1
     },
     FREE_YEARLY: {
@@ -32,11 +32,11 @@ export const PRICINGVALUE= {
       subscription_time_type: 2
     },
     BUSINESS_YEARLY: {
-      billing_type: 4,
+      billing_type: 5,
       subscription_time_type: 2
     },
     STANDARD_YEARLY: {
-      billing_type: 5,
+      billing_type: 4,
       subscription_time_type: 2
     },
   }
