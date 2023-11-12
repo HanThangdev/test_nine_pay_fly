@@ -12,3 +12,15 @@ export interface UpgradeBillingResponse {
     billing_type: number,
     expires_at: Date,
 }
+
+export interface GetPaymentUrlNinePayPayload {
+  billing_type : number,
+  subscription_time_type : number,
+  lang : string,
+  currency : string,
+}
+
+export interface GetNinePayCallbackPayload {
+  result : string,
+  checksum : string,
+}

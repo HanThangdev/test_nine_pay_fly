@@ -49,17 +49,21 @@ export function convertFile2Base64(file: File) {
 }
 
 export function objectToQueryString(obj: { [key: string]: any }): string {
-  const keyValuePairs = [];
+  const queryString = Object.keys(obj)
+    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(obj[key])}`)
+    .join('&');
+  return queryString;
+}
 
-  for (const key in obj) {
-    if (obj.hasOwnProperty(key)) {
-      keyValuePairs.push(
-        encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]),
-      );
-    }
+export function getSearchParamsObject(queryString: string) {
+  const urlParams = new URLSearchParams(queryString);
+  
+  const paramsObject: any = {};
+  for (const [key, value] of urlParams.entries()) {
+    paramsObject[key] = value;
   }
 
-  return keyValuePairs.join('&');
+  return paramsObject;
 }
 
 export function convertCustomValue(obj: any): Array<{ key: string }> {

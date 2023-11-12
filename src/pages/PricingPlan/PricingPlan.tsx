@@ -1,8 +1,7 @@
 import classNames from 'classnames';
 import { useState } from 'react';
-import IconCheck from '@/components/IconCheck/IconCheck';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Header from '@/components/header';
 
 import { AiOutlineQuestionCircle } from 'react-icons/ai';
@@ -14,9 +13,21 @@ import {
   IconsBusiness,
   IconsStandard,
 } from '@/components/IconPrice/IconPrice';
+import { PRICINGVALUE } from '@/constants/pricing';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/states/store';
+import { objectToQueryString } from '@/utils/utils';
 
+interface IPricingValue {
+  billing_type: number;
+  subscription_time_type: number;
+}
 const PricingPlan = () => {
   const { t } = useTranslation();
+  const { currentPricingPlan } = useSelector(
+    (state: RootState) => state.pricing,
+  );
+  const navigate = useNavigate();
   const itemFree = [
     `${t('Free.item1', { ns: 'pricing_plan' })}`,
     `${t('Free.item2', { ns: 'pricing_plan' })}`,
@@ -125,9 +136,26 @@ const PricingPlan = () => {
       answer: `${t('answer.answer9', { ns: 'pricing_plan' })}`,
     },
   ];
-  const [month, setMonth] = useState(true);
+  const [month, setMonth] = useState(PRICINGVALUE.FREE_MONTHLY);
+  enum PRICINGENUM {
+    Free,
+    Basic,
+    Starter,
+    Standard,
+    Business,
+  }
+  
+  const pricingValuesType: Record<string, PRICINGENUM> = {
+    Free: PRICINGENUM.Free,
+    Basic: PRICINGENUM.Basic,
+    Starter: PRICINGENUM.Starter,
+    Standard: PRICINGENUM.Standard,
+    Business: PRICINGENUM.Business,
+  };
 
-  console.log(IconsFree[0]);
+  const navigateCheckoutPricing = (type: IPricingValue) => {
+    navigate(`/checkout?`+ objectToQueryString(type))
+  }
   return (
     <>
       <Header
@@ -153,9 +181,9 @@ const PricingPlan = () => {
               </p>
               <p className="text-[#9CA3AF] text-[14px] Pricing gap-x-3 flex">
                 <Switch
-                  checked={!month}
+                  checked={month == PRICINGVALUE.FREE_YEARLY}
                   size="small"
-                  onClick={(e) => setMonth(!e)}
+                  onClick={(e) => setMonth(e ? PRICINGVALUE.FREE_YEARLY : PRICINGVALUE.FREE_MONTHLY)}
                 />
                 YEARLY
               </p>
@@ -176,7 +204,7 @@ const PricingPlan = () => {
             ))}
             <div className="bottom-0 lg:absolute m-auto w-[calc(100%-32px)] mb-[20px]">
               <button className="flex justify-center w-full items-center m-auto py-3 px-5 bg-button-upgrade text-[#FFF] rounded-[12px] text-[18px] justify-cente">
-                You are currently on free plan
+                {pricingValuesType[currentPricingPlan || 'Free'] < PRICINGENUM.Basic ? 'You are currently on free plan' : 'Registered for this plan.'}
               </button>
             </div>
           </div>
@@ -192,22 +220,22 @@ const PricingPlan = () => {
               </p>
               <p className="text-[#9CA3AF] text-[14px] Pricing gap-x-3 flex">
                 <Switch
-                  checked={!month}
+                  checked={month == PRICINGVALUE.BASIC_YEARLY}
                   size="small"
-                  onClick={(e) => setMonth(!e)}
+                  onClick={(e) => setMonth(e ? PRICINGVALUE.BASIC_YEARLY : PRICINGVALUE.BASIC_MONTHLY)}
                 />
                 YEARLY
               </p>
             </div>
             <div className="mt-[16px] h-[80px]">
               <p className="text-[57px] text-[#2D3FE7] font-semibold mb-0">
-                $14{!month && '0'}
+                $14{month == PRICINGVALUE.BASIC_YEARLY && '0'}
                 <br />
                 <span className="text-[#9CA3AF] text-[16px] font-semibold uppercase">
                   PER{' '}
-                  {month
-                    ? `${t('month', { ns: 'pricing_plan' })}`
-                    : `${t('year', { ns: 'pricing_plan' })}`}
+                  {month == PRICINGVALUE.BASIC_YEARLY
+                    ? `${t('year', { ns: 'pricing_plan' })}`
+                    : `${t('month', { ns: 'pricing_plan' })}`}
                 </span>
               </p>
             </div>
@@ -225,8 +253,8 @@ const PricingPlan = () => {
               </div>
             ))}
             <div className="bottom-0 m-auto w-full pt-4">
-              <button className="flex justify-center items-center w-full m-auto py-3 px-5 bg-button-upgrade text-[#FFF] rounded-[12px] text-[18px] justify-cente">
-                <Link to="/register-pricing-plan">Upgrade to Basic</Link>
+              <button className="flex justify-center items-center w-full m-auto py-3 px-5 bg-button-upgrade text-[#FFF] rounded-[12px] text-[18px] justify-cente" onClick={() => navigateCheckoutPricing(month == PRICINGVALUE.BASIC_YEARLY ? PRICINGVALUE.BASIC_YEARLY : PRICINGVALUE.BASIC_MONTHLY)}>
+                {pricingValuesType[currentPricingPlan || 'Free'] < PRICINGENUM.Basic ? pricingValuesType[currentPricingPlan || 'Free'] == PRICINGENUM.Basic ? 'You are currently on basic plan': 'Upgrade to Basic' : 'Registered for this plan.'}
               </button>
             </div>
           </div>
@@ -244,22 +272,22 @@ const PricingPlan = () => {
               </p>
               <p className="text-[#9CA3AF] text-[14px] Pricing gap-x-3 flex">
                 <Switch
-                  checked={!month}
+                  checked={month == PRICINGVALUE.STARTER_YEARLY}
                   size="small"
-                  onClick={(e) => setMonth(!e)}
+                  onClick={(e) => setMonth(e ? PRICINGVALUE.STARTER_YEARLY : PRICINGVALUE.STARTER_MONTHLY)}
                 />
                 YEARLY
               </p>
             </div>
             <div className="mt-[16px] h-[80px]">
               <p className="text-[57px] text-[#AE28DF] font-semibold mb-0">
-                $39{!month && '0'}
+                $39{month == PRICINGVALUE.STARTER_YEARLY && '0'}
                 <br />
                 <span className="text-[#9CA3AF] text-[16px] font-semibold uppercase">
                   PER{' '}
-                  {month
-                    ? `${t('month', { ns: 'pricing_plan' })}`
-                    : `${t('year', { ns: 'pricing_plan' })}`}
+                  {month == PRICINGVALUE.STARTER_YEARLY
+                    ? `${t('year', { ns: 'pricing_plan' })}`
+                    : `${t('month', { ns: 'pricing_plan' })}`}
                 </span>
               </p>
             </div>
@@ -282,8 +310,8 @@ const PricingPlan = () => {
               </div>
             ))}
             <div className="bottom-0 lg:absolute m-auto w-[calc(100%-32px)] mb-[20px]">
-              <button className="flex justify-center items-center w-full m-auto py-3 px-5 bg-starter text-[#FFF] rounded-[12px] text-[18px]">
-                <Link to="/register-pricing-plan">Upgrade to Starter</Link>
+              <button className="flex justify-center items-center w-full m-auto py-3 px-5 bg-starter text-[#FFF] rounded-[12px] text-[18px]" onClick={() => navigateCheckoutPricing(month == PRICINGVALUE.STARTER_YEARLY ? PRICINGVALUE.STARTER_YEARLY : PRICINGVALUE.STARTER_MONTHLY)}>
+              {pricingValuesType[currentPricingPlan || 'Free'] < PRICINGENUM.Starter ? pricingValuesType[currentPricingPlan || 'Free'] == PRICINGENUM.Starter ? 'You are currently on starter plan': 'Upgrade to Starter' : 'Registered for this plan.'}
               </button>
             </div>
           </div>
@@ -299,22 +327,22 @@ const PricingPlan = () => {
               </p>
               <p className="text-[#9CA3AF] text-[14px] Pricing gap-x-3 flex">
                 <Switch
-                  checked={!month}
+                  checked={month == PRICINGVALUE.BUSINESS_YEARLY}
                   size="small"
-                  onClick={(e) => setMonth(!e)}
+                  onClick={(e) => setMonth(e ? PRICINGVALUE.BUSINESS_YEARLY : PRICINGVALUE.BUSINESS_MONTHLY)}
                 />
                 YEARLY
               </p>
             </div>
             <div className="mt-[16px] h-[80px]">
               <p className="text-[57px] text-[#0F0F0F] font-semibold mb-0">
-                $279{!month && '0'}
+                $279{month == PRICINGVALUE.BUSINESS_YEARLY && '0'}
                 <br />
                 <span className="text-[#9CA3AF] text-[16px] font-semibold uppercase">
                   PER{' '}
-                  {month
-                    ? `${t('month', { ns: 'pricing_plan' })}`
-                    : `${t('year', { ns: 'pricing_plan' })}`}
+                  {month == PRICINGVALUE.BUSINESS_YEARLY
+                    ? `${t('year', { ns: 'pricing_plan' })}`
+                    : `${t('month', { ns: 'pricing_plan' })}`}
                 </span>
               </p>
             </div>
@@ -337,8 +365,8 @@ const PricingPlan = () => {
               </div>
             ))}
             <div className="bottom-0 m-auto w-full pt-4">
-              <button className="flex justify-center items-center w-full m-auto py-3 px-5 bg-business text-[#FFF] rounded-[12px] text-[18px] justify-cente">
-                <Link to="/register-pricing-plan">Upgrade to Business</Link>
+              <button className="flex justify-center items-center w-full m-auto py-3 px-5 bg-business text-[#FFF] rounded-[12px] text-[18px] justify-cente" onClick={() => navigateCheckoutPricing(month == PRICINGVALUE.BUSINESS_YEARLY ? PRICINGVALUE.BUSINESS_YEARLY : PRICINGVALUE.BUSINESS_MONTHLY)}>
+                {pricingValuesType[currentPricingPlan || 'Free'] >= PRICINGENUM.Business ? 'You are currently on Business plan': 'Upgrade to Business'}
               </button>
             </div>
           </div>
@@ -354,22 +382,22 @@ const PricingPlan = () => {
               </p>
               <p className="text-[#9CA3AF] text-[14px] Pricing gap-x-3 flex">
                 <Switch
-                  checked={!month}
+                  checked={month == PRICINGVALUE.STANDARD_YEARLY}
                   size="small"
-                  onClick={(e) => setMonth(!e)}
+                  onClick={(e) => setMonth(e ? PRICINGVALUE.STANDARD_YEARLY : PRICINGVALUE.STANDARD_MONTHLY)}
                 />
                 YEARLY
               </p>
             </div>
             <div className="mt-[16px] h-[80px]">
               <p className="text-[57px] text-[#D92525] font-semibold mb-0">
-                $79{!month && '0'}
+                $79{month == PRICINGVALUE.STANDARD_YEARLY && '0'}
                 <br />
                 <span className="text-[#9CA3AF] text-[16px] font-semibold uppercase">
                   PER{' '}
-                  {month
-                    ? `${t('month', { ns: 'pricing_plan' })}`
-                    : `${t('year', { ns: 'pricing_plan' })}`}
+                  {month == PRICINGVALUE.STANDARD_YEARLY
+                    ? `${t('monthyear', { ns: 'pricing_plan' })}`
+                    : `${t('month', { ns: 'pricing_plan' })}`}
                 </span>
               </p>
             </div>
@@ -392,8 +420,8 @@ const PricingPlan = () => {
               </div>
             ))}
             <div className="bottom-0 lg:absolute m-auto w-[calc(100%-32px)] mb-[20px]">
-              <button className="flex justify-center items-center w-full m-auto py-3 px-5 bg-standard text-[#FFF] rounded-[12px] text-[18px]">
-                <Link to="/register-pricing-plan">Upgrade to Standard</Link>
+              <button className="flex justify-center items-center w-full m-auto py-3 px-5 bg-standard text-[#FFF] rounded-[12px] text-[18px]" onClick={() => navigateCheckoutPricing(month == PRICINGVALUE.STANDARD_YEARLY ? PRICINGVALUE.STANDARD_YEARLY : PRICINGVALUE.STANDARD_MONTHLY)}>
+                {pricingValuesType[currentPricingPlan || 'Free'] < PRICINGENUM.Standard ? pricingValuesType[currentPricingPlan || 'Free'] == PRICINGENUM.Standard ? 'You are currently on Standard plan': 'Upgrade to Standard' : 'Registered for this plan.'}
               </button>
             </div>
           </div>
