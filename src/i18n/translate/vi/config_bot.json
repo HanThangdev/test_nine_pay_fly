@@ -196,5 +196,7 @@
   "addRule": "Thêm quy tắc",
   "text": "Văn bản",
   "examplePrompt": "Xem lời nhắc ví dụ",
-  "messagesDay": " tin nhắn / ngày"
+  "messagesDay": " tin nhắn / ngày",
+  "please_import_avatar": "Vui lòng nhập hình ảnh trước.",
+  "share_your_bot": "Chia sẻ bot"
 }

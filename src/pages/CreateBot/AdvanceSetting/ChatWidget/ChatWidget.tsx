@@ -30,8 +30,8 @@ const ChatWidget = ({ save, step, saveSuccess }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
   const { botInfos } = useSelector((state: RootState) => state.buildChatBot);
   const { id } = useParams();
-  const [displayName, setDisplayName] = useState('');
-  const [displayRole, setDisplayRole] = useState('');
+  const [displayName, setDisplayName] = useState('Chat Bot 1');
+  const [displayRole, setDisplayRole] = useState('Product Expert');
   const [initialMessages, setinitialMessages] = useState(
     'Hello! How can I assist you today?',
   );
@@ -181,7 +181,7 @@ const ChatWidget = ({ save, step, saveSuccess }: Props) => {
             />
           </div>
         </div>
-        <div className="min-w-[395px]">
+        <div className="min-w-[395px] w-[395px]">
           <Interface
             display_name={displayName}
             display_role={displayRole}

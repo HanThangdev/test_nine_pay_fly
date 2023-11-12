@@ -317,8 +317,18 @@ const Styling = ({ save, step, saveSuccess }: Props) => {
           <p className="prompt-bot flex gap-x-[10px] font-medium text-[#111827] items-center mt-4">
             <Switch
               size="small"
-              checked={!!botAvatarFile}
-              onChange={() => setBotAvatarFile(undefined)}
+              checked={!!botAvatarFile || Boolean(bot_avatar_url)}
+              onChange={() => {
+                if (botAvatarFile || bot_avatar_url) {
+                  setBotAvatarFile(undefined);
+                  setBotAvatar('');
+                  setBot_avatar_url('');
+                } else {
+                  notification.info({
+                    message: t('please_import_avatar', { ns: 'config_bot' }),
+                  });
+                }
+              }}
             />
             {t('userPicture', { ns: 'config_bot' })}
           </p>
@@ -351,8 +361,18 @@ const Styling = ({ save, step, saveSuccess }: Props) => {
           <p className="prompt-bot flex gap-x-[10px] font-medium text-[#111827] items-center mt-4">
             <Switch
               size="small"
-              checked={!!chatIconFile}
-              onChange={() => setChatIconFile(undefined)}
+              checked={!!chatIconFile || Boolean(chat_icon_url)}
+              onChange={() => {
+                if (chatIconFile || chat_icon_url) {
+                  setChatIconFile(undefined);
+                  setChatIconUrl('');
+                  setChat_icon_url('');
+                } else {
+                  notification.info({
+                    message: t('please_import_avatar', { ns: 'config_bot' }),
+                  });
+                }
+              }}
             />
             {t('symbol', { ns: 'config_bot' })}
           </p>
@@ -391,7 +411,7 @@ const Styling = ({ save, step, saveSuccess }: Props) => {
             Chat Bubble
           </p>
         </div>
-        <div className="min-w-[395px]">
+        <div className="min-w-[395px] w-[395px]">
           <Interface
             chatbubble={chatBubble}
             chat_message_color={messageColor}

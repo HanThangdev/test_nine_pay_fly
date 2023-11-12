@@ -199,5 +199,8 @@
   "addRule": "Add rule",
   "text": "Text",
   "examplePrompt": "View example prompt",
-  "messagesDay": " messages / day"
+  "messagesDay": " messages / day",
+  "please_import_avatar": "Please import the images first.",
+  "share_your_bot": "Share your bot"
+
 }

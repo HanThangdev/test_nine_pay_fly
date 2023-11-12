@@ -2,7 +2,11 @@ import { RootState, AppDispatch } from '@/states/store';
 import { Avatar, Tooltip } from 'antd';
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
-import { IconSticker, IconAttach } from '@/components/IconGroup/IconGroup';
+import {
+  IconSticker,
+  IconAttach,
+  IconChat,
+} from '@/components/IconGroup/IconGroup';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAdvanceSettingTransaction } from '@/repository/buildChatBot';
 import { useParams } from 'react-router-dom';
@@ -48,7 +52,7 @@ const Interface = ({
     align_chat_bubble_button: 'right',
     auto_show_initial_message_after: 0,
     chat_message_color: '#4AC1FF',
-    chat_bubble_button_color: '#4AC1FF',
+    chat_bubble_button_color: '#FFFF',
     bot_avatar_url: iconBot,
     chat_icon_url:
       'https://app.gpt-trainer.com/img/widget-images/widget-button-open-state/default-chat.svg',
@@ -62,7 +66,7 @@ const Interface = ({
       ...dataSet,
       display_name: res.payload.data.display_name || 'Chat Bot 1',
       display_role: res.payload.data.display_role || 'Product Expert',
-      initial_messages: res.payload.data.initial_messages,
+      initial_messages: res.payload.data.initial_message,
       theme: res.payload.data.theme,
       suggest_messages: res.payload.data.suggest_messages,
       bot_avatar_url: res.payload.data.bot_avatar_url || iconBot,
@@ -90,7 +94,7 @@ const Interface = ({
             },
           )}
         >
-              <div
+          <div
             className={classNames(
               'flex justify-between h-[76px] items-center px-[18px] border-b-2 border-[rgb(220,222,237)]',
             )}
@@ -115,7 +119,7 @@ const Interface = ({
                   },
                 )}
               >
-                {display_role? display_role : dataSet.display_role}
+                {display_role ? display_role : dataSet.display_role}
               </p>
             </div>
             <p className="mb-0 cursor-pointer bg-[#F3F4F6] rounded-lg p-1">
@@ -136,42 +140,39 @@ const Interface = ({
             </p>
           </div>
           <div className=" overflow-x-scroll h-[350px]">
-            {(initial_messages?.length !== 0
-              ? initial_messages
-              : dataSet.initial_messages
-            )?.map((item: any, index: any) => (
-              <div key={index} className="py-5 px-[16px] gap-y-[10px] grid">
-                <div className="flex gap-x-2 items-center">
-                  {(dataSet.bot_avatar_url || bot_avatar_url) && (
-                    <Avatar
-                      className="mt-2"
-                      src={
-                        bot_avatar_url ? bot_avatar_url : dataSet.bot_avatar_url
-                      }
-                      size="small"
-                    />
-                  )}
+            <div className="py-5 px-[16px] gap-y-[10px] grid">
+              <div className="flex gap-x-2 items-center">
+                {(dataSet.bot_avatar_url || bot_avatar_url) && (
+                  <Avatar
+                    className="mt-2"
+                    src={
+                      bot_avatar_url ? bot_avatar_url : dataSet.bot_avatar_url
+                    }
+                    size="small"
+                  />
+                )}
 
-                  <div className="max-w-[280px] bg-[#eeeef1] px-3 py-2 rounded-t-lg rounded-br-lg break-words">
-                    {item}
-                  </div>
-                </div>
-                <div className="w-full justify-end flex">
-                  <p
-                    className="px-3 py-2 mt-4 text-white rounded-t-lg rounded-bl-lg w-fit"
-                    style={{
-                      background: chat_message_color
-                        ? chat_message_color
-                        : dataSet.chat_message_color
-                        ? dataSet.chat_message_color
-                        : '#D7E4FD',
-                    }}
-                  >
-                    Hi
-                  </p>
+                <div className="max-w-[280px] bg-[#eeeef1] px-3 py-2 rounded-t-lg rounded-br-lg break-words">
+                  {initial_messages
+                    ? initial_messages
+                    : dataSet.initial_messages}
                 </div>
               </div>
-            ))}
+              <div className="w-full justify-end flex">
+                <p
+                  className="px-3 py-2 mt-4 text-white rounded-t-lg rounded-bl-lg w-fit"
+                  style={{
+                    background: chat_message_color
+                      ? chat_message_color
+                      : dataSet.chat_message_color
+                      ? dataSet.chat_message_color
+                      : '#D7E4FD',
+                  }}
+                >
+                  Hi
+                </p>
+              </div>
+            </div>
           </div>
           <div className="absolute bottom-[62px] flex gap-x-3 py-2 px-4 overflow-x-auto w-full">
             {(suggest_messages
@@ -227,20 +228,18 @@ const Interface = ({
                 ? chat_bubble_button_color
                 : dataSet.chat_bubble_button_color
                 ? dataSet.chat_bubble_button_color
-                : '#4AC1FF',
+                : '#FFFF',
             }}
           >
             {textbubble ? textbubble : chatbubble && ' Chat with me'}
-            <img
-              className="h-[20px] invert"
-              src={
-                chat_icon_url
-                  ? chat_icon_url
-                  : dataSet.chat_icon_url
-                  ? dataSet.chat_icon_url
-                  : 'https://app.gpt-trainer.com/img/widget-images/widget-button-open-state/default-chat.svg'
-              }
-            />
+            {chat_icon_url || dataSet.chat_icon_url ? (
+              <img
+                className="h-[20px] invert"
+                src={chat_icon_url ? chat_icon_url : dataSet.chat_icon_url}
+              />
+            ) : (
+              <IconChat />
+            )}
           </div>
         </div>
       </div>
