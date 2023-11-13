@@ -3,6 +3,7 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../store';
 import {
   getCurrentPricingPlanTransaction,
+  getLatestInvoice,
   getPaymentUrlNinePay,
   getVnpayRedirectTransaction,
   getVnpayReturnTransaction,
@@ -50,6 +51,12 @@ export const usePricingPlan = () => {
     },
     [dispatch],
   );
+  const onGetLatestInvoice = useCallback(
+    async () => {
+      return await dispatch(getLatestInvoice());
+    },
+    [dispatch],
+  );
   return {
     currentPricingPlan,
     onGetCurrentPricingPlan,
@@ -57,6 +64,7 @@ export const usePricingPlan = () => {
     onGetVnpayReturn,
     onUpgradeBilling,
     onRegisterUpgradeBilling,
-    onGetPaymentUrlNinePay
+    onGetPaymentUrlNinePay,
+    onGetLatestInvoice
   };
 };

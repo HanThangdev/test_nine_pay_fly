@@ -1,7 +1,7 @@
 import classNames from 'classnames';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Header from '@/components/header';
 
 import { AiOutlineQuestionCircle } from 'react-icons/ai';
@@ -17,6 +17,9 @@ import { PRICINGVALUE } from '@/constants/pricing';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/states/store';
 import { objectToQueryString } from '@/utils/utils';
+import { useSearchParamsObject } from '@/utils/useSearchParamsObject';
+import { usePricingPlan } from '@/states/pricingPlan/pricingPlan.selector';
+import { API_STATUS } from '@/constants';
 
 interface IPricingValue {
   billing_type: number;
@@ -28,6 +31,9 @@ const PricingPlan = () => {
     (state: RootState) => state.pricing,
   );
   const navigate = useNavigate();
+  const searchParamsObject = useSearchParamsObject();
+  const localtion = useLocation()
+  const {onGetLatestInvoice} = usePricingPlan()
   const itemFree = [
     `${t('Free.item1', { ns: 'pricing_plan' })}`,
     `${t('Free.item2', { ns: 'pricing_plan' })}`,
@@ -156,6 +162,18 @@ const PricingPlan = () => {
   const navigateCheckoutPricing = (type: IPricingValue) => {
     navigate(`/checkout?`+ objectToQueryString(type))
   }
+
+  useEffect(() => {
+    if(searchParamsObject.hasOwnProperty('show_result_invoice') && searchParamsObject.show_result_invoice){
+      onGetLatestInvoice().then(response => {
+        const { meta, payload }: any = response;
+        if (meta.requestStatus === API_STATUS.FULFILLED) {
+          console.log(payload);
+          navigate('/price');
+        }
+      })
+    }
+  },[localtion])
   return (
     <>
       <Header
@@ -204,7 +222,7 @@ const PricingPlan = () => {
             ))}
             <div className="bottom-0 lg:absolute m-auto w-[calc(100%-32px)] mb-[20px]">
               <button className="flex justify-center w-full items-center m-auto py-3 px-5 bg-button-upgrade text-[#FFF] rounded-[12px] text-[18px] justify-cente" disabled={pricingValuesType[currentPricingPlan || 'Free'] >= PRICINGENUM.Basic}>
-                {pricingValuesType[currentPricingPlan || 'Free'] == PRICINGENUM.Basic ? 'You are currently on free plan' : 'Registered for this plan.'}
+                {pricingValuesType[currentPricingPlan || 'Free'] == PRICINGENUM.Free ? 'You are currently on free plan' : 'Registered for this plan.'}
               </button>
             </div>
           </div>
@@ -445,6 +463,7 @@ const PricingPlan = () => {
             <p>{item.answer}</p>
           </div>
         ))}
+
       </div>
     </>
   );
