@@ -201,9 +201,9 @@ const Checkout = () => {
           <p>
             <div id="NinePayCheckout"></div>
           </p>
-          <button className="mt-4 mb-8 w-full rounded-md bg-[#111827] px-6 py-3 font-medium text-white">
+          {/* <button className="mt-4 mb-8 w-full rounded-md bg-[#111827] px-6 py-3 font-medium text-white">
             Place Order
-          </button>
+          </button> */}
         </div>
       </div>
     </>

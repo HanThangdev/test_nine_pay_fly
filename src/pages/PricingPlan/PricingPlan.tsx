@@ -1,7 +1,7 @@
 import classNames from 'classnames';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Header from '@/components/header';
 
 import { AiOutlineQuestionCircle } from 'react-icons/ai';
@@ -17,6 +17,9 @@ import { PRICINGVALUE } from '@/constants/pricing';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/states/store';
 import { objectToQueryString } from '@/utils/utils';
+import { useSearchParamsObject } from '@/utils/useSearchParamsObject';
+import { usePricingPlan } from '@/states/pricingPlan/pricingPlan.selector';
+import { API_STATUS } from '@/constants';
 
 interface IPricingValue {
   billing_type: number;
@@ -28,6 +31,9 @@ const PricingPlan = () => {
     (state: RootState) => state.pricing,
   );
   const navigate = useNavigate();
+  const searchParamsObject = useSearchParamsObject();
+  const localtion = useLocation()
+  const {onGetLatestInvoice} = usePricingPlan()
   const itemFree = [
     `${t('Free.item1', { ns: 'pricing_plan' })}`,
     `${t('Free.item2', { ns: 'pricing_plan' })}`,
@@ -156,6 +162,18 @@ const PricingPlan = () => {
   const navigateCheckoutPricing = (type: IPricingValue) => {
     navigate(`/checkout?`+ objectToQueryString(type))
   }
+
+  useEffect(() => {
+    if(searchParamsObject.hasOwnProperty('show_result_invoice') && searchParamsObject.show_result_invoice){
+      onGetLatestInvoice().then(response => {
+        const { meta, payload }: any = response;
+        if (meta.requestStatus === API_STATUS.FULFILLED) {
+          console.log(payload);
+          navigate('/price');
+        }
+      })
+    }
+  },[localtion])
   return (
     <>
       <Header
@@ -203,8 +221,8 @@ const PricingPlan = () => {
               </p>
             ))}
             <div className="bottom-0 lg:absolute m-auto w-[calc(100%-32px)] mb-[20px]">
-              <button className="flex justify-center w-full items-center m-auto py-3 px-5 bg-button-upgrade text-[#FFF] rounded-[12px] text-[18px] justify-cente">
-                {pricingValuesType[currentPricingPlan || 'Free'] < PRICINGENUM.Basic ? 'You are currently on free plan' : 'Registered for this plan.'}
+              <button className="flex justify-center w-full items-center m-auto py-3 px-5 bg-button-upgrade text-[#FFF] rounded-[12px] text-[18px] justify-cente" disabled={pricingValuesType[currentPricingPlan || 'Free'] >= PRICINGENUM.Basic}>
+                {pricingValuesType[currentPricingPlan || 'Free'] == PRICINGENUM.Free ? 'You are currently on free plan' : 'Registered for this plan.'}
               </button>
             </div>
           </div>
@@ -253,8 +271,8 @@ const PricingPlan = () => {
               </div>
             ))}
             <div className="bottom-0 m-auto w-full pt-4">
-              <button className="flex justify-center items-center w-full m-auto py-3 px-5 bg-button-upgrade text-[#FFF] rounded-[12px] text-[18px] justify-cente" onClick={() => navigateCheckoutPricing(month == PRICINGVALUE.BASIC_YEARLY ? PRICINGVALUE.BASIC_YEARLY : PRICINGVALUE.BASIC_MONTHLY)}>
-                {pricingValuesType[currentPricingPlan || 'Free'] < PRICINGENUM.Basic ? pricingValuesType[currentPricingPlan || 'Free'] == PRICINGENUM.Basic ? 'You are currently on basic plan': 'Upgrade to Basic' : 'Registered for this plan.'}
+              <button className="flex justify-center items-center w-full m-auto py-3 px-5 bg-button-upgrade text-[#FFF] rounded-[12px] text-[18px] justify-cente" onClick={() => navigateCheckoutPricing(month == PRICINGVALUE.BASIC_YEARLY ? PRICINGVALUE.BASIC_YEARLY : PRICINGVALUE.BASIC_MONTHLY)} disabled={pricingValuesType[currentPricingPlan || 'Free'] >= PRICINGENUM.Basic}  >
+                {pricingValuesType[currentPricingPlan || 'Free'] <= PRICINGENUM.Basic ? pricingValuesType[currentPricingPlan || 'Free'] == PRICINGENUM.Basic ? 'You are currently on basic plan': 'Upgrade to Basic' : 'Registered for this plan.'}
               </button>
             </div>
           </div>
@@ -310,8 +328,8 @@ const PricingPlan = () => {
               </div>
             ))}
             <div className="bottom-0 lg:absolute m-auto w-[calc(100%-32px)] mb-[20px]">
-              <button className="flex justify-center items-center w-full m-auto py-3 px-5 bg-starter text-[#FFF] rounded-[12px] text-[18px]" onClick={() => navigateCheckoutPricing(month == PRICINGVALUE.STARTER_YEARLY ? PRICINGVALUE.STARTER_YEARLY : PRICINGVALUE.STARTER_MONTHLY)}>
-              {pricingValuesType[currentPricingPlan || 'Free'] < PRICINGENUM.Starter ? pricingValuesType[currentPricingPlan || 'Free'] == PRICINGENUM.Starter ? 'You are currently on starter plan': 'Upgrade to Starter' : 'Registered for this plan.'}
+              <button className="flex justify-center items-center w-full m-auto py-3 px-5 bg-starter text-[#FFF] rounded-[12px] text-[18px]" onClick={() => navigateCheckoutPricing(month == PRICINGVALUE.STARTER_YEARLY ? PRICINGVALUE.STARTER_YEARLY : PRICINGVALUE.STARTER_MONTHLY)} disabled={pricingValuesType[currentPricingPlan || 'Free'] >= PRICINGENUM.Starter}>
+              {pricingValuesType[currentPricingPlan || 'Free'] <= PRICINGENUM.Starter ? pricingValuesType[currentPricingPlan || 'Free'] == PRICINGENUM.Starter ? 'You are currently on starter plan': 'Upgrade to Starter' : 'Registered for this plan.'}
               </button>
             </div>
           </div>
@@ -365,8 +383,8 @@ const PricingPlan = () => {
               </div>
             ))}
             <div className="bottom-0 m-auto w-full pt-4">
-              <button className="flex justify-center items-center w-full m-auto py-3 px-5 bg-business text-[#FFF] rounded-[12px] text-[18px] justify-cente" onClick={() => navigateCheckoutPricing(month == PRICINGVALUE.BUSINESS_YEARLY ? PRICINGVALUE.BUSINESS_YEARLY : PRICINGVALUE.BUSINESS_MONTHLY)}>
-                {pricingValuesType[currentPricingPlan || 'Free'] >= PRICINGENUM.Business ? 'You are currently on Business plan': 'Upgrade to Business'}
+              <button className="flex justify-center items-center w-full m-auto py-3 px-5 bg-business text-[#FFF] rounded-[12px] text-[18px] justify-cente" onClick={() => navigateCheckoutPricing(month == PRICINGVALUE.BUSINESS_YEARLY ? PRICINGVALUE.BUSINESS_YEARLY : PRICINGVALUE.BUSINESS_MONTHLY)} disabled={pricingValuesType[currentPricingPlan || 'Free'] >= PRICINGENUM.Business}>
+                {pricingValuesType[currentPricingPlan || 'Free'] == PRICINGENUM.Business ? 'You are currently on Business plan': 'Upgrade to Business'}
               </button>
             </div>
           </div>
@@ -396,7 +414,7 @@ const PricingPlan = () => {
                 <span className="text-[#9CA3AF] text-[16px] font-semibold uppercase">
                   PER{' '}
                   {month == PRICINGVALUE.STANDARD_YEARLY
-                    ? `${t('monthyear', { ns: 'pricing_plan' })}`
+                    ? `${t('year', { ns: 'pricing_plan' })}`
                     : `${t('month', { ns: 'pricing_plan' })}`}
                 </span>
               </p>
@@ -420,8 +438,8 @@ const PricingPlan = () => {
               </div>
             ))}
             <div className="bottom-0 lg:absolute m-auto w-[calc(100%-32px)] mb-[20px]">
-              <button className="flex justify-center items-center w-full m-auto py-3 px-5 bg-standard text-[#FFF] rounded-[12px] text-[18px]" onClick={() => navigateCheckoutPricing(month == PRICINGVALUE.STANDARD_YEARLY ? PRICINGVALUE.STANDARD_YEARLY : PRICINGVALUE.STANDARD_MONTHLY)}>
-                {pricingValuesType[currentPricingPlan || 'Free'] < PRICINGENUM.Standard ? pricingValuesType[currentPricingPlan || 'Free'] == PRICINGENUM.Standard ? 'You are currently on Standard plan': 'Upgrade to Standard' : 'Registered for this plan.'}
+              <button className="flex justify-center items-center w-full m-auto py-3 px-5 bg-standard text-[#FFF] rounded-[12px] text-[18px]" onClick={() => navigateCheckoutPricing(month == PRICINGVALUE.STANDARD_YEARLY ? PRICINGVALUE.STANDARD_YEARLY : PRICINGVALUE.STANDARD_MONTHLY)} disabled={pricingValuesType[currentPricingPlan || 'Free'] >= PRICINGENUM.Standard}>
+                {pricingValuesType[currentPricingPlan || 'Free'] <= PRICINGENUM.Standard ? pricingValuesType[currentPricingPlan || 'Free'] == PRICINGENUM.Standard ? 'You are currently on Standard plan': 'Upgrade to Standard' : 'Registered for this plan.'}
               </button>
             </div>
           </div>
@@ -445,6 +463,7 @@ const PricingPlan = () => {
             <p>{item.answer}</p>
           </div>
         ))}
+
       </div>
     </>
   );
